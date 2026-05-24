@@ -18,7 +18,7 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const response = await fetch("$($NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com')/api/v1/auth/register", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

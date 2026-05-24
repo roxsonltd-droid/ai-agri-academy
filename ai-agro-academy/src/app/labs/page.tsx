@@ -23,7 +23,7 @@ export default function LabPage() {
     setResult(null);
 
     try {
-      const response = await fetch("$($NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com')/api/v1/lab/analyze", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/lab/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

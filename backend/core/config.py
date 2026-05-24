@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./agro_academy.db")
     
     # CORS setup (Allow Next.js frontend to talk to this backend)
-    BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000", "https://agro-academy-frontend.onrender.com"]
     
     # AI 
     MISTRAL_API_KEY: str | None = None

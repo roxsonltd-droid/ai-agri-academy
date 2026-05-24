@@ -24,7 +24,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="absolute top-0 z-50 w-full bg-transparent">
+    <nav className="fixed top-0 z-50 w-full glass transition-all duration-300">
       <div className="container mx-auto flex h-20 items-center justify-between px-6 lg:px-8">
         <Link href="/" className="flex items-center space-x-2">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-[#0A2540]">

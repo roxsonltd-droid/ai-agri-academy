@@ -112,7 +112,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* AI Lab Simulator Card */}
-          <Card className="col-span-1 md:col-span-3 bg-white border border-[#E6EBF1] shadow-sm hover:shadow-md transition-shadow">
+          <Card className="col-span-1 md:col-span-3 bg-white border border-[#E6EBF1] shadow-sm hover:shadow-md hover-lift transition-all">
             <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
               <div className="flex items-center space-x-5 mb-4 sm:mb-0">
                 <div className="h-14 w-14 bg-[#F0FDF4] rounded-2xl flex items-center justify-center">
@@ -169,7 +169,7 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               
               {courses.map((course) => (
-                <Card key={course.id} className="border-[#E6EBF1] shadow-sm hover:shadow-md transition-shadow">
+                <Card key={course.id} className="border-[#E6EBF1] shadow-sm hover:shadow-md hover-lift transition-all">
                   <div className="h-32 bg-[#F6F9FC] border-b border-[#E6EBF1] flex items-center justify-center">
                      <BookOpen className="h-12 w-12 text-[#94A3B8]" />
                   </div>

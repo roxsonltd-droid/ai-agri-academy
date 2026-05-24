@@ -161,7 +161,7 @@ export default function Home() {
               { title: "Оранжерии", icon: Droplets, desc: "Оптимизация на микроклимата, водата и LED осветлението." }
             ].map((course, idx) => (
               <motion.div key={idx} variants={fadeUp}>
-                <Card className="h-full">
+                <Card className="h-full hover-lift transition-all border-transparent hover:border-[#059669]/30 bg-white">
                   <CardHeader>
                     <div className="h-12 w-12 rounded bg-[#F6F9FC] flex items-center justify-center mb-2 shadow-sm border border-[#E6EBF1]">
                       <course.icon className="h-6 w-6 text-[#0A2540]" />

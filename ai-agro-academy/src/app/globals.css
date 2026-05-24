@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #F6F9FC;
+  --color-foreground: #0A2540;
+  
+  --color-primary: #059669; /* Deep Emerald */
+  --color-primary-foreground: #ffffff;
+  
+  --color-card: #ffffff;
+  --color-border: #E6EBF1;
+  
+  --color-muted: #F6F9FC;
+  --color-muted-foreground: #425466;
+}
+
+:root {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  min-height: 100vh;
+}
+
+/* Stripe's famous shadow */
+.stripe-shadow {
+  box-shadow: 0 50px 100px -20px rgba(50,50,93,0.25), 0 30px 60px -30px rgba(0,0,0,0.3);
+}
+
+.stripe-shadow-sm {
+  box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 0 8px 16px -8px rgba(0,0,0,0.3);
+}
+
+/* Slanted hero background */
+.slanted-bg {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0% 100%);
+}

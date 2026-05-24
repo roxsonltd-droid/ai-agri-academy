@@ -162,13 +162,13 @@ export default function CoursePlayerPage() {
           </div>
           
           <div className="flex-1 overflow-y-auto">
-            {courseData.modules.map((module) => (
+            {courseData.modules.map((module: any) => (
               <div key={module.id} className="border-b border-[#E6EBF1] last:border-b-0">
                 <div className="px-4 py-3 bg-white">
                   <h4 className="text-sm font-bold text-[#0A2540]">{module.title}</h4>
                 </div>
                 <div>
-                  {module.lessons.map((lesson) => (
+                  {module.lessons.map((lesson: any) => (
                     <button
                       key={lesson.id}
                       onClick={() => setActiveLesson(lesson)}

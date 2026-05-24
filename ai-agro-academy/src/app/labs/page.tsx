@@ -55,7 +55,7 @@ export default function LabPage() {
     }
   };
 
-  const getStatusConfig = (status: str) => {
+  const getStatusConfig = (status: string) => {
     switch (status) {
       case "success":
         return {

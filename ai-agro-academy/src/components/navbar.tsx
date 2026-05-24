@@ -35,7 +35,7 @@ export default function Navbar() {
         </Link>
         <div className="hidden md:flex space-x-8">
           <Link href="/courses" className="text-sm font-semibold text-[#425466] hover:text-[#0A2540] transition-colors">Курсове</Link>
-          <Link href="/faculty" className="text-sm font-semibold text-[#425466] hover:text-[#0A2540] transition-colors">AI Факултет</Link>
+          <Link href="/faculty/agromind" className="text-sm font-semibold text-[#425466] hover:text-[#0A2540] transition-colors">AI Факултет</Link>
           <Link href="/labs" className="text-sm font-semibold text-[#425466] hover:text-[#0A2540] transition-colors">Лаборатории</Link>
         </div>
         <div className="flex items-center space-x-4">

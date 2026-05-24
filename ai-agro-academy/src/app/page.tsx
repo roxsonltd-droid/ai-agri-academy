@@ -59,9 +59,11 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mt-10">
-                <Button variant="default" size="lg" className="w-full sm:w-auto font-semibold">
-                  Започни веднага <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Link href="/register" className="w-full sm:w-auto">
+                  <Button variant="default" size="lg" className="w-full sm:w-auto font-semibold">
+                    Започни веднага <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
                 <Button variant="outline" size="lg" className="w-full sm:w-auto font-semibold">
                   Свържи се с продажби
                 </Button>
@@ -168,9 +170,9 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-[#425466] font-medium leading-relaxed">{course.desc}</p>
-                    <a href="#" className="inline-flex items-center mt-6 text-[#059669] font-semibold hover:text-[#0A2540] transition-colors">
+                    <Link href="/dashboard" className="inline-flex items-center mt-6 text-[#059669] font-semibold hover:text-[#0A2540] transition-colors">
                       Научи повече <ArrowRight className="ml-1 h-4 w-4" />
-                    </a>
+                    </Link>
                   </CardContent>
                 </Card>
               </motion.div>

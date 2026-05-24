@@ -65,12 +65,29 @@ export default function CoursePlayerPage() {
           <div className="w-full bg-black aspect-video relative">
             <iframe 
               className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube-nocookie.com/embed/${activeLesson.videoId}?rel=0`} 
+              src={`https://www.youtube.com/embed/${activeLesson.videoId}?rel=0`} 
               title="YouTube video player" 
               frameBorder="0" 
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen>
             </iframe>
+          </div>
+          
+          {/* Fallback for adblockers */}
+          <div className="bg-[#1A365D] text-white text-sm py-2 px-6 flex justify-between items-center flex-wrap gap-2">
+            <span className="flex items-center">
+              <span className="h-2 w-2 rounded-full bg-amber-400 mr-2 animate-pulse"></span>
+              Ако видеото дава грешка (поради AdBlocker), можете да го отворите директно:
+            </span>
+            <a 
+              href={`https://www.youtube.com/watch?v=${activeLesson.videoId}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-[#059669] hover:bg-[#047857] text-white px-3 py-1 rounded text-xs font-bold transition-colors flex items-center"
+            >
+              <PlayCircle className="h-3 w-3 mr-1" />
+              Гледай в YouTube
+            </a>
           </div>
 
           {/* Content Area Below Video */}

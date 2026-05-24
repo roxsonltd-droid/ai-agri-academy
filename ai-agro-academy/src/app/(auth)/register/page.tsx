@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sprout } from "lucide-react";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -38,8 +37,8 @@ export default function RegisterPage() {
       const data = await response.json();
       localStorage.setItem("token", data.access_token);
       window.location.href = "/dashboard";
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Възникна грешка");
     } finally {
       setIsLoading(false);
     }

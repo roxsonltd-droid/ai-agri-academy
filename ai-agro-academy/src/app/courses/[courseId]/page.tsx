@@ -6,17 +6,39 @@ import { ChevronLeft, PlayCircle, CheckCircle, FileText, MessageSquare, Download
 
 import { useParams } from "next/navigation";
 
+type Lesson = {
+  id: string | number;
+  title: string;
+  duration?: number;
+  order?: number;
+  completed?: boolean;
+};
+
+type Module = {
+  id: string | number;
+  title: string;
+  lessons: Lesson[];
+};
+
+type CoursePayload = {
+  title: string;
+  modules: Module[];
+};
+
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://agro-academy-backend.onrender.com";
+
 export default function CoursePlayerPage() {
   const params = useParams();
-  const [courseData, setCourseData] = useState<any>(null);
-  const [activeLesson, setActiveLesson] = useState<any>(null);
+  const [courseData, setCourseData] = useState<CoursePayload | null>(null);
+  const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState("description");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await fetch(`https://agro-academy-backend.onrender.com/api/v1/courses/${params.courseId}`);
+        const response = await fetch(`${API_BASE}/api/v1/courses/${params.courseId}`);
         if (response.ok) {
           const data = await response.json();
           setCourseData(data);
@@ -140,7 +162,7 @@ export default function CoursePlayerPage() {
                     <div className="bg-[#F0FDF4] border-l-4 border-[#059669] p-5 rounded-r-lg">
                       <h4 className="text-[#059669] font-bold mb-2">Бележка от Професора</h4>
                       <p className="text-sm italic text-[#425466]">
-                        "Успехът в модерното земеделие не идва от сляпото следване на технологиите, а от тяхното правилно и осмислено прилагане спрямо спецификата на вашата почва и култури."
+                        &ldquo;Успехът в модерното земеделие не идва от сляпото следване на технологиите, а от тяхното правилно и осмислено прилагане спрямо спецификата на вашата почва и култури.&rdquo;
                       </p>
                     </div>
                   </div>
@@ -187,13 +209,13 @@ export default function CoursePlayerPage() {
           </div>
           
           <div className="flex-1 overflow-y-auto">
-            {courseData.modules.map((module: any) => (
+            {courseData.modules.map((module) => (
               <div key={module.id} className="border-b border-[#E6EBF1] last:border-b-0">
                 <div className="px-4 py-3 bg-white">
                   <h4 className="text-sm font-bold text-[#0A2540]">{module.title}</h4>
                 </div>
                 <div>
-                  {module.lessons.map((lesson: any) => (
+                  {module.lessons.map((lesson) => (
                     <button
                       key={lesson.id}
                       onClick={() => setActiveLesson(lesson)}

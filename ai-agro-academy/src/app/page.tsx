@@ -3,9 +3,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sprout, Tractor, Droplets, Wind, ArrowRight, BrainCircuit, Play, User, Activity, ChevronRight, BarChart3, CloudRain, CheckCircle2 } from "lucide-react";
+import { Sprout, Tractor, Droplets, Wind, ArrowRight, BrainCircuit, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -241,7 +240,7 @@ export default function Home() {
                 
                 <div className="space-y-4">
                   <div className="bg-[#0A2540] p-4 rounded-lg border border-[#2A4B7C] text-sm text-[#E6EBF1] font-medium shadow-inner">
-                    "Анализирах снимката на листото, която качи. Забелязвам начални признаци на брашнеста мана. Ето как да я третираме органично..."
+                    &ldquo;Анализирах снимката на листото, която качи. Забелязвам начални признаци на брашнеста мана. Ето как да я третираме органично&hellip;&rdquo;
                   </div>
                   <Link href="/faculty/agromind" className="w-full">
                     <Button variant="neon" className="w-full h-12 text-base font-semibold">

@@ -2,8 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, Beaker, CheckCircle2, AlertTriangle, XCircle, Loader2, CloudRain, Sun, Cloud, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { ChevronLeft, Beaker, CheckCircle2, AlertTriangle, XCircle, Loader2, TrendingUp, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+type LabResult = {
+  status: string;
+  analysis: string;
+  recommendation: string;
+  expected_yield?: string;
+  financial_outlook?: string;
+};
 
 export default function LabPage() {
   const [ph, setPh] = useState<number>(6.5);
@@ -16,7 +24,7 @@ export default function LabPage() {
   const [budget, setBudget] = useState<number>(150);
   
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<LabResult | null>(null);
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
@@ -44,7 +52,7 @@ export default function LabPage() {
       } else {
         throw new Error("API Error");
       }
-    } catch (error) {
+    } catch {
       setResult({
         status: "danger",
         analysis: "Възникна грешка при връзката с AI Лабораторията.",
@@ -267,7 +275,7 @@ export default function LabPage() {
                   <Beaker className="h-10 w-10 text-[#94A3B8]" />
                 </div>
                 <h3 className="text-xl font-bold text-[#0A2540] mb-2">Готови за симулация</h3>
-                <p className="text-[#425466] max-w-sm">Настройте параметрите на почвата вляво и кликнете "Анализирай", за да получите експертна оценка от Проф. АгроМайнд.</p>
+                <p className="text-[#425466] max-w-sm">Настройте параметрите на почвата вляво и кликнете <span className="font-semibold text-[#0A2540]">Анализирай</span>, за да получите експертна оценка от Проф. АгроМайнд.</p>
               </div>
             )}
 

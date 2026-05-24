@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Sprout, User } from "lucide-react";
+import { User } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
   useEffect(() => {
-    // Check if user is logged in
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    queueMicrotask(() => {
+      setIsAuthenticated(Boolean(token));
+    });
   }, []);
   
   const hiddenRoutes = ["/faculty/agromind", "/login", "/register"];

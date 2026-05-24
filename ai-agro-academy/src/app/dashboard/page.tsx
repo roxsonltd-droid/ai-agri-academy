@@ -6,9 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BrainCircuit, BookOpen, PlayCircle, Loader2, Sparkles } from "lucide-react";
 
+type MeUser = {
+  id?: string | number;
+  email?: string;
+  full_name?: string;
+};
+
+type CourseSummary = {
+  id: string | number;
+  title: string;
+};
+
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
-  const [courses, setCourses] = useState<any[]>([]);
+  const [user, setUser] = useState<MeUser | null>(null);
+  const [courses, setCourses] = useState<CourseSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [newTopic, setNewTopic] = useState("");
@@ -41,7 +52,7 @@ export default function DashboardPage() {
           const coursesData = await coursesResponse.json();
           setCourses(coursesData);
         }
-      } catch (error) {
+      } catch {
         localStorage.removeItem("token");
         window.location.href = "/login";
       } finally {

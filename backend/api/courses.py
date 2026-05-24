@@ -10,7 +10,6 @@ import asyncio
 from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from core.config import settings
-from youtubesearchpython import VideosSearch
 
 # Initialize LLM for Course Generation
 llm = ChatMistralAI(model="mistral-large-latest", temperature=0.7, api_key=settings.MISTRAL_API_KEY)
@@ -169,16 +168,9 @@ async def generate_course(request: GenerateCourseRequest, db: Session = Depends(
                 les_id = str(uuid.uuid4())[:8]
                 les_title = les_data.get("title", f"Урок {lesson_order}")
                 
-                # Automatically fetch real YouTube video ID
-                video_id = "aqz-KE-bpKQ" # Default fallback
-                try:
-                    search_query = f"{les_title} agriculture"
-                    videos_search = VideosSearch(search_query, limit=1)
-                    results = videos_search.result()
-                    if results and results.get('result') and len(results['result']) > 0:
-                        video_id = results['result'][0]['id']
-                except Exception as ex:
-                    print(f"Failed to fetch video for {les_title}: {ex}")
+                # Video ID is no longer used for YouTube scraping.
+                # We'll use this field to store a placeholder or an avatar ID in the future.
+                video_id = "" 
 
                 lesson = Lesson(
                     id=les_id,

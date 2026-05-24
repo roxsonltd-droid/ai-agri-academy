@@ -61,33 +61,15 @@ export default function CoursePlayerPage() {
         
         {/* Left Column: Video & Tabs */}
         <div className="flex-1 overflow-y-auto flex flex-col">
-          {/* Video Container (16:9 aspect ratio) */}
-          <div className="w-full bg-black aspect-video relative">
-            <iframe 
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${activeLesson.videoId}?rel=0`} 
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen>
-            </iframe>
-          </div>
-          
-          {/* Fallback for adblockers */}
-          <div className="bg-[#1A365D] text-white text-sm py-2 px-6 flex justify-between items-center flex-wrap gap-2">
-            <span className="flex items-center">
-              <span className="h-2 w-2 rounded-full bg-amber-400 mr-2 animate-pulse"></span>
-              Ако видеото дава грешка (поради AdBlocker), можете да го отворите директно:
-            </span>
-            <a 
-              href={`https://www.youtube.com/watch?v=${activeLesson.videoId}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-[#059669] hover:bg-[#047857] text-white px-3 py-1 rounded text-xs font-bold transition-colors flex items-center"
-            >
-              <PlayCircle className="h-3 w-3 mr-1" />
-              Гледай в YouTube
-            </a>
+          {/* AI Avatar Video Container Placeholder */}
+          <div className="w-full bg-[#0A2540] aspect-video relative flex flex-col items-center justify-center border-b border-[#E6EBF1]">
+            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-[#059669] to-[#00D4FF] flex items-center justify-center shadow-lg mb-4 animate-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a5 5 0 0 0-5 5v1a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/><path d="M19 14v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="21" x2="12" y2="21.01"/></svg>
+            </div>
+            <h3 className="text-white font-bold text-xl mb-2">Проф. АгроМайнд (Виртуален Преподавател)</h3>
+            <p className="text-slate-300 text-sm max-w-md text-center px-4">
+              Това е запазено място за вашето реалистично AI видео. Копирайте сценария по-долу и го поставете в софтуера за аватари.
+            </p>
           </div>
 
           {/* Content Area Below Video */}
@@ -129,13 +111,22 @@ export default function CoursePlayerPage() {
             <div className="prose prose-sm prose-slate max-w-none text-[#425466]">
               {activeTab === "description" && (
                 <div>
-                  <p>В този урок ще разгледаме в детайли как точно работят основните концепции. Ще се фокусираме върху практическите ползи и избягването на често срещани грешки.</p>
-                  <p className="mt-4">След приключване на урока, трябва да можете да:</p>
-                  <ul className="list-disc pl-5 mt-2 space-y-1">
-                    <li>Разбирате основните принципи.</li>
-                    <li>Прилагате наученото в реална среда.</li>
-                    <li>Анализирате данните ефективно.</li>
-                  </ul>
+                  <div className="bg-[#F0FDF4] border border-[#059669]/30 p-5 rounded-xl relative">
+                    <div className="absolute top-3 right-3 bg-[#059669] text-white text-[10px] uppercase font-bold px-2 py-1 rounded">
+                      Сценарий за Аватара
+                    </div>
+                    <h4 className="text-[#059669] font-bold mb-3 flex items-center">
+                      <FileText className="h-4 w-4 mr-1.5" />
+                      Текст за копиране:
+                    </h4>
+                    <p className="text-sm leading-relaxed text-[#0A2540] italic">
+                      "Здравейте! Аз съм Проф. АгроМайнд и днес ще разгледаме темата: {activeLesson.title}. В рамките на следващите {activeLesson.duration} минути, ще научите най-важните концепции, предимствата на технологията и как да я приложите във Вашето собствено стопанство. Нека да започваме!"
+                    </p>
+                  </div>
+                  
+                  <p className="mt-6 text-sm">
+                    <strong>Инструкции:</strong> Копирайте горния текст и го поставете в платформата за AI Инфлуенсъри (напр. Impresso, HeyGen, Synthesia), за да генерирате видеото за този урок.
+                  </p>
                 </div>
               )}
               {activeTab === "materials" && (

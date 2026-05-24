@@ -2,11 +2,12 @@ services:
   - type: web
     name: agro-academy-backend
     env: python
+    plan: free
     buildCommand: "cd backend && pip install -r requirements.txt"
     startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: "3.11.0"
       - key: MISTRAL_API_KEY
         sync: false
       - key: JWT_SECRET
@@ -15,10 +16,11 @@ services:
   - type: web
     name: agro-academy-frontend
     env: node
+    plan: free
     buildCommand: "cd ai-agro-academy && npm install && npm run build"
     startCommand: "cd ai-agro-academy && npm start"
     envVars:
       - key: NODE_VERSION
-        value: 18.17.0
+        value: "18.17.0"
       - key: NEXT_PUBLIC_API_URL
         value: "https://agro-academy-backend.onrender.com"

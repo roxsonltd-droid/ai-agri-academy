@@ -1,0 +1,20 @@
+# Node/Next.js
+ai-agro-academy/node_modules/
+ai-agro-academy/.next/
+ai-agro-academy/out/
+ai-agro-academy/.env
+ai-agro-academy/.env.local
+ai-agro-academy/.env.*.local
+ai-agro-academy/build/
+
+# Python/FastAPI
+backend/venv/
+backend/__pycache__/
+backend/.pytest_cache/
+backend/*.pyc
+backend/.env
+backend/agro_academy.db
+
+# OS Files
+.DS_Store
+Thumbs.db

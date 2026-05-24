@@ -22,7 +22,7 @@ export default function DashboardPage() {
       }
 
       try {
-        const userResponse = await fetch("http://127.0.0.1:8000/api/v1/auth/me", {
+        const userResponse = await fetch("$($NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com')/api/v1/auth/me", {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -36,7 +36,7 @@ export default function DashboardPage() {
         setUser(userData);
 
         // Fetch courses
-        const coursesResponse = await fetch("http://127.0.0.1:8000/api/v1/courses/");
+        const coursesResponse = await fetch("$($NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com')/api/v1/courses/");
         if (coursesResponse.ok) {
           const coursesData = await coursesResponse.json();
           setCourses(coursesData);
@@ -56,7 +56,7 @@ export default function DashboardPage() {
     if (!newTopic.trim()) return;
     setIsGenerating(true);
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/courses/generate", {
+      const response = await fetch("$($NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com')/api/v1/courses/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic: newTopic })
@@ -205,3 +205,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

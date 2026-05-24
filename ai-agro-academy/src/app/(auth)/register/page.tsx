@@ -18,7 +18,7 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/auth/register", {
+      const response = await fetch("$($NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com')/api/v1/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,3 +146,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

@@ -16,7 +16,7 @@ export default function CoursePlayerPage() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/v1/courses/${params.courseId}`);
+        const response = await fetch(`https://agro-academy-backend.onrender.com/api/v1/courses/${params.courseId}`);
         if (response.ok) {
           const data = await response.json();
           setCourseData(data);

@@ -58,17 +58,24 @@ export default function CoursePlayerPage() {
 
       {/* Main Player Area */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-        
         {/* Left Column: Video & Tabs */}
         <div className="flex-1 overflow-y-auto flex flex-col">
-          {/* AI Avatar Video Container Placeholder */}
-          <div className="w-full bg-[#0A2540] aspect-video relative flex flex-col items-center justify-center border-b border-[#E6EBF1]">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-[#059669] to-[#00D4FF] flex items-center justify-center shadow-lg mb-4 animate-pulse">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a5 5 0 0 0-5 5v1a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/><path d="M19 14v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="21" x2="12" y2="21.01"/></svg>
+          {/* Reading Header */}
+          <div className="w-full bg-gradient-to-r from-[#0A2540] to-[#1a365d] relative flex flex-col justify-center px-8 py-12 border-b border-[#E6EBF1]">
+            <div className="flex items-center space-x-3 mb-4">
+              <span className="bg-[#059669] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                Урок {activeLesson.order || 1}
+              </span>
+              <span className="text-slate-300 text-sm flex items-center">
+                <FileText className="h-4 w-4 mr-1.5" />
+                Време за четене: ~{activeLesson.duration} мин
+              </span>
             </div>
-            <h3 className="text-white font-bold text-xl mb-2">Проф. АгроМайнд (Виртуален Преподавател)</h3>
-            <p className="text-slate-300 text-sm max-w-md text-center px-4">
-              Това е запазено място за вашето реалистично AI видео. Копирайте сценария по-долу и го поставете в софтуера за аватари.
+            <h2 className="text-white font-bold text-3xl md:text-4xl mb-4 leading-tight max-w-3xl">
+              {activeLesson.title}
+            </h2>
+            <p className="text-slate-300 text-lg max-w-2xl">
+              Прочетете внимателно материала по-долу. Ако имате въпроси, винаги можете да се консултирате с Проф. АгроМайнд в секцията за дискусии.
             </p>
           </div>
 
@@ -111,22 +118,32 @@ export default function CoursePlayerPage() {
             <div className="prose prose-sm prose-slate max-w-none text-[#425466]">
               {activeTab === "description" && (
                 <div>
-                  <div className="bg-[#F0FDF4] border border-[#059669]/30 p-5 rounded-xl relative">
-                    <div className="absolute top-3 right-3 bg-[#059669] text-white text-[10px] uppercase font-bold px-2 py-1 rounded">
-                      Сценарий за Аватара
-                    </div>
-                    <h4 className="text-[#059669] font-bold mb-3 flex items-center">
-                      <FileText className="h-4 w-4 mr-1.5" />
-                      Текст за копиране:
-                    </h4>
-                    <p className="text-sm leading-relaxed text-[#0A2540] italic">
-                      "Здравейте! Аз съм Проф. АгроМайнд и днес ще разгледаме темата: {activeLesson.title}. В рамките на следващите {activeLesson.duration} минути, ще научите най-важните концепции, предимствата на технологията и как да я приложите във Вашето собствено стопанство. Нека да започваме!"
+                  <div className="bg-white border border-[#E6EBF1] p-6 sm:p-8 rounded-xl shadow-sm">
+                    <p className="text-[17px] leading-relaxed mb-6">
+                      Добре дошли в този урок. Тук ще разгледаме в детайли как точно работят основните концепции, свързани с <strong>{activeLesson.title}</strong>. Ще се фокусираме върху практическите ползи и избягването на често срещани грешки в процеса на имплементация.
                     </p>
+                    <h3 className="text-[#0A2540] text-xl font-bold mt-8 mb-4">Основни цели на урока:</h3>
+                    <ul className="list-none space-y-3 mb-8">
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-[#059669] mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Да разберем фундаменталните принципи на технологията.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-[#059669] mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Да приложим наученото в реална земеделска среда.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-[#059669] mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Да анализираме данните ефективно за по-добри добиви.</span>
+                      </li>
+                    </ul>
+                    <div className="bg-[#F0FDF4] border-l-4 border-[#059669] p-5 rounded-r-lg">
+                      <h4 className="text-[#059669] font-bold mb-2">Бележка от Професора</h4>
+                      <p className="text-sm italic text-[#425466]">
+                        "Успехът в модерното земеделие не идва от сляпото следване на технологиите, а от тяхното правилно и осмислено прилагане спрямо спецификата на вашата почва и култури."
+                      </p>
+                    </div>
                   </div>
-                  
-                  <p className="mt-6 text-sm">
-                    <strong>Инструкции:</strong> Копирайте горния текст и го поставете в платформата за AI Инфлуенсъри (напр. Impresso, HeyGen, Synthesia), за да генерирате видеото за този урок.
-                  </p>
                 </div>
               )}
               {activeTab === "materials" && (

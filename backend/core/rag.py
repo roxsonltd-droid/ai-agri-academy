@@ -7,25 +7,17 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from pathlib import Path
 
 import numpy as np
 from langchain_mistralai import MistralAIEmbeddings
 
 from core.config import settings
+from core.rag_paths import KNOWLEDGE_ROOT, knowledge_uploads_dir
 
 logger = logging.getLogger(__name__)
 
 _MAX_CHUNK = 1200
 _MIN_CHUNK = 200
-_KNOWLEDGE_DIR = Path(__file__).resolve().parent.parent / "knowledge"
-_UPLOADS_DIR_NAME = "uploads"
-
-
-def knowledge_uploads_dir() -> Path:
-    d = _KNOWLEDGE_DIR / _UPLOADS_DIR_NAME
-    d.mkdir(parents=True, exist_ok=True)
-    return d
 
 
 _chunks: list[str] = []
@@ -59,11 +51,11 @@ def _split_into_chunks(text: str) -> list[str]:
 
 
 def _load_corpus() -> list[str]:
-    if not _KNOWLEDGE_DIR.is_dir():
-        logger.warning("RAG knowledge directory missing: %s", _KNOWLEDGE_DIR)
+    if not KNOWLEDGE_ROOT.is_dir():
+        logger.warning("RAG knowledge directory missing: %s", KNOWLEDGE_ROOT)
         return []
     all_chunks: list[str] = []
-    for path in sorted(_KNOWLEDGE_DIR.glob("*.md")):
+    for path in sorted(KNOWLEDGE_ROOT.glob("*.md")):
         try:
             raw = path.read_text(encoding="utf-8")
         except OSError as e:
@@ -72,7 +64,7 @@ def _load_corpus() -> list[str]:
         all_chunks.extend(_split_into_chunks(raw))
         logger.info("RAG loaded %s (%d chunks so far)", path.name, len(all_chunks))
 
-    uploads = _KNOWLEDGE_DIR / _UPLOADS_DIR_NAME
+    uploads = knowledge_uploads_dir()
     if uploads.is_dir():
         upload_paths = sorted(uploads.glob("*.md")) + sorted(uploads.glob("*.txt"))
         for path in upload_paths:

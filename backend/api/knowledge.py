@@ -12,11 +12,18 @@ from sqlalchemy.orm import Session
 from core.config import settings
 from core.bearer_user import resolve_user_from_bearer
 from core.r2 import RAG_OBJECT_KEY_RE, delete_object, get_object_bytes, r2_enabled
-from core.rag import invalidate_rag_index, knowledge_uploads_dir
+from core.rag_paths import knowledge_uploads_dir
 from db.database import get_db
 
 router = APIRouter()
 bearer_scheme = HTTPBearer(auto_error=False)
+
+
+async def _invalidate_rag_index() -> None:
+    """Defer import of core.rag (numpy/embeddings) until a document actually changes."""
+    from core.rag import invalidate_rag_index
+
+    await invalidate_rag_index()
 
 _ALLOWED_SUFFIX = {".md", ".txt", ".pdf"}
 # uploaded files: 8 hex + __ + safe stem + .md|.txt
@@ -103,7 +110,7 @@ async def upload_document(
         )
     data = await file.read()
     result = _ingest_bytes_to_uploads(original_filename=file.filename, suf=suf, data=data)
-    await invalidate_rag_index()
+    await _invalidate_rag_index()
     return result
 
 
@@ -145,7 +152,7 @@ async def ingest_document_from_r2(
         raise HTTPException(status_code=502, detail=f"R2 read неуспешен: {e}") from e
 
     result = _ingest_bytes_to_uploads(original_filename=original_filename, suf=suf, data=data)
-    await invalidate_rag_index()
+    await _invalidate_rag_index()
 
     if settings.R2_DELETE_AFTER_INGEST:
         delete_object(key)
@@ -190,5 +197,5 @@ async def delete_document(
     if not path.is_file():
         raise HTTPException(status_code=404, detail="Файлът не съществува")
     path.unlink()
-    await invalidate_rag_index()
+    await _invalidate_rag_index()
     return {"deleted": filename}

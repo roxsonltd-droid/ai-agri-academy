@@ -30,6 +30,8 @@ python -m alembic current               # текуща ревизия
 python -m alembic history               # списък ревизии
 ```
 
+След ревизия **`20250525_0002`** таблица **`lessons`** има колона **`content`** (Markdown текст на урока). За демо съдържание: празна база + `POST /api/v1/courses/seed` (текстовете са в `api/seed_lesson_content.py`).
+
 ## Промени по моделите: `revision --autogenerate`
 
 Alembic **сравнява** SQLAlchemy `Base.metadata` с **реалната база** и генерира `upgrade()` / `downgrade()`. Това не е „магия“ — винаги прегледайте файла преди merge.

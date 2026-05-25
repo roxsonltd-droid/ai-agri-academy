@@ -21,3 +21,5 @@ mobile/node_modules/
 mobile/.expo/
 mobile/dist/
 
+python/
+*.log

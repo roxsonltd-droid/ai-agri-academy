@@ -1,0 +1,26 @@
+ВАЖНО ЗА WINDOWS / ВАЖНО ЗА ИНСТАЛАЦИЯ
+=====================================
+
+Този бекенд (FastAPI, pydantic, numpy и др.) НЕ се поддържа добре с Python 3.14.
+
+Ако pip пише "Failed building wheel for pydantic-core" — почти сигурно ползваш твърде нова версия на Python.
+
+ПРАВИЛНО: Python 3.12.x (препоръчително) или 3.13.x
+  https://www.python.org/downloads/
+
+След инсталация на 3.12:
+
+  1) Затвори VS Code / терминала
+  2) Изтрий папката "venv" в тази директория (backend)
+  3) Отвори PowerShell тук и изпълни (ако python3.12 не работи, ползвай пълния път от инсталацията):
+
+       py -3.12 -m venv venv
+       .\venv\Scripts\Activate.ps1
+       python -m pip install --upgrade pip
+       pip install -r requirements.txt
+
+  4) Стартирай отново uvicorn.
+
+Проверка на версията:
+  python --version
+  Трябва да покаже 3.12.x или 3.13.x, не 3.14.

@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { ChevronLeft, PlayCircle, CheckCircle, FileText, MessageSquare, Download } from "lucide-react";
 
 import { useParams } from "next/navigation";
@@ -9,9 +11,10 @@ import { useParams } from "next/navigation";
 type Lesson = {
   id: string | number;
   title: string;
-  duration?: number;
+  duration?: string | number;
   order?: number;
   completed?: boolean;
+  content?: string | null;
 };
 
 type Module = {
@@ -64,7 +67,7 @@ export default function CoursePlayerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-app-surface font-sans text-app-ink flex flex-col pt-20">
+    <div className="h-screen bg-app-surface font-sans text-app-ink flex flex-col pt-20 overflow-hidden">
       {/* Top Header */}
       <div className="bg-app-card border-b border-app-border h-14 flex items-center px-4 lg:px-8 shadow-sm flex-shrink-0 z-10">
         <Link
@@ -102,8 +105,6 @@ export default function CoursePlayerPage() {
 
           {/* Content Area Below Video */}
           <div className="max-w-5xl w-full mx-auto p-6 lg:p-8">
-            <h2 className="text-2xl font-bold mb-6">{activeLesson.title}</h2>
-
             {/* Tabs Navigation */}
             <div className="flex space-x-6 border-b border-app-border mb-6">
               <button
@@ -143,24 +144,33 @@ export default function CoursePlayerPage() {
               {activeTab === "description" && (
                 <div>
                   <div className="bg-app-card border border-app-border p-6 sm:p-8 rounded-xl shadow-sm">
-                    <p className="text-[17px] leading-relaxed mb-6">
-                      Добре дошли в този урок. Тук ще разгледаме в детайли как точно работят основните концепции, свързани с{" "}
-                      <strong>{activeLesson.title}</strong>. Ще се фокусираме върху практическите ползи и избягването на често
-                      срещани грешки в процеса на имплементация.
-                    </p>
-                    <h3 className="text-app-ink text-xl font-bold mt-8 mb-4">Основни цели на урока:</h3>
+                    {activeLesson.content && String(activeLesson.content).trim() ? (
+                      <article className="prose prose-slate max-w-none prose-headings:text-app-ink prose-p:text-app-ink-muted prose-strong:text-app-ink prose-li:text-app-ink-muted prose-a:text-app-primary">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{String(activeLesson.content)}</ReactMarkdown>
+                      </article>
+                    ) : (
+                      <p className="text-[17px] leading-relaxed text-app-ink-muted mb-6">
+                        За урока <strong className="text-app-ink">&ldquo;{activeLesson.title}&rdquo;</strong> все още няма
+                        публикуван учебен текст в базата. Администратор: пуснете{" "}
+                        <code className="rounded bg-app-surface px-1.5 py-0.5 text-sm text-app-ink">alembic upgrade head</code> и
+                        при празна база отново{" "}
+                        <code className="rounded bg-app-surface px-1.5 py-0.5 text-sm text-app-ink">POST /api/v1/courses/seed</code>
+                        , или генерирайте нов курс от таблото — уроците вече поддържат поле <strong>content</strong> (Markdown).
+                      </p>
+                    )}
+                    <h3 className="text-app-ink text-xl font-bold mt-10 mb-4">Фокус на урока</h3>
                     <ul className="list-none space-y-3 mb-8">
                       <li className="flex items-start">
                         <CheckCircle className="h-5 w-5 text-app-primary mr-3 mt-0.5 flex-shrink-0" />
-                        <span>Да разберем фундаменталните принципи на технологията.</span>
+                        <span className="text-app-ink-muted">Ключови понятия и връзка с практиката в полето.</span>
                       </li>
                       <li className="flex items-start">
                         <CheckCircle className="h-5 w-5 text-app-primary mr-3 mt-0.5 flex-shrink-0" />
-                        <span>Да приложим наученото в реална земеделска среда.</span>
+                        <span className="text-app-ink-muted">Как да проверите дали препоръките важат за вашия парцел.</span>
                       </li>
                       <li className="flex items-start">
                         <CheckCircle className="h-5 w-5 text-app-primary mr-3 mt-0.5 flex-shrink-0" />
-                        <span>Да анализираме данните ефективно за по-добри добиви.</span>
+                        <span className="text-app-ink-muted">Следваща стъпка: материали и дискусия с AI при нужда.</span>
                       </li>
                     </ul>
                     <div className="bg-app-success-bg border-l-4 border-app-primary p-5 rounded-r-lg">
@@ -175,7 +185,7 @@ export default function CoursePlayerPage() {
               )}
               {activeTab === "materials" && (
                 <div className="flex flex-col space-y-3">
-                  <div className="p-4 border border-app-border rounded-lg bg-app-card flex items-center justify-between hover:border-app-primary cursor-pointer transition-colors">
+                  <button type="button" onClick={() => alert("Изтеглянето се подготвя от Силвия (Документи)...")} className="w-full text-left p-4 border border-app-border rounded-lg bg-app-card flex items-center justify-between hover:border-app-primary cursor-pointer transition-colors">
                     <div className="flex items-center">
                       <FileText className="h-5 w-5 text-app-primary mr-3" />
                       <div>
@@ -184,7 +194,7 @@ export default function CoursePlayerPage() {
                       </div>
                     </div>
                     <Download className="h-4 w-4 text-app-ink-muted" />
-                  </div>
+                  </button>
                 </div>
               )}
               {activeTab === "ai" && (

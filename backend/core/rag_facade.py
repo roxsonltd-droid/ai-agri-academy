@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from core.config import settings
-from core.rag import retrieve_context as retrieve_file_rag
 
 
 async def retrieve_for_prompt(query: str, k: int | None = None) -> str:
@@ -13,4 +12,7 @@ async def retrieve_for_prompt(query: str, k: int | None = None) -> str:
         block = await query_pinecone_context(query, top_k=k)
         if block:
             return block
+    # Lazy import: core.rag pulls numpy/langchain; only needed for file RAG.
+    from core.rag import retrieve_context as retrieve_file_rag
+
     return await retrieve_file_rag(query, k=k)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from db.database import Base
 
@@ -28,6 +28,7 @@ class Lesson(Base):
     id = Column(String, primary_key=True, index=True)
     title = Column(String)
     duration = Column(String)
+    content = Column(Text, nullable=True)  # Markdown lesson body for reading view
     video_id = Column(String)  # Stream uid or external id; see docs/VIDEO_LEARNING_SYSTEM.md
     completed = Column(Boolean, default=False) # In real app, this should be tracked per-user, but we'll mock it here for simplicity
     order = Column("order", Integer, quote=True)

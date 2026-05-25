@@ -16,7 +16,7 @@ class Module(Base):
 
     id = Column(String, primary_key=True, index=True)
     title = Column(String)
-    order = Column(Integer)
+    order = Column("order", Integer, quote=True)
     course_id = Column(String, ForeignKey("courses.id"))
     
     course = relationship("Course", back_populates="modules")
@@ -28,9 +28,9 @@ class Lesson(Base):
     id = Column(String, primary_key=True, index=True)
     title = Column(String)
     duration = Column(String)
-    video_id = Column(String) # YouTube video ID
+    video_id = Column(String)  # Stream uid or external id; see docs/VIDEO_LEARNING_SYSTEM.md
     completed = Column(Boolean, default=False) # In real app, this should be tracked per-user, but we'll mock it here for simplicity
-    order = Column(Integer)
+    order = Column("order", Integer, quote=True)
     module_id = Column(String, ForeignKey("modules.id"))
     
     module = relationship("Module", back_populates="lessons")

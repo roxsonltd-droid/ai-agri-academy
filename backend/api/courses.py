@@ -6,10 +6,10 @@ from pydantic import BaseModel
 from typing import List
 import json
 import uuid
-import asyncio
 from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from core.config import settings
+from core.rag_facade import retrieve_for_prompt
 
 # Initialize LLM for Course Generation
 llm = ChatMistralAI(model="mistral-large-latest", temperature=0.7, api_key=settings.MISTRAL_API_KEY)
@@ -127,7 +127,10 @@ COURSE_GENERATOR_PROMPT = """Ти си Професор АгроМайнд - г�
 
 @router.post("/generate", response_model=CourseSchema)
 async def generate_course(request: GenerateCourseRequest, db: Session = Depends(get_db)):
+    rag = await retrieve_for_prompt(request.topic)
     human_msg = f"Генерирай курс на тема: {request.topic}"
+    if rag:
+        human_msg = f"{rag}\n\n{human_msg}"
     messages = [
         SystemMessage(content=COURSE_GENERATOR_PROMPT),
         HumanMessage(content=human_msg)

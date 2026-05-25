@@ -4,13 +4,23 @@ services:
     env: python
     plan: free
     buildCommand: "cd backend && pip install -r requirements.txt"
-    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    startCommand: "cd backend && sh -c 'alembic upgrade head && exec uvicorn main:app --host 0.0.0.0 --port $PORT'"
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.0"
+      - key: DATABASE_URL
+        sync: false
       - key: MISTRAL_API_KEY
         sync: false
       - key: JWT_SECRET
+        sync: false
+      - key: PLATFORM_RAG_BACKEND
+        value: "files"
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_INDEX_NAME
+        sync: false
+      - key: OPENAI_API_KEY
         sync: false
 
   - type: web
@@ -24,3 +34,7 @@ services:
         value: "20.10.0"
       - key: NEXT_PUBLIC_API_URL
         value: "https://agro-academy-backend.onrender.com"
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: NEXT_PUBLIC_CLERK_ENFORCE
+        value: "false"

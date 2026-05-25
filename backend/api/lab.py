@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from core.config import settings
+from core.rag_facade import retrieve_for_prompt
 
 router = APIRouter()
 
@@ -54,6 +55,11 @@ LAB_SYSTEM_PROMPT = """Ти си Професор АгроМайнд - глав�
 
 @router.post("/analyze", response_model=LabAnalyzeResponse)
 async def analyze_soil(request: LabAnalyzeRequest):
+    rag_query = (
+        f"{request.target_crop} почва pH {request.ph} азот {request.nitrogen} "
+        f"фосфор {request.phosphorus} калий {request.potassium} сезон {request.season} време {request.weather}"
+    )
+    rag = await retrieve_for_prompt(rag_query, k=3)
     human_msg = f"""
     Анализирай следните данни:
     - Желана култура: {request.target_crop}
@@ -65,7 +71,9 @@ async def analyze_soil(request: LabAnalyzeRequest):
     - Фосфор (P): {request.phosphorus}
     - Калий (K): {request.potassium}
     """
-    
+    if rag:
+        human_msg = f"{rag}\n\n{human_msg}"
+
     messages = [
         SystemMessage(content=LAB_SYSTEM_PROMPT),
         HumanMessage(content=human_msg)

@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Design (AI + хора)
+
+- **[docs/AI_DESIGN.md](./docs/AI_DESIGN.md)** — единен договор за шрифтове, цветове (`@theme`), ShadCN, motion и фонови ефекти; ползвай го за всички UI/AI инструменти.
+- **[docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)** — разширено описание и таблици.
+
 ## Getting Started
 
 First, run the development server:
@@ -16,9 +21,9 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Шрифтът по подразбиране е **Inter** (`next/font` в `src/app/layout.tsx`).
 
 ## Learn More
 

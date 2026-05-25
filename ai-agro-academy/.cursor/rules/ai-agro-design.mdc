@@ -1,0 +1,19 @@
+---
+description: AI Agro Academy — единен UI договор (шрифтове, @theme цветове, ShadCN, motion, glass/ambient)
+alwaysApply: true
+---
+
+# AI Agro Academy — дизайн за агенти и инструменти
+
+При всяка промяна на UI, стилове или нови компоненти:
+
+1. **Прочети** `docs/AI_DESIGN.md` (кратък договор) и при нужда `docs/DESIGN_SYSTEM.md`.
+2. **Цветове и радиуси** — само от Tailwind, съпоставени на `@theme` в `src/app/globals.css`. Не добавяй нови hex в JSX; липсващ токен → първо `@theme`, после utility.
+3. **Шрифт** — `font-sans`; Inter се зарежда в `src/app/layout.tsx` (`--font-sans`).
+4. **Компоненти** — `src/components/ui/*` (ShadCN New York). Бутони: `Button` с подходящ `variant`.
+5. **Иконки** — Lucide, размер съгласуван с текста.
+6. **Фон / depth** — при нужда: `glass*`, `ai-panel`, `ai-mesh`, или глобалният `AmbientBackground` (не дублирай логиката на нови места без причина).
+7. **Анимации** — `src/lib/motion.ts`, Framer Motion; винаги уважавай `useReducedMotion()` за по-силни ефекти.
+8. **Legacy страници** с фиксирани `#hex` — мигрирай към токени при докосване на файла, ако е бързo; иначе не разширявай хардкода.
+
+Това правило е **каноничният дизайн слой** за всички инструменти и агенти, работещи по този frontend.

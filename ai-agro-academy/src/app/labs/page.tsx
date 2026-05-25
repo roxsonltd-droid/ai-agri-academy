@@ -67,11 +67,11 @@ export default function LabPage() {
     switch (status) {
       case "success":
         return {
-          bg: "bg-[#F0FDF4]",
-          border: "border-[#059669]",
-          icon: <CheckCircle2 className="h-8 w-8 text-[#059669]" />,
+          bg: "bg-app-success-bg",
+          border: "border-app-primary",
+          icon: <CheckCircle2 className="h-8 w-8 text-app-primary" />,
           titleText: "Отличен избор!",
-          titleColor: "text-[#059669]"
+          titleColor: "text-app-primary",
         };
       case "warning":
         return {
@@ -91,42 +91,54 @@ export default function LabPage() {
         };
       default:
         return {
-          bg: "bg-[#F6F9FC]",
-          border: "border-[#E6EBF1]",
-          icon: <Beaker className="h-8 w-8 text-[#94A3B8]" />,
+          bg: "bg-app-surface",
+          border: "border-app-border",
+          icon: <Beaker className="h-8 w-8 text-app-placeholder" />,
           titleText: "Резултат",
-          titleColor: "text-[#0A2540]"
+          titleColor: "text-app-ink",
         };
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F6F9FC] font-sans text-[#0A2540] flex flex-col pt-20">
-      
+    <div className="relative min-h-screen bg-background font-sans text-foreground flex flex-col pt-20">
+      <div className="pointer-events-none fixed inset-0 -z-10 opacity-25">
+        <div className="ai-mesh h-full">
+          <div className="ai-mesh-blob -top-10 left-0 w-[50%] h-[45%] bg-gradient-to-br from-primary/20 to-transparent" />
+          <div className="ai-mesh-blob bottom-0 right-10 w-[40%] h-[40%] bg-gradient-to-tl from-accent/15 to-transparent" />
+        </div>
+      </div>
+
       {/* Top Header */}
-      <div className="bg-white border-b border-[#E6EBF1] h-14 flex items-center px-4 lg:px-8 shadow-sm flex-shrink-0 z-10">
-        <Link href="/dashboard" className="flex items-center text-[#425466] hover:text-[#0A2540] transition-colors text-sm font-medium mr-6">
+      <div className="glass-strong border-b border-border/50 h-14 flex items-center px-4 lg:px-8 shadow-sm flex-shrink-0 z-10 backdrop-blur-xl gap-3">
+        <Link href="/dashboard" className="flex items-center text-muted-foreground hover:text-foreground transition-colors text-sm font-medium rounded-full px-2 py-1 hover:bg-muted/70 shrink-0">
           <ChevronLeft className="h-4 w-4 mr-1" />
           Назад към портала
         </Link>
-        <div className="h-4 w-[1px] bg-[#E6EBF1] mx-4 hidden sm:block"></div>
-        <h1 className="text-[15px] font-semibold text-[#0A2540] hidden sm:block">
+        <div className="h-4 w-px bg-border hidden sm:block shrink-0" />
+        <h1 className="text-[15px] font-semibold text-foreground hidden sm:block truncate min-w-0 flex-1">
           AI Лаборатория: Почвен Симулатор
         </h1>
+        <Link
+          href="/labs/vision"
+          className="text-sm font-semibold text-primary hover:underline shrink-0"
+        >
+          Roboflow CV →
+        </Link>
       </div>
 
       <div className="container mx-auto px-4 py-8 flex-1">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Left Panel: Inputs */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#E6EBF1]">
+          <div className="glass-subtle rounded-2xl p-8 shadow-card border border-border/60 backdrop-blur-md">
             <div className="flex items-center mb-6">
-              <div className="h-12 w-12 bg-[#F0FDF4] rounded-xl flex items-center justify-center mr-4">
-                <Beaker className="h-6 w-6 text-[#059669]" />
+              <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4 border border-primary/20">
+                <Beaker className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Входни Данни</h2>
-                <p className="text-[#425466] text-sm mt-1">Въведете параметрите на полето</p>
+                <h2 className="text-2xl font-bold text-foreground">Входни Данни</h2>
+                <p className="text-muted-foreground text-sm mt-1">Въведете параметрите на полето</p>
               </div>
             </div>
 
@@ -137,7 +149,7 @@ export default function LabPage() {
                 <select 
                   value={targetCrop}
                   onChange={(e) => setTargetCrop(e.target.value)}
-                  className="w-full h-12 px-4 rounded-xl border border-[#E6EBF1] bg-[#F6F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#059669]/20 transition-all font-medium"
+                  className="w-full h-12 px-4 rounded-xl border border-border/80 bg-muted/50 backdrop-blur-sm focus:bg-card focus:outline-none focus:ring-2 focus:ring-ring/30 transition-all font-medium text-foreground"
                 >
                   <option value="Царевица">Царевица</option>
                   <option value="Пшеница">Пшеница</option>
@@ -151,16 +163,16 @@ export default function LabPage() {
               <div>
                 <div className="flex justify-between items-end mb-2">
                   <label className="block text-sm font-semibold">Киселинност (pH)</label>
-                  <span className="text-[#059669] font-bold text-lg">{ph}</span>
+                  <span className="text-primary font-bold text-lg">{ph}</span>
                 </div>
                 <input 
                   type="range" 
                   min="0" max="14" step="0.1" 
                   value={ph}
                   onChange={(e) => setPh(parseFloat(e.target.value))}
-                  className="w-full h-2 bg-[#E6EBF1] rounded-lg appearance-none cursor-pointer accent-[#059669]"
+                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                 />
-                <div className="flex justify-between text-xs text-[#94A3B8] mt-1 font-medium">
+                <div className="flex justify-between text-xs text-subtle-foreground mt-1 font-medium">
                   <span>Силно кисела (0)</span>
                   <span>Неутрална (7)</span>
                   <span>Силно алкална (14)</span>
@@ -174,7 +186,7 @@ export default function LabPage() {
                   <select 
                     value={nitrogen}
                     onChange={(e) => setNitrogen(e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg border border-[#E6EBF1] text-sm focus:outline-none focus:border-[#059669]"
+                    className="w-full h-10 px-3 rounded-lg border border-border/80 bg-card/50 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                   >
                     <option value="low">Ниско</option>
                     <option value="medium">Средно</option>
@@ -186,7 +198,7 @@ export default function LabPage() {
                   <select 
                     value={phosphorus}
                     onChange={(e) => setPhosphorus(e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg border border-[#E6EBF1] text-sm focus:outline-none focus:border-[#059669]"
+                    className="w-full h-10 px-3 rounded-lg border border-border/80 bg-card/50 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                   >
                     <option value="low">Ниско</option>
                     <option value="medium">Средно</option>
@@ -198,7 +210,7 @@ export default function LabPage() {
                   <select 
                     value={potassium}
                     onChange={(e) => setPotassium(e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg border border-[#E6EBF1] text-sm focus:outline-none focus:border-[#059669]"
+                    className="w-full h-10 px-3 rounded-lg border border-border/80 bg-card/50 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                   >
                     <option value="low">Ниско</option>
                     <option value="medium">Средно</option>
@@ -214,7 +226,7 @@ export default function LabPage() {
                   <select 
                     value={season}
                     onChange={(e) => setSeason(e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg border border-[#E6EBF1] text-sm focus:outline-none focus:border-[#059669]"
+                    className="w-full h-10 px-3 rounded-lg border border-border/80 bg-card/50 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                   >
                     <option value="Пролет">Пролет</option>
                     <option value="Лято">Лято</option>
@@ -227,7 +239,7 @@ export default function LabPage() {
                   <select 
                     value={weather}
                     onChange={(e) => setWeather(e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg border border-[#E6EBF1] text-sm focus:outline-none focus:border-[#059669]"
+                    className="w-full h-10 px-3 rounded-lg border border-border/80 bg-card/50 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                   >
                     <option value="суша">☀️ Суша</option>
                     <option value="нормално">⛅ Нормално</option>
@@ -239,21 +251,22 @@ export default function LabPage() {
               <div>
                 <div className="flex justify-between items-end mb-2">
                   <label className="block text-sm font-semibold">Бюджет (EUR/декар)</label>
-                  <span className="text-[#0A2540] font-bold text-lg">{budget} €</span>
+                  <span className="text-foreground font-bold text-lg">{budget} €</span>
                 </div>
                 <input 
                   type="range" 
                   min="0" max="500" step="10" 
                   value={budget}
                   onChange={(e) => setBudget(parseFloat(e.target.value))}
-                  className="w-full h-2 bg-[#E6EBF1] rounded-lg appearance-none cursor-pointer accent-[#0A2540]"
+                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-foreground"
                 />
               </div>
 
-              <Button 
-                onClick={handleAnalyze} 
+              <Button
+                onClick={handleAnalyze}
                 disabled={isAnalyzing}
-                className="w-full h-14 mt-4 bg-[#0A2540] hover:bg-[#1a365d] text-white text-lg font-semibold rounded-xl shadow-md transition-all flex items-center justify-center"
+                variant="default"
+                className="w-full h-14 mt-4 text-lg font-semibold rounded-xl shadow-md glow-primary"
               >
                 {isAnalyzing ? (
                   <>
@@ -270,20 +283,24 @@ export default function LabPage() {
           {/* Right Panel: Results */}
           <div className="flex flex-col h-full">
             {!result && !isAnalyzing && (
-              <div className="flex-1 border-2 border-dashed border-[#E6EBF1] rounded-2xl flex flex-col items-center justify-center text-center p-8 bg-white/50">
-                <div className="h-20 w-20 bg-[#F6F9FC] rounded-full flex items-center justify-center mb-6">
-                  <Beaker className="h-10 w-10 text-[#94A3B8]" />
+              <div className="flex-1 border-2 border-dashed border-border/70 rounded-2xl flex flex-col items-center justify-center text-center p-8 glass-subtle backdrop-blur-md">
+                <div className="h-20 w-20 bg-muted/60 rounded-full flex items-center justify-center mb-6 ring-1 ring-border/50">
+                  <Beaker className="h-10 w-10 text-subtle-foreground" />
                 </div>
-                <h3 className="text-xl font-bold text-[#0A2540] mb-2">Готови за симулация</h3>
-                <p className="text-[#425466] max-w-sm">Настройте параметрите на почвата вляво и кликнете <span className="font-semibold text-[#0A2540]">Анализирай</span>, за да получите експертна оценка от Проф. АгроМайнд.</p>
+                <h3 className="text-xl font-bold text-foreground mb-2">Готови за симулация</h3>
+                <p className="text-muted-foreground max-w-sm">
+                  Настройте параметрите на почвата вляво и кликнете{" "}
+                  <span className="font-semibold text-foreground">Анализирай</span>, за да получите експертна оценка от Проф.
+                  АгроМайнд.
+                </p>
               </div>
             )}
 
             {isAnalyzing && (
-              <div className="flex-1 border border-[#E6EBF1] rounded-2xl flex flex-col items-center justify-center text-center p-8 bg-white shadow-sm">
-                <Loader2 className="h-16 w-16 text-[#059669] animate-spin mb-6" />
-                <h3 className="text-xl font-bold text-[#0A2540] mb-2">Проф. АгроМайнд мисли...</h3>
-                <p className="text-[#425466] max-w-sm">Извършва се анализ на химичния състав и съвместимостта с културата.</p>
+              <div className="flex-1 border border-border/60 rounded-2xl flex flex-col items-center justify-center text-center p-8 glass backdrop-blur-md shadow-card">
+                <Loader2 className="h-16 w-16 text-primary animate-spin mb-6" />
+                <h3 className="text-xl font-bold text-foreground mb-2">Проф. АгроМайнд мисли...</h3>
+                <p className="text-muted-foreground max-w-sm">Извършва се анализ на химичния състав и съвместимостта с културата.</p>
               </div>
             )}
 
@@ -296,27 +313,33 @@ export default function LabPage() {
                     <h3 className={`text-2xl font-bold ml-4 ${config.titleColor}`}>{config.titleText}</h3>
                   </div>
                   
-                  <div className="bg-white/80 rounded-xl p-5 mb-4 shadow-sm">
-                    <h4 className="font-bold text-[#0A2540] mb-2 text-sm uppercase tracking-wider opacity-70">Агрономически Анализ</h4>
-                    <p className="text-[#425466] leading-relaxed">{result.analysis}</p>
+                  <div className="glass-subtle rounded-xl p-5 mb-4 border border-border/50">
+                    <h4 className="font-bold text-foreground mb-2 text-sm uppercase tracking-wider opacity-70">Агрономически Анализ</h4>
+                    <p className="text-muted-foreground leading-relaxed">{result.analysis}</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div className="bg-white/80 rounded-xl p-5 shadow-sm flex flex-col justify-center">
-                      <h4 className="font-bold text-[#0A2540] mb-1 text-sm uppercase tracking-wider opacity-70">Очакван Добив</h4>
+                    <div className="glass-subtle rounded-xl p-5 border border-border/50 flex flex-col justify-center">
+                      <h4 className="font-bold text-foreground mb-1 text-sm uppercase tracking-wider opacity-70">Очакван Добив</h4>
                       <div className="flex items-center mt-1">
-                        {result.expected_yield === "Слаб" ? <TrendingDown className="h-6 w-6 text-red-500 mr-2" /> : <TrendingUp className={`h-6 w-6 mr-2 ${result.expected_yield === "Висок" ? "text-[#059669]" : "text-amber-500"}`} />}
-                        <span className="text-xl font-bold text-[#0A2540]">{result.expected_yield}</span>
+                        {result.expected_yield === "Слаб" ? (
+                          <TrendingDown className="h-6 w-6 text-red-500 mr-2" />
+                        ) : (
+                          <TrendingUp
+                            className={`h-6 w-6 mr-2 ${result.expected_yield === "Висок" ? "text-primary" : "text-amber-500"}`}
+                          />
+                        )}
+                        <span className="text-xl font-bold text-foreground">{result.expected_yield}</span>
                       </div>
                     </div>
-                    <div className="bg-white/80 rounded-xl p-5 shadow-sm flex flex-col justify-center">
-                      <h4 className="font-bold text-[#0A2540] mb-1 text-sm uppercase tracking-wider opacity-70">Финансова Прогноза</h4>
-                      <p className="text-[#425466] text-sm font-medium leading-tight">{result.financial_outlook}</p>
+                    <div className="glass-subtle rounded-xl p-5 border border-border/50 flex flex-col justify-center">
+                      <h4 className="font-bold text-foreground mb-1 text-sm uppercase tracking-wider opacity-70">Финансова Прогноза</h4>
+                      <p className="text-muted-foreground text-sm font-medium leading-tight">{result.financial_outlook}</p>
                     </div>
                   </div>
 
-                  <div className="bg-[#0A2540] text-white rounded-xl p-5 shadow-sm border-l-4 border-l-[#059669]">
-                    <h4 className="font-bold mb-2 text-sm uppercase tracking-wider text-[#059669]">Експертна Препоръка</h4>
+                  <div className="rounded-xl p-5 shadow-inner bg-band text-band-foreground border-l-4 border-l-primary ring-1 ring-cyan-400/15">
+                    <h4 className="font-bold mb-2 text-sm uppercase tracking-wider text-primary">Експертна Препоръка</h4>
                     <p className="leading-relaxed font-medium">{result.recommendation}</p>
                   </div>
                 </div>

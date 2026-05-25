@@ -9,12 +9,15 @@ ai-agro-academy/build/
 
 # Python/FastAPI
 backend/venv/
-backend/__pycache__/
+backend/**/__pycache__/
 backend/.pytest_cache/
-backend/*.pyc
+backend/**/*.pyc
 backend/.env
 backend/agro_academy.db
+backend/_alembic_test.db
 
-# OS Files
-.DS_Store
-Thumbs.db
+# Mobile (Expo)
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+

@@ -2,6 +2,10 @@
 	"name": "furrow-markets-site",
 	"private": true,
 	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/roxsonltd-droid/fieldlot.git"
+	},
 	"scripts": {
 		"dev": "node --import tsx scripts/dev-server.mjs",
 		"dev:web": "npm --prefix apps/web run dev",

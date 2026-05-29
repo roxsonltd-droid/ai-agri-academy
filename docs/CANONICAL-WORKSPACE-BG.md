@@ -30,3 +30,7 @@ git clone https://github.com/roxsonltd-droid/ai-agri-academy.git .
 
 - [`LOCAL-DEV.md`](./LOCAL-DEV.md) — Docker, Next, FastAPI, mobile.
 - [`WORKSPACE-CYRILLIC-PATH-BG.md`](./WORKSPACE-CYRILLIC-PATH-BG.md) — кирилица `проект` срещу ASCII и junction.
+
+## Академия в репото
+
+Курсовете и лекциите като Markdown: **`content/academy/`** (след промени — `npm run sync:academy`). Next маршрути и UI: **`docs/DESIGN-SYSTEM.md`** (секция Next.js Academy). Преглед на продукта: **`docs/ACADEMY_PRODUCT_VISION.md`**, **`docs/ACADEMY_ARCHITECTURE.md`**.

@@ -33,5 +33,11 @@ B2B агро UI (FieldLot): токени, типография, Yellow Pages р�
 
 ## Next.js Academy (`apps/web`)
 
-- Локално отвори репото от каноничния корен **`C:\Users\expre\Academy`** (виж **`docs/CANONICAL-WORKSPACE-BG.md`**), за да не се разминават пътища и инструменти.
-- **`GeneratedQuizViewer`** — `src/components/academy/generated-quiz-viewer.tsx` (типове: `src/lib/generated-quiz-types.ts`). Демо: маршрут **`/academy/lab/quiz`** (линк от `/academy/lab`).
+Каноничен дисков корен: **`docs/CANONICAL-WORKSPACE-BG.md`** (напр. `C:\Users\expre\Academy`), за да съвпадат терминалът и Cursor.
+
+- **Курсове и лекции (източник на истина):** `content/academy/courses/<slug>/` — `course.json` + `.md`. След редакция от корена на репото: **`npm run sync:academy`** (копира към `apps/web/public/lectures/…` и обновява каталога). Пълно описание: **`content/academy/README.md`**.
+- **Маршрути (Next):** `/academy`, `/bg/academy`, каталог **`/academy/course/[slug]`**, лектор **`/academy/lecturer`**, лаборатория **`/academy/lab`**, карти **`/academy/maps`**, финален тест **`/academy/course/[slug]/test`** (през `[locale]` в `src/app`).
+- **Компоненти:** лаборатория (`academy-lab-simulation` и др.), лектор (`academy-lecturer`), **`GeneratedQuizViewer`** — `src/components/academy/generated-quiz-viewer.tsx` (типове: `src/lib/generated-quiz-types.ts`), демо **`/academy/lab/quiz`** (линк от `/academy/lab`).
+- **Мобилно:** `apps/mobile/app/academy/`.
+- **Маркетингови HTML:** `academy.html` / `bg/academy.html` ползват същите shared CSS като останалия маркетинг (секцията „Файлове“ по-горе).
+- **Продукт и архитектура:** **`docs/ACADEMY_PRODUCT_VISION.md`**, **`docs/ACADEMY_ARCHITECTURE.md`**.

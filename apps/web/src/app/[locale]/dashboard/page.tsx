@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { DashboardDebateInsight } from "@/components/dashboard/debate-insight-snippet";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -190,8 +191,8 @@ export default async function DashboardPage({ params }: PageProps) {
 	};
 
 	return (
-		<div className="relative z-[2] flex min-h-screen bg-[#f6f3ec]">
-			<aside className="sticky top-0 hidden h-screen w-[220px] flex-shrink-0 flex-col gap-4 border-r border-ink/[0.06] bg-paper/85 px-3.5 py-5 backdrop-blur-xl md:flex">
+		<div className="relative z-[2] flex min-h-screen bg-[#f6f3ec] dark:bg-slate-950 dark:text-slate-200">
+			<aside className="sticky top-0 hidden h-screen w-[220px] flex-shrink-0 flex-col gap-4 border-r border-ink/[0.06] bg-paper/85 px-3.5 py-5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/90 md:flex">
 				<Link href="/" className="flex items-center gap-2 px-1.5 py-1 pb-3 text-ink no-underline">
 					<span className="flex h-[22px] w-[22px] items-center justify-center rounded-md bg-brand-gradient text-xs text-white shadow-[0_2px_8px_rgba(31,77,44,0.25)]">✦</span>
 					<span className="text-[13px] font-medium">AgriNexus</span>
@@ -220,7 +221,7 @@ export default async function DashboardPage({ params }: PageProps) {
 					</div>
 				</div>
 
-				<section className="mb-3.5 grid grid-cols-1 gap-5 rounded-[18px] border border-white/70 bg-white/55 px-6 py-5 backdrop-blur-xl md:grid-cols-3">
+				<section className="mb-3.5 grid grid-cols-1 gap-5 rounded-[18px] border border-white/70 dark:border-white/10 bg-white/55 dark:bg-slate-900/50 px-6 py-5 backdrop-blur-xl md:grid-cols-3">
 					{c.briefings.map((briefing, idx) => (
 						<div key={briefing.tag} className={idx < c.briefings.length - 1 ? "border-ink/[0.06] md:border-r md:pr-4" : ""}>
 							<div className="mb-2.5 flex items-center gap-2 text-[9px] uppercase tracking-[0.08em] text-ink/50">
@@ -235,7 +236,7 @@ export default async function DashboardPage({ params }: PageProps) {
 
 				<div className="grid grid-cols-1 gap-3.5 lg:grid-cols-[1.4fr_1fr]">
 					<div className="flex flex-col gap-3.5">
-						<div className="overflow-hidden rounded-2xl border border-white/70 bg-white/55 backdrop-blur-xl">
+						<div className="overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-white/55 dark:bg-slate-900/50 backdrop-blur-xl">
 							<div className="flex items-baseline justify-between px-4 pb-2.5 pt-3.5">
 								<div className="text-[13px] font-medium">{c.fieldsTitle}</div>
 								<div className="flex gap-1">
@@ -269,17 +270,19 @@ export default async function DashboardPage({ params }: PageProps) {
 							</div>
 						</div>
 
-						<div className="overflow-hidden rounded-2xl border border-white/70 bg-white/55 backdrop-blur-xl">
+						<div className="overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-white/55 dark:bg-slate-900/50 backdrop-blur-xl">
 							<div className="flex items-baseline justify-between px-4 pb-2.5 pt-3.5"><div className="text-[13px] font-medium">{c.marketTitle}</div><div className="font-mono text-[10px] text-ink/50">{c.marketMeta}</div></div>
 							<div className="grid grid-cols-1 gap-3.5 px-4 pb-5 py-1 md:grid-cols-2">
 								<div><div className="mb-1 font-mono text-[10px] uppercase tracking-[0.06em] text-ink/50">{c.wheatMeta}</div><div className="mb-1 flex items-baseline gap-2"><span className="font-serif text-3xl tracking-[-0.02em]">€246</span><span className="text-[11px] font-medium text-semantic-success">+€8</span></div></div>
 								<div><div className="rounded-lg border border-forest-700/10 bg-forest-700/[0.06] px-3 py-2.5"><div className="mb-1 text-[9px] uppercase tracking-[0.06em] text-ink/50">{c.forecast}</div><div className="font-serif text-base text-forest-700">€268 ±€14</div><div className="text-[10px] text-forest-700/70">{c.overCost}</div></div><div className="flex gap-1.5 pt-3"><button className="flex-1 rounded-lg border-none bg-ink px-2.5 py-2 text-center text-[11px] font-medium text-white">{c.lock}</button><button className="flex-1 rounded-lg border border-ink/[0.18] bg-transparent px-2.5 py-2 text-center text-[11px] font-medium text-ink/65">{c.wait}</button></div></div>
 							</div>
 						</div>
+
+						<DashboardDebateInsight />
 					</div>
 
 					<div className="flex flex-col gap-3.5">
-						<div className="overflow-hidden rounded-2xl border border-white/70 bg-white/55 backdrop-blur-xl">
+						<div className="overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-white/55 dark:bg-slate-900/50 backdrop-blur-xl">
 							<div className="flex items-baseline justify-between px-4 pb-2.5 pt-3.5"><div className="text-[13px] font-medium">{c.activityTitle}</div><div className="font-mono text-[10px] text-ink/50">{c.activityMeta}</div></div>
 							<div className="px-4 pb-4">
 								{c.activity.map((item, idx) => (
@@ -291,14 +294,14 @@ export default async function DashboardPage({ params }: PageProps) {
 							</div>
 						</div>
 
-						<div className="overflow-hidden rounded-2xl border border-white/70 bg-white/55 backdrop-blur-xl">
+						<div className="overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-white/55 dark:bg-slate-900/50 backdrop-blur-xl">
 							<div className="flex items-baseline justify-between px-4 pb-2.5 pt-3.5"><div className="text-[13px] font-medium">{c.weatherTitle}</div><div className="font-mono text-[10px] text-ink/50">{c.weatherMeta}</div></div>
 							<div className="grid grid-cols-5">
 								{c.weather.map((day) => <div key={day.dow} className={`border-r border-ink/[0.05] px-1.5 py-3 text-center last:border-r-0 ${day.today ? "bg-forest-700/[0.04]" : ""}`}><div className="mb-2 font-mono text-[10px] uppercase tracking-[0.06em] text-ink/50">{day.dow}</div><div className="mb-1.5 text-[22px]">{day.icon}</div><div className="mb-1 text-[13px] font-medium">{day.high}<span className="text-[11px] font-normal text-ink/40"> / {day.low}</span></div><div className="text-[10px] text-semantic-info">{day.rain}</div></div>)}
 							</div>
 						</div>
 
-						<div className="overflow-hidden rounded-2xl border border-white/70 bg-white/55 backdrop-blur-xl">
+						<div className="overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-white/55 dark:bg-slate-900/50 backdrop-blur-xl">
 							<div className="flex items-baseline justify-between px-4 pb-2.5 pt-3.5"><div className="text-[13px] font-medium">{c.tasksTitle}</div><div className="font-mono text-[10px] text-ink/50">{c.tasksMeta}</div></div>
 							<div className="flex flex-col gap-1.5 px-4 pb-4">
 								{c.tasks.map((task, idx) => <div key={idx} className="flex cursor-pointer items-center gap-2.5 rounded-lg bg-white/50 px-2.5 py-2"><span className={`relative h-3.5 w-3.5 flex-shrink-0 rounded ${task.done ? "border border-forest-700 bg-gradient-to-br from-forest-700 to-forest-500" : "border border-ink/25"}`}>{task.done && <span className="absolute left-1 top-[2px] h-[7px] w-1 rotate-45 border-b-[1.5px] border-r-[1.5px] border-white" />}</span><div className="flex-1"><div className={`text-xs ${task.done ? "text-ink/40 line-through" : ""}`}>{task.title}</div><div className="mt-px text-[10px] text-ink/45">{task.meta}</div></div><span className="ml-auto rounded-sm bg-ink/[0.04] px-1.5 py-px font-mono text-[9px] tracking-[0.04em] text-ink/55">{task.from}</span></div>)}

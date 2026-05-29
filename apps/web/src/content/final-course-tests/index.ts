@@ -12,6 +12,7 @@ import {
 	type QuestionRow,
 } from "./types";
 import { waterIrrigationRows } from "./water-irrigation";
+import { integratedPestManagementRows } from "./integrated-pest-management";
 
 export type { CourseFinalTest, QuizQuestion, QuestionRow };
 export { PASS_SHARE, correctAnswersToPass };
@@ -32,6 +33,7 @@ const FINAL_TESTS_BY_SLUG: Record<string, CourseFinalTest> = {
 	"farm-finance": pack("farm-finance", farmFinanceRows),
 	"precision-data": pack("precision-data", precisionDataRows),
 	"drone-pilots": pack("drone-pilots", dronePilotsRows),
+	"integrated-pest-management": pack("integrated-pest-management", integratedPestManagementRows),
 };
 
 export function getFinalTest(slug: string): CourseFinalTest | undefined {

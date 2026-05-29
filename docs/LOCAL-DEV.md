@@ -23,7 +23,7 @@ npm run dev
 Open `http://localhost:3000` — the home page calls the backend `/health` and includes a **“Питай”** box that proxies to the root marketing dev server `POST /api/chat` (set `AGN_MARKETING_ORIGIN` in `apps/web/.env.local`, default `http://127.0.0.1:3456`). Run **`npm run dev` from the repo root** on port 3456 with `MISTRAL_API_KEY` for that chat to work.
 
 - **`POST /api/academy-tutor-proxy`** in `apps/web` → same origin, forwards to **`POST /api/academy-tutor`** on the marketing dev server (Academy Tutor). Used by **`/academy/lecturer`**.
-- **Lectures**: Markdown under **`apps/web/public/lectures/courses/<course-slug>/`**, catalog in **`apps/web/src/content/academy-courses.ts`** (loaded at runtime in the browser from `/lectures/...`).
+- **Lectures**: canonical Markdown in **`content/academy/courses/<slug>/`**; run **`npm run sync:academy`** from repo root to copy into **`apps/web/public/lectures/...`** and refresh **`academy.catalog.json`** (see **`docs/ACADEMY_CONTENT.md`**).
 - **Academy final tests**: 25 multiple-choice questions per course in **`apps/web/src/content/final-course-tests/`** (bundled at build time). Pass threshold **`PASS_SHARE`** (default **80%**, `types.ts`). Unanswered questions count as wrong on submit. UI: **`/academy/course/<slug>/test`**.
 
 In **development**, Next.js also proxies `http://localhost:3000/api/py/*` → FastAPI on `BACKEND_ORIGIN` (default `http://127.0.0.1:8000/*`) so you can hit the API same-origin from the browser (e.g. `/api/py/docs` may work for Swagger; asset paths on `/docs` are safest when opened directly at `:8000/docs`).
@@ -49,6 +49,15 @@ npm run dev:mobile
 ```
 
 This starts **`apps/mobile`** (Expo Router). For login + live academy catalog, run **Next** (`npm run dev:web`) and **FastAPI** as in Option A/B above, then set `EXPO_PUBLIC_WEB_ORIGIN` and `EXPO_PUBLIC_BACKEND_URL` (see **`apps/mobile/README.md`** and **`apps/mobile/.env.example`**).
+
+## DevEx — pre-commit, backend tests, web E2E
+
+- **Husky + lint-staged**: on `git commit`, staged `apps/web` `*.ts` / `*.tsx` files are linted (see root `.husky/pre-commit` and `.lintstagedrc.json`). First clone: `npm install` at repo root runs `husky` via the `prepare` script.
+- **Backend (pytest + ruff on tests)**: from `apps/backend` with dev deps installed (`pip install -r requirements.txt -r requirements-dev.txt`): `python -m pytest` and `python -m ruff check tests`.
+- **Web (Playwright)**: from `apps/web`: `npm run test:e2e` (starts dev server unless `PLAYWRIGHT_NO_WEBSERVER=1`). In CI the server is started separately; see `apps/web/README.md`.
+- **Web ↔ FastAPI (tutor / RAG)**: Next route handlers `POST /api/tutor/chat` and `POST /api/tutor/deep-debate` proxy to `API_URL` (see `apps/web/.env.example`). Course pages use the same for the embedded RAG + debate panel.
+- **Supabase Auth (`apps/web`)**: set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and in Supabase Dashboard add redirect `http://localhost:3000/auth/callback`. Product roadmap: **`docs/ROADMAP.md`**.
+- **Secrets / env files**: see **`docs/ENVIRONMENT.md`** (per-app `.env.example`, optional Doppler).
 
 ## NPM scripts (repo root)
 

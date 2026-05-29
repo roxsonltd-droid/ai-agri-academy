@@ -6,6 +6,7 @@ import { coursesForLocale } from "@/content/academy-courses";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
 import { AcademyCourseStagger, AcademyFeatureTiles } from "@/components/motion/academy-hub-motion";
+import { AcademyHubProgress } from "@/components/academy/academy-hub-progress";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -23,6 +24,7 @@ export default async function AcademyHubPage({ params }: Props) {
 	const { locale } = await params;
 	setRequestLocale(locale);
 	const t = await getTranslations("Academy");
+	const tCourse = await getTranslations("Course");
 	const loc = locale as AppLocale;
 	const courses = coursesForLocale(loc);
 	const courseRows = courses.map((c) => ({
@@ -36,6 +38,12 @@ export default async function AcademyHubPage({ params }: Props) {
 
 	const tileGrid =
 		"mt-10 grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3";
+
+	const progressRows = courses.map((c) => ({
+		slug: c.slug,
+		title: c.title,
+		lectureIds: c.lectures.map((l) => l.id),
+	}));
 
 	return (
 		<main className="mx-auto min-w-0 max-w-5xl px-6 py-14 sm:py-16">
@@ -121,6 +129,8 @@ export default async function AcademyHubPage({ params }: Props) {
 					</Button>
 				}
 			/>
+
+			<AcademyHubProgress courses={progressRows} title={tCourse("hubProgressTitle")} />
 
 			<FadeIn className="mt-12" delay={0.08}>
 				<section aria-labelledby="academy-courses-heading">

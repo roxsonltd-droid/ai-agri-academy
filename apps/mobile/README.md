@@ -2,25 +2,34 @@
 
 This app uses [Expo Router](https://docs.expo.dev/router/introduction/) (routes under `app/`) and TypeScript. It lives next to `apps/web` (Next.js).
 
-## Screens
+## First launch & onboarding
 
-| Route | Description |
-|-------|-------------|
-| `/` | Home — shortcuts to Login & Academy |
-| `/login` | Вход: `POST` към FastAPI `/auth/token`, запис на JWT (SecureStore / AsyncStorage на web) |
-| `/academy` | Каталог: `GET` към Next `/api/mobile/courses` (+ опционален `Authorization: Bearer`); при грешка — вграден `lib/courses.ts` |
-| `/academy/[slug]` | Детайл за курс — същият източник/кеш като списъка |
+1. **`/`** (`app/index.tsx`) — cold start router: if welcome not seen → **`/welcome`**; if signed in and farm profile not saved → **`/onboarding`**; else **`/(tabs)`** (Home tab).
+2. **`/welcome`** — hero + bullets; **Continue** marks welcome as seen; **Sign in** also marks welcome (avoids a post-login loop).
+3. **`/onboarding`** (signed-in only) — crops + region + hectares → saved locally (`@agrinexus/mobile_farm_profile_v1`). New **sign-in** clears the previous profile key so a fresh setup runs.
 
-Header **EN / БГ** toggles copy for all screens.
+Details: **`docs/ONBOARDING.md`**.
+
+## Main tabs (`/(tabs)`)
+
+| Tab / route | Description |
+|-------------|-------------|
+| `/(tabs)` → Home | Dashboard — greeting, shortcuts to Tutor & Academy, “continue learning”, login / sign out |
+| `/(tabs)/tutor` | **AI Tutor** — `POST` to Next `/api/tutor/chat` → FastAPI `/api/tutor/chat` |
+| `/(tabs)/academy` | **My Academy** — course catalog from `GET /api/mobile/courses` (+ optional Bearer); pull-to-refresh; local lecture progress (AsyncStorage) |
+| `/academy/[slug]` | Course detail — tap lectures to mark studied; progress syncs with the Academy tab |
+| `/login` | Email → FastAPI `POST /auth/token`, JWT stored on device; after sign-in → **`/`** (gate sends you to onboarding or tabs) |
+
+Tab bar + stack headers include **EN / БГ** (language toggle).
 
 ## Environment (copy `.env.example` → `.env`)
 
 | Variable | Purpose |
 |----------|---------|
-| `EXPO_PUBLIC_WEB_ORIGIN` | Next origin **without** `/en` prefix, e.g. `http://127.0.0.1:3000`. Android emulator → host machine: `http://10.0.2.2:3000`. |
+| `EXPO_PUBLIC_WEB_ORIGIN` | Next origin **without** `/en` prefix, e.g. `http://127.0.0.1:3000`. Used for **courses** and **tutor** API routes. Android emulator → host machine: `http://10.0.2.2:3000`. |
 | `EXPO_PUBLIC_BACKEND_URL` | FastAPI, e.g. `http://127.0.0.1:8000`. |
 
-Run **Next** (`apps/web`) and **FastAPI** (`apps/backend`) while testing login + live catalog:
+Run **Next** (`apps/web`) and **FastAPI** (`apps/backend`) while testing tutor + live catalog:
 
 ```bash
 # terminal A — from repo root or apps/web
@@ -50,6 +59,9 @@ Or from this folder:
 
 ```bash
 npm install
+# Ако npm върне ERESOLVE (React 19.x peer), опитай:
+npm install --legacy-peer-deps
+npm run typecheck
 npm run start
 ```
 
@@ -60,7 +72,7 @@ Then press `a` (Android emulator), `w` (web), or scan the QR code with **Expo Go
 
 ## Connect to the web API
 
-Point `fetch` / `axios` at your Next dev server, e.g. `http://<your-LAN-IP>:3000`, and ensure CORS allows the mobile origin if you call browser-based web builds. For native apps, CORS does not apply to `fetch` from the device.
+Point `fetch` at your Next dev server, e.g. `http://<your-LAN-IP>:3000`, and ensure CORS allows the mobile origin if you call browser-based web builds. For native apps, CORS does not apply to `fetch` from the device.
 
 ## Docs
 

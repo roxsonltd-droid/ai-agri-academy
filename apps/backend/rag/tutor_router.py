@@ -1,16 +1,43 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Optional, Dict
-from .retriever import retriever
-from langchain_core.messages import HumanMessage
+from typing import Optional
 
 from core.llm import llm
 from debate_graph import ask_with_debate
+from fastapi import APIRouter, HTTPException
+from langchain_core.messages import HumanMessage
+from pydantic import BaseModel, Field
+from retriever import get_retriever
 
 router = APIRouter(prefix="/tutor", tags=["Academy Tutor"])
 
-def generate_prompt(question: str, context: str) -> str:
-    return f"""
+
+class TutorRequest(BaseModel):
+    question: str
+    user_id: str
+    culture: Optional[str] = None  # пшеница, домати и т.н.
+    region: Optional[str] = None
+    experience: Optional[str] = None  # beginner | intermediate | advanced (или свободен текст)
+    farm_size_ha: Optional[float] = None
+    tutor_role: Optional[str] = None  # main | expert | mentor | examiner
+
+
+def generate_prompt(question: str, context: str, request: TutorRequest) -> str:
+    try:
+        from ai.tutors.prompts import build_academy_rag_tutor_prompt
+
+        profile = {
+            "experience": request.experience,
+            "farm_size_ha": request.farm_size_ha,
+            "culture": request.culture,
+            "region": request.region,
+        }
+        return build_academy_rag_tutor_prompt(
+            question=question,
+            context=context,
+            user_profile=profile,
+            tutor_role=request.tutor_role,
+        )
+    except ImportError:
+        return f"""
 Ти си AgriNexus Academy Tutor — опитен, практичен и честен агроном съветник.
 
 Контекст от Academy материалите:
@@ -28,11 +55,6 @@ def generate_prompt(question: str, context: str) -> str:
 Отговор:
 """
 
-class TutorRequest(BaseModel):
-    question: str
-    user_id: str
-    culture: Optional[str] = None      # пшеница, домати и т.н.
-    region: Optional[str] = None
 
 class TutorResponse(BaseModel):
     answer: str
@@ -50,20 +72,20 @@ async def tutor_chat(request: TutorRequest):
             filters["region"] = request.region
 
         # Retrieval
-        data = retriever.get_context(request.question, filters=filters)
-        
+        data = get_retriever().get_context(request.question, filters=filters)
+
         # LLM Prompt
-        prompt = generate_prompt(request.question, data["context"])
-        
+        prompt = generate_prompt(request.question, data["context"], request)
+
         # Извикване на LLM (Grok, Claude, или локален)
         response = llm.invoke([HumanMessage(content=prompt)])
-        
+
         return TutorResponse(
             answer=response.content,
             sources=data["sources"],
             confidence=0.88
         )
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -78,6 +100,7 @@ class DeepDebateResponse(BaseModel):
     final_answer: str
     consensus_level: str
     debate_history: list
+    sources: list = Field(default_factory=list)
 
 @router.post("/deep-debate", response_model=DeepDebateResponse)
 async def tutor_deep_debate(request: DeepDebateRequest):
@@ -90,7 +113,8 @@ async def tutor_deep_debate(request: DeepDebateRequest):
         return DeepDebateResponse(
             final_answer=result["final_answer"],
             consensus_level=result["consensus_level"],
-            debate_history=result["debate_history"]
+            debate_history=result["debate_history"],
+            sources=result.get("sources") or [],
         )
     except Exception as e:
         print("Deep debate error:", e)

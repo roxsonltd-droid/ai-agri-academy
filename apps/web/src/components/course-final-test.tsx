@@ -3,13 +3,15 @@
 import { useCallback, useMemo, useState } from "react";
 import type { CourseFinalTest } from "@/content/final-course-tests";
 import { PASS_SHARE, correctAnswersToPass } from "@/content/final-course-tests";
+import { saveQuizScore } from "@/lib/course-progress";
 
 type Props = {
 	courseTitle: string;
 	test: CourseFinalTest;
+	courseSlug?: string;
 };
 
-export function CourseFinalTestQuiz({ courseTitle, test }: Props) {
+export function CourseFinalTestQuiz({ courseTitle, test, courseSlug }: Props) {
 	const total = test.questions.length;
 	const needCorrect = useMemo(() => correctAnswersToPass(total), [total]);
 
@@ -57,8 +59,12 @@ export function CourseFinalTestQuiz({ courseTitle, test }: Props) {
 		const ok = c >= needCorrect;
 		setPassed(ok);
 		setSubmitted(true);
+		if (courseSlug) {
+			const pct = Math.round((c / total) * 100);
+			saveQuizScore(courseSlug, pct);
+		}
 		if (ok) fireConfetti();
-	}, [choice, fireConfetti, needCorrect, test.questions]);
+	}, [choice, fireConfetti, needCorrect, test.questions, courseSlug, total]);
 
 	const reset = useCallback(() => {
 		setSubmitted(false);
@@ -68,10 +74,10 @@ export function CourseFinalTestQuiz({ courseTitle, test }: Props) {
 
 	return (
 		<div className="space-y-8">
-			<header className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-				<p className="text-xs font-semibold uppercase tracking-wide text-emerald-800">Финален тест</p>
-				<h1 className="mt-1 text-2xl font-semibold text-slate-900">{courseTitle}</h1>
-				<p className="mt-2 text-sm text-slate-600">
+			<header className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900/70">
+				<p className="text-xs font-semibold uppercase tracking-wide text-emerald-800 dark:text-emerald-300">Финален тест</p>
+				<h1 className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-50">{courseTitle}</h1>
+				<p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
 					{total} въпроса с по четири възможни отговора. Маркирайте един отговор на въпрос. Успешно преминаване:{" "}
 					<strong className="text-slate-900">поне {needCorrect} верни</strong> ({passPercent}% от общия брой). Можете да
 					предадете и с непопълнени въпроси — <strong className="text-slate-900">без отговор се броят като грешни</strong>.

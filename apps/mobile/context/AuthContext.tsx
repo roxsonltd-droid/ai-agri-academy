@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { requestBackendMe, requestBackendToken } from "../lib/api";
 import { clearSession, loadSession, saveSession } from "../lib/tokenStorage";
 import { invalidateCourseCatalogCache } from "../lib/courseCatalogCache";
+import { clearMobileFarmProfileStorage } from "../lib/mobileFarmProfile";
 
 type AuthCtx = {
 	token: string | null;
@@ -42,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	const signIn = useCallback(async (rawEmail: string) => {
 		const emailTrim = rawEmail.trim();
+		await clearMobileFarmProfileStorage();
 		const tr = await requestBackendToken(emailTrim);
 		const me = await requestBackendMe(tr.access_token);
 		await saveSession(tr.access_token, me.email);
@@ -51,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const signOut = useCallback(async () => {
+		await clearMobileFarmProfileStorage();
 		await clearSession();
 		setToken(null);
 		setEmail(null);

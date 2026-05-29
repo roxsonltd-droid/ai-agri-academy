@@ -42,7 +42,10 @@ export async function ApiStatus() {
 				<a className="font-medium text-emerald-800 underline underline-offset-2" href="/api/py/health" target="_blank" rel="noreferrer">
 					/api/py/health
 				</a>
-				).
+				). Сървърни проксита <code className="rounded bg-slate-100 px-1">POST /api/tutor/chat</code>,{" "}
+				<code className="rounded bg-slate-100 px-1">/api/tutor/teach</code>, <code className="rounded bg-slate-100 px-1">/api/tutor/assess</code>,{" "}
+				<code className="rounded bg-slate-100 px-1">GET /api/tutor/progress</code>, <code className="rounded bg-slate-100 px-1">/api/tutor/deep-debate</code>{" "}
+				ползват <code className="rounded bg-slate-100 px-1">API_URL</code>.
 			</p>
 		</div>
 	);

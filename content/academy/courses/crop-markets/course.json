@@ -1,0 +1,31 @@
+{
+	"slug": "crop-markets",
+	"modules": 2,
+	"title": { "bg": "Пазар на култури за стопанството", "en": "Crop markets for the farm" },
+	"description": {
+		"bg": "Борса, базис, логистика — от котировка до цена при полето.",
+		"en": "Exchange, basis, logistics — from futures quotes to price at the field gate."
+	},
+	"lectures": [
+		{
+			"id": "cm-basis",
+			"file": "courses/crop-markets/01-bazis-lokalna-cena.md",
+			"filename": "01-bazis-lokalna-cena.md",
+			"title": { "bg": "Базис и локална цена", "en": "Basis and local price" },
+			"summary": {
+				"bg": "Защо при еднаква борса двама съседи получават различна цена.",
+				"en": "Why two neighbours can get different prices with the same exchange print."
+			}
+		},
+		{
+			"id": "cm-timing",
+			"file": "courses/crop-markets/02-vreme-prodazba-sklad.md",
+			"filename": "02-vreme-prodazba-sklad.md",
+			"title": { "bg": "Време на продажба и склад", "en": "Selling timing and storage" },
+			"summary": {
+				"bg": "Сезонност, влага, отстъпки — как „чакането“ струва пари.",
+				"en": "Seasonality, moisture, discounts — how “waiting” costs money."
+			}
+		}
+	]
+}

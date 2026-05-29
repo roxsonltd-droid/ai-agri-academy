@@ -1,0 +1,31 @@
+{
+	"slug": "soil-fertility",
+	"modules": 2,
+	"title": { "bg": "Почвено плодородие и торене", "en": "Soil fertility and fertilization" },
+	"description": {
+		"bg": "Проби, pH, органика и разумни ставки NPK за устойчив добив.",
+		"en": "Soil tests, pH, organic matter, and sensible NPK rates for resilient yield."
+	},
+	"lectures": [
+		{
+			"id": "sf-probi",
+			"file": "courses/soil-fertility/01-probi-i-baza.md",
+			"filename": "01-probi-i-baza.md",
+			"title": { "bg": "Проби и базова диагностика", "en": "Soil tests and basic diagnostics" },
+			"summary": {
+				"bg": "Какво да поръчате в лабораторията и как да четете резултата с бизнес очи.",
+				"en": "What to order from the lab and how to read results with a business mindset."
+			}
+		},
+		{
+			"id": "sf-npk",
+			"file": "courses/soil-fertility/02-npk-balans.md",
+			"filename": "02-npk-balans.md",
+			"title": { "bg": "NPK баланс без изгаряне на бюджета", "en": "NPK balance without burning budget" },
+			"summary": {
+				"bg": "Кога повече тор не значи повече пари в джоба.",
+				"en": "When more fertilizer does not mean more profit."
+			}
+		}
+	]
+}

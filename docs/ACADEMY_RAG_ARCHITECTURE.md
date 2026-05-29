@@ -1,5 +1,7 @@
 # Архитектура на RAG системата за AgriNexus Academy Tutor
 
+Канонично съдържание и режими на изпълнение: **`docs/ACADEMY_CONTENT.md`**.
+
 ## 1. Обща Архитектура (High-level)
 
 ```text
@@ -140,6 +142,17 @@ SYSTEM_PROMPT = """
 ```bash
 0 3 * * 0 cd /path/to/agrinexus/apps/backend/rag && python update_rag_weekly.py >> logs/cron.log 2>&1
 ```
+
+## 7. Централизиран `RAGEngine` (имплементация)
+
+Код: `apps/backend/ai/rag/engine.py`.
+
+- **`retrieve` / `aretrieve`** — `flat` или **`ACADEMY_RETRIEVAL_MODE=parent_child`**, връщат `context`, `documents`, опционално `used_filter`.
+- **Филтри:** подай готов `filter` dict или convenience полета **`culture`**, **`region`**, **`module`**, **`difficulty`** — обединяват се чрез **`RAGEngine.merge_retrieval_filter`** (явният `filter` печели при съвпадение на ключ).
+- **Компресия:** `use_compression=True` изпълнява **`AgriContextualCompressor.compress_documents`** върху върнатите документи и обновява `context` / `documents`; поле **`used_compression`** в резултата. При грешка се връща некомпресиран контекст.
+- **Quiz:** `QuizService` вика `aretrieve` с **`ACADEMY_QUIZ_USE_RAG_COMPRESSION`** (по подразбиране изключено заради латентност и разход за LLM).
+- **ReAct:** стандартно търсене — `ai/tools/rag_tool.py` (`search_academy_knowledge`); компресиран вариант — `ai/tools/compressed_rag_tool.py` (`search_academy_knowledge_compressed`).
+- **Redis кеш:** при **`REDIS_URL`** и **`ACADEMY_RAG_CACHE_ENABLED`** (default true) се кешират пакетите от **`retrieve` / `aretrieve`** като JSON (`app/core/cache.py`, `ai/rag/rag_cache_serde.py`). TTL: **`ACADEMY_RAG_CACHE_TTL_SECONDS`** (default 1200). Глобално „изчистване“ на стари ключове: смени **`ACADEMY_RAG_CACHE_BUMP`** или **`RAGCacheManager.invalidate_all_*`** (`ai/rag/cache_manager.py`). В `docker-compose.yml` има услуга **`redis`**; `backend` получава **`REDIS_URL=redis://redis:6379/0`**.
 
 ---
 

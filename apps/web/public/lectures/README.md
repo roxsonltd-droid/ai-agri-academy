@@ -1,21 +1,23 @@
 # Лекции (Markdown)
 
-## Структура с курсове
+## Канонично съдържание
 
-Лекциите за академията са в **`public/lectures/courses/<курс>/...md`**.
+Източникът на истина е **`content/academy/courses/`** в монорепото (всеки курс: `course.json` + `.md` файлове).
 
-Каталогът на курсовете и връзките към файловете са в **`src/content/academy-courses.ts`**.
+Синхронизация към Next и мобилното приложение:
 
-### Нова лекция в съществуващ курс
+```bash
+# от корена на agrinexus-final
+npm run sync:academy
+```
 
-1. Добавете `.md` под съответната папка на курса.
-2. Добавете обект в масива `lectures` на курса в `academy-courses.ts`.
+Това копира лекциите тук под **`public/lectures/courses/<slug>/...`** и обновява **`src/content/academy.catalog.json`**.
 
-### Нов курс
+### Нова лекция
 
-1. Нова папка `public/lectures/courses/<slug>/`.
-2. Нов обект в масива `COURSES` в `academy-courses.ts`.
-3. Преводи за EN в `src/content/academy-en.ts`.
-4. Финален тест: 25 въпроса в `src/content/final-course-tests/<slug>.ts` и регистрация в `final-course-tests/index.ts`.
+1. Добавете `.md` в съответната папка на курса в `content/academy/...`.
+2. Добавете запис в `lectures` вътре в `course.json` за този курс.
+3. Пуснете `npm run sync:academy`.
+4. При нужда от финален тест: `src/content/final-course-tests/<slug>.ts` (25 въпроса) и регистрация в `final-course-tests/index.ts`.
 
 Страницата **„Лектор“** (`/academy/lecturer`) зарежда текста от `/lectures/<file>`.

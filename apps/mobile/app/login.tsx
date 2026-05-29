@@ -1,5 +1,6 @@
 import { Link, Stack, router } from "expo-router";
 import { useState } from "react";
+import { LangToggle } from "../components/LangToggle";
 import {
 	ActivityIndicator,
 	Alert,
@@ -28,7 +29,7 @@ export default function LoginScreen() {
 		setBusy(true);
 		try {
 			await signIn(email);
-			router.replace("/academy");
+			router.replace("/");
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : s.login.errorFallback;
 			Alert.alert(s.login.errorTitle, msg);
@@ -42,7 +43,7 @@ export default function LoginScreen() {
 			style={styles.flex}
 			behavior={Platform.OS === "ios" ? "padding" : undefined}
 		>
-			<Stack.Screen options={{ title: s.login.header }} />
+			<Stack.Screen options={{ title: s.login.header, headerRight: () => <LangToggle /> }} />
 			<ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
 				<Text style={styles.kicker}>{s.login.kicker}</Text>
 				<Text style={styles.title}>{s.login.header}</Text>

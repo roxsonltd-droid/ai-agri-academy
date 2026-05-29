@@ -4,7 +4,7 @@ from typing import TypedDict, Annotated, List, Optional
 from operator import add
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.documents import Document
-from retriever import retriever
+from retriever import get_retriever
 import json
 
 from core.llm import llm
@@ -38,7 +38,7 @@ def retrieve_documents(state: TutorState):
     if state.get("region"):
         filters["region"] = state["region"]
 
-    data = retriever.get_context(state["rewritten_question"] or state["question"], filters)
+    data = get_retriever().get_context(state["rewritten_question"] or state["question"], filters)
     
     return {
         "documents": data["documents"],

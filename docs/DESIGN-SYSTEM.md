@@ -30,3 +30,7 @@ B2B агро UI (FieldLot): токени, типография, Yellow Pages р�
 1. Нови **общи** компоненти → `agri-market-shared.css`.
 2. Само начало/агенти орбита/карти → `agri-marketing-supplement.css`.
 3. Не дублирай `@keyframes pulse` — тикерът ползва `pulse`; оркестраторът ползва `orch-ring` в supplement.
+
+## Next.js Academy (`apps/web`)
+
+- **`GeneratedQuizViewer`** — `src/components/academy/generated-quiz-viewer.tsx` (типове: `src/lib/generated-quiz-types.ts`). Демо: маршрут **`/academy/lab/quiz`** (линк от `/academy/lab`).

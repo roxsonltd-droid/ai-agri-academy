@@ -1,42 +1,54 @@
-"""AgriNexus FastAPI backend (scaffold)."""
+"""AgriNexus FastAPI — unified ``/api`` surface, rate limits, optional Clerk/Supabase auth."""
 
 from __future__ import annotations
 
 import os
 from contextlib import asynccontextmanager
-from datetime import datetime, timedelta, timezone
 from typing import Any
 
-import jwt
-from fastapi import FastAPI, Header, HTTPException
+from app.core.path_setup import ensure_backend_paths
+
+ensure_backend_paths()
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+
+from app.api.routes import api_router
+from app.core.config import get_settings
+from app.core.rate_limit import limiter
 
 
 def _cors_origins() -> list[str]:
-	raw = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
+	raw = get_settings().cors_origins
 	return [o.strip() for o in raw.split(",") if o.strip()]
-
-
-def _jwt_secret() -> str:
-	secret = os.getenv("JWT_SECRET", "").strip()
-	if not secret:
-		# Dev default — override in production.
-		return "agrinexus-dev-jwt-secret-change-me"
-	return secret
-
-
-JWT_ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_DAYS = 7
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-	# Place DB pool / Redis here later
 	yield
 
 
-app = FastAPI(title="AgriNexus API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(
+	title="AgriNexus API",
+	version="0.2.0",
+	lifespan=lifespan,
+	docs_url="/docs",
+	redoc_url="/redoc",
+	openapi_url="/openapi.json",
+	description="""
+## HTTP API
+
+- **Swagger UI:** [`/docs`](/docs) — интерактивни заявки към `/api/*`.
+- **ReDoc:** [`/redoc`](/redoc) — четим референс.
+- **OpenAPI JSON:** [`/openapi.json`](/openapi.json) — за клиенти и codegen.
+
+Пълният текстов преглед на маршрутите: `docs/BACKEND_API.md`.
+""",
+)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
 	CORSMiddleware,
@@ -46,9 +58,7 @@ app.add_middleware(
 	allow_headers=["*"],
 )
 
-
-class TokenRequest(BaseModel):
-	email: str = Field(..., min_length=3, max_length=320)
+app.include_router(api_router, prefix="/api")
 
 
 @app.get("/health")
@@ -58,7 +68,7 @@ def health() -> dict[str, str]:
 
 @app.get("/health/db")
 def health_db() -> dict[str, Any]:
-	dsn = os.getenv("DATABASE_URL")
+	dsn = get_settings().database_url or os.getenv("DATABASE_URL")
 	if not dsn:
 		return {"database": "skipped", "detail": "DATABASE_URL not set"}
 	try:
@@ -71,33 +81,3 @@ def health_db() -> dict[str, Any]:
 		return {"database": "ok", "select": one}
 	except Exception as e:
 		return {"database": "error", "detail": str(e)}
-
-
-@app.post("/auth/token")
-def create_access_token(body: TokenRequest) -> dict[str, str]:
-	"""Dev-friendly stub: issues a JWT for any plausible email (no password yet)."""
-	email = body.email.strip()
-	if "@" not in email or len(email) < 5:
-		raise HTTPException(status_code=400, detail="invalid_email")
-	now = datetime.now(timezone.utc)
-	exp = now + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
-	payload = {"sub": email, "iat": int(now.timestamp()), "exp": exp}
-	token = jwt.encode(payload, _jwt_secret(), algorithm=JWT_ALGORITHM)
-	if isinstance(token, bytes):
-		token = token.decode("utf-8")
-	return {"access_token": token, "token_type": "bearer"}
-
-
-@app.get("/auth/me")
-def auth_me(authorization: str | None = Header(default=None)) -> dict[str, str]:
-	if not authorization or not authorization.lower().startswith("bearer "):
-		raise HTTPException(status_code=401, detail="missing_bearer")
-	raw = authorization[7:].strip()
-	try:
-		payload = jwt.decode(raw, _jwt_secret(), algorithms=[JWT_ALGORITHM])
-	except jwt.PyJWTError:
-		raise HTTPException(status_code=401, detail="invalid_token")
-	sub = payload.get("sub")
-	if not isinstance(sub, str) or not sub:
-		raise HTTPException(status_code=401, detail="invalid_subject")
-	return {"email": sub}

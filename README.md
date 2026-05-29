@@ -4,11 +4,35 @@
 
 AgriNexus is a complete infrastructure for modern farming. It replaces the traditional "black box AI" with a transparent, explainable ecosystem of specialized agents that help farmers make data-driven decisions.
 
+## Quick links
+
+| Topic | Where |
+|--------|--------|
+| **Roadmap** | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
+| **Onboarding** (web Supabase + mobile first-run) | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
+| **Deploy (Render / Railway)** | [`docs/DEPLOY-RENDER-RAILWAY.md`](docs/DEPLOY-RENDER-RAILWAY.md) |
+| **Local dev** (Next + FastAPI + Expo + Docker) | [`docs/LOCAL-DEV.md`](docs/LOCAL-DEV.md) |
+| **Environment & secrets** (`.env.example`, Doppler) | [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) |
+| **Backend HTTP API** (OpenAPI, auth, tutor) | [`docs/BACKEND_API.md`](docs/BACKEND_API.md) |
+| **Web app** (routes, Playwright, Supabase) | [`apps/web/README.md`](apps/web/README.md) |
+| **Mobile** | [`apps/mobile/README.md`](apps/mobile/README.md) |
+| **Backend (Python)** | [`apps/backend/README.md`](apps/backend/README.md) |
+
+**Auth (Supabase):** Next.js `apps/web` uses `@supabase/ssr` — browser client in `src/lib/supabase.ts`, session refresh in `src/middleware.ts` together with `next-intl`. Localized login: `/login` and `/bg/login` with Google OAuth and email magic link when `NEXT_PUBLIC_SUPABASE_*` are set. FastAPI verifies the same users via `SUPABASE_JWT_SECRET` on `GET /api/auth/me` and optional `AUTH_REQUIRED_FOR_TUTOR`.
+
+**AI Tutor (LangGraph):** `POST /api/tutor/graph` — minimal graph (classify → draft). With `MISTRAL_API_KEY` the draft node calls Mistral; otherwise a stub answer (see `docs/BACKEND_API.md`). Heavier RAG routes remain `POST /api/tutor/chat` and `POST /api/tutor/deep-debate` when the optional `rag/` stack is installed.
+
 **AI кошче:** временни чернови, фрагменти и еднократни артефакти от работа с ИИ — папка **`ai-trash/`** (съдържанието е в `.gitignore`, виж `ai-trash/README.md`). Правило за агентите: `.cursor/rules/ai-trash.mdc`.
 
 **Windows + кирилица в пътя:** ако имаш и `Desktop\проект\…` и `Desktop\project\…`, лесно се работи върху „грешното“ копие. Виж **`docs/WORKSPACE-CYRILLIC-PATH-BG.md`** и скрипта **`scripts/windows/link-cyrillic-desktop-folder.ps1`** (junction към едно репо).
 
 **Графичен слой:** споделени стилове в **`styles/agri-market-shared.css`** + **`styles/agri-marketing-supplement.css`** за начална/агенти; описание и таблица: **`docs/DESIGN-SYSTEM.md`**.
+
+## DevEx (монорепо `apps/*`)
+
+- **Pre-commit:** [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — след `npm ci` в корена ESLint за стейджнати `apps/web/**/*.{ts,tsx}`.
+- **CI:** `.github/workflows/ci.yml` — root typecheck, **web** (lint, typecheck, build, Playwright smoke), **mobile** typecheck, **backend** (pytest + `ruff check tests`), **fieldlot**.
+- **Секрети / Doppler:** `docs/ENVIRONMENT.md` и коренов `.env.example`.
 
 ## Project Structure & Core Pages
 
@@ -70,11 +94,11 @@ Serves `http://127.0.0.1:3456` with static HTML/CSS plus **`/api/market-data`**,
 npm run dev:mobile
 ```
 
-Пълни инструкции (`.env`, Android `10.0.2.2`, заедно с `dev:web` и backend): **`apps/mobile/README.md`**.
+Пълни инструкции (`.env`, Android `10.0.2.2`, заедно с `dev:web` и backend): **`apps/mobile/README.md`**. Onboarding и първи екран: **`docs/ONBOARDING.md`**.
 
-## Target stack (roadmap)
+## Target stack
 
-Продуктов слой (бъдеща фаза): **Next.js** (frontend), **Python + FastAPI** (backend), **PostgreSQL** (OLTP), **vector DB** (AI memory), **Docker** automation, **VPS** → по-късно **Kubernetes**. Пълна таблица и роли: **`docs/TARGET-ARCHITECTURE.md`**. Скелет за локална работа: **`docs/LOCAL-DEV.md`** (`apps/web`, `apps/backend`, `apps/mobile`, `docker-compose.yml`).
+Продуктов слой: **Next.js** (`apps/web`), **Python + FastAPI** (`apps/backend`), **PostgreSQL** (OLTP + pgvector), **Supabase Auth**, **Docker** за локална база. По-нататък: по-силен agent mesh, managed vector search, VPS/Kubernetes — виж **`docs/TARGET-ARCHITECTURE.md`** и фазите в **`docs/ROADMAP.md`**. Скелет за локална работа: **`docs/LOCAL-DEV.md`**. HTTP повърхност и OpenAPI: **`docs/BACKEND_API.md`**.
 
 ## CI
 

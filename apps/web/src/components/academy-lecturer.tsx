@@ -375,7 +375,8 @@ export function AcademyLecturer() {
 				<ul className="mt-2 list-disc space-y-1 pl-5">
 					<li>
 						Нови лекции: <code className="rounded bg-white px-1">public/lectures/courses/&lt;курс&gt;/*.md</code> + ред в{" "}
-						<code className="rounded bg-white px-1">src/content/academy-courses.ts</code>.
+						<code className="rounded bg-white px-1">content/academy</code> +{" "}
+						<code className="rounded bg-white px-1">npm run sync:academy</code>.
 					</li>
 					<li>Дълбочина: квизове, видео връзки, PDF приложения към модул.</li>
 					<li>Връзка с <code className="rounded bg-white px-1">/academy/lab</code> — параметри от сценарий към симулацията.</li>

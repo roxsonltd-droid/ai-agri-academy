@@ -1,0 +1,34 @@
+{
+	"slug": "integrated-pest-management",
+	"modules": 2,
+	"title": {
+		"bg": "Интегрирана растителна защита (ИРЗ)",
+		"en": "Integrated pest management (IPM)"
+	},
+	"description": {
+		"bg": "Прагове, наблюдение, ротация на механизми и смесване на мерки — по-малко резистентност и по-чиста реколта.",
+		"en": "Thresholds, scouting, MoA rotation, and mixing tactics — less resistance and cleaner harvest profiles."
+	},
+	"lectures": [
+		{
+			"id": "ipm-framework",
+			"file": "courses/integrated-pest-management/01-ipm-ramka-nablyudenie.md",
+			"filename": "01-ipm-ramka-nablyudenie.md",
+			"title": { "bg": "Рамка ИРЗ: наблюдение и прагове", "en": "IPM framework: scouting and thresholds" },
+			"summary": {
+				"bg": "Как да решавате „пръскам ли“ с числа, а не с притеснение в петък вечер.",
+				"en": "How to decide “do I spray?” with numbers instead of Friday-night anxiety."
+			}
+		},
+		{
+			"id": "ipm-rotation",
+			"file": "courses/integrated-pest-management/02-rotatsiya-mehanizmi-rezistentnost.md",
+			"filename": "02-rotatsiya-mehanizmi-rezistentnost.md",
+			"title": { "bg": "Ротация на механизми и устойчивост", "en": "MoA rotation and resistance management" },
+			"summary": {
+				"bg": "Групи IRAC, смесване, културни мерки и кога „още едно пръскане“ вреди на следващата кампания.",
+				"en": "IRAC groups, tank-mix rules, cultural tactics, and when “one more pass” hurts next season."
+			}
+		}
+	]
+}

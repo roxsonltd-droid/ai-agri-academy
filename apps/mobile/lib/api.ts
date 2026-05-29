@@ -73,3 +73,58 @@ export async function fetchCoursesFromNext(token: string | null): Promise<Course
 	}
 	return data.courses;
 }
+
+export type TutorChatResponse = {
+	answer?: string;
+	sources?: unknown;
+	error?: string;
+};
+
+/** Proxies through Next.js `POST /api/tutor/chat` → FastAPI `POST /api/tutor/chat` (RAG). */
+export async function postTutorChat(
+	token: string | null,
+	body: {
+		question: string;
+		userId: string;
+		threadId: string;
+		mode?: string;
+		culture?: string;
+		region?: string;
+	},
+): Promise<TutorChatResponse> {
+	const origin = getWebOrigin();
+	const headers: Record<string, string> = {
+		Accept: "application/json",
+		"Content-Type": "application/json",
+	};
+	if (token) {
+		headers.Authorization = `Bearer ${token}`;
+	}
+	const res = await fetch(`${origin}/api/tutor/chat`, {
+		method: "POST",
+		headers,
+		body: JSON.stringify({
+			question: body.question,
+			userId: body.userId,
+			threadId: body.threadId,
+			mode: body.mode ?? "general",
+			culture: body.culture ?? "",
+			region: body.region ?? "",
+		}),
+	});
+	const text = await res.text();
+	let json: unknown = {};
+	try {
+		json = text ? JSON.parse(text) : {};
+	} catch {
+		json = {};
+	}
+	if (!res.ok) {
+		const err =
+			typeof json === "object" && json !== null && "error" in json
+				? String((json as { error: unknown }).error)
+				: text || res.statusText;
+		throw new Error(err || `HTTP ${res.status}`);
+	}
+	return json as TutorChatResponse;
+}

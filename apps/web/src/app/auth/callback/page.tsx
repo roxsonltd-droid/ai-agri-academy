@@ -1,21 +1,17 @@
-'use client';
+import { Suspense } from "react";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { AuthCallbackContent } from "./AuthCallbackContent";
 
-export default function AuthCallback() {
-  const router = useRouter();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.push('/dashboard');
-      } else {
-        router.push('/login');
-      }
-    });
-  }, [router]);
-
-  return <div className="p-10 text-center">Обработка на входа...</div>;
+export default function AuthCallbackPage() {
+	return (
+		<Suspense
+			fallback={
+				<div className="flex min-h-screen flex-col items-center justify-center bg-paper px-4 dark:bg-slate-950">
+					<p className="text-sm text-slate-600 dark:text-slate-400">Зареждане…</p>
+				</div>
+			}
+		>
+			<AuthCallbackContent />
+		</Suspense>
+	);
 }

@@ -57,7 +57,8 @@ export default async function AcademyLecturerPage({ params }: PageProps) {
 			<h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{c.title}</h1>
 			<p className="mt-3 text-slate-600">
 				{c.introBefore} <code className="rounded bg-slate-200 px-1">public/lectures/courses/.../*.md</code> ({c.introMiddle}{" "}
-				<code className="rounded bg-slate-200 px-1">src/content/academy-courses.ts</code>){c.introAfter}{" "}
+				<code className="rounded bg-slate-200 px-1">content/academy</code> +{" "}
+				<code className="rounded bg-slate-200 px-1">npm run sync:academy</code>){c.introAfter}{" "}
 				<code className="rounded bg-slate-200 px-1">npm run dev</code> (3456) {c.introEnd}
 			</p>
 

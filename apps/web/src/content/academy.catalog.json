@@ -1,0 +1,378 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-29T06:22:02.432Z",
+  "courses": [
+    {
+      "slug": "crop-markets",
+      "modules": 2,
+      "title": {
+        "bg": "Пазар на култури за стопанството",
+        "en": "Crop markets for the farm"
+      },
+      "description": {
+        "bg": "Борса, базис, логистика — от котировка до цена при полето.",
+        "en": "Exchange, basis, logistics — from futures quotes to price at the field gate."
+      },
+      "lectures": [
+        {
+          "id": "cm-basis",
+          "file": "courses/crop-markets/01-bazis-lokalna-cena.md",
+          "filename": "01-bazis-lokalna-cena.md",
+          "title": {
+            "bg": "Базис и локална цена",
+            "en": "Basis and local price"
+          },
+          "summary": {
+            "bg": "Защо при еднаква борса двама съседи получават различна цена.",
+            "en": "Why two neighbours can get different prices with the same exchange print."
+          }
+        },
+        {
+          "id": "cm-timing",
+          "file": "courses/crop-markets/02-vreme-prodazba-sklad.md",
+          "filename": "02-vreme-prodazba-sklad.md",
+          "title": {
+            "bg": "Време на продажба и склад",
+            "en": "Selling timing and storage"
+          },
+          "summary": {
+            "bg": "Сезонност, влага, отстъпки — как „чакането“ струва пари.",
+            "en": "Seasonality, moisture, discounts — how “waiting” costs money."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "drone-pilots",
+      "modules": 2,
+      "title": {
+        "bg": "Пилоти на дронове в стопанството",
+        "en": "Farm drone pilots"
+      },
+      "description": {
+        "bg": "Симулатор, тренинг на ръцете и безопасен преход към полет над нивата.",
+        "en": "Simulator training, stick skills, and a safe path to flights over cropland."
+      },
+      "lectures": [
+        {
+          "id": "dp-sim",
+          "file": "courses/drone-pilots/01-simulator-trening.md",
+          "filename": "01-simulator-trening.md",
+          "title": {
+            "bg": "Симулатор и тренинг преди първия полет",
+            "en": "Simulator training before the first flight"
+          },
+          "summary": {
+            "bg": "DJI симулатори, безплатни варианти и кратки сесии — по-малко скъпи грешки.",
+            "en": "DJI simulators, free-tier options, and short sessions — fewer expensive mistakes."
+          }
+        },
+        {
+          "id": "dp-field",
+          "file": "courses/drone-pilots/02-bezopasnost-i-reglament.md",
+          "filename": "02-bezopasnost-i-reglament.md",
+          "title": {
+            "bg": "От симулатора до полето: безопасност и регламент",
+            "en": "From simulator to field: safety and rules"
+          },
+          "summary": {
+            "bg": "Чеклист, екип от двама, поверителност — без да заместваме официалния регулатор.",
+            "en": "Checklists, two-person crew, privacy — without replacing the official regulator."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "farm-finance",
+      "modules": 2,
+      "title": {
+        "bg": "Финанси и риск в стопанството",
+        "en": "Farm finance and risk"
+      },
+      "description": {
+        "bg": "Оборот, застраховки, субсидии и прости показатели за решения.",
+        "en": "Working capital, insurance, subsidies, and simple metrics for decisions."
+      },
+      "lectures": [
+        {
+          "id": "ff-working-capital",
+          "file": "courses/farm-finance/01-oboroten-kapital.md",
+          "filename": "01-oboroten-kapital.md",
+          "title": {
+            "bg": "Оборотен капитал в кампанията",
+            "en": "Working capital in the campaign"
+          },
+          "summary": {
+            "bg": "Защо сушата е и кредитен риск.",
+            "en": "Why drought is also a credit risk."
+          }
+        },
+        {
+          "id": "ff-insurance",
+          "file": "courses/farm-finance/02-zastrahovki-meteo.md",
+          "filename": "02-zastrahovki-meteo.md",
+          "title": {
+            "bg": "Застраховки и метео прагове",
+            "en": "Insurance and weather triggers"
+          },
+          "summary": {
+            "bg": "Какво „доказуемо“ иска финансовият партньор.",
+            "en": "What “verifiable” means to a financial partner."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "integrated-pest-management",
+      "modules": 2,
+      "title": {
+        "bg": "Интегрирана растителна защита (ИРЗ)",
+        "en": "Integrated pest management (IPM)"
+      },
+      "description": {
+        "bg": "Прагове, наблюдение, ротация на механизми и смесване на мерки — по-малко резистентност и по-чиста реколта.",
+        "en": "Thresholds, scouting, MoA rotation, and mixing tactics — less resistance and cleaner harvest profiles."
+      },
+      "lectures": [
+        {
+          "id": "ipm-framework",
+          "file": "courses/integrated-pest-management/01-ipm-ramka-nablyudenie.md",
+          "filename": "01-ipm-ramka-nablyudenie.md",
+          "title": {
+            "bg": "Рамка ИРЗ: наблюдение и прагове",
+            "en": "IPM framework: scouting and thresholds"
+          },
+          "summary": {
+            "bg": "Как да решавате „пръскам ли“ с числа, а не с притеснение в петък вечер.",
+            "en": "How to decide “do I spray?” with numbers instead of Friday-night anxiety."
+          }
+        },
+        {
+          "id": "ipm-rotation",
+          "file": "courses/integrated-pest-management/02-rotatsiya-mehanizmi-rezistentnost.md",
+          "filename": "02-rotatsiya-mehanizmi-rezistentnost.md",
+          "title": {
+            "bg": "Ротация на механизми и устойчивост",
+            "en": "MoA rotation and resistance management"
+          },
+          "summary": {
+            "bg": "Групи IRAC, смесване, културни мерки и кога „още едно пръскане“ вреди на следващата кампания.",
+            "en": "IRAC groups, tank-mix rules, cultural tactics, and when “one more pass” hurts next season."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "maps-and-fields",
+      "modules": 3,
+      "title": {
+        "bg": "Карти и полета",
+        "en": "Maps and fields"
+      },
+      "description": {
+        "bg": "Жива учебна карта: OSM, сателит, очертаване на блок и GeoJSON за упражнения.",
+        "en": "A live training map in the browser: streets (OSM), satellite, click-to-outline blocks, and GeoJSON export."
+      },
+      "lectures": [
+        {
+          "id": "mf-why-draw",
+          "file": "courses/maps-and-fields/01-vavedenie-karti-poleta.md",
+          "filename": "01-vavedenie-karti-poleta.md",
+          "title": {
+            "bg": "Защо чертаем блокове и какво е полигон",
+            "en": "Why we draw blocks and what a polygon is"
+          },
+          "summary": {
+            "bg": "Ролята на картата между стопанството, агронома и машината; понятия преди лабораторията.",
+            "en": "The map as shared language between farm, agronomist, and machinery — concepts before the lab."
+          }
+        },
+        {
+          "id": "mf-live-map",
+          "file": "courses/maps-and-fields/02-zhiva-karta-lab.md",
+          "filename": "02-zhiva-karta-lab.md",
+          "title": {
+            "bg": "Жива карта: лаборатория в AgriNexus",
+            "en": "Live map: AgriNexus lab"
+          },
+          "summary": {
+            "bg": "Страницата /academy/maps — реални плочки, сателит, клик за върхове и GeoJSON за упражнения.",
+            "en": "The /academy/maps page — real tiles, satellite, vertices by click, and GeoJSON for class exercises."
+          }
+        },
+        {
+          "id": "mf-export-workflow",
+          "file": "courses/maps-and-fields/03-eksport-i-raboten-potok.md",
+          "filename": "03-eksport-i-raboten-potok.md",
+          "title": {
+            "bg": "От чертежа до техниката и партньорите",
+            "en": "From sketch to machinery and partners"
+          },
+          "summary": {
+            "bg": "Подаване на файл към FMIS/QGIS и проверки преди операция в полето.",
+            "en": "Handing files to FMIS/QGIS and checks before running an operation in the field."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "precision-data",
+      "modules": 5,
+      "title": {
+        "bg": "Прецизно земеделие и данни",
+        "en": "Precision farming and data"
+      },
+      "description": {
+        "bg": "Карти и слоеве, GPS, метео за операции, карти на добив, запис — по-малко гадаене.",
+        "en": "Maps and layers, GPS, weather for operations, yield maps, records — less guesswork."
+      },
+      "lectures": [
+        {
+          "id": "pd-yield-maps",
+          "file": "courses/precision-data/01-karti-dobiv-zonirane.md",
+          "filename": "01-karti-dobiv-zonirane.md",
+          "title": {
+            "bg": "Карти на добива и зониране",
+            "en": "Yield maps and zoning"
+          },
+          "summary": {
+            "bg": "От снимка към решение: къде да вложите следващия лев.",
+            "en": "From a picture to a decision: where to spend the next euro."
+          }
+        },
+        {
+          "id": "pd-traceability",
+          "file": "courses/precision-data/02-prosledimost-zapis.md",
+          "filename": "02-prosledimost-zapis.md",
+          "title": {
+            "bg": "Проследимост и запис",
+            "en": "Traceability and records"
+          },
+          "summary": {
+            "bg": "Защо „дневникът“ на полето плаща при изкупуване и при спор.",
+            "en": "Why a field diary pays at purchase and in disputes."
+          }
+        },
+        {
+          "id": "pd-maps-gps",
+          "file": "courses/precision-data/03-karti-gps-sloevi.md",
+          "filename": "03-karti-gps-sloevi.md",
+          "title": {
+            "bg": "Карти, GPS и слоеве в полето",
+            "en": "Maps, GPS, and layers in the field"
+          },
+          "summary": {
+            "bg": "Ортофото, слоеве, телефон срещу приемник, граници и AB линии без объркване.",
+            "en": "Orthophoto, layers, phone vs receiver, boundaries and AB lines without confusion."
+          }
+        },
+        {
+          "id": "pd-weather-ops",
+          "file": "courses/precision-data/04-meteo-operatsii.md",
+          "filename": "04-meteo-operatsii.md",
+          "title": {
+            "bg": "Метео за операции",
+            "en": "Weather for field operations"
+          },
+          "summary": {
+            "bg": "Кратък и сезонен хоризонт, локална станция, вятър за пръскане, радар за дъжд.",
+            "en": "Short vs seasonal outlook, local station, spray wind limits, rain radar."
+          }
+        },
+        {
+          "id": "pd-field-sat-maps-practice",
+          "file": "courses/precision-data/05-praktika-karta-satelit-poleta.md",
+          "filename": "05-praktika-karta-satelit-poleta.md",
+          "title": {
+            "bg": "Практически занятия: карта, полета и сателит в реално време",
+            "en": "Hands-on: maps, field outlines, and satellite in (near) real time"
+          },
+          "summary": {
+            "bg": "Очертаване на блокове, сателитни слоеве във времето, проверка на граници с GPS и обновяване в полето.",
+            "en": "Draw parcel polygons, use satellite time series, walk boundaries with live GPS, and refresh layers safely in the field."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "soil-fertility",
+      "modules": 2,
+      "title": {
+        "bg": "Почвено плодородие и торене",
+        "en": "Soil fertility and fertilization"
+      },
+      "description": {
+        "bg": "Проби, pH, органика и разумни ставки NPK за устойчив добив.",
+        "en": "Soil tests, pH, organic matter, and sensible NPK rates for resilient yield."
+      },
+      "lectures": [
+        {
+          "id": "sf-probi",
+          "file": "courses/soil-fertility/01-probi-i-baza.md",
+          "filename": "01-probi-i-baza.md",
+          "title": {
+            "bg": "Проби и базова диагностика",
+            "en": "Soil tests and basic diagnostics"
+          },
+          "summary": {
+            "bg": "Какво да поръчате в лабораторията и как да четете резултата с бизнес очи.",
+            "en": "What to order from the lab and how to read results with a business mindset."
+          }
+        },
+        {
+          "id": "sf-npk",
+          "file": "courses/soil-fertility/02-npk-balans.md",
+          "filename": "02-npk-balans.md",
+          "title": {
+            "bg": "NPK баланс без изгаряне на бюджета",
+            "en": "NPK balance without burning budget"
+          },
+          "summary": {
+            "bg": "Кога повече тор не значи повече пари в джоба.",
+            "en": "When more fertilizer does not mean more profit."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "water-irrigation",
+      "modules": 2,
+      "title": {
+        "bg": "Вода и иригация",
+        "en": "Water and irrigation"
+      },
+      "description": {
+        "bg": "Воден бюджет, риск от суша и разговор с банкера на език m³/ha.",
+        "en": "Water budget, drought risk, and talking to your banker in m³/ha language."
+      },
+      "lectures": [
+        {
+          "id": "wi-budget",
+          "file": "courses/water-irrigation/01-voden-byudzhet.md",
+          "filename": "01-voden-byudzhet.md",
+          "title": {
+            "bg": "Воден бюджет на сезона",
+            "en": "Season water budget"
+          },
+          "summary": {
+            "bg": "Отделна линия в разходите — не „остатък“ след торовете.",
+            "en": "A dedicated cost line — not a leftover after fertilizer."
+          }
+        },
+        {
+          "id": "wi-energy",
+          "file": "courses/water-irrigation/02-pompi-energiya.md",
+          "filename": "02-pompi-energiya.md",
+          "title": {
+            "bg": "Помпи и енергия",
+            "en": "Pumps and energy"
+          },
+          "summary": {
+            "bg": "Когато токът изяде спестенията от по-малко тор.",
+            "en": "When electricity eats the savings from “less fertilizer”."
+          }
+        }
+      ]
+    }
+  ]
+}

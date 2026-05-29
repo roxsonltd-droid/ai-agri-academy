@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 import whisper
 from io import BytesIO
-from .tutor_router import tutor_chat, TutorRequest
+from tutor_router import tutor_chat, TutorRequest
 
 router = APIRouter(prefix="/voice", tags=["Voice Input"])
 

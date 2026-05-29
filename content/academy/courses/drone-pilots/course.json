@@ -1,0 +1,31 @@
+{
+	"slug": "drone-pilots",
+	"modules": 2,
+	"title": { "bg": "Пилоти на дронове в стопанството", "en": "Farm drone pilots" },
+	"description": {
+		"bg": "Симулатор, тренинг на ръцете и безопасен преход към полет над нивата.",
+		"en": "Simulator training, stick skills, and a safe path to flights over cropland."
+	},
+	"lectures": [
+		{
+			"id": "dp-sim",
+			"file": "courses/drone-pilots/01-simulator-trening.md",
+			"filename": "01-simulator-trening.md",
+			"title": { "bg": "Симулатор и тренинг преди първия полет", "en": "Simulator training before the first flight" },
+			"summary": {
+				"bg": "DJI симулатори, безплатни варианти и кратки сесии — по-малко скъпи грешки.",
+				"en": "DJI simulators, free-tier options, and short sessions — fewer expensive mistakes."
+			}
+		},
+		{
+			"id": "dp-field",
+			"file": "courses/drone-pilots/02-bezopasnost-i-reglament.md",
+			"filename": "02-bezopasnost-i-reglament.md",
+			"title": { "bg": "От симулатора до полето: безопасност и регламент", "en": "From simulator to field: safety and rules" },
+			"summary": {
+				"bg": "Чеклист, екип от двама, поверителност — без да заместваме официалния регулатор.",
+				"en": "Checklists, two-person crew, privacy — without replacing the official regulator."
+			}
+		}
+	]
+}

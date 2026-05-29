@@ -4,6 +4,7 @@ import { Bot, GraduationCap, Heart, Leaf, LineChart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 type NavProps = {
 	active?: "platform" | "market" | "agents" | "academy" | "sponsors";
@@ -59,7 +60,7 @@ export function Nav({ active }: NavProps) {
 	return (
 		<header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-3 sm:px-4">
 			<nav
-				className="pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-2 rounded-2xl border border-ink/[0.08] bg-paper/70 px-3 py-2.5 shadow-[0_12px_48px_rgba(14,40,24,0.12)] ring-1 ring-white/60 backdrop-blur-2xl sm:gap-3 sm:px-5 sm:py-3"
+				className="pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-2 rounded-2xl border border-ink/[0.08] bg-paper/70 px-3 py-2.5 shadow-[0_12px_48px_rgba(14,40,24,0.12)] ring-1 ring-white/60 backdrop-blur-2xl dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_12px_48px_rgba(0,0,0,0.45)] dark:ring-white/5 sm:gap-3 sm:px-5 sm:py-3"
 				aria-label="Main"
 			>
 				<Link
@@ -80,8 +81,8 @@ export function Nav({ active }: NavProps) {
 							<Link
 								key={l.navKey}
 								href={l.href}
-								className={`group flex items-center gap-2 rounded-xl px-2 py-1.5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-sm active:translate-y-0 lg:px-2.5 lg:py-2 ${
-									isActive ? "bg-white/80 shadow-sm ring-1 ring-ink/[0.06]" : ""
+								className={`group flex items-center gap-2 rounded-xl px-2 py-1.5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-sm active:translate-y-0 lg:px-2.5 lg:py-2 dark:hover:bg-slate-800/80 ${
+									isActive ? "bg-white/80 shadow-sm ring-1 ring-ink/[0.06] dark:bg-slate-800/90 dark:ring-white/10" : ""
 								}`}
 							>
 								<span
@@ -102,10 +103,11 @@ export function Nav({ active }: NavProps) {
 				</div>
 
 				<div className="flex shrink-0 items-center gap-2 sm:gap-3">
+					<ThemeToggle />
 					<LanguageSwitcher />
 					<Link
 						href="/dashboard"
-						className="inline-flex items-center gap-1 rounded-full bg-ink px-3 py-1.5 text-[11px] font-medium text-white shadow-md transition-all duration-300 ease-out hover:scale-[1.03] hover:bg-ink/90 hover:shadow-lg active:scale-[0.98] sm:px-4 sm:py-2 sm:text-xs"
+						className="inline-flex items-center gap-1 rounded-full bg-ink px-3 py-1.5 text-[11px] font-medium text-white shadow-md transition-all duration-300 ease-out hover:scale-[1.03] hover:bg-ink/90 hover:shadow-lg active:scale-[0.98] dark:bg-emerald-600 dark:hover:bg-emerald-500 sm:px-4 sm:py-2 sm:text-xs"
 					>
 						{t("joinFree")}
 					</Link>

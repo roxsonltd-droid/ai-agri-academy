@@ -25,9 +25,22 @@ services:
     environment:
       DATABASE_URL: postgresql://agrinexus:agrinexus_dev@db:5432/agrinexus
       CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      REDIS_URL: redis://redis:6379/0
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
 
 volumes:
   pgdata:
+  redis_data:

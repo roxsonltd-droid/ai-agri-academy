@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { SiteNav } from "@/components/site-nav";
+import { AppThemeProvider } from "@/components/theme/providers";
 import { routing } from "@/i18n/routing";
 
 const spaceGrotesk = Space_Grotesk({
@@ -83,18 +84,20 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 	const messages = await getMessages();
 
 	return (
-		<html lang={locale} className={fontVariables}>
+		<html lang={locale} className={fontVariables} suppressHydrationWarning>
 			<body className="min-h-screen font-sans">
-				<NextIntlClientProvider locale={locale} messages={messages}>
-					<div className="aurora" aria-hidden="true" />
-					<div className="grain" aria-hidden="true" />
-					<div className="relative z-[2] flex min-h-screen flex-col">
-						<SiteNav />
-						<div className="h-[5.75rem] shrink-0 md:h-24" aria-hidden />
-						<div className="flex-1">{children}</div>
-						<Footer />
-					</div>
-				</NextIntlClientProvider>
+				<AppThemeProvider>
+					<NextIntlClientProvider locale={locale} messages={messages}>
+						<div className="aurora" aria-hidden="true" />
+						<div className="grain" aria-hidden="true" />
+						<div className="relative z-[2] flex min-h-screen flex-col">
+							<SiteNav />
+							<div className="h-[5.75rem] shrink-0 md:h-24" aria-hidden />
+							<div className="flex-1">{children}</div>
+							<Footer />
+						</div>
+					</NextIntlClientProvider>
+				</AppThemeProvider>
 			</body>
 		</html>
 	);

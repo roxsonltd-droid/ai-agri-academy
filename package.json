@@ -10,12 +10,15 @@
 		"compose:up": "docker compose up --build",
 		"compose:down": "docker compose down",
 		"serve": "npx --yes serve . -p 3456",
+		"sync:academy": "node scripts/sync-academy-content.mjs",
 		"sync:agridirect": "node scripts/sync-agridirect-articles.mjs",
 		"build:egypt": "node scripts/build-egypt-article.mjs",
 		"build:egypt:ru": "node scripts/build-egypt-article-ru.mjs",
 		"typecheck": "tsc --noEmit",
 		"check:fieldlot-rag": "node scripts/check-fieldlot-rag.mjs",
-		"ci": "npm run typecheck && node scripts/check-fieldlot-rag.mjs"
+		"ci": "npm run typecheck && node scripts/check-fieldlot-rag.mjs",
+		"lint:web": "npm run lint --prefix apps/web",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@langchain/core": "^1.1.48",
@@ -28,6 +31,8 @@
 		"yahoo-finance2": "^3.14.1"
 	},
 	"devDependencies": {
+		"husky": "^9.1.7",
+		"lint-staged": "^15.5.2",
 		"tsx": "^4.19.3",
 		"typescript": "^5.7.3"
 	}

@@ -31,7 +31,7 @@ export default async function CourseTestPage({ params }: Props) {
 
 	return (
 		<main className="mx-auto max-w-3xl px-6 py-12">
-			<CourseFinalTestQuiz courseTitle={course.title} test={test} />
+			<CourseFinalTestQuiz courseTitle={course.title} test={test} courseSlug={slug} />
 
 			<p className="mt-10 flex flex-wrap gap-4 text-sm">
 				<Link href={`/academy/course/${slug}`} className="text-emerald-800 underline underline-offset-4">

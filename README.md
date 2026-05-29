@@ -8,6 +8,7 @@ AgriNexus is a complete infrastructure for modern farming. It replaces the tradi
 
 | Topic | Where |
 |--------|--------|
+| **GitHub (canonical repo)** | [github.com/roxsonltd-droid/fieldlot](https://github.com/roxsonltd-droid/fieldlot) |
 | **Roadmap** | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 | **Onboarding** (web Supabase + mobile first-run) | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
 | **Deploy (Render / Railway)** | [`docs/DEPLOY-RENDER-RAILWAY.md`](docs/DEPLOY-RENDER-RAILWAY.md) |

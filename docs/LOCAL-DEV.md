@@ -93,3 +93,5 @@ The existing `npm run dev` is still the **static site + TS API** dev server for 
 4. Домейн: или нов поддомейн (напр. `app.…`) за Next проекта, или преместване на production към Next-only проект (тогава статичните коренови страници няма да се обслужват от същия deploy — планирай пренасочвания/един front).
 
 Докато root directory остане `.`, новите файлове под **`apps/web/`** ще са в GitHub, но **няма да влязат** в този статичен build.
+
+Пълен чеклист и типични грешки: **[`docs/VERCEL.md`](./VERCEL.md)**.

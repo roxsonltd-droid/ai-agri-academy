@@ -15,6 +15,7 @@ AgriNexus is a complete infrastructure for modern farming. It replaces the tradi
 | **Roadmap** | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 | **Onboarding** (web Supabase + mobile first-run) | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
 | **Deploy (Render / Railway)** | [`docs/DEPLOY-RENDER-RAILWAY.md`](docs/DEPLOY-RENDER-RAILWAY.md) |
+| **Vercel (Next vs статичен корен)** | [`docs/VERCEL.md`](docs/VERCEL.md) |
 | **Local dev** (Next + FastAPI + Expo + Docker) | [`docs/LOCAL-DEV.md`](docs/LOCAL-DEV.md) |
 | **Environment & secrets** (`.env.example`, Doppler) | [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) |
 | **Backend HTTP API** (OpenAPI, auth, tutor) | [`docs/BACKEND_API.md`](docs/BACKEND_API.md) |

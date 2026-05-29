@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "name": "Academy",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.cwd": "${workspaceFolder}"
+  }
+}

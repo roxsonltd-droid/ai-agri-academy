@@ -1,0 +1,8 @@
+# Optional AI platform stack — install with:
+#   pip install -r requirements.txt -r requirements-ai.txt
+langgraph>=0.2.55,<0.3
+langchain-core>=0.3.45,<0.4
+llama-index-core>=0.11.0,<0.13
+llama-index-vector-stores-pinecone>=0.2.0,<0.5
+llama-index-embeddings-openai>=0.2.0,<0.4
+pinecone[grpc]>=5.1.0,<6

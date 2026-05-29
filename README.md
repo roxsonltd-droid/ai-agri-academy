@@ -110,5 +110,9 @@ GitHub Actions: `.github/workflows/ci.yml` — root `npm run typecheck`, advisor
 
 Operator notes: `docs/AI-OPERATIONS.md`.
 
+## Слято с `origin/main` (архивен слой)
+
+GitHub `origin/main` носеше отделно дърво (`ai-agro-academy/`, коренов `backend/`, `mobile/`, …). То е **запазено** в това репо след merge за справка; **активната разработка** остава **`apps/web`**, **`apps/backend`**, **`apps/mobile`**. Workspace за стария layout: **`Agro-Academy.code-workspace`**.
+
 ---
 *Every article peer-reviewed by working agronomists and traders. Always free. No vendor lock-in. Open standards, your data, your call.*

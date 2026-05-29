@@ -7,7 +7,7 @@
 Синхронизация към Next и мобилното приложение:
 
 ```bash
-# от корена на agrinexus-final
+# от корена на монорепото (канонично C:\Users\expre\Academy — виж docs/CANONICAL-WORKSPACE-BG.md)
 npm run sync:academy
 ```
 

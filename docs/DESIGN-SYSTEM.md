@@ -33,4 +33,5 @@ B2B агро UI (FieldLot): токени, типография, Yellow Pages р�
 
 ## Next.js Academy (`apps/web`)
 
+- Локално отвори репото от каноничния корен **`C:\Users\expre\Academy`** (виж **`docs/CANONICAL-WORKSPACE-BG.md`**), за да не се разминават пътища и инструменти.
 - **`GeneratedQuizViewer`** — `src/components/academy/generated-quiz-viewer.tsx` (типове: `src/lib/generated-quiz-types.ts`). Демо: маршрут **`/academy/lab/quiz`** (линк от `/academy/lab`).

@@ -1,6 +1,6 @@
 # AgriNexus Academy — канонично съдържание
 
-Тази папка е **източник на истина** за курсове и лекции (Markdown + JSON метаданни). След промени пусни от корена на `agrinexus-final`:
+Тази папка е **източник на истина** за курсове и лекции (Markdown + JSON метаданни). След промени пусни от корена на монорепото (канонично **`C:\Users\expre\Academy`** — виж **`docs/CANONICAL-WORKSPACE-BG.md`**):
 
 ```bash
 npm run sync:academy

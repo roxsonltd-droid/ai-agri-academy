@@ -11,6 +11,7 @@ AgriNexus is a complete infrastructure for modern farming. It replaces the tradi
 | Topic | Where |
 |--------|--------|
 | **GitHub (canonical repo)** | [github.com/roxsonltd-droid/ai-agri-academy](https://github.com/roxsonltd-droid/ai-agri-academy) |
+| **Локален корен (канонично)** | `C:\Users\expre\Academy` — виж [`docs/CANONICAL-WORKSPACE-BG.md`](docs/CANONICAL-WORKSPACE-BG.md) и `Open-Academy-Terminal.cmd` |
 | **Roadmap** | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 | **Onboarding** (web Supabase + mobile first-run) | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
 | **Deploy (Render / Railway)** | [`docs/DEPLOY-RENDER-RAILWAY.md`](docs/DEPLOY-RENDER-RAILWAY.md) |
@@ -27,7 +28,7 @@ AgriNexus is a complete infrastructure for modern farming. It replaces the tradi
 
 **AI кошче:** временни чернови, фрагменти и еднократни артефакти от работа с ИИ — папка **`ai-trash/`** (съдържанието е в `.gitignore`, виж `ai-trash/README.md`). Правило за агентите: `.cursor/rules/ai-trash.mdc`.
 
-**Windows + кирилица в пътя:** ако имаш и `Desktop\проект\…` и `Desktop\project\…`, лесно се работи върху „грешното“ копие. Виж **`docs/WORKSPACE-CYRILLIC-PATH-BG.md`** и скрипта **`scripts/windows/link-cyrillic-desktop-folder.ps1`** (junction към едно репо).
+**Windows + кирилица в пътя:** ако имаш и `Desktop\проект\…` и друго копие, лесно се работи върху „грешното“. Виж **`docs/WORKSPACE-CYRILLIC-PATH-BG.md`** и скрипта **`scripts/windows/link-cyrillic-desktop-folder.ps1`** (junction по подразбиране към **`C:\Users\expre\Academy`**).
 
 **Графичен слой:** споделени стилове в **`styles/agri-market-shared.css`** + **`styles/agri-marketing-supplement.css`** за начална/агенти; описание и таблица: **`docs/DESIGN-SYSTEM.md`**.
 

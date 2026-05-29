@@ -1,5 +1,9 @@
 # Работна папка: кирилица `проект` срещу ASCII `project`
 
+## Канонично местоположение (препоръка)
+
+Дръж **истинското** репо в **`C:\Users\expre\Academy`** и отваряй проекта оттам в Cursor (виж [`CANONICAL-WORKSPACE-BG.md`](./CANONICAL-WORKSPACE-BG.md)). Така няма объркване с `Desktop\проект\…` vs `Desktop\project\…`.
+
 ## Какъв беше проблемът
 
 На Windows често се появяват **две различни папки**:
@@ -14,24 +18,24 @@
 ## Решение A (препоръчано): една директория чрез junction
 
 1. **Затвори** Cursor/VS Code, всички терминали и Explorer прозорци, отворени в `...\проект\agrinexus-final-main`.
-2. Отвори PowerShell и изпълни (от корена на репото под **`project\`**):
+2. Отвори PowerShell и изпълни от **каноничния корен** (`C:\Users\expre\Academy`) или от ASCII пътя, където реално е `.git`:
 
 ```powershell
-cd $env:USERPROFILE\OneDrive\Desktop\project\agrinexus-final-main
+cd C:\Users\expre\Academy
 powershell -ExecutionPolicy Bypass -File .\scripts\windows\link-cyrillic-desktop-folder.ps1
 ```
 
-Скриптът преименува старата папка под `проект\` в `agrinexus-final-main-backup-…` и създава **junction** с име `agrinexus-final-main`, която сочи към `Desktop\project\agrinexus-final-main`. Така и двата пътя виждат **едни и същи файлове**.
+Скриптът преименува старата папка под `проект\` в `agrinexus-final-main-backup-…` и създава **junction** `...\проект\agrinexus-final-main`, която сочи към **`C:\Users\expre\Academy`** (по подразбиране). Така и двата пътя виждат **едни и същи файлове**.
 
 Ако видиш грешка „file is being used“, затвори IDE и пусни скрипта отново.
 
 ## Решение B: без junction
 
-Отваряй репото **само** от:
+Отваряй репото **само** от каноничния корен:
 
-`%USERPROFILE%\OneDrive\Desktop\project\agrinexus-final-main`
+`C:\Users\expre\Academy`
 
-и не ползвай дублиращата папка под `проект\`, докато не направиш junction.
+(или временно от `%USERPROFILE%\OneDrive\Desktop\project\agrinexus-final-main`, ако още не си преместил clone-а). Не ползвай дублиращата папка под `проект\`, докато не направиш junction.
 
 ## Бележка за OneDrive
 

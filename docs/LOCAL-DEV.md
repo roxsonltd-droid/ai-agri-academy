@@ -1,5 +1,7 @@
 # Local development — Next.js + FastAPI + Postgres
 
+**Каноничен локален корен на репото:** `C:\Users\expre\Academy` (виж [`CANONICAL-WORKSPACE-BG.md`](./CANONICAL-WORKSPACE-BG.md)). Командите по-долу се изпълняват от този път (или от еквивалентен clone с `.git` в корена).
+
 ## Option A — Docker (DB + API)
 
 From repo root:

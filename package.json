@@ -4,7 +4,7 @@
 	"type": "module",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/roxsonltd-droid/fieldlot.git"
+		"url": "https://github.com/roxsonltd-droid/ai-agri-academy.git"
 	},
 	"scripts": {
 		"dev": "node --import tsx scripts/dev-server.mjs",

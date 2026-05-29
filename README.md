@@ -2,13 +2,15 @@
 
 **An operating system that senses, thinks, acts.**
 
+Канонично GitHub репо (Academy / монорепо): **[roxsonltd-droid/ai-agri-academy](https://github.com/roxsonltd-droid/ai-agri-academy)**.
+
 AgriNexus is a complete infrastructure for modern farming. It replaces the traditional "black box AI" with a transparent, explainable ecosystem of specialized agents that help farmers make data-driven decisions.
 
 ## Quick links
 
 | Topic | Where |
 |--------|--------|
-| **GitHub (canonical repo)** | [github.com/roxsonltd-droid/fieldlot](https://github.com/roxsonltd-droid/fieldlot) |
+| **GitHub (canonical repo)** | [github.com/roxsonltd-droid/ai-agri-academy](https://github.com/roxsonltd-droid/ai-agri-academy) |
 | **Roadmap** | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 | **Onboarding** (web Supabase + mobile first-run) | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
 | **Deploy (Render / Railway)** | [`docs/DEPLOY-RENDER-RAILWAY.md`](docs/DEPLOY-RENDER-RAILWAY.md) |

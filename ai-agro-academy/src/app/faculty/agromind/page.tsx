@@ -35,10 +35,23 @@ export default function RectorateChat() {
       }
     } catch(e) {}
 
+    let initialMessage = `Добре дошли в Ректората! Аз съм Главният AI Ректор на академията.${farmContext} Моята цел е да изградя вашия персонален образователен път и да координирам експертния съвет. С кой казус ще започнем днес?`;
+
+    // Handle agent context from URL
+    try {
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const agentContext = params.get("context");
+        if (agentContext) {
+          initialMessage = agentContext;
+        }
+      }
+    } catch(e) {}
+
     setMessages([
       {
         role: "ai",
-        content: `Добре дошли в Ректората! Аз съм Главният AI Ректор на академията.${farmContext} Моята цел е да изградя вашия персонален образователен път и да координирам експертния съвет. С кой казус ще започнем днес?`
+        content: initialMessage
       }
     ]);
   }, []);

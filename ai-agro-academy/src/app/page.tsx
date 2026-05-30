@@ -16,7 +16,7 @@ export default function Home() {
     { title: "Анализ на Снимки", desc: "Разпознаване на болести по растенията чрез компютърно зрение.", icon: ImageIcon, color: "from-orange-400 to-orange-500", bg: "bg-orange-500/10", href: "/labs/vision" },
     { title: "Видео Уроци", desc: "Генериране на 3D видео симулации за работа с агро техника.", icon: Video, color: "from-red-400 to-red-500", bg: "bg-red-500/10" },
     { title: "Гласов Асистент", desc: "Диктувайте бележки на полето и ги превръщайте в отчети.", icon: Mic, color: "from-pink-400 to-pink-500", bg: "bg-pink-500/10" },
-    { title: "Център за Документи", desc: "Анализирайте почвени проби, сертификати и PDF ръководства.", icon: FileText, color: "from-cyan-400 to-cyan-500", bg: "bg-cyan-500/10" },
+    { title: "Център за Документи", desc: "Анализирайте почвени проби, сертификати и PDF ръководства.", icon: FileText, color: "from-cyan-400 to-cyan-500", bg: "bg-cyan-500/10", href: "/knowledge" },
     { title: "Добив и Данни", desc: "Качвайте таблици и получавайте моментални AI прогнози за добива.", icon: BarChart3, color: "from-emerald-400 to-emerald-500", bg: "bg-emerald-500/10" },
     { title: "Мултиезичност", desc: "Превеждайте земеделска литература от над 100 езика моментално.", icon: Languages, color: "from-indigo-400 to-indigo-500", bg: "bg-indigo-500/10" },
     { title: "Смарт Напояване", desc: "Интеграция с IoT сензори за автоматично контролиране на водата.", icon: Zap, color: "from-yellow-400 to-yellow-500", bg: "bg-yellow-500/10" },

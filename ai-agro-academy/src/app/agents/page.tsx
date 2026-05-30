@@ -15,7 +15,9 @@ import {
   Radio,
   Settings,
   X,
-  Plus
+  Plus,
+  Zap,
+  Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -36,6 +38,9 @@ export default function AgentsMissionControl() {
   const [showNewAgentModal, setShowNewAgentModal] = useState(false);
   const [newAgentName, setNewAgentName] = useState("");
   const [newAgentTask, setNewAgentTask] = useState("");
+  
+  const [isSimulatingCron, setIsSimulatingCron] = useState(false);
+  const [alerts, setAlerts] = useState<any[]>([]);
   
   const [agents, setAgents] = useState<Agent[]>([
     {
@@ -79,43 +84,65 @@ export default function AgentsMissionControl() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("agro_farm_profile");
+      let currentRegion = "вашия регион";
+      let currentCrops = "вашите култури";
+      
       if (saved) {
         const profile = JSON.parse(saved);
-        if (profile.region) setRegion(profile.region);
-        if (profile.crops) setCrops(profile.crops);
+        if (profile.region) {
+          setRegion(profile.region);
+          currentRegion = profile.region;
+        }
+        if (profile.crops) {
+          setCrops(profile.crops);
+          currentCrops = profile.crops;
+        }
       }
+
+      const notifs = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
+      const formattedNotifs = notifs.map((n: any) => ({
+         id: n.id,
+         agentId: n.type,
+         severity: n.type === 'weather' ? 'high' : 'medium',
+         title: n.type === 'weather' ? `Метео Аларма: ${currentRegion}` : `Пазарно Известие`,
+         description: n.message,
+         time: "Току-що",
+         contextParam: `Здравей, получих известие: ${n.message}`
+      }));
+      
+      const defaultAlerts = [
+        {
+          id: "def-1",
+          agentId: "weather",
+          severity: "high",
+          title: `Очакват се обилни валежи в ${currentRegion}`,
+          description: `Анализът на сателитните данни показва 85% вероятност за силни валежи през следващите 48 часа. Препоръчва се отлагане на планираните пръскания.`,
+          time: "Преди 12 мин",
+          contextParam: `Здравей, Агент Време засече обилни валежи в ${currentRegion} за следващите 48 часа. Какви превантивни мерки да предприема за ${currentCrops}?`
+        },
+        {
+          id: "def-2",
+          agentId: "market",
+          severity: "medium",
+          title: "Ръст на цената на зърното на MATIF",
+          description: "Европейската борса отчита повишение с 2.5% за пшеницата през последните 24 часа. Подходящ момент за сключване на предварителни договори.",
+          time: "Преди 2 часа",
+          contextParam: `Агент Пазари ме информира за ръст от 2.5% на пшеницата в MATIF. Можеш ли да ми дадеш икономически съвет кога е най-добре да продавам?`
+        },
+        {
+          id: "def-3",
+          agentId: "disease",
+          severity: "low",
+          title: `Следене на ${currentCrops} за ранен пригор`,
+          description: "Повишената влажност през уикенда създава благоприятни условия за развитие на гъбични заболявания.",
+          time: "Преди 5 часа",
+          contextParam: `Агент Болести съобщава за повишен риск от ранен пригор по ${currentCrops} заради влагата. Какво да използвам за превантивно пръскане?`
+        }
+      ];
+
+      setAlerts([...formattedNotifs, ...defaultAlerts]);
     } catch(e) {}
   }, []);
-
-  const alerts = [
-    {
-      id: 1,
-      agentId: "weather",
-      severity: "high",
-      title: `Очакват се обилни валежи в ${region}`,
-      description: `Анализът на сателитните данни показва 85% вероятност за силни валежи през следващите 48 часа. Препоръчва се отлагане на планираните пръскания.`,
-      time: "Преди 12 мин",
-      contextParam: `Здравей, Агент Време засече обилни валежи в ${region} за следващите 48 часа. Какви превантивни мерки да предприема за ${crops}?`
-    },
-    {
-      id: 2,
-      agentId: "market",
-      severity: "medium",
-      title: "Ръст на цената на зърното на MATIF",
-      description: "Европейската борса отчита повишение с 2.5% за пшеницата през последните 24 часа. Подходящ момент за сключване на предварителни договори.",
-      time: "Преди 2 часа",
-      contextParam: `Агент Пазари ме информира за ръст от 2.5% на пшеницата в MATIF. Можеш ли да ми дадеш икономически съвет кога е най-добре да продавам?`
-    },
-    {
-      id: 3,
-      agentId: "disease",
-      severity: "low",
-      title: `Следене на ${crops} за ранен пригор`,
-      description: "Повишената влажност през уикенда създава благоприятни условия за развитие на гъбични заболявания.",
-      time: "Преди 5 часа",
-      contextParam: `Агент Болести съобщава за повишен риск от ранен пригор по ${crops} заради влагата. Какво да използвам за превантивно пръскане?`
-    }
-  ];
 
   const handleCreateAgent = () => {
     if (!newAgentName) return;
@@ -131,6 +158,41 @@ export default function AgentsMissionControl() {
     setShowNewAgentModal(false);
     setNewAgentName("");
     setNewAgentTask("");
+  };
+
+  const simulateCronJob = () => {
+    setIsSimulatingCron(true);
+    setTimeout(() => {
+       const isWeather = Math.random() > 0.5;
+       const newNotif = {
+         id: Date.now().toString(),
+         type: isWeather ? "weather" : "market",
+         message: isWeather 
+          ? `Внимание! AI Метеоролог засича рязък спад на температурите в ${region}. Погрижете се за вашите посеви (${crops}).`
+          : `AI Пазари: Наблюдава се повишено търсене на ${crops} в региона на ${region}. Проверете борсовите цени.`,
+         date: new Date().toISOString(),
+         read: false
+       };
+       
+       const current = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
+       localStorage.setItem("agro_notifications", JSON.stringify([newNotif, ...current]));
+       
+       // Alert Navbar
+       window.dispatchEvent(new Event("agro_notifications_updated"));
+       
+       // Update local feed
+       setAlerts([{
+         id: newNotif.id,
+         agentId: newNotif.type,
+         severity: isWeather ? 'high' : 'medium',
+         title: isWeather ? `Метео Аларма: ${region}` : `Пазарно Известие: ${region}`,
+         description: newNotif.message,
+         time: "Току-що",
+         contextParam: `Моля за съвет относно: ${newNotif.message}`
+       }, ...alerts]);
+       
+       setIsSimulatingCron(false);
+    }, 1500);
   };
 
   return (
@@ -166,6 +228,25 @@ export default function AgentsMissionControl() {
           
           {/* Active Agents Panel */}
           <div className="lg:col-span-1 space-y-6">
+            
+            {/* Automation Simulator */}
+            <div className="p-5 rounded-xl border border-indigo-500/30 bg-indigo-950/20 shadow-[0_0_20px_rgba(79,70,229,0.1)] mb-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-indigo-400 flex items-center mb-3">
+                <Zap className="w-4 h-4 mr-2" /> Автоматизация
+              </h2>
+              <p className="text-xs text-slate-400 mb-4 leading-relaxed">
+                Сървърният Cron Job работи всеки ден в 06:00 ч. Можете да го симулирате ръчно, за да тествате известията (API: <code>/api/cron</code>).
+              </p>
+              <Button 
+                onClick={simulateCronJob}
+                disabled={isSimulatingCron}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs"
+              >
+                {isSimulatingCron ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Zap className="w-4 h-4 mr-2" />}
+                {isSimulatingCron ? "Симулиране..." : "Симлуирай Сутрешен Cron Job"}
+              </Button>
+            </div>
+
             <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 flex items-center">
               <ShieldCheck className="w-4 h-4 mr-2" /> Наети Агенти
             </h2>
@@ -231,47 +312,50 @@ export default function AgentsMissionControl() {
             </h2>
 
             <div className="space-y-4">
-              {alerts.map((alert, idx) => (
-                <motion.div 
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  key={alert.id} 
-                  className={`relative p-6 rounded-xl border backdrop-blur-sm overflow-hidden ${
-                    alert.severity === 'high' 
-                      ? 'bg-red-950/20 border-red-500/30' 
-                      : alert.severity === 'medium'
-                        ? 'bg-amber-950/20 border-amber-500/30'
-                        : 'bg-slate-900/80 border-slate-800'
-                  }`}
-                >
-                  <div className={`absolute left-0 top-0 bottom-0 w-1 ${
-                    alert.severity === 'high' ? 'bg-red-500' : alert.severity === 'medium' ? 'bg-amber-500' : 'bg-slate-700'
-                  }`} />
-                  
-                  <div className="flex justify-between items-start mb-3 pl-3">
-                    <h3 className={`font-bold text-lg ${
-                      alert.severity === 'high' ? 'text-red-400' : alert.severity === 'medium' ? 'text-amber-400' : 'text-white'
-                    }`}>
-                      {alert.title}
-                    </h3>
-                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">{alert.time}</span>
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm leading-relaxed pl-3 mb-5">
-                    {alert.description}
-                  </p>
+              <AnimatePresence>
+                {alerts.map((alert, idx) => (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ delay: idx * 0.05 }}
+                    key={alert.id} 
+                    className={`relative p-6 rounded-xl border backdrop-blur-sm overflow-hidden ${
+                      alert.severity === 'high' 
+                        ? 'bg-red-950/20 border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.05)]' 
+                        : alert.severity === 'medium'
+                          ? 'bg-amber-950/20 border-amber-500/30'
+                          : 'bg-slate-900/80 border-slate-800'
+                    }`}
+                  >
+                    <div className={`absolute left-0 top-0 bottom-0 w-1 ${
+                      alert.severity === 'high' ? 'bg-red-500' : alert.severity === 'medium' ? 'bg-amber-500' : 'bg-slate-700'
+                    }`} />
+                    
+                    <div className="flex justify-between items-start mb-3 pl-3">
+                      <h3 className={`font-bold text-lg ${
+                        alert.severity === 'high' ? 'text-red-400' : alert.severity === 'medium' ? 'text-amber-400' : 'text-white'
+                      }`}>
+                        {alert.title}
+                      </h3>
+                      <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">{alert.time}</span>
+                    </div>
+                    
+                    <p className="text-slate-300 text-sm leading-relaxed pl-3 mb-5">
+                      {alert.description}
+                    </p>
 
-                  <div className="pl-3 flex justify-end">
-                    <Link href={`/faculty/agromind?context=${encodeURIComponent(alert.contextParam)}`}>
-                      <Button size="sm" className="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow-sm flex items-center transition-colors hover:border-primary/50">
-                        <BrainCircuit className="w-4 h-4 mr-2 text-primary" />
-                        Анализирай с Ректора <ChevronRight className="w-3 h-3 ml-2 text-slate-400" />
-                      </Button>
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
+                    <div className="pl-3 flex justify-end">
+                      <Link href={`/faculty/agromind?context=${encodeURIComponent(alert.contextParam)}`}>
+                        <Button size="sm" className="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow-sm flex items-center transition-colors hover:border-primary/50">
+                          <BrainCircuit className="w-4 h-4 mr-2 text-primary" />
+                          Анализирай с Ректора <ChevronRight className="w-3 h-3 ml-2 text-slate-400" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
         </div>

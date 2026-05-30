@@ -6,6 +6,11 @@ import { MessageSquare, Bot, Code2, Image as ImageIcon, Video, FileText, BarChar
 import Link from "next/link";
 import { easeCinematic, staggerInViewContainer, transitionCinematic, viewportFadeUpVariants } from "@/lib/motion";
 
+export const metadata = {
+  title: "Начало | AI Agro Academy",
+  description: "Добре дошли в първата AI-движена платформа за агрономия в България. Влезте в бъдещето на земеделието.",
+};
+
 export default function Home() {
   const reduceMotion = useReducedMotion();
 

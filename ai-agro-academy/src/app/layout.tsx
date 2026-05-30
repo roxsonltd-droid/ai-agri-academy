@@ -11,15 +11,39 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AI Agro Academy | AI operating system for learning",
+  title: {
+    template: "%s | AI Agro Academy",
+    default: "AI Agro Academy | AI operating system for learning",
+  },
   description:
-    "An AI operating system for learning — изкуствен интелект, лаборатории и експертно съдържание за модерно земеделие.",
+    "Първата AI-движена платформа за агрономия в България. Интерактивни лаборатории, AI преподаватели и експертно съдържание за модерно земеделие.",
+  keywords: ["агрономия", "земеделие", "AI обучение", "агро академия", "селско стопанство", "курсове", "AgriNexus"],
+  authors: [{ name: "AgriNexus Team" }],
+  creator: "AgriNexus",
   openGraph: {
     title: "AI Agro Academy · AI operating system for learning",
     description:
-      "An AI operating system for learning — платформа за умно обучение в агрономията.",
+      "Първата AI-движена платформа за агрономия в България. Учи по-умно с изкуствен интелект.",
+    url: "https://agro-academy-frontend-dzjv.onrender.com",
+    siteName: "AI Agro Academy",
     locale: "bg_BG",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Agro Academy | Модерно Земеделие",
+    description: "AI operating system for learning — платформа за умно обучение в агрономията.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

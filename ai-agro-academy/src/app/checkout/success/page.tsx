@@ -29,6 +29,13 @@ export default function CheckoutSuccessPage() {
     localStorage.setItem("agro_notifications", JSON.stringify([newNotif, ...current]));
     window.dispatchEvent(new Event("agro_notifications_updated"));
 
+    // Fire simulated Email Receipt
+    fetch("/api/emails/receipt", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "demo-farmer@agrinexus.eu", plan: "PRO", price: "249" })
+    }).catch(console.error);
+
   }, []);
 
   if (!isClient) return null;

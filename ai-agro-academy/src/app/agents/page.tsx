@@ -26,7 +26,9 @@ import {
   FileText,
   UploadCloud,
   CheckCircle2,
-  HardDrive
+  HardDrive,
+  Mail,
+  Send
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -60,7 +62,20 @@ export default function AgentsMissionControl() {
   // Docs States
   const [uploadingDoc, setUploadingDoc] = useState(false);
   
+  // Marketing States
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+
   const [agents, setAgents] = useState<Agent[]>([
+    {
+      id: "marketing",
+      name: "Маркетинг Агент",
+      role: "Автоматизирани Имейл Кампании",
+      icon: Mail,
+      status: "active",
+      color: "text-pink-400",
+      bg: "bg-pink-500/10 border-pink-500/30"
+    },
     {
       id: "weather",
       name: "Агент Време",
@@ -278,7 +293,34 @@ export default function AgentsMissionControl() {
        localStorage.setItem("agro_notifications", JSON.stringify([newNotif, ...current]));
        window.dispatchEvent(new Event("agro_notifications_updated"));
     }, 1500);
-  }
+  };
+
+  const handleSendWelcomeEmail = () => {
+    setSendingEmail(true);
+    setEmailSent(false);
+    fetch("/api/emails/welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "demo-farmer@agrinexus.eu", name: "Иван" })
+    })
+      .then(() => {
+        setTimeout(() => {
+          setSendingEmail(false);
+          setEmailSent(true);
+          const newNotif = {
+            id: Date.now().toString(),
+            type: "system",
+            message: `Маркетинг Агентът изпрати Welcome имейл до demo-farmer@agrinexus.eu.`,
+            date: new Date().toISOString(),
+            read: false
+          };
+          const current = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
+          localStorage.setItem("agro_notifications", JSON.stringify([newNotif, ...current]));
+          window.dispatchEvent(new Event("agro_notifications_updated"));
+        }, 1000);
+      })
+      .catch(console.error);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300 font-sans pt-20 pb-20">
@@ -617,8 +659,65 @@ export default function AgentsMissionControl() {
                 </div>
               )}
 
-              {/* 3. DEFAULT SETTINGS MODAL CONTENT (for Weather, Market, etc) */}
-              {selectedAgent.id !== 'clear' && selectedAgent.id !== 'docs' && (
+              {/* 3. MARKETING MODAL CONTENT */}
+              {selectedAgent.id === 'marketing' && (
+                <div className="space-y-6">
+                  <div className="text-center py-6">
+                    <Mail className="w-16 h-16 text-pink-500 mx-auto mb-4" />
+                    <h4 className="text-xl font-bold text-white mb-2">Имейл Автоматизация</h4>
+                    <p className="text-slate-400 max-w-md mx-auto mb-8 text-sm">
+                      Този агент следи за нови регистрации и успешни плащания. Използва Resend за моментално доставяне на красиви HTML писма.
+                    </p>
+                    
+                    {!emailSent ? (
+                      <Button 
+                        onClick={handleSendWelcomeEmail}
+                        disabled={sendingEmail}
+                        className="bg-pink-600 hover:bg-pink-500 text-white font-bold py-6 px-10 rounded-xl text-lg shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all"
+                      >
+                        {sendingEmail ? <Loader2 className="w-6 h-6 animate-spin mr-3" /> : <Send className="w-6 h-6 mr-3" />}
+                        {sendingEmail ? "Изпращане на имейл..." : "Тествай Welcome Email"}
+                      </Button>
+                    ) : (
+                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-pink-950/20 border border-pink-500/30 rounded-xl p-6">
+                        <CheckCircle2 className="w-12 h-12 text-pink-400 mx-auto mb-3" />
+                        <h4 className="font-bold text-white mb-1">Имейлът е изпратен!</h4>
+                        <p className="text-pink-400 text-sm">Вижте конзолата на сървъра за HTML шаблона (Simulation Mode).</p>
+                        <Button onClick={() => setEmailSent(false)} variant="outline" className="mt-4 border-slate-700">
+                          Изпрати отново
+                        </Button>
+                      </motion.div>
+                    )}
+                  </div>
+                  
+                  <div className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden mt-6">
+                    <table className="w-full text-left text-sm text-slate-300">
+                      <thead className="bg-slate-950 border-b border-slate-800 text-xs uppercase">
+                        <tr>
+                          <th className="px-6 py-4 font-medium">Тригер</th>
+                          <th className="px-6 py-4 font-medium">Шаблон</th>
+                          <th className="px-6 py-4 font-medium">Статус</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-800">
+                        <tr className="hover:bg-slate-800/50">
+                          <td className="px-6 py-4">Нова Регистрация (Clerk)</td>
+                          <td className="px-6 py-4">Welcome Email</td>
+                          <td className="px-6 py-4"><span className="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs">Активен</span></td>
+                        </tr>
+                        <tr className="hover:bg-slate-800/50">
+                          <td className="px-6 py-4">Успешно Плащане (Stripe)</td>
+                          <td className="px-6 py-4">Разписка & PRO</td>
+                          <td className="px-6 py-4"><span className="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs">Активен</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* 4. DEFAULT SETTINGS MODAL CONTENT (for Weather, Market, etc) */}
+              {selectedAgent.id !== 'clear' && selectedAgent.id !== 'docs' && selectedAgent.id !== 'marketing' && (
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-semibold text-slate-300 mb-2">Ниво на тревога (Сензитивност)</label>

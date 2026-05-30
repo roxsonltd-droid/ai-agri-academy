@@ -1,25 +1,22 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, Printer, Award, Medal, ShieldCheck } from "lucide-react";
+import { ChevronLeft, Printer, Medal, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function CertificatePage() {
+function CertificateContent() {
   const searchParams = useSearchParams();
   const [studentName, setStudentName] = useState("Красимир Атанасов");
   const courseTitle = searchParams.get("course") || "Основи на Прецизното Земеделие";
   const dateStr = new Date().toLocaleDateString("bg-BG");
   
   useEffect(() => {
-    // Attempt to load from localStorage if logged in
     try {
       const savedUser = localStorage.getItem("agro_farm_profile");
       if (savedUser) {
-        const parsed = JSON.parse(savedUser);
-        // We don't have name in farm profile, maybe we have token?
-        // Fallback to static for demo purposes, but in real life it would fetch from /me
+        // Just parsing for now, fallback to static name
       }
     } catch(e) {}
   }, []);
@@ -41,10 +38,8 @@ export default function CertificatePage() {
 
       <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
         
-        {/* CERTIFICATE CONTAINER */}
         <div className="relative bg-white w-full max-w-5xl aspect-[1.414/1] sm:aspect-auto sm:min-h-[700px] rounded-sm shadow-2xl p-4 sm:p-12 border-8 border-slate-800 overflow-hidden print:shadow-none print:border-none print:p-0">
           
-          {/* Ornate Background Patterns */}
           <div className="absolute inset-0 pointer-events-none opacity-5">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
           </div>
@@ -55,7 +50,6 @@ export default function CertificatePage() {
           <div className="absolute bottom-0 left-0 w-32 h-32 border-b-8 border-l-8 border-amber-700 m-8 rounded-bl-xl pointer-events-none print:hidden" />
           <div className="absolute bottom-0 right-0 w-32 h-32 border-b-8 border-r-8 border-amber-700 m-8 rounded-br-xl pointer-events-none print:hidden" />
 
-          {/* Certificate Content */}
           <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-4 py-8">
             
             <div className="flex items-center space-x-4 mb-8">
@@ -82,7 +76,6 @@ export default function CertificatePage() {
               {courseTitle}
             </h3>
 
-            {/* Signatures & Seal */}
             <div className="w-full flex flex-col md:flex-row justify-between items-end mt-auto px-8 md:px-24">
               
               <div className="flex flex-col items-center mb-8 md:mb-0">
@@ -93,7 +86,6 @@ export default function CertificatePage() {
                 </div>
               </div>
 
-              {/* Golden Seal */}
               <div className="relative flex items-center justify-center mb-8 md:mb-0 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
                 <div className="w-32 h-32 bg-gradient-to-br from-amber-400 via-amber-600 to-amber-700 rounded-full shadow-xl flex items-center justify-center border-4 border-amber-200">
                   <div className="w-28 h-28 border-2 border-dashed border-amber-200/50 rounded-full flex items-center justify-center">
@@ -114,11 +106,17 @@ export default function CertificatePage() {
               </div>
 
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
+  );
+}
+
+export default function CertificatePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Зареждане на сертификата...</div>}>
+      <CertificateContent />
+    </Suspense>
   );
 }

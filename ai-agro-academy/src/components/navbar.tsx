@@ -56,6 +56,7 @@ export default function Navbar() {
           <Link href="/faculty/agromind" className={navLink}>AI Факултет</Link>
           <Link href="/labs" className={navLink}>Лаборатории</Link>
           <Link href="/knowledge" className={navLink}>База Знания</Link>
+          <Link href="/sponsors" className={`${navLink} text-primary`}>Спонсори</Link>
         </div>
 
         {/* Right: Actions */}

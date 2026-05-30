@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Bot, Code2, Image as ImageIcon, Video, Music, FileText, BarChart3, Globe, Zap, Mic, Languages } from "lucide-react";
+import { MessageSquare, Bot, Code2, Image as ImageIcon, Video, FileText, BarChart3, Globe, Zap, Mic, Languages, Podcast } from "lucide-react";
 import Link from "next/link";
 import { easeCinematic, staggerInViewContainer, transitionCinematic, viewportFadeUpVariants } from "@/lib/motion";
 
@@ -15,13 +15,13 @@ export default function Home() {
     { title: "Симулации", desc: "Тествайте стратегии за засаждане и торене във виртуална среда.", icon: Code2, color: "from-blue-400 to-blue-500", bg: "bg-blue-500/10" },
     { title: "Анализ на Снимки", desc: "Разпознаване на болести по растенията чрез компютърно зрение.", icon: ImageIcon, color: "from-orange-400 to-orange-500", bg: "bg-orange-500/10", href: "/labs/vision" },
     { title: "Видео Уроци", desc: "Генериране на 3D видео симулации за работа с агро техника.", icon: Video, color: "from-red-400 to-red-500", bg: "bg-red-500/10" },
-    { title: "Гласов Асистент", desc: "Диктувайте бележки на полето и ги превръщайте в отчети.", icon: Mic, color: "from-pink-400 to-pink-500", bg: "bg-pink-500/10" },
+    { title: "Гласов Асистент", desc: "Диктувайте бележки на полето и ги превръщайте в отчети.", icon: Mic, color: "from-pink-400 to-pink-500", bg: "bg-pink-500/10", href: "/voice" },
     { title: "Център за Документи", desc: "Анализирайте почвени проби, сертификати и PDF ръководства.", icon: FileText, color: "from-cyan-400 to-cyan-500", bg: "bg-cyan-500/10", href: "/knowledge" },
     { title: "Добив и Данни", desc: "Качвайте таблици и получавайте моментални AI прогнози за добива.", icon: BarChart3, color: "from-emerald-400 to-emerald-500", bg: "bg-emerald-500/10" },
     { title: "Мултиезичност", desc: "Превеждайте земеделска литература от над 100 езика моментално.", icon: Languages, color: "from-indigo-400 to-indigo-500", bg: "bg-indigo-500/10" },
     { title: "Смарт Напояване", desc: "Интеграция с IoT сензори за автоматично контролиране на водата.", icon: Zap, color: "from-yellow-400 to-yellow-500", bg: "bg-yellow-500/10" },
-    { title: "Глобални Пазари", desc: "Следете борсовите цени на зърното в реално време.", icon: Globe, color: "from-sky-400 to-sky-500", bg: "bg-sky-500/10" },
-    { title: "Агро Подкаст", desc: "Генерирайте аудио резюмета на последните агро-новини за слушане в трактора.", icon: Music, color: "from-rose-400 to-rose-500", bg: "bg-rose-500/10" },
+    { title: "Глобални Пазари", desc: "Следете борсовите цени на зърното и торовете в реално време.", icon: Globe, color: "from-sky-400 to-sky-500", bg: "bg-sky-500/10" },
+    { title: "Агро Подкаст", desc: "Слушайте персонализирани аудио новини, генерирани от AI за вас.", icon: Podcast, color: "from-amber-400 to-amber-500", bg: "bg-amber-500/10", href: "/podcast" },
   ];
 
   return (

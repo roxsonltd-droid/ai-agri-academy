@@ -305,22 +305,7 @@ export default function DiagnosticLabPage() {
         </div>
       </div>
       
-      {/* Global Style for scrollbar in report */}
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(15, 23, 42, 0.5);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(45, 212, 191, 0.3);
-          border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(45, 212, 191, 0.6);
-        }
-      `}</style>
+
     </div>
   );
 }

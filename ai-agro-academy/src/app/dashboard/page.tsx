@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BrainCircuit, BookOpen, PlayCircle, Loader2, Sparkles } from "lucide-react";
 import { easeOutExpo, listContainerVariants, listItemVariants, transitionSnappy } from "@/lib/motion";
+import { Settings, Tractor } from "lucide-react";
 
 type MeUser = {
   id?: string | number;
@@ -111,10 +112,20 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: transitionSnappy.duration, ease: easeOutExpo }}
         >
-          <h1 className="text-3xl font-bold tracking-tight mb-2 text-foreground">
-            Здравейте, {user?.full_name?.split(" ")[0] || "Колега"}
-          </h1>
-          <p className="text-muted-foreground text-lg">Добре дошли във вашия студентски портал.</p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight mb-2 text-foreground">
+                Здравейте, {user?.full_name?.split(" ")[0] || "Колега"}
+              </h1>
+              <p className="text-muted-foreground text-lg">Добре дошли във вашия студентски портал.</p>
+            </div>
+            <Link href="/farm">
+              <Button variant="outline" className="border-border/60 hover:bg-white/5 bg-card/50 backdrop-blur-sm">
+                <Tractor className="w-4 h-4 mr-2 text-emerald-400" />
+                Моето Стопанство
+              </Button>
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div

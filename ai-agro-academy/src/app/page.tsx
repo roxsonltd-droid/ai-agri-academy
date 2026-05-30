@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Bot, Code2, Image as ImageIcon, Video, Music, FileText, BarChart3, Globe, Zap, Mic, Languages } from "lucide-react";
 import Link from "next/link";
 import { easeCinematic, staggerInViewContainer, transitionCinematic, viewportFadeUpVariants } from "@/lib/motion";
-import Navbar from "@/components/navbar";
 
 export default function Home() {
   const reduceMotion = useReducedMotion();
@@ -27,8 +26,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0B0F19]">
-      <Navbar />
-      
       {/* Centered Hero Section */}
       <section className="relative w-full pt-40 pb-20 md:pt-48 md:pb-28 overflow-hidden flex flex-col items-center text-center">
         {/* Background glow */}

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { listContainerVariants, listItemVariants } from "@/lib/motion";
 import { ChevronLeft, Target, ArrowRight, Star, ShieldCheck, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -106,14 +108,20 @@ export default function SponsorsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <motion.div 
+          variants={listContainerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        >
           {AD_BOARDS.map((board, idx) => {
             const displayPrice = isAnnual 
               ? Math.floor(board.priceMonthly * 12 * 0.8) 
               : board.priceMonthly;
               
             return (
-              <div 
+              <motion.div 
+                variants={listItemVariants}
                 key={idx} 
                 className={`relative glass flex flex-col rounded-3xl overflow-hidden border ${board.popular ? 'border-primary/50 shadow-elevated scale-105 z-10' : 'border-border/60 hover:border-primary/30'} transition-all duration-300`}
               >
@@ -164,10 +172,10 @@ export default function SponsorsPage() {
                     </Button>
                   </Link>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         <div className="mt-20 max-w-4xl mx-auto glass-subtle border border-border/50 rounded-3xl p-8 md:p-12 text-center flex flex-col md:flex-row items-center justify-between gap-8 mb-16">
           <div className="text-left flex-1">

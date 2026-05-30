@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { listContainerVariants, listItemVariants } from "@/lib/motion";
 import { 
   CloudRain, 
   Bug, 
@@ -335,9 +336,15 @@ export default function AgentsMissionControl() {
               <ShieldCheck className="w-4 h-4 mr-2" /> Наети Агенти
             </h2>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+            <motion.div 
+              variants={listContainerVariants} 
+              initial="hidden" 
+              animate="show" 
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4"
+            >
               {agents.map((agent) => (
-                <div 
+                <motion.div 
+                  variants={listItemVariants}
                   key={agent.id} 
                   onClick={() => setSelectedAgent(agent)}
                   className={`p-4 rounded-xl border bg-slate-900/80 backdrop-blur-sm transition-all cursor-pointer hover:scale-[1.02] ${
@@ -378,9 +385,9 @@ export default function AgentsMissionControl() {
                     </div>
                     <ChevronRight className="w-4 h-4 text-slate-600" />
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             <div className="p-5 mt-6 rounded-xl border border-dashed border-slate-700 bg-slate-900/50 text-center">
               <h4 className="text-sm font-bold text-white mb-2">Имате нужда от нов агент?</h4>

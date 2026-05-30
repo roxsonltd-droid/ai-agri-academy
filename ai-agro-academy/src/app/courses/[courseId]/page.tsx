@@ -301,6 +301,19 @@ export default function CoursePlayerPage() {
                           if (quizAnswer === "Правилното и осмислено прилагане спрямо спецификата на почвата.") {
                             setQuizScore(100);
                             setQuizFeedback(null);
+                            
+                            try {
+                                const certs = JSON.parse(localStorage.getItem("agro_certificates") || "[]");
+                                const newCert = {
+                                  id: Math.random().toString(36).substring(2, 10).toUpperCase(),
+                                  courseName: courseData.title,
+                                  date: new Date().toISOString()
+                                };
+                                if (!certs.find((c: any) => c.courseName === courseData.title)) {
+                                  certs.push(newCert);
+                                  localStorage.setItem("agro_certificates", JSON.stringify(certs));
+                                }
+                            } catch (e) {}
                           } else {
                             setQuizFeedback("Грешка! Върни се към текста. Ключът не е в скъпата техника, а в осмисленото ѝ приложение спрямо твоята специфична почва!");
                           }

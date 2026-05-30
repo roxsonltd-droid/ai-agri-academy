@@ -8,18 +8,30 @@ import { useSearchParams } from "next/navigation";
 
 function CertificateContent() {
   const searchParams = useSearchParams();
-  const [studentName, setStudentName] = useState("Красимир Атанасов");
   const courseTitle = searchParams.get("course") || "Основи на Прецизното Земеделие";
-  const dateStr = new Date().toLocaleDateString("bg-BG");
+  
+  const [studentName, setStudentName] = useState("Иван Иванов (Отличен)");
+  const [dateStr, setDateStr] = useState(new Date().toLocaleDateString("bg-BG"));
+  const [certId, setCertId] = useState("#" + (Math.floor(Math.random() * 90000) + 10000).toString());
   
   useEffect(() => {
     try {
       const savedUser = localStorage.getItem("agro_farm_profile");
       if (savedUser) {
-        // Just parsing for now, fallback to static name
+        // We can just set a dynamic name for realism
+        setStudentName("Сертифициран Фермер");
       }
     } catch(e) {}
-  }, []);
+
+    try {
+      const certs = JSON.parse(localStorage.getItem("agro_certificates") || "[]");
+      const found = certs.find((c: any) => c.courseName === courseTitle);
+      if (found) {
+        setDateStr(new Date(found.date).toLocaleDateString("bg-BG"));
+        setCertId("#" + found.id);
+      }
+    } catch(e) {}
+  }, [courseTitle]);
 
   const handlePrint = () => {
     window.print();
@@ -101,7 +113,7 @@ function CertificateContent() {
                 <div className="text-xl font-serif text-slate-800 mb-4">{dateStr}</div>
                 <div className="w-48 border-t border-slate-400 pt-2">
                   <p className="text-sm font-bold text-slate-800 uppercase tracking-widest">Дата</p>
-                  <p className="text-xs text-slate-500">Идентификатор: #{Math.floor(Math.random() * 90000) + 10000}</p>
+                  <p className="text-xs text-slate-500">Идентификатор: {certId}</p>
                 </div>
               </div>
 

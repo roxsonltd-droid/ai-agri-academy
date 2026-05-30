@@ -33,6 +33,7 @@ type CourseSummary = {
 export default function DashboardPage() {
   const [user, setUser] = useState<MeUser | null>(null);
   const [courses, setCourses] = useState<CourseSummary[]>([]);
+  const [certificates, setCertificates] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [newTopic, setNewTopic] = useState("");
@@ -65,6 +66,13 @@ export default function DashboardPage() {
           const coursesData = await coursesResponse.json();
           setCourses(coursesData);
         }
+
+        // Fetch local certificates
+        try {
+          const certs = JSON.parse(localStorage.getItem("agro_certificates") || "[]");
+          setCertificates(certs);
+        } catch(e) {}
+
       } catch {
         localStorage.removeItem("token");
         window.location.href = "/login";
@@ -273,18 +281,36 @@ export default function DashboardPage() {
                   Дипломи и Сертификати
                 </h3>
               </div>
-              <div className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center mx-auto mb-3">
-                  <Award className="w-8 h-8 text-slate-500" />
-                </div>
-                <p className="text-sm text-slate-400 mb-4">
-                  Все още нямате завършени курсове и издадени сертификати.
-                </p>
-                <Link href="/certificate">
-                  <Button variant="outline" size="sm" className="border-slate-700 text-xs w-full">
-                    Разгледай демо диплома
-                  </Button>
-                </Link>
+              <div className="p-4">
+                {certificates.length > 0 ? (
+                  <div className="space-y-3">
+                    {certificates.map((cert) => (
+                      <Link key={cert.id} href={`/certificate?course=${encodeURIComponent(cert.courseName)}`} className="block">
+                        <div className="flex items-center p-3 rounded-lg border border-slate-800 bg-slate-950 hover:border-amber-500/50 transition-colors group">
+                          <Award className="w-8 h-8 text-amber-500 mr-3 group-hover:scale-110 transition-transform" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-bold text-white truncate">{cert.courseName}</p>
+                            <p className="text-xs text-slate-500">{new Date(cert.date).toLocaleDateString("bg-BG")} • #{cert.id}</p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-4">
+                    <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center mx-auto mb-3">
+                      <Award className="w-6 h-6 text-slate-500" />
+                    </div>
+                    <p className="text-sm text-slate-400 mb-4">
+                      Все още нямате завършени курсове.
+                    </p>
+                    <Link href="/certificate">
+                      <Button variant="outline" size="sm" className="border-slate-700 text-xs w-full">
+                        Разгледай демо диплома
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
             

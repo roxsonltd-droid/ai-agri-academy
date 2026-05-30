@@ -42,59 +42,48 @@ export default function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }}
       >
-        <div className="flex items-center gap-2">
+        {/* Left: Logo */}
+        <div className="flex items-center gap-2 z-10 shrink-0">
           <AiAvatar size="sm" className="shrink-0" />
           <span className="text-xl font-bold tracking-tight text-white">
             Agro<span className="text-primary">Academy</span>
           </span>
         </div>
 
-        <div className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
+        {/* Center: Links (hidden on smaller screens to prevent overlap) */}
+        <div className="hidden lg:flex items-center gap-4 absolute left-1/2 -translate-x-1/2 z-0">
           <Link href="/courses" className={navLink}>Курсове</Link>
           <Link href="/faculty/agromind" className={navLink}>AI Факултет</Link>
           <Link href="/labs" className={navLink}>Лаборатории</Link>
           <Link href="/knowledge" className={navLink}>База Знания</Link>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" className="hidden sm:flex text-slate-300 hover:text-white text-sm font-medium">
-            <span className="mr-2">🌐</span> Български
+        {/* Right: Actions */}
+        <div className="flex items-center gap-2 sm:gap-3 z-10 shrink-0">
+          <Button variant="ghost" className="hidden md:flex text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
+            <span className="mr-2">🌐</span> <span className="hidden sm:inline">Български</span>
           </Button>
           {isAuthenticated ? (
             <Link href="/dashboard">
-              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium">
-                Моят профил
+              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
+                <span className="hidden sm:inline">Моят профил</span>
+                <span className="sm:hidden">Профил</span>
               </Button>
             </Link>
           ) : (
             <Link href="/login">
-              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium">
+              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
                 Вход
               </Button>
             </Link>
           )}
           <Link href="/register">
-            <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-5 py-2 font-medium text-sm transition-all">
+            <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-3 sm:px-5 py-2 font-medium text-xs sm:text-sm transition-all whitespace-nowrap">
               Започни безплатно &rarr;
             </Button>
           </Link>
         </div>
       </motion.nav>
-
-      {/* Gradient Banner underneath */}
-      <motion.div 
-        className="w-full bg-gradient-to-r from-[#6366f1] via-[#3b82f6] to-[#06b6d4] py-3 px-4 flex items-center justify-center gap-4 shadow-md"
-        initial={reduceMotion ? false : { opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.4 }}
-      >
-        <span className="text-white font-medium text-sm hidden sm:block">
-          Всички Агро AI Инструменти. Една Платформа. Нулеви Усилия.
-        </span>
-        <Button variant="secondary" size="sm" className="bg-white text-black hover:bg-slate-100 rounded-full font-bold px-4 h-8 text-xs">
-          Опитай Академията Безплатно &rarr;
-        </Button>
-      </motion.div>
     </div>
   );
 }

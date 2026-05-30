@@ -11,7 +11,7 @@ export default function Home() {
 
   const features = [
     { title: "Агро Чат", desc: "Разговаряйте с най-добрите AI модели (GPT-4o, Claude 3) за земеделие.", icon: MessageSquare, color: "from-teal-400 to-teal-500", bg: "bg-teal-500/10", href: "/chat" },
-    { title: "Автономни Агенти", desc: "Агенти, които мислят, планират и управляват вашите ресурси автономно.", icon: Bot, color: "from-purple-400 to-purple-500", bg: "bg-purple-500/10" },
+    { title: "Автономни Агенти", desc: "Агенти, които мислят, планират и управляват вашите ресурси автономно.", icon: Bot, color: "from-purple-400 to-purple-500", bg: "bg-purple-500/10", href: "/faculty/agromind" },
     { title: "Симулации", desc: "Тествайте стратегии за засаждане и торене във виртуална среда.", icon: Code2, color: "from-blue-400 to-blue-500", bg: "bg-blue-500/10" },
     { title: "Анализ на Снимки", desc: "Разпознаване на болести по растенията чрез компютърно зрение.", icon: ImageIcon, color: "from-orange-400 to-orange-500", bg: "bg-orange-500/10", href: "/labs/vision" },
     { title: "Видео Уроци", desc: "Генериране на 3D видео симулации за работа с агро техника.", icon: Video, color: "from-red-400 to-red-500", bg: "bg-red-500/10" },

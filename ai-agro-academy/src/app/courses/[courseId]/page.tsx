@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ChevronLeft, PlayCircle, CheckCircle, FileText, MessageSquare, Download } from "lucide-react";
+import { ChevronLeft, PlayCircle, CheckCircle, FileText, MessageSquare, Download, GraduationCap, Award } from "lucide-react";
 
 import { useParams } from "next/navigation";
 
@@ -37,6 +37,11 @@ export default function CoursePlayerPage() {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState("description");
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Quiz State
+  const [quizScore, setQuizScore] = useState<number | null>(null);
+  const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+  const [quizFeedback, setQuizFeedback] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -134,7 +139,17 @@ export default function CoursePlayerPage() {
               >
                 <div className="flex items-center">
                   <MessageSquare className="h-4 w-4 mr-2" />
-                  Дискусия с AI
+                  Дискусия
+                </div>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("quiz")}
+                className={`pb-3 text-sm font-semibold transition-colors ${activeTab === "quiz" ? "text-emerald-500 border-b-2 border-emerald-500" : "text-app-ink-muted hover:text-emerald-500"}`}
+              >
+                <div className="flex items-center">
+                  <GraduationCap className="h-4 w-4 mr-2" />
+                  Изпит
                 </div>
               </button>
             </div>
@@ -211,6 +226,92 @@ export default function CoursePlayerPage() {
                       Попитай Професора
                     </button>
                   </Link>
+                </div>
+              )}
+              {activeTab === "quiz" && (
+                <div className="bg-app-card border border-app-border p-6 sm:p-8 rounded-xl shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mr-4">
+                      <GraduationCap className="h-6 w-6 text-emerald-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-app-ink">Проверка на знанията</h3>
+                      <p className="text-sm text-app-ink-muted">AI Професорът проверява какво сте научили от урока.</p>
+                    </div>
+                  </div>
+
+                  {quizScore === 100 ? (
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-8 text-center">
+                      <Award className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
+                      <h4 className="text-2xl font-bold text-app-ink mb-2">Браво! Ти премина успешно.</h4>
+                      <p className="text-app-ink-muted mb-6 max-w-md mx-auto">
+                        Професорът е изключително доволен от твоите резултати. Ти доказа, че владееш материята!
+                      </p>
+                      <Link href={`/certificate?course=${encodeURIComponent(courseData.title)}`}>
+                        <button className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg flex items-center mx-auto transition-colors">
+                          <Award className="w-5 h-5 mr-2" />
+                          Вземи своя Сертификат
+                        </button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <div className="bg-app-surface p-6 rounded-lg border border-app-border">
+                        <p className="text-lg font-medium text-app-ink mb-4">
+                          Кой е най-важният фактор за правилното приложение на новите технологии в земеделието?
+                        </p>
+                        <div className="space-y-3">
+                          {[
+                            "Покупката на най-скъпия софтуер на пазара.",
+                            "Правилното и осмислено прилагане спрямо спецификата на почвата.",
+                            "Сляпото следване на чужди практики без анализ.",
+                            "Използването им само през пролетта."
+                          ].map((option, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setQuizAnswer(option)}
+                              className={`w-full text-left p-4 rounded-lg border transition-all ${
+                                quizAnswer === option 
+                                  ? "border-emerald-500 bg-emerald-500/5 shadow-sm" 
+                                  : "border-app-border bg-app-card hover:border-emerald-300"
+                              }`}
+                            >
+                              <div className="flex items-center">
+                                <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                                  quizAnswer === option ? "border-emerald-500" : "border-app-border"
+                                }`}>
+                                  {quizAnswer === option && <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full" />}
+                                </div>
+                                <span className="text-app-ink font-medium">{option}</span>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {quizFeedback && (
+                        <div className="bg-red-500/10 border-l-4 border-red-500 p-4 rounded-r-lg">
+                          <p className="font-bold text-red-600 mb-1">Съвет от Професора:</p>
+                          <p className="text-sm text-red-800">{quizFeedback}</p>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => {
+                          if (quizAnswer === "Правилното и осмислено прилагане спрямо спецификата на почвата.") {
+                            setQuizScore(100);
+                            setQuizFeedback(null);
+                          } else {
+                            setQuizFeedback("Грешка! Върни се към текста. Ключът не е в скъпата техника, а в осмисленото ѝ приложение спрямо твоята специфична почва!");
+                          }
+                        }}
+                        disabled={!quizAnswer}
+                        className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white px-8 py-3 rounded-xl font-bold transition-colors w-full sm:w-auto"
+                      >
+                        Провери отговора
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

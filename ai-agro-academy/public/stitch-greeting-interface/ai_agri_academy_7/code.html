@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#89bda4",
+                    "surface-tint": "#366853",
+                    "on-secondary-fixed": "#111e18",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#404944",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#002115",
+                    "secondary-fixed": "#d6e6db",
+                    "secondary-fixed-dim": "#bacac0",
+                    "surface": "#f0fdf2",
+                    "secondary-container": "#d1e1d6",
+                    "on-secondary-container": "#55645b",
+                    "surface-variant": "#d9e6dc",
+                    "primary-fixed-dim": "#9ed2b9",
+                    "tertiary-fixed-dim": "#ecc246",
+                    "surface-dim": "#d0ddd3",
+                    "surface-container-highest": "#d9e6dc",
+                    "primary-fixed": "#b9eed4",
+                    "on-background": "#131e18",
+                    "on-primary-fixed-variant": "#1d4f3c",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#cea72c",
+                    "primary": "#003625",
+                    "outline-variant": "#c0c9c2",
+                    "background": "#f0fdf2",
+                    "secondary": "#536259",
+                    "tertiary-fixed": "#ffe08e",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#4f3d00",
+                    "inverse-surface": "#28332c",
+                    "tertiary": "#755b00",
+                    "inverse-on-surface": "#e7f4ea",
+                    "primary-container": "#1a4d3a",
+                    "surface-container": "#e4f1e7",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#9ed2b9",
+                    "on-tertiary-fixed-variant": "#584400",
+                    "surface-container-high": "#deebe1",
+                    "on-secondary-fixed-variant": "#3c4a42",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-bright": "#f0fdf2",
+                    "outline": "#717974",
+                    "on-surface": "#131e18",
+                    "surface-container-low": "#eaf7ec"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "margin-mobile": "12px",
+                    "lg": "24px",
+                    "container-max": "1140px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "base": "4px",
+                    "xxl": "48px"
+            },
+            "fontFamily": {
+                    "label-eyebrow": ["DM Sans"],
+                    "label-badge": ["DM Sans"],
+                    "headline-md": ["DM Sans"],
+                    "display-lg": ["DM Sans"],
+                    "headline-sm": ["DM Sans"],
+                    "body-sm": ["DM Sans"],
+                    "display-lg-mobile": ["DM Sans"],
+                    "body-base": ["DM Sans"]
+            },
+            "fontSize": {
+                    "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                    "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                    "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                    "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .parchment-texture {
+            background-color: #f0fdf2;
+            background-image: radial-gradient(#d1e1d6 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+        .yellow-pages-shadow {
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.1);
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            background-color: rgba(240, 253, 242, 0.96);
+        }
+        .selection-highlight::selection {
+            background-color: #ffe08e;
+            color: #241a00;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection-highlight min-h-screen parchment-texture">
+<!-- Top Bar -->
+<header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-outline-variant h-16 flex items-center px-gutter md:px-xl">
+<div class="flex items-center gap-md w-full max-w-[1140px] mx-auto">
+<button aria-label="Go back" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex flex-col flex-grow">
+<span class="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-widest">Lecture 04 • Precision Agriculture</span>
+<h1 class="font-headline-sm text-headline-sm text-primary truncate leading-none">IoT Sensor Networks in Modern Soil Management</h1>
+</div>
+<div class="hidden md:flex items-center gap-md">
+<div class="flex flex-col items-end">
+<span class="font-label-badge text-label-badge text-on-surface-variant">PROGRESS</span>
+<span class="font-label-eyebrow text-label-eyebrow text-primary">68%</span>
+</div>
+<div class="w-32 h-1.5 bg-outline-variant rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[68%]"></div>
+</div>
+</div>
+<button class="material-symbols-outlined text-primary ml-md hover:bg-surface-container-high p-2 rounded-full" data-icon="more_vert"></button>
+</div>
+</header>
+<!-- Reading Progress Bar (Mobile) -->
+<div class="fixed top-16 left-0 w-full h-1 bg-outline-variant z-50 md:hidden">
+<div class="h-full bg-tertiary-container w-[68%]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 px-gutter max-w-[1140px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left Column: Study Tools (Desktop) -->
+<aside class="hidden lg:flex lg:col-span-1 flex-col gap-lg sticky top-24 h-fit">
+<button class="group flex flex-col items-center gap-xs" title="Save for later">
+<div class="w-12 h-12 rounded-xl border border-outline-variant flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="bookmark"></span>
+</div>
+<span class="font-label-badge text-label-badge opacity-60">SAVE</span>
+</button>
+<button class="group flex flex-col items-center gap-xs" title="Add note">
+<div class="w-12 h-12 rounded-xl border border-outline-variant flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="note_add"></span>
+</div>
+<span class="font-label-badge text-label-badge opacity-60">NOTE</span>
+</button>
+<button class="group flex flex-col items-center gap-xs" title="References">
+<div class="w-12 h-12 rounded-xl border border-outline-variant flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="library_books"></span>
+</div>
+<span class="font-label-badge text-label-badge opacity-60">REF</span>
+</button>
+</aside>
+<!-- Center Column: Lecture Content -->
+<article class="lg:col-span-8 space-y-xl">
+<!-- Introduction Section -->
+<section class="space-y-md">
+<div class="inline-flex items-center gap-xs px-2 py-1 rounded bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-[14px]" data-icon="timer"></span>
+<span class="font-label-badge text-label-badge">12 MIN READ</span>
+</div>
+<p class="font-body-base text-body-base text-on-surface-variant leading-relaxed text-lg first-letter:text-5xl first-letter:font-bold first-letter:text-primary first-letter:mr-3 first-letter:float-left">
+                    The digital transformation of the agricultural sector hinges on the granular understanding of soil composition and moisture levels. In this lecture, we explore the strategic placement of IoT (Internet of Things) sensors and how they communicate vital data to cloud-based analytical engines.
+                </p>
+</section>
+<!-- Diagram Component -->
+<figure class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden yellow-pages-shadow">
+<div class="w-full aspect-video relative">
+<img class="w-full h-full object-cover" data-alt="A high-end technical 3D diagram of a modern farm field with glowing digital nodes placed at various depths underground. The visual style is clean Agro-Modernism with deep forest green and harvest gold accents. Soft atmospheric lighting highlights the sensor placement strategy. Professional educational aesthetic on a minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKB05OwHX77I1v8LATC_WZ2xzM9zG1kdL-uZQpKJrfw4opd6eP26S4js8jLkfTTssYEzAGoU_48NA7kKGItBWVYHu9x3IZU0a30OxJCA8npsNU8PedEMjHgkUwTPLINUnJxGvMQI7cte4qeSnQlTlbi1fT6olqS82ODc3IPQKCuDHZ_KsyRx-mVqGSJo0ft2UEkIjA70tE17I3kS64IlIXdfYWSWTt6vjdWTqXfTJiI2lOq7Uv4TPtn1y6h0enGZfjzWoQaJqTJPg"/>
+<div class="absolute top-4 left-4 bg-primary/90 text-white px-3 py-1 rounded-full font-label-badge text-label-badge backdrop-blur-sm">FIG 4.2: MULTI-DEPTH TOPOLOGY</div>
+</div>
+<figcaption class="p-md bg-white italic font-body-sm text-body-sm text-on-surface-variant border-t border-outline-variant">
+                    Standard multi-tier sensor deployment showing placement at 15cm, 30cm, and 60cm depths for optimal root-zone monitoring.
+                </figcaption>
+</figure>
+<!-- Content Block 2 -->
+<section class="space-y-md border-t border-outline-variant pt-lg">
+<h2 class="font-headline-sm text-headline-sm text-primary">Strategic Grid Topology</h2>
+<p class="font-body-base text-body-base text-on-surface leading-relaxed">
+                    Unlike traditional sampling, persistent IoT networks require a <span class="bg-tertiary-fixed text-on-tertiary-fixed cursor-help px-1 rounded-sm" id="term-loRaWAN">LoRaWAN-enabled</span> mesh to ensure data integrity across vast acreage. The signal attenuation in moist clay soils presents a significant engineering challenge, necessitating specialized antenna housings.
+                </p>
+<div class="bg-surface-container-low p-md rounded-xl border-l-4 border-tertiary">
+<p class="font-body-sm text-body-sm text-secondary italic">
+                        "The goal is not just data collection, but data actionable at the nozzle level of the irrigation system."
+                    </p>
+</div>
+<p class="font-body-base text-body-base text-on-surface leading-relaxed">
+                    By integrating these data streams with real-time weather forecasts, farmers can reduce water consumption by up to 30% while simultaneously increasing yield via precision fertigation techniques.
+                </p>
+</section>
+<!-- Content Block 3 -->
+<section class="space-y-md border-t border-outline-variant pt-lg">
+<h2 class="font-headline-sm text-headline-sm text-primary">Academic References</h2>
+<ul class="space-y-sm">
+<li class="flex gap-md group">
+<span class="font-label-badge text-label-badge text-tertiary mt-1">01</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">
+                            Petrov, S. (2023). <span class="underline underline-offset-4">Soil Impedance Models for Sub-Surface Communication</span>. Bulgarian Journal of Agronomy.
+                        </p>
+</li>
+<li class="flex gap-md group">
+<span class="font-label-badge text-label-badge text-tertiary mt-1">02</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">
+                            TechAgro Institute (2024). <span class="underline underline-offset-4">Annual Report on Precision Irrigation Efficiencies</span>.
+                        </p>
+</li>
+</ul>
+</section>
+</article>
+<!-- Right Column: AI Assistant Pop-out (Desktop) -->
+<aside class="hidden lg:block lg:col-span-3">
+<div class="sticky top-24 space-y-md">
+<div class="bg-white rounded-2xl p-lg border border-outline-variant yellow-pages-shadow border-t-4 border-t-tertiary">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-tertiary" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;"></span>
+<span class="font-headline-sm text-[18px] text-primary">AgriTutor AI</span>
+</div>
+<div class="space-y-md" id="ai-context">
+<p class="font-body-sm text-body-sm text-secondary">Highlight any text to get instant academic explanations.</p>
+<div class="p-sm bg-surface-container rounded-lg border border-outline-variant/30 hidden" id="ai-response">
+<span class="font-label-badge text-label-badge text-tertiary block mb-xs uppercase">Definition</span>
+<p class="font-body-sm text-body-sm text-on-surface" id="ai-definition"></p>
+</div>
+</div>
+</div>
+<div class="bg-primary p-lg rounded-2xl text-white shadow-xl">
+<h4 class="font-label-eyebrow text-label-eyebrow mb-sm opacity-80 uppercase">Study Progress</h4>
+<div class="flex justify-between items-end mb-xs">
+<span class="font-headline-sm text-white">7/12</span>
+<span class="font-label-badge text-label-badge opacity-60">QUIZ READY</span>
+</div>
+<div class="w-full h-2 bg-primary-container rounded-full mb-md">
+<div class="h-full bg-tertiary-fixed w-7/12"></div>
+</div>
+<button class="w-full bg-white text-primary font-label-eyebrow text-label-eyebrow py-3 rounded-full hover:bg-surface-container-high transition-transform active:scale-95">TAKE KNOWLEDGE CHECK</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- Floating Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 px-4 pb-4 pointer-events-none">
+<div class="max-w-[1140px] mx-auto flex justify-between items-center pointer-events-auto">
+<button class="flex items-center gap-sm bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-xl py-3 rounded-full yellow-pages-shadow hover:bg-surface transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="chevron_left"></span>
+<span class="font-label-eyebrow text-label-eyebrow">PREVIOUS</span>
+</button>
+<!-- Mobile AI Trigger -->
+<button class="lg:hidden w-14 h-14 bg-tertiary text-on-tertiary-fixed rounded-full shadow-2xl flex items-center justify-center animate-bounce">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;"></span>
+</button>
+<button class="flex items-center gap-sm bg-primary text-white px-xl py-3 rounded-full shadow-xl hover:bg-primary-container transition-all active:scale-95">
+<span class="font-label-eyebrow text-label-eyebrow">NEXT LESSON</span>
+<span class="material-symbols-outlined" data-icon="chevron_right"></span>
+</button>
+</div>
+</nav>
+<!-- Interaction Script -->
+<script>
+        const aiResponse = document.getElementById('ai-response');
+        const aiDefinition = document.getElementById('ai-definition');
+        const termLoRa = document.getElementById('term-loRaWAN');
+
+        // Simple interaction demo for the LoRaWAN term
+        termLoRa.addEventListener('mouseenter', () => {
+            aiResponse.classList.remove('hidden');
+            aiDefinition.innerText = "LoRaWAN is a low-power, wide-area networking protocol designed to wirelessly connect battery operated 'things' to the internet in regional, national or global networks.";
+        });
+
+        // Basic Text Selection Trigger
+        document.addEventListener('mouseup', () => {
+            const selection = window.getSelection().toString().trim();
+            if (selection.length > 3) {
+                aiResponse.classList.remove('hidden');
+                aiDefinition.innerHTML = `<span class="italic text-secondary">Analyzing "${selection}"...</span><br>Generating technical context in relation to precision agriculture...`;
+                
+                // Simulate "Loading" effect
+                setTimeout(() => {
+                    aiDefinition.innerHTML = `Technical context for <strong>${selection}</strong>: Detailed analysis is being synthesized from the course curriculum and related academic publications.`;
+                }, 800);
+            }
+        });
+
+        // Micro-interaction for scroll progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            // Update desktop progress bar if you want it dynamic
+            // document.querySelector('.w-32 .bg-tertiary-container').style.width = scrolled + "%";
+        });
+    </script>
+</body></html>

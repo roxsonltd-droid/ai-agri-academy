@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(145deg, #ffffff 0%, #fcfaf2 100%);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.1);
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background-color: rgba(240, 253, 242, 0.96);
+        }
+        .slider-thumb::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #003625;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 3px solid #b9eed4;
+        }
+        .visualizer-gradient {
+            background: radial-gradient(circle at center, #b9eed4 0%, transparent 70%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#e7f4ea",
+                        "tertiary-fixed": "#ffe08e",
+                        "surface-container": "#e4f1e7",
+                        "surface-container-high": "#deebe1",
+                        "surface": "#f0fdf2",
+                        "outline": "#717974",
+                        "secondary-fixed": "#d6e6db",
+                        "secondary": "#536259",
+                        "surface-container-highest": "#d9e6dc",
+                        "outline-variant": "#c0c9c2",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-surface-variant": "#404944",
+                        "inverse-surface": "#28332c",
+                        "on-background": "#131e18",
+                        "inverse-primary": "#9ed2b9",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#bacac0",
+                        "on-secondary-container": "#55645b",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#b9eed4",
+                        "on-tertiary-container": "#4f3d00",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eaf7ec",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d9e6dc",
+                        "surface-bright": "#f0fdf2",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d0ddd3",
+                        "primary": "#003625",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#cea72c",
+                        "primary-container": "#1a4d3a",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "tertiary": "#755b00",
+                        "on-primary-fixed": "#002115",
+                        "on-surface": "#131e18",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "surface-tint": "#366853",
+                        "secondary-container": "#d1e1d6",
+                        "on-tertiary-fixed": "#241a00",
+                        "background": "#f0fdf2",
+                        "on-secondary-fixed": "#111e18",
+                        "on-primary-container": "#89bda4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "margin-mobile": "12px",
+                        "container-max": "1140px",
+                        "base": "4px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "headline-sm": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-base antialiased min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 glass-header flex justify-between items-center px-gutter h-16">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="agriculture">agriculture</span>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">AgriAcademy</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-20 px-4 max-w-container-max mx-auto space-y-6">
+<!-- Simulation Visualization -->
+<section class="relative w-full aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden bg-primary-container group">
+<img class="w-full h-full object-cover opacity-60 mix-blend-overlay" data-alt="A lush green agricultural field viewed from a low angle, featuring rows of healthy wheat stalks under a clear morning sun. Superimposed over the scene is a sophisticated digital wireframe grid and glowing data points in forest green and harvest gold, representing an AI-driven crop yield simulation. The lighting is cinematic and high-contrast, emphasizing both the organic texture of the plants and the sleek precision of the agricultural technology interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDtlUVb7LH4KuJzNapF17hDqQdk1GSvmR2XY5mMjOiKLZSekR69Dk2sXYBpGifbaiWC-ahKpjkYXDHiGA-m6RkHIiuAZc3Q6vc9zk-tLDNIbSIdE4YmgRJtPNtqGJVTUis9gln2HWntIgwLflgtwq4eIdlWplsGQm6CX4Nh03zYZ7s87eQEadwoMKzhkYQembMU2T7QD2zMan08Js13B5Ffo2dizBfDxv0rdt3H7iXRDukdIV7QTfHjDIj7CHTSw1xK1JI3Uiwr8"/>
+<div class="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-primary/80 to-transparent">
+<div class="flex justify-between items-end">
+<div>
+<span class="font-label-eyebrow text-primary-fixed uppercase tracking-widest block mb-1">Прогнозиран добив</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg-mobile md:text-display-lg text-white" id="yield-value">8.4</span>
+<span class="font-headline-sm text-primary-fixed">т/хектар</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+<span class="material-symbols-outlined text-tertiary-fixed text-xl" data-icon="trending_up">trending_up</span>
+<span class="text-white font-label-badge">+12% спрямо 2023</span>
+</div>
+</div>
+</div>
+<div class="absolute top-6 right-6">
+<div class="visualizer-gradient w-32 h-32 blur-3xl opacity-50 animate-pulse"></div>
+</div>
+</section>
+<!-- AI Insights Card -->
+<div class="yellow-pages-card p-6 rounded-xl flex items-start gap-4">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-primary mb-2">AI Анализ на симулацията</h3>
+<p class="text-on-surface-variant font-body-base" id="ai-insight-text">
+                    Текущата конфигурация показва оптимален баланс. Повишаването на Азотния вход над 150кг би довело до риск от замърсяване на подпочвените води без значителен прираст в добива. Нивото на рН е в идеални граници за Пшеница.
+                </p>
+</div>
+</div>
+<!-- Simulator Controls Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Irrigation Level -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant hover:border-primary transition-all duration-300">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="water_drop">water_drop</span>
+<span class="font-headline-sm !text-lg">Напояване</span>
+</div>
+<span class="font-bold text-primary" id="irrigation-label">70%</span>
+</div>
+<input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer slider-thumb" id="irrigation-slider" max="100" min="0" type="range" value="70"/>
+<div class="flex justify-between mt-2">
+<span class="font-label-badge text-outline">Суша</span>
+<span class="font-label-badge text-outline">Максимално</span>
+</div>
+</div>
+<!-- Nitrogen Input -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant hover:border-primary transition-all duration-300">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="Science">science</span>
+<span class="font-headline-sm !text-lg">Азотен вход (N)</span>
+</div>
+<span class="font-bold text-primary" id="nitrogen-label">120 kg/h</span>
+</div>
+<input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer slider-thumb" id="nitrogen-slider" max="300" min="0" type="range" value="120"/>
+<div class="flex justify-between mt-2">
+<span class="font-label-badge text-outline">0</span>
+<span class="font-label-badge text-outline">300 kg</span>
+</div>
+</div>
+<!-- Soil pH -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant hover:border-primary transition-all duration-300">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="terrain">terrain</span>
+<span class="font-headline-sm !text-lg">Киселинност (pH)</span>
+</div>
+<span class="font-bold text-primary" id="ph-label">6.5</span>
+</div>
+<input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer slider-thumb" id="ph-slider" max="90" min="40" type="range" value="65"/>
+<div class="flex justify-between mt-2">
+<span class="font-label-badge text-outline">Кисела</span>
+<span class="font-label-badge text-outline">Алкална</span>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="flex flex-col md:flex-row gap-4 items-center justify-between py-6">
+<p class="text-on-surface-variant font-body-sm text-center md:text-left">
+                Симулацията е базирана на метеорологични данни за региона на Тракия.
+            </p>
+<div class="flex gap-4">
+<button class="px-8 h-12 bg-surface border border-outline rounded-full font-bold text-primary hover:bg-surface-container-high transition-all active:scale-95">
+                    Запази сценарий
+                </button>
+<button class="px-8 h-12 bg-primary text-white rounded-full font-bold shadow-lg hover:-translate-y-0.5 transition-all active:scale-95">
+                    Приложи в стопанството
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface flex justify-around items-center px-4 py-2 border-t border-outline-variant rounded-t-xl shadow-sm">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Начало</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm">Курсове</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-sm text-label-sm">AI Tutor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Профил</span>
+</a>
+</nav>
+<script>
+        const sliders = {
+            irrigation: document.getElementById('irrigation-slider'),
+            nitrogen: document.getElementById('nitrogen-slider'),
+            ph: document.getElementById('ph-slider')
+        };
+
+        const labels = {
+            irrigation: document.getElementById('irrigation-label'),
+            nitrogen: document.getElementById('nitrogen-label'),
+            ph: document.getElementById('ph-label'),
+            yield: document.getElementById('yield-value'),
+            insight: document.getElementById('ai-insight-text')
+        };
+
+        function updateSimulation() {
+            const irr = parseInt(sliders.irrigation.value);
+            const nit = parseInt(sliders.nitrogen.value);
+            const ph = parseInt(sliders.ph.value) / 10;
+
+            labels.irrigation.innerText = `${irr}%`;
+            labels.nitrogen.innerText = `${nit} kg/h`;
+            labels.ph.innerText = ph.toFixed(1);
+
+            // Mock Logic for Yield Calculation
+            // Base yield 5.0. Max theoretical ~12.0
+            const irrFactor = 1 - Math.abs(75 - irr) / 150;
+            const nitFactor = 1 - Math.abs(180 - nit) / 600;
+            const phFactor = 1 - Math.abs(6.5 - ph) / 5;
+            
+            const projectedYield = (5 + (irrFactor * 3) + (nitFactor * 3) + (phFactor * 1.5)).toFixed(1);
+            labels.yield.innerText = projectedYield;
+
+            // Simple AI Insight Logic
+            if (irr > 90) {
+                labels.insight.innerText = "Внимание: Прекомерното напояване може да доведе до измиване на хранителните вещества и заболявания по корена.";
+            } else if (ph < 5.5) {
+                labels.insight.innerText = "Критично: Почвата е твърде кисела. Препоръчваме варуване преди следващото торене.";
+            } else if (nit > 250) {
+                labels.insight.innerText = "Внимание: Високите дози азот не увеличават добива линейно след 180кг/хектар. Икономически неефективно.";
+            } else {
+                labels.insight.innerText = "Текущата конфигурация показва оптимален баланс. Повишаването на Азотния вход над 150кг би довело до риск от замърсяване на подпочвените води.";
+            }
+        }
+
+        Object.values(sliders).forEach(slider => {
+            slider.addEventListener('input', updateSimulation);
+        });
+
+        // Micro-interaction for feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.add('scale-95');
+                setTimeout(() => btn.classList.remove('scale-95'), 150);
+            });
+        });
+    </script>
+</body></html>

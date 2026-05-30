@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot - B2B Агро Маркетплейс от AgriNexus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fefcf0 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+            transition: all 0.2s ease-in-out;
+        }
+        .yellow-pages-card:hover {
+            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15);
+            transform: translateY(-2px);
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#4f3d00",
+                        "on-primary-container": "#89bda4",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-tertiary-fixed": "#241a00",
+                        "outline-variant": "#c0c9c2",
+                        "on-background": "#131e18",
+                        "surface-container-low": "#eaf7ec",
+                        "secondary": "#536259",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#e4f1e7",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#404944",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d0ddd3",
+                        "tertiary": "#755b00",
+                        "surface-variant": "#d9e6dc",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "secondary-container": "#d1e1d6",
+                        "primary-container": "#1a4d3a",
+                        "on-primary-fixed": "#002115",
+                        "on-secondary-container": "#55645b",
+                        "on-surface": "#131e18",
+                        "on-secondary-fixed": "#111e18",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f0fdf2",
+                        "tertiary-container": "#cea72c",
+                        "background": "#f0fdf2",
+                        "primary": "#003625",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#366853",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "inverse-primary": "#9ed2b9",
+                        "secondary-fixed-dim": "#bacac0",
+                        "surface": "#f0fdf2",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d6e6db",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "outline": "#717974",
+                        "surface-container-high": "#deebe1",
+                        "primary-fixed": "#b9eed4",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "tertiary-fixed": "#ffe08e",
+                        "inverse-on-surface": "#e7f4ea",
+                        "inverse-surface": "#28332c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-max": "1140px",
+                        "margin-mobile": "12px",
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background font-body-base text-on-surface selection:bg-primary-fixed-dim selection:text-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] max-w-container-max mx-auto bg-surface/96 glass-header border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">FieldLot</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="FieldLot Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpIPkp8U_bncPE1VCsrSTK1-9A4tk1exdgYWBbErxLiIo4Lzg4OeJmOkxMzDnLJbgRAVd668weUm2cb995oiAvuCtj3NNObLF0YhDIW4w5qOJZZ1a9NttAePRM_x9JXj3R2DhYCT2zE17WUya0V2Jc_wFx3u3fm4VxnHT0WZbS9koXFBPkKY3n0RPUiLwVqXihmluL3FrBnhImmQbdqI5H-biKu_o_U9Z26DjEzLjtRmsGVOJ2vgne06s8mdSHuka6LOi6E4OLuuQ"/>
+</div>
+</header>
+<main class="pt-[48px] pb-24 px-margin-mobile">
+<!-- Hero Section -->
+<section class="mt-lg rounded-xl overflow-hidden relative min-h-[180px] flex flex-col justify-end p-md bg-primary">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" data-alt="A wide panoramic view of a lush green Bulgarian wheat field during a bright morning sunrise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC80mLcqGtLN8DHMinfn2rgXl1ky-mFVu8yGCBj9AQVh9B4Ke8ayKGakF5lJmax8SUux87WQZzAKv21vs3pJ-lLj6yd-gCh8a0MH2gSH0uu8a5DolHPdrWAFkqigwkYK4QLYzHeYIcFS0xQAPq3qoGR5QVLQx_CxPvZX1J3yqWP5wIUYvFILgB5-Tr_lLRNz7qgsiJj1HBSs9BFKAXpyWpQ2X4iBWZT3YnEniOViYw2UoEBAGqmGnOHE3-oJa1h7ztVfifgN59pLsk"/>
+<div class="relative z-10">
+<h2 class="text-headline-sm-mobile font-headline-sm-mobile text-on-primary">Добре дошли в FieldLot</h2>
+<p class="text-body-sm text-on-primary-container">B2B Агро Маркетплейс от AgriNexus LTD</p>
+</div>
+</section>
+<!-- Search Bar -->
+<section class="mt-md">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-outline" data-icon="search">search</span>
+<input class="w-full h-[48px] pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-full text-body-base focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" placeholder="Търсете най-добрите B2B агро оферти" type="text"/>
+<button class="absolute right-2 h-9 px-4 bg-primary text-white rounded-full text-label-eyebrow font-label-eyebrow uppercase tracking-wider">
+                    Търси
+                </button>
+</div>
+</section>
+<!-- Quick Categories (Chips) -->
+<section class="mt-lg flex gap-2 overflow-x-auto no-scrollbar pb-2">
+<div class="px-4 py-2 bg-tertiary-container/20 text-on-tertiary-container rounded-full border border-tertiary-container/30 flex items-center gap-1 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]" data-icon="grass">grass</span>
+<span class="text-label-eyebrow">Зърнени</span>
+</div>
+<div class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full border border-outline-variant flex items-center gap-1 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]" data-icon="agriculture">agriculture</span>
+<span class="text-label-eyebrow">Техника</span>
+</div>
+<div class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full border border-outline-variant flex items-center gap-1 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]" data-icon="science">science</span>
+<span class="text-label-eyebrow">Торове</span>
+</div>
+<div class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full border border-outline-variant flex items-center gap-1 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]" data-icon="local_shipping">local_shipping</span>
+<span class="text-label-eyebrow">Логистика</span>
+</div>
+</section>
+<!-- Featured Listings Header -->
+<div class="mt-xl flex justify-between items-end mb-md">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">Препоръчани оферти</h3>
+<div class="h-1 w-12 bg-tertiary-container mt-1"></div>
+</div>
+<button class="text-label-eyebrow text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                Виж всички <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Featured Listings Grid (Yellow Pages Cards) -->
+<div class="grid grid-cols-1 gap-md">
+<!-- Listing Card 1: Wheat -->
+<div class="yellow-pages-card rounded-lg overflow-hidden border-t-4 border-tertiary-container relative">
+<div class="p-md">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-label-badge font-label-badge bg-primary/10 text-primary px-2 py-1 rounded uppercase">Зърно</span>
+<span class="text-label-eyebrow text-outline">Преди 2ч.</span>
+</div>
+<h4 class="text-body-base font-bold text-on-surface mb-xs">Пшеница - Реколта 2024</h4>
+<p class="text-body-sm text-on-surface-variant line-clamp-2 mb-md">Висококачествена мека хлебна пшеница, сорт "Енос". Наличност 500 тона в силоз Добрич.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex flex-col">
+<span class="text-label-eyebrow text-outline uppercase tracking-widest">Цена</span>
+<span class="text-headline-sm font-bold text-primary">420 лв/т</span>
+</div>
+<button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Listing Card 2: Tractor -->
+<div class="yellow-pages-card rounded-lg overflow-hidden border-t-4 border-tertiary-container relative">
+<div class="p-md">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-label-badge font-label-badge bg-primary/10 text-primary px-2 py-1 rounded uppercase">Техника</span>
+<span class="text-label-eyebrow text-outline">Преди 5ч.</span>
+</div>
+<h4 class="text-body-base font-bold text-on-surface mb-xs">John Deere 6155M</h4>
+<p class="text-body-sm text-on-surface-variant line-clamp-2 mb-md">Отлично състояние, 155 к.с., климатик, GPS навигация. Сервизна история.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex flex-col">
+<span class="text-label-eyebrow text-outline uppercase tracking-widest">Оферта</span>
+<span class="text-headline-sm font-bold text-primary">165,000 лв</span>
+</div>
+<button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Image Card (Visual Break) -->
+<div class="mt-xl rounded-2xl overflow-hidden h-40 relative flex items-center justify-center">
+<img class="absolute inset-0 w-full h-full object-cover brightness-50" data-alt="Macro close-up of grains." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSaT3QX7dgp_C0o0qNSreE2KUxYnKhx6Yxo8-WsclEWKMgpmbNygxTYHk7I8hDpZRle8EcSJxQGidWUXZZkAi2J3_W_Z4uUv6qIMIZ4yYSdbI2KHVfKn0msUy0v2UyjMuE-9-g1kK6X3XNA-AydnFOCp3voNMKyrQu7Horhw7LPadAibcdA10Z9EfHeZNIyUZkThsHk-Iq0EVbnEdr7zdjJxIPzEzU4fFtIjCIkOK-aKlGeH6y9m5MDepvymOTyMTjmiKhczQpJA8"/>
+<div class="relative z-10 text-center px-lg">
+<p class="text-headline-sm font-bold text-white mb-xs">Нуждаете се от транспорт?</p>
+<button class="text-label-eyebrow font-bold px-6 py-2 bg-tertiary-container text-on-tertiary-container rounded-full">Провери тарифите</button>
+</div>
+</div>
+<!-- Footer / Ownership Information -->
+<footer class="mt-xxl pt-lg border-t border-outline-variant text-center space-y-4">
+<div class="flex flex-col items-center gap-2">
+<div class="flex items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="agriculture">agriculture</span>
+<span class="text-label-eyebrow font-bold text-primary uppercase tracking-widest">FieldLot by AgriNexus</span>
+</div>
+<p class="text-body-sm text-on-surface-variant max-w-[280px] mx-auto">
+                    Вашият доверен B2B партньор в модерното земеделие.
+                </p>
+<a class="text-label-eyebrow text-primary hover:underline flex items-center gap-1 justify-center" href="mailto:info@agrinexus.eu">
+<span class="material-symbols-outlined text-[14px]" data-icon="mail">mail</span>
+                    info@agrinexus.eu
+                </a>
+</div>
+<div class="text-label-badge text-outline uppercase tracking-tighter pt-md">
+                © 2024 AgriNexus LTD. Всички права запазени.
+            </div>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-2 pt-2 border-t border-outline-variant bg-surface shadow-lg">
+<!-- Home Active -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-badge font-label-badge">Начало</span>
+</a>
+<!-- Market -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-label-badge font-label-badge">Пазар</span>
+</a>
+<!-- AI Guide -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-badge font-label-badge">AI Асистент</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-badge font-label-badge">Профил</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-20 right-4 w-14 h-14 bg-tertiary-container text-on-tertiary-container rounded-2xl shadow-xl flex items-center justify-center z-40 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[32px]" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</button>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.yellow-pages-card').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Hide FAB on scroll down, show on scroll up
+        let lastScroll = 0;
+        const fab = document.querySelector('button.fixed.bottom-20');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                fab.style.transform = 'scale(0)';
+            } else {
+                fab.style.transform = 'scale(1)';
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body></html>

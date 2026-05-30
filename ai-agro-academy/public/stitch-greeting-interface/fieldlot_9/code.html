@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot Interactive Map</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "tertiary-fixed": "#ffe08e",
+                        "on-secondary-container": "#55645b",
+                        "surface-container-high": "#deebe1",
+                        "surface-container": "#e4f1e7",
+                        "surface": "#f0fdf2",
+                        "tertiary-container": "#cea72c",
+                        "inverse-primary": "#9ed2b9",
+                        "primary": "#003625",
+                        "on-tertiary-fixed": "#241a00",
+                        "inverse-surface": "#28332c",
+                        "secondary-fixed": "#d6e6db",
+                        "on-surface": "#131e18",
+                        "secondary": "#536259",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a4d3a",
+                        "outline": "#717974",
+                        "on-tertiary-container": "#4f3d00",
+                        "surface-tint": "#366853",
+                        "primary-fixed": "#b9eed4",
+                        "inverse-on-surface": "#e7f4ea",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "surface-container-highest": "#d9e6dc",
+                        "tertiary": "#755b00",
+                        "surface-container-low": "#eaf7ec",
+                        "on-secondary-fixed": "#111e18",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#d1e1d6",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#404944",
+                        "outline-variant": "#c0c9c2",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "surface-bright": "#f0fdf2",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "on-primary-fixed": "#002115",
+                        "on-background": "#131e18",
+                        "surface-variant": "#d9e6dc",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#bacac0",
+                        "surface-dim": "#d0ddd3",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "on-primary-container": "#89bda4",
+                        "on-error-container": "#93000a",
+                        "background": "#f0fdf2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "container-max": "1140px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "margin-mobile": "12px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "body-sm": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .map-container { height: calc(100vh - 120px); width: 100%; position: relative; overflow: hidden; background: #f0fdf2; }
+        .bulgaria-map-svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05)); }
+        .cluster-node { transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .cluster-node:hover { transform: scale(1.1); z-index: 50; }
+        .bottom-sheet { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .yellow-page-card { 
+            background: linear-gradient(135deg, #ffffff 0%, #fffdf0 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.08), 0 8px 24px rgba(201, 162, 39, 0.08);
+            border-top: 3px solid #cea72c;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+<!-- Top AppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] max-w-container-max mx-auto backdrop-blur-md border-b border-outline-variant bg-surface/96">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">FieldLot</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Avatar" class="w-full h-full" data-alt="A professional headshot of a Bulgarian agricultural expert in his 40s, wearing a clean white shirt, smiling warmly. The lighting is bright and natural, suggesting a modern office environment. The style is crisp and corporate with high-key lighting and a soft focus background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDptbwzgKo6-u0UPiNdXL_-mxSbPwY-q1fOHjuQPkQtc2mS2hnrYEg9YDaMSz_r4Io0eOGeVUPMEQWsLH9PWcJPmoFUtWXtPC7ZFBWiR1LLCfi8GoCa-m_PaaEsS3Hf1lqoG7gdtelR-fjMzh8tWNeEWrK7SAnxFGcLczTpPJFM9kQ7TLEP_G4CJiD4b4mUS7urdlqtZv6FPe0X3JlC4GeA67b0d3nZRWeGUtJLVk2uMumLl9BwnUm1uKfqJ57fwBITcBazl9mi1co"/>
+</div>
+</header>
+<!-- Map & UI Layer -->
+<main class="pt-[48px] pb-[80px] h-screen overflow-hidden relative">
+<!-- Search & Filters Overlay -->
+<div class="absolute top-[60px] left-0 w-full px-4 z-40 pointer-events-none">
+<div class="max-w-[500px] mx-auto space-y-3 pointer-events-auto">
+<!-- Search Bar -->
+<div class="bg-surface-container-lowest rounded-full px-4 h-11 flex items-center shadow-lg border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-body-base placeholder:text-on-surface-variant/60" placeholder="Търси локация или култура..." type="text"/>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="tune">tune</span>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+<button class="flex-none px-4 py-1.5 rounded-full bg-primary-container text-on-primary-container font-label-badge text-label-badge flex items-center gap-1 border border-primary/20">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span> Пшеница
+                    </button>
+<button class="flex-none px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-badge text-label-badge border border-outline-variant hover:bg-surface-container-highest transition-colors">Царевица</button>
+<button class="flex-none px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-badge text-label-badge border border-outline-variant hover:bg-surface-container-highest transition-colors">Слънчоглед</button>
+<button class="flex-none px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-badge text-label-badge border border-outline-variant hover:bg-surface-container-highest transition-colors">Продава</button>
+</div>
+</div>
+</div>
+<!-- Custom Interactive Map -->
+<div class="map-container flex items-center justify-center">
+<div class="relative w-full h-full max-w-4xl p-8">
+<!-- Mock SVG Background Map for Bulgaria -->
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<img alt="Bulgaria Map" class="bulgaria-map-svg grayscale brightness-125 contrast-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACC8AGdWFPhQse_cP12To-J-2A2JajmeTJ_cHQIWXaa1kYtQ8h3qQBYXhJ2TohE1OISZPEy20UOhei7DIW_UjdZ43w5U7emEJPEJDhPPvndzYLU8YU8SaFzDNWtRO0IheTEVhyGwD19YdKuyBXlpTSLKCzBxzQzXxZrztBsCQsBBsoVWoSSvw-igDwKV0xZQ3KJJec3kdJaZID9V8OFjV6rc4FYlhLTDztKz3-G5kw6JRHnayeyrrdQfKMmG2h3ZHodpfv3-u0m5Q"/>
+</div>
+<!-- Cluster Markers -->
+<!-- Dobrich (Focus) -->
+<div class="cluster-node absolute top-[18%] right-[10%] group" onclick="toggleBottomSheet()">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container border-2 border-white shadow-xl flex items-center justify-center font-bold text-headline-sm ring-4 ring-primary/10">28</div>
+<div class="mt-1 px-3 py-0.5 bg-white/90 backdrop-blur-sm border border-outline-variant rounded-full text-label-badge font-label-badge text-on-surface shadow-sm">Добрич</div>
+</div>
+</div>
+<!-- Varna -->
+<div class="cluster-node absolute top-[35%] right-[15%]">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container border-2 border-white shadow-lg flex items-center justify-center font-bold">14</div>
+<div class="mt-1 px-2 py-0.5 bg-white/80 rounded-full text-[10px] font-bold text-on-surface-variant">Варна</div>
+</div>
+</div>
+<!-- Pleven -->
+<div class="cluster-node absolute top-[25%] left-[35%]">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant border-2 border-white shadow-md flex items-center justify-center font-bold">9</div>
+<div class="mt-1 px-2 py-0.5 bg-white/80 rounded-full text-[10px] font-bold text-on-surface-variant">Плевен</div>
+</div>
+</div>
+<!-- Sofia -->
+<div class="cluster-node absolute top-[55%] left-[15%]">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container border-2 border-white shadow-lg flex items-center justify-center font-bold">18</div>
+<div class="mt-1 px-2 py-0.5 bg-white/80 rounded-full text-[10px] font-bold text-on-surface-variant">София</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FAB: Create Offer -->
+<button class="fixed bottom-20 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center z-[55] hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+<!-- Bottom Sheet (Regional Details) -->
+<div class="bottom-sheet fixed bottom-0 left-0 w-full z-[60] bg-surface-container-low border-t border-outline-variant rounded-t-xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transform translate-y-[60%]" id="bottomSheet">
+<!-- Drag Handle -->
+<div class="w-full flex flex-col items-center py-3 cursor-pointer" onclick="toggleBottomSheet()">
+<div class="w-10 h-1.5 bg-outline-variant rounded-full mb-4"></div>
+<div class="w-full px-6 flex justify-between items-end">
+<div>
+<p class="text-label-eyebrow font-label-eyebrow text-tertiary uppercase">Регионален преглед</p>
+<h2 class="text-headline-sm font-headline-sm text-primary">Добрич</h2>
+</div>
+<div class="text-right">
+<div class="flex items-center text-primary font-bold">
+<span class="material-symbols-outlined mr-1" data-icon="trending_up">trending_up</span>
+<span>Стабилен</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Тенденция</p>
+</div>
+</div>
+</div>
+<!-- Sheet Content -->
+<div class="px-6 pb-24 space-y-6">
+<!-- Summary Stats -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant">
+<p class="text-label-badge font-label-badge text-on-surface-variant mb-1 uppercase">Активни Оферти</p>
+<p class="text-headline-sm font-bold text-primary">28</p>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant">
+<p class="text-label-badge font-label-badge text-on-surface-variant mb-1 uppercase">Ср. Цена (Пшеница)</p>
+<p class="text-headline-sm font-bold text-primary">420 <span class="text-body-sm font-normal">лв/т</span></p>
+</div>
+</div>
+<!-- Preview Cards -->
+<div class="space-y-4">
+<h3 class="text-label-eyebrow font-label-eyebrow text-on-surface-variant uppercase border-b border-outline-variant pb-2">Топ Оферти в района</h3>
+<!-- Card 1 -->
+<div class="yellow-page-card rounded-xl p-3 flex gap-4 items-center">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Wheat Field" class="w-full h-full object-cover" data-alt="A lush wheat field in Dobrich, Bulgaria, under a clear blue sky during the golden hour. The sunlight is warm and directional, highlighting the golden hues of the ripe wheat. The photography style is sharp, professional, and captures the vast agricultural heritage of the region with a sense of bounty and serenity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC081e9MQxiHXOa8YNwhrx7OXLMtVan70tsaDQtVACmv9bgZcuP_pynnnyB00Y4UfO6tn8v0Bt0vYmWcTfpAUg394dEULraJgLMS_Y43mkYpPU-ets3hpssCs9u0bLVA1ygKsV2I9eKk0kwfjwgB0iR0jlKl7BGnDUDWXzkXMzNP2VbSbAh1V20V_-_VF_3FCeRLjgPLXYc9OWu-VO8ox2pvppWnj-5jY3WioX0X56_3_X2WScMNwyWdbgQoCv6btB3k5q3mpBId_c"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<span class="text-label-badge font-label-badge bg-primary/10 text-primary px-2 py-0.5 rounded-full">ПШЕНИЦА</span>
+<span class="text-body-sm font-bold text-primary">425 лв/т</span>
+</div>
+<h4 class="text-body-base font-bold mt-1">Оферта #5218 • 150т</h4>
+<p class="text-body-sm text-on-surface-variant flex items-center mt-1">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="location_on">location_on</span> ген. Тошево
+                            </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="yellow-page-card rounded-xl p-3 flex gap-4 items-center">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Corn Harvest" class="w-full h-full object-cover" data-alt="Close-up of golden harvested corn kernels in a wooden container, symbolizing a successful Bulgarian harvest. The lighting is crisp and natural, with a focus on texture and warmth. The background shows a soft-focus agricultural facility, creating a professional and grounded B2B trade atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHG-wKuD6u8ndlLk767-yNI-pszjd0n63_lYgwbZP2UX5bMLjcpIyBFEmzXE9DvINfJhptq9kiGSZsc0dME5yEZs9vDN-4kskeWN13BlFZaFmNRhxVzZC3heCmvbc07cvRpAbeakHpfuolbCzBAtodvJooDyWyVPmkUz7sO6eQCbnMhNDFE__Hi68v_GOGipTQuWsa_Q1wHrfU2o90tsWUJoGhrOdqPmqo2ocHHqn8YBv6T3yH1-BWaTn950igDn_5RbnKvYcBCc0"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<span class="text-label-badge font-label-badge bg-tertiary-container/20 text-on-tertiary-container px-2 py-0.5 rounded-full">ЦАРЕВИЦА</span>
+<span class="text-body-sm font-bold text-primary">380 лв/т</span>
+</div>
+<h4 class="text-body-base font-bold mt-1">Оферта #4992 • 400т</h4>
+<p class="text-body-sm text-on-surface-variant flex items-center mt-1">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="location_on">location_on</span> с. Стожер
+                            </p>
+</div>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary rounded-full font-bold flex items-center justify-center gap-2">
+                    Виж всички оферти в Добрич
+                    <span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-2 pt-2 border-t border-outline-variant bg-surface">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-badge font-label-badge">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-label-badge font-label-badge">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-badge font-label-badge">AI Guide</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-badge font-label-badge">Profile</span>
+</div>
+</nav>
+<script>
+        let isExpanded = false;
+        const sheet = document.getElementById('bottomSheet');
+
+        function toggleBottomSheet() {
+            if (isExpanded) {
+                sheet.style.transform = 'translateY(60%)';
+            } else {
+                sheet.style.transform = 'translateY(0%)';
+            }
+            isExpanded = !isExpanded;
+        }
+
+        // Handle simple drag/swipe simulation if needed
+        let startY;
+        sheet.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        });
+
+        sheet.addEventListener('touchend', (e) => {
+            let endY = e.changedTouches[0].clientY;
+            if (startY - endY > 50) { // Swipe up
+                sheet.style.transform = 'translateY(0%)';
+                isExpanded = true;
+            } else if (endY - startY > 50) { // Swipe down
+                sheet.style.transform = 'translateY(60%)';
+                isExpanded = false;
+            }
+        });
+    </script>
+</body></html>

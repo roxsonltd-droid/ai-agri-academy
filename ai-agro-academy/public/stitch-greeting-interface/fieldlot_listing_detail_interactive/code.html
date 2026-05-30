@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot - Детайли на обявата</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.15);
+        }
+        .backdrop-glass {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* Motion & Effects Animations */
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes badgePop {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .animate-content {
+            animation: slideUpFade 0.6s ease-out forwards;
+        }
+
+        .animate-badge {
+            opacity: 0;
+            animation: badgePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .hero-zoom {
+            transition: transform 0.1s ease-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#4f3d00",
+                      "on-primary-container": "#89bda4",
+                      "on-tertiary-fixed-variant": "#584400",
+                      "on-tertiary-fixed": "#241a00",
+                      "outline-variant": "#c0c9c2",
+                      "on-background": "#131e18",
+                      "surface-container-low": "#eaf7ec",
+                      "secondary": "#536259",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#e4f1e7",
+                      "on-tertiary": "#ffffff",
+                      "on-surface-variant": "#404944",
+                      "surface-container-highest": "#d9e6dc",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#d0ddd3",
+                      "tertiary": "#755b00",
+                      "surface-variant": "#d9e6dc",
+                      "on-primary-fixed-variant": "#1d4f3c",
+                      "secondary-container": "#d1e1d6",
+                      "primary-container": "#1a4d3a",
+                      "on-primary-fixed": "#002115",
+                      "on-secondary-container": "#55645b",
+                      "on-surface": "#131e18",
+                      "on-secondary-fixed": "#111e18",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#f0fdf2",
+                      "tertiary-container": "#cea72c",
+                      "background": "#f0fdf2",
+                      "primary": "#003625",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-tint": "#366853",
+                      "on-secondary-fixed-variant": "#3c4a42",
+                      "inverse-primary": "#9ed2b9",
+                      "secondary-fixed-dim": "#bacac0",
+                      "surface": "#f0fdf2",
+                      "on-error": "#ffffff",
+                      "secondary-fixed": "#d6e6db",
+                      "error": "#ba1a1a",
+                      "primary-fixed-dim": "#9ed2b9",
+                      "outline": "#717974",
+                      "surface-container-high": "#deebe1",
+                      "primary-fixed": "#b9eed4",
+                      "tertiary-fixed-dim": "#ecc246",
+                      "tertiary-fixed": "#ffe08e",
+                      "inverse-on-surface": "#e7f4ea",
+                      "inverse-surface": "#28332c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "container-max": "1140px",
+                      "margin-mobile": "12px",
+                      "base": "4px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "xl": "32px",
+                      "xxl": "48px",
+                      "lg": "24px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": ["DM Sans"],
+                      "body-sm": ["DM Sans"],
+                      "label-badge": ["DM Sans"],
+                      "label-eyebrow": ["DM Sans"],
+                      "headline-sm": ["DM Sans"],
+                      "headline-md": ["DM Sans"],
+                      "display-lg-mobile": ["DM Sans"],
+                      "body-base": ["DM Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                      "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                      "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                      "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-base antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] max-w-container-max mx-auto bg-surface/96 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors active:scale-95" onclick="window.location.href='{{DATA:SCREEN:SCREEN_28}}'">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<span class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">FieldLot</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">share</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="User Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMRwFDTDlGOCP5EouSiKHqNAgTV8YQcqmL7bqnGp6DTLU4L3wENRCedwdFZW5At1nDTU_b1bm5RXRHc6uzEvXpUVsm_ykC2x7MkMpKeuLVqLYT_DuGB5cjwvJlMwGSG87JuVCMij_e14GCKQnHP6j2TRChUmzzynD912nk8JmO9tgFp5VYmml8Zu3COBPIvucKloQxQyhJZNJpUgQ6NbgsCDmoPicjeT3KJ2JB1nt2x7HhX5Vor_0fsz5TI-J1KbQnBmv9VQ0vCl4"/>
+</div>
+</div>
+</header>
+<main class="pt-[48px] pb-32">
+<!-- Hero Image Section -->
+<div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container-highest">
+<img alt="Agricultural Machinery" class="w-full h-full object-cover hero-zoom opacity-0 transition-opacity duration-1000" data-alt="A professional high-resolution photograph of a modern green John Deere tractor parked in a sun-drenched Bulgarian wheat field during the golden hour. The lighting is warm and cinematic, highlighting the rugged textures of the machinery and the golden hues of the ripe grain. The composition is clean and focused, reflecting a premium B2B agricultural marketplace aesthetic with natural tones of forest green and harvest gold." id="hero-image" onload="this.classList.remove('opacity-0')" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs-Jq-LOZfvEWP-YhsH1Kut3xtcj68q6qcuobfSlYwJ2cqeVYWuAqzlSr_XEQOsIvyhMlSIRtxoB2qxPcWz1LlyGzinOwGUtqDbgedCfjFE_TE2JcMWsF79JOY8ZqHkoOINUXg5N51NU1o9fny6AdhFyvCD7rpatAMMTP4OiHg-VhjmFrWZEE4uLOWpvQyCa9Hx_XhkifTyyK3rOTM5kJ1CZ9BDUYKV8ULLW9b5NfUzUZ02NVjjWWw07Lx9LAhGOzL4truUyM7_i0" style="transition-property: opacity, transform;"/>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<span class="bg-primary text-white text-label-eyebrow px-3 py-1 rounded-full uppercase animate-badge" style="animation-delay: 0.4s;">Премиум Обява</span>
+<span class="bg-tertiary-container text-on-tertiary-container text-label-eyebrow px-3 py-1 rounded-full uppercase animate-badge" style="animation-delay: 0.6s;">Налично</span>
+</div>
+</div>
+<!-- Content Area -->
+<div class="px-margin-mobile -mt-6 relative z-10 space-y-4">
+<!-- Main Title Card -->
+<div class="yellow-pages-card p-5 rounded-xl animate-content" style="animation-delay: 0.1s;">
+<div class="flex justify-between items-start mb-2">
+<h1 class="text-headline-sm-mobile font-headline-sm text-primary leading-tight">John Deere 6155M (2021)</h1>
+<span class="material-symbols-outlined text-tertiary" data-weight="fill">verified</span>
+</div>
+<div class="flex items-center gap-2 mb-4 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-body-sm">Варна, България</span>
+</div>
+<div class="text-headline-sm font-bold text-primary">184,500 лв. <span class="text-body-sm font-normal text-on-surface-variant">без ДДС</span></div>
+</div>
+<!-- Specs Grid (Bento Style) -->
+<section class="grid grid-cols-2 gap-3 animate-content" style="animation-delay: 0.2s;">
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant">
+<span class="text-label-eyebrow text-on-surface-variant uppercase block mb-1">Мощност</span>
+<div class="flex items-baseline gap-1">
+<span class="text-headline-sm font-bold text-primary">155</span>
+<span class="text-body-sm text-on-surface-variant">к.с.</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant">
+<span class="text-label-eyebrow text-on-surface-variant uppercase block mb-1">Моточасове</span>
+<div class="flex items-baseline gap-1">
+<span class="text-headline-sm font-bold text-primary">1,240</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">history</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant col-span-2 flex justify-between items-center">
+<div>
+<span class="text-label-eyebrow text-on-surface-variant uppercase block mb-1">Трансмисия</span>
+<span class="text-body-base font-bold text-primary">CommandQuad Plus</span>
+</div>
+<span class="material-symbols-outlined text-primary">settings_input_component</span>
+</div>
+</section>
+<!-- Description -->
+<section class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm animate-content" style="animation-delay: 0.3s;">
+<h3 class="text-label-eyebrow text-primary uppercase font-bold mb-3 border-b border-outline-variant pb-2">Описание</h3>
+<p class="text-body-base text-on-surface-variant leading-relaxed">
+                    Тракторът е в отлично състояние, обслужван единствено в оторизиран сервиз. Пълна история на поддръжката. Оборудван с TLS преден мост, климатроник и Premium седалка. Използван е основно за лека почвообработка в района на обл. Варна.
+                </p>
+</section>
+<!-- Location Map Snippet -->
+<section class="bg-surface-container-lowest overflow-hidden rounded-xl border border-outline-variant shadow-sm animate-content" style="animation-delay: 0.4s;">
+<div class="h-40 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A stylized, clean map view of the Varna region in Bulgaria, designed for a professional B2B application. The map uses a soft palette of muted greens and greys, with a prominent forest green pin indicating a location. The aesthetic is modern and high-tech, fitting the Corporate Modernism style of an agricultural trading platform." data-location="Varna, Bulgaria" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ8cFm3ITAsE2eWLoRUG6bo5laTTTHr0DUJ0xhNYRNgzjhsM-hRS5sONlWCq01-4QIO-TAeEBT36vYMV2ge2doGLxc_DBGe8n31WuCm3wN03Zx6qDrRq6BfAyEkYomLpIjhvfJXwGJ8-yFgXzbzLr2ABPItjVCBtroRPrFh50vbM-lUo3rFBfRrV_D9GdRxFZfYkXijRxfPbxWztX5tcxDxmzmvGhWCJymck38Rb8OUGDuUghNjDIkPN05YMP0NpMLj81hoT9ro_I"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<div class="bg-white p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-primary text-3xl" data-weight="fill">location_on</span>
+</div>
+</div>
+</div>
+<div class="p-4 flex justify-between items-center">
+<div>
+<p class="text-body-base font-bold text-primary">Местоположение</p>
+<p class="text-body-sm text-on-surface-variant">Индустриална зона, Варна</p>
+</div>
+<button class="text-primary font-bold text-body-sm flex items-center gap-1 active:scale-95 transition-transform">
+                        Упътвания <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</button>
+</div>
+</section>
+<!-- Seller Info -->
+<section class="flex items-center justify-between p-4 bg-secondary-fixed rounded-xl cursor-pointer active:scale-98 transition-transform animate-content" onclick="window.location.href='{{DATA:SCREEN:SCREEN_26}}'" style="animation-delay: 0.5s;">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-2xl">agriculture</span>
+</div>
+<div>
+<p class="text-body-base font-bold text-primary">Агро Партнерс ООД</p>
+<div class="flex items-center gap-1">
+<span class="text-label-badge text-on-secondary-fixed-variant bg-white/50 px-1 rounded">B2B VERIFIED</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</section>
+</div>
+</main>
+<!-- Fixed Action Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-surface/96 backdrop-glass border-t border-outline-variant p-4 flex gap-3">
+<button class="flex-1 h-[52px] bg-primary text-white rounded-full font-bold text-body-base flex items-center justify-center gap-2 active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_32}}'">
+<span class="material-symbols-outlined">handshake</span>
+            Прояви интерес
+        </button>
+<button class="w-[52px] h-[52px] rounded-full border-2 border-primary text-primary flex items-center justify-center active:scale-90 transition-all">
+<span class="material-symbols-outlined">call</span>
+</button>
+</footer>
+<!-- Bottom Navigation (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-[60] flex justify-around items-center px-4 pb-2 pt-2 bg-surface border-t border-outline-variant md:hidden translate-y-[100%] transition-transform duration-300" id="bottom-nav">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-badge font-label-badge">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-90">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-label-badge font-label-badge">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-badge font-label-badge">AI Guide</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-badge font-label-badge">Profile</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions and parallax scroll effect
+        const heroImage = document.getElementById('hero-image');
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Simple parallax-like scroll effect for hero
+            if (scrollTop < 400) {
+                const scrollFactor = scrollTop * 0.4;
+                heroImage.style.transform = `translateY(${scrollFactor}px)`;
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Initialize animations sequence
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero image starts zooming out slightly for entrance
+            heroImage.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                heroImage.style.transition = 'transform 8s ease-out, opacity 1s ease-out';
+                heroImage.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+        // Navigation for interest button was handled via onclick in HTML
+    </script>
+</body></html>

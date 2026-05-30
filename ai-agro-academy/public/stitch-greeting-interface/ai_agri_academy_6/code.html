@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Agri Academy - Precision Farming Lecture</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=Lora:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif-content {
+            font-family: 'Lora', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0fdf2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c0c9c2;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #717974;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#131e18",
+                        "secondary-container": "#d1e1d6",
+                        "primary-fixed": "#b9eed4",
+                        "surface-bright": "#f0fdf2",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#404944",
+                        "on-tertiary-container": "#4f3d00",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#536259",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#755b00",
+                        "tertiary-container": "#cea72c",
+                        "on-tertiary-fixed": "#241a00",
+                        "secondary-fixed-dim": "#bacac0",
+                        "outline-variant": "#c0c9c2",
+                        "background": "#f0fdf2",
+                        "inverse-surface": "#28332c",
+                        "surface": "#f0fdf2",
+                        "on-secondary-container": "#55645b",
+                        "on-primary-fixed": "#002115",
+                        "on-surface": "#131e18",
+                        "surface-variant": "#d9e6dc",
+                        "inverse-primary": "#9ed2b9",
+                        "primary": "#003625",
+                        "outline": "#717974",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#e7f4ea",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#deebe1",
+                        "on-secondary-fixed": "#111e18",
+                        "primary-container": "#1a4d3a",
+                        "surface-tint": "#366853",
+                        "surface-dim": "#d0ddd3",
+                        "surface-container": "#e4f1e7",
+                        "on-primary-container": "#89bda4",
+                        "tertiary-fixed": "#ffe08e",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "secondary-fixed": "#d6e6db",
+                        "surface-container-low": "#eaf7ec"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "margin-mobile": "12px",
+                        "xxl": "48px",
+                        "container-max": "1140px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "label-badge": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-secondary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant dark:border-outline">
+<div class="flex justify-between items-center px-margin-mobile md:px-lg h-12 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" style="font-variation-settings: 'FILL' 1;">agriculture</span>
+<h1 class="font-headline-sm text-headline-sm-mobile font-bold text-primary dark:text-primary-fixed tracking-tight">AI Agri Academy</h1>
+</div>
+<div class="hidden md:flex gap-6">
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:opacity-80 transition-opacity uppercase tracking-widest" href="#">Dashboard</a>
+<a class="font-label-badge text-label-badge text-primary font-bold transition-opacity uppercase tracking-widest" href="#">Courses</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:opacity-80 transition-opacity uppercase tracking-widest" href="#">Community</a>
+</div>
+<button class="active:scale-95 duration-150 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+</div>
+</header>
+<main class="pt-12 pb-24 min-h-screen">
+<!-- Progress Header -->
+<div class="sticky top-12 z-40 bg-surface-container-low/80 backdrop-blur-sm border-b border-outline-variant/50">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-lg py-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+<div>
+<span class="font-label-eyebrow text-label-eyebrow text-tertiary uppercase mb-1 block">Module 01: Core Concepts</span>
+<h2 class="font-headline-sm text-headline-sm-mobile text-primary font-bold">Introduction to Precision Farming</h2>
+</div>
+<div class="flex items-center gap-4 w-full md:w-64">
+<div class="flex-grow bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%] rounded-full transition-all duration-1000"></div>
+</div>
+<span class="font-label-badge text-label-badge text-on-surface-variant">45% COMPLETE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Article Content -->
+<article class="max-w-[800px] mx-auto px-margin-mobile md:px-xl mt-xl">
+<!-- Hero Image -->
+<div class="w-full h-64 md:h-96 rounded-xl overflow-hidden mb-xl shadow-sm">
+<img alt="Precision farming technology" class="w-full h-full object-cover" data-alt="A cinematic, high-angle photograph of a modern green tractor navigating a vast, lush agricultural field at sunset. Golden hour light bathes the landscape in a warm harvest glow, highlighting technical overlay lines that represent GPS and soil data mapping. The overall aesthetic is professional and high-tech, combining the earthy greens of the farm with the clean, sophisticated atmosphere of agricultural SaaS technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-ORfb4bysUw5ofiS3DwZ2RDYQW5st_PUG5Z8MMsQPEuozu9mEPS7QtrSi1yQlZRfOSrOPfROj0jLeOgzPjS407GBsj8WGjeLKA9gLm3WEC5gD0wKuLVEuQBCcYU6PoVhZBEUD9w7Oaac5qK2jnoltw7SYSoct_wcHg-vabIPO8c9HRWLo4c5HSPt8ZBQFcR80HUkU8wekp1R4O2yS0tfY-OohRSG44psRZ2ZcxHDNtQ7vPx1oxscmbOGM13y0NxqswUPy694KN2g"/>
+</div>
+<div class="serif-content text-on-background space-y-8">
+<p class="text-xl md:text-2xl leading-relaxed font-medium italic text-on-surface-variant border-l-4 border-tertiary-container pl-6">
+                    Precision farming represents the convergence of traditional agricultural wisdom and cutting-edge digital intelligence, allowing producers to manage field variability with surgical accuracy.
+                </p>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-12 mb-4">The Evolution of the Field</h3>
+<p class="text-body-base md:text-lg leading-[1.8]">
+                    In the past, agricultural management was based on average field conditions. A farmer would apply the same amount of fertilizer, water, and seeds across an entire 100-acre plot. However, soil quality, moisture levels, and pest pressure are rarely uniform. This "blanket approach" often resulted in waste in some areas and under-performance in others.
+                </p>
+<p class="text-body-base md:text-lg leading-[1.8]">
+                    Modern precision agriculture breaks the field down into manageable "zones" using GPS, IoT sensors, and satellite imagery. By analyzing data at a granular level, we can tailor every input to the specific needs of each square meter, maximizing yield while minimizing environmental impact.
+                </p>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-12 mb-4">Core Technologies</h3>
+<ul class="space-y-4 list-none">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tertiary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-body-base md:text-lg leading-[1.6]"><strong>Variable Rate Technology (VRT):</strong> Systems that allow farmers to change the rate of applications (seed, fertilizer, chemicals) as they move through a field.</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tertiary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-body-base md:text-lg leading-[1.6]"><strong>Geographic Information Systems (GIS):</strong> A framework for gathering, managing, and analyzing data rooted in the science of geography.</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tertiary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-body-base md:text-lg leading-[1.6]"><strong>Remote Sensing:</strong> Using satellites or drones to monitor crop health from the air without physical contact.</span>
+</li>
+</ul>
+<!-- Key Takeaways Box -->
+<div class="bg-primary-container/10 border-l-4 border-primary p-lg rounded-r-xl my-xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h4 class="font-headline-sm text-headline-sm-mobile text-primary font-bold">Key Takeaways</h4>
+</div>
+<ul class="space-y-3 font-body-base text-on-surface">
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            Precision farming focuses on intra-field variability rather than field averages.
+                        </li>
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            Data-driven decisions lead to higher resource efficiency and sustainability.
+                        </li>
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            The primary goal is optimizing "Return on Investment" per square meter.
+                        </li>
+</ul>
+</div>
+<p class="text-body-base md:text-lg leading-[1.8]">
+                    As we move forward in this course, we will explore how AI specifically enhances these technologies by predicting trends before they manifest physically in the crop, allowing for proactive rather than reactive management.
+                </p>
+</div>
+<!-- Footer Action -->
+<div class="mt-xxl pt-xl border-t border-outline-variant flex flex-col items-center gap-6">
+<button class="bg-primary text-on-primary font-headline-sm h-12 px-xl rounded-full flex items-center gap-3 shadow-md hover:opacity-90 active:scale-95 transition-all w-full md:w-auto">
+                    Continue to Next Lesson
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="text-on-surface-variant font-label-badge uppercase tracking-widest hover:text-primary transition-colors">
+                    Mark as Read &amp; Go to Dashboard
+                </button>
+</div>
+</article>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface dark:bg-surface-container-lowest border-t border-outline-variant shadow-md h-16 md:hidden">
+<div class="flex justify-around items-center px-4 pb-2 pt-1 h-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant py-1 hover:bg-secondary-container/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-badge text-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed-dim text-on-primary-container dark:text-on-primary-fixed rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-label-badge text-label-badge">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant py-1 hover:bg-secondary-container/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-badge text-label-badge">AI Tutor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant py-1 hover:bg-secondary-container/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Desktop Floating Tutor Trigger (Extra touch for 'Agro-Modernism') -->
+<button class="fixed bottom-lg right-lg hidden md:flex items-center gap-3 bg-tertiary-container text-on-tertiary-container p-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all z-40">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-bold">Ask AI Tutor</span>
+</button>
+<script>
+        // Simple scroll listener to update progress bar visually as user scrolls
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            // Map scroll 0-100 to progress 45-100 for demonstration
+            const demoProgress = Math.min(100, 45 + (scrolled * 0.55));
+            document.querySelector('.bg-primary.h-full').style.width = demoProgress + "%";
+        });
+    </script>
+</body></html>

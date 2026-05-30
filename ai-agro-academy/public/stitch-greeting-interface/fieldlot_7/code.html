@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot - Подписване на договор</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "surface-dim": "#d0ddd3",
+                        "secondary-container": "#d1e1d6",
+                        "primary": "#003625",
+                        "on-tertiary-fixed": "#241a00",
+                        "secondary": "#536259",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1a4d3a",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "surface-tint": "#366853",
+                        "surface-container": "#e4f1e7",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#9ed2b9",
+                        "primary-fixed": "#b9eed4",
+                        "secondary-fixed": "#d6e6db",
+                        "surface-variant": "#d9e6dc",
+                        "tertiary-fixed": "#ffe08e",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "inverse-on-surface": "#e7f4ea",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "on-surface-variant": "#404944",
+                        "tertiary": "#755b00",
+                        "surface-container-low": "#eaf7ec",
+                        "secondary-fixed-dim": "#bacac0",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#131e18",
+                        "error": "#ba1a1a",
+                        "background": "#f0fdf2",
+                        "on-secondary-fixed": "#111e18",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "surface-bright": "#f0fdf2",
+                        "surface": "#f0fdf2",
+                        "tertiary-container": "#cea72c",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-surface": "#131e18",
+                        "on-tertiary-container": "#4f3d00",
+                        "outline": "#717974",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002115",
+                        "outline-variant": "#c0c9c2",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#deebe1",
+                        "on-secondary-container": "#55645b",
+                        "inverse-surface": "#28332c",
+                        "on-primary-container": "#89bda4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xxl": "48px",
+                        "margin-mobile": "12px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "container-max": "1140px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-badge": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "display-lg": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .canvas-container {
+            background-image: radial-gradient(#d1e1d6 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f0fdf2;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base text-on-surface">
+<!-- TopAppBar Shell (Filtered for Mobile Detail View - suppressing standard drawer for focus) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] bg-surface/96 backdrop-blur-md border-b border-outline-variant max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="close">close</span>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">Подписване на договор</h1>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed-variant text-[20px]" data-icon="person">person</span>
+</div>
+</header>
+<main class="pt-[48px] pb-32 px-margin-mobile max-w-container-max mx-auto">
+<!-- Progress Indicator -->
+<div class="mt-lg mb-md">
+<div class="flex justify-between items-center mb-xs">
+<span class="text-label-eyebrow font-label-eyebrow uppercase text-secondary">Progress</span>
+<span class="text-label-eyebrow font-label-eyebrow text-primary">Step 2 of 2: Signing</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-700 w-full"></div>
+</div>
+</div>
+<!-- Document Preview Section -->
+<section class="mb-lg">
+<div class="yellow-pages-card border-t-4 border-tertiary-container rounded-xl p-md">
+<div class="flex items-center gap-md mb-md">
+<div class="p-sm bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</div>
+<div>
+<p class="text-label-eyebrow font-label-eyebrow text-tertiary">PURCHASE AGREEMENT</p>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Contract #2024-085</h2>
+</div>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between items-center py-xs border-b border-outline-variant/30">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Seller</span>
+<span class="text-body-sm font-body-sm font-bold text-on-surface">Ivan Georgiev</span>
+</div>
+<div class="flex justify-between items-center py-xs border-b border-outline-variant/30">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Buyer</span>
+<span class="text-body-sm font-body-sm font-bold text-on-surface">Georgi Petrov</span>
+</div>
+<div class="flex justify-between items-center py-xs border-b border-outline-variant/30">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Subject</span>
+<span class="text-body-sm font-body-sm font-bold text-on-surface">Wheat Sort Enola</span>
+</div>
+<div class="flex justify-between items-center py-xs">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Quantity</span>
+<span class="text-body-sm font-body-sm font-bold text-on-surface">500 tons</span>
+</div>
+</div>
+<div class="mt-md p-sm bg-surface-container rounded-lg flex items-center justify-center gap-sm cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+<span class="text-label-eyebrow font-label-eyebrow">View Full Document</span>
+</div>
+</div>
+</section>
+<!-- Signature Canvas Area -->
+<section class="mb-lg">
+<label class="block text-label-eyebrow font-label-eyebrow text-secondary mb-sm uppercase">Digital Signature</label>
+<div class="relative w-full aspect-[4/3] bg-surface-container-lowest border-2 border-dashed border-outline-variant rounded-xl overflow-hidden flex flex-col group canvas-container">
+<canvas class="flex-1 w-full cursor-crosshair" id="signatureCanvas"></canvas>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full hover:bg-surface-container-highest transition-all flex items-center justify-center" id="clearBtn">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="p-sm text-center border-t border-outline-variant/50 bg-surface-container-low/50">
+<p class="text-label-badge font-label-badge text-on-surface-variant">Draw your signature above</p>
+</div>
+</div>
+<div class="mt-md flex flex-col gap-sm">
+<p class="text-center text-body-sm font-body-sm text-on-surface-variant">or</p>
+<button class="w-full h-[48px] border-2 border-primary text-primary rounded-full font-bold flex items-center justify-center gap-md hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span>Use Digital Certificate (KEP)</span>
+</button>
+</div>
+</section>
+<!-- Image Decoration / Aesthetic Bridge -->
+<section class="mb-lg">
+<div class="relative w-full h-32 rounded-xl overflow-hidden shadow-sm border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A macro close-up photograph of golden wheat ears swaying gently in a sunset field, bathed in warm harvest-gold light. The background features a soft focus of the vast Bulgarian countryside under a clear, serene sky. The aesthetic is tactile and organic, reflecting agricultural heritage and professional reliability with deep forest green shadows and glowing amber highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9iw4Y8uA1Q89e6SfGARxFB0knPLOuGxxXRKMPo8O1Mc0ybjJNRHuPWpOdI-SIC3twL2pUltK8CpWZkEpLPKMui5tSuVIwyVDoezTd0Ts2-bM6sOn7Lw4dZ4nwfKxToq-xKEzgtGVcRZIUNeEbyRczlRxdCowEaaADdLLkS8uOOeDexdrVoEV19knRjjSU4zZQs_Hph8HQarI6_qAqossP0TAxMb_vlE2q6mvWkTZq49fpymsA4dn82hEk9zp26bzW_5CV1zwQszk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-md">
+<span class="text-white text-label-eyebrow font-label-eyebrow">Ensuring secure trade across Bulgaria</span>
+</div>
+</div>
+</section>
+<!-- Terms & Action -->
+<div class="fixed bottom-0 left-0 w-full bg-surface/96 backdrop-blur-md border-t border-outline-variant p-gutter pb-8">
+<div class="max-w-container-max mx-auto flex flex-col gap-md">
+<label class="flex items-start gap-md group cursor-pointer">
+<div class="relative flex items-center pt-1">
+<input class="peer h-5 w-5 rounded border-outline text-primary focus:ring-primary/20" type="checkbox"/>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant leading-tight">
+                        I agree to the <span class="text-primary font-bold">terms and conditions</span> and understand that this signature is legally binding.
+                    </span>
+</label>
+<button class="w-full h-[52px] bg-primary text-white rounded-full font-bold text-body-base shadow-lg shadow-primary/20 hover:scale-[0.98] transition-all active:scale-95 flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="draw">draw</span>
+<span>Подпиши и изпрати</span>
+</button>
+</div>
+</div>
+</main>
+<script>
+        // Simple signature canvas interaction
+        const canvas = document.getElementById('signatureCanvas');
+        const clearBtn = document.getElementById('clearBtn');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        // Resize canvas to its container
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight - 40; // subtract footer area
+            ctx.strokeStyle = '#003625';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const startDrawing = (e) => {
+            isDrawing = true;
+            draw(e);
+        };
+
+        const stopDrawing = () => {
+            isDrawing = false;
+            ctx.beginPath();
+        };
+
+        const draw = (e) => {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        };
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); }, { passive: false });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // Interactive Button Feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('scale-95'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('scale-95'));
+            btn.addEventListener('mouseleave', () => btn.classList.remove('scale-95'));
+        });
+    </script>
+</body></html>

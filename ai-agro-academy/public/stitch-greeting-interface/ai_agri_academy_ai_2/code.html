@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AGRI ACADEMY - AI Mentor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffe08e",
+                        "surface-container": "#e4f1e7",
+                        "surface-container-high": "#deebe1",
+                        "on-surface": "#131e18",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-surface-variant": "#404944",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "outline": "#717974",
+                        "on-tertiary-container": "#4f3d00",
+                        "secondary-container": "#d1e1d6",
+                        "secondary-fixed-dim": "#bacac0",
+                        "outline-variant": "#c0c9c2",
+                        "primary-fixed": "#b9eed4",
+                        "on-primary-container": "#89bda4",
+                        "surface-tint": "#366853",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "secondary-fixed": "#d6e6db",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "surface-container-low": "#eaf7ec",
+                        "tertiary": "#755b00",
+                        "on-error-container": "#93000a",
+                        "on-background": "#131e18",
+                        "on-tertiary-fixed": "#241a00",
+                        "surface-dim": "#d0ddd3",
+                        "surface-variant": "#d9e6dc",
+                        "tertiary-container": "#cea72c",
+                        "surface-bright": "#f0fdf2",
+                        "on-secondary-container": "#55645b",
+                        "surface-container-highest": "#d9e6dc",
+                        "primary-container": "#1a4d3a",
+                        "on-secondary-fixed": "#111e18",
+                        "inverse-primary": "#9ed2b9",
+                        "surface": "#f0fdf2",
+                        "primary": "#003625",
+                        "inverse-surface": "#28332c",
+                        "background": "#f0fdf2",
+                        "secondary": "#536259",
+                        "on-primary-fixed": "#002115",
+                        "inverse-on-surface": "#e7f4ea",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "12px",
+                        "base": "4px",
+                        "container-max": "1140px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "gutter": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>body {
+    background-color: #f0fdf2;
+    background-image: radial-gradient(at 0% 0%, rgba(206, 167, 44, 0.05) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(54, 104, 83, 0.05) 0, transparent 50%);
+    background-attachment: fixed
+    }
+.botanical-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.03;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCMjDIBm-tXfYgWu4jHAiZuLVOiqjPKwYfLzp9eR_gtKF8hZqYY5vq50S8R1UUwdS_699SHcEwWS7Q_H4DXJSyDqtqTIjBOLiTh89oz4pfHYuaG15n1kLLmG8Y65uAuzmuLLfhU5hEcd5yQJLA05IQ_N0I_dSiGSyq3jr4wRc6_aIlXyCc7Z8-Qg4NPzAZPFiGKGJdn9xSRrKsqicTus9JsSqqiYZsYdaltEb_8jaR0QqbHw1SGo7Gejr_UgElysyx23RTmPHvQu88)
+    }
+.chat-bubble-ai {
+    position: relative;
+    background: #fff;
+    border: 1px solid #dde5df;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05)
+    }
+.chat-bubble-user {
+    background: #003625;
+    color: #fff
+    }
+.glass-panel {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px)
+    }
+.yellow-pages-card {
+    border-top: 4px solid #cea72c;
+    background: linear-gradient(180deg, #fff 0%, #fcfdfa 100%);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12), 0 8px 24px rgba(201, 162, 39, 0.08)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px
+    }
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent
+    }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #c0c9c2;
+    border-radius: 10px
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base text-on-surface">
+<div class="botanical-overlay"></div>
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 dark:bg-inverse-surface/95 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<div class="flex justify-between items-center px-4 h-14 w-full max-w-[1140px] mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">school</span>
+<h1 class="font-headline-sm text-headline-sm font-bold tracking-tight text-primary">AGRI ACADEMY</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200">notifications</button>
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container font-bold text-xs shadow-sm">
+                    ИП
+                </div>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-24 min-h-screen max-w-[1140px] mx-auto px-4 lg:px-0 flex flex-col md:flex-row gap-6">
+<!-- Sidebar: Study Context & Quick Prompts (Desktop Only) -->
+<aside class="hidden md:flex flex-col gap-6 w-80 shrink-0">
+<div class="yellow-pages-card rounded-xl p-5">
+<h3 class="font-label-eyebrow text-label-eyebrow text-on-surface-variant uppercase mb-4">Текущ Модул</h3>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-fixed" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+<div>
+<p class="font-bold text-body-base leading-tight">Устойчиво земеделие 2.0</p>
+<p class="text-body-sm text-on-surface-variant mt-1">Прогрес: 64%</p>
+</div>
+</div>
+<div class="mt-4 w-full bg-surface-container rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full w-[64%]"></div>
+</div>
+</div>
+<div class="bg-white/60 glass-panel rounded-xl p-5 border border-outline-variant/30">
+<h3 class="font-label-eyebrow text-label-eyebrow text-on-surface-variant uppercase mb-4">Бързи Въпроси</h3>
+<div class="space-y-3">
+<button class="w-full text-left p-3 rounded-lg border border-outline-variant/30 hover:bg-primary-container/10 transition-colors text-body-sm flex items-center justify-between group">
+<span>Анализ на почвата</span>
+<span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+</button>
+<button class="w-full text-left p-3 rounded-lg border border-outline-variant/30 hover:bg-primary-container/10 transition-colors text-body-sm flex items-center justify-between group">
+<span>Цикъл на азота</span>
+<span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+</button>
+<button class="w-full text-left p-3 rounded-lg border border-outline-variant/30 hover:bg-primary-container/10 transition-colors text-body-sm flex items-center justify-between group">
+<span>Сензорни технологии</span>
+<span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Chat Area -->
+<section class="flex-grow flex flex-col bg-white/40 glass-panel rounded-2xl border border-outline-variant/20 shadow-xl overflow-hidden min-h-[618px]">
+<!-- Chat Header -->
+<div class="px-6 py-4 border-b border-outline-variant/20 flex items-center justify-between bg-white/60">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-fixed" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<h2 class="font-bold text-body-base">AI Академичен Ментор</h2>
+<p class="text-[10px] text-primary font-bold tracking-widest uppercase">Експерт по Агрономия</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">history</button>
+</div>
+<!-- Messages Area -->
+<div class="flex-grow overflow-y-auto p-6 space-y-8 custom-scrollbar">
+<!-- AI Message 1 -->
+<div class="flex gap-4 max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-primary-container shrink-0 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-[18px] text-primary-fixed" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="space-y-3">
+<div class="chat-bubble-ai rounded-tr-2xl rounded-br-2xl rounded-bl-2xl p-4 text-body-base leading-relaxed">
+                            Здравейте! Аз съм Вашият личен асистент. Днес разглеждаме темата за почвената микробиология. С какво мога да Ви помогна в обучението Ви?
+                        </div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-label-badge text-primary uppercase">Въведение</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-label-badge text-primary uppercase">Микробиология</span>
+</div>
+</div>
+</div>
+<!-- User Message 1 -->
+<div class="flex flex-row-reverse gap-4 max-w-[85%] ml-auto">
+<div class="w-8 h-8 rounded-full bg-primary shrink-0 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-[18px] text-white">person</span>
+</div>
+<div class="chat-bubble-user rounded-tl-2xl rounded-bl-2xl rounded-br-2xl p-4 text-body-base shadow-lg">
+                        Можеш ли да ми обясниш как фосфорът се усвоява от растенията чрез микоризни гъби?
+                    </div>
+</div>
+<!-- AI Message 2 (Rich Media) -->
+<div class="flex gap-4 max-w-[90%]">
+<div class="w-8 h-8 rounded-full bg-primary-container shrink-0 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-[18px] text-primary-fixed" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="space-y-4">
+<div class="chat-bubble-ai rounded-tr-2xl rounded-br-2xl rounded-bl-2xl p-4 text-body-base leading-relaxed">
+                            Разбира се. Това е ключов симбиотичен процес. Арбускуларните микоризни гъби (AMF) разширяват кореновата мрежа чрез своите хифи, достигайки до труднодостъпни форми на фосфор.
+                        </div>
+<!-- Scientific Diagram Placeholder -->
+<div class="yellow-pages-card rounded-xl overflow-hidden border border-outline-variant/30">
+<img alt="Scientific diagram" class="w-full h-48 object-cover opacity-90" data-alt="A highly detailed, professional scientific diagram showing plant root systems interacting with microscopic fungal hyphae in rich, loamy soil. The visual style is clean and academic, using a soft palette of forest greens, earthy ochres, and clean whites, typical of a modern digital textbook. The lighting is bright and clear, emphasizing the intricate biological structures in a sophisticated light-mode UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLKi5pEVFvfZW37x5C7hnAUk8_XyolgtHDU9OVF3IdO2l0J3ycpiO37Tys44dpODO9RL9kKTS1G-A2vnwlSByE20qMrlgur5OgHj5Zk-C2dEbpW0Aagp2TzV5VrrJXDzaJG8ovb9K7n-KixsypfXBaWC2JyXvsB2s30t0_OIFzvpj8Y9YWUwzBlmceWI5NcB8jarfa5C6wn8r68OUqYOCRL39uSLv0R7QT5HFufvkgHfGJieEHR5eYgdjV30gVtPh-WE5f6ZARjEo"/>
+<div class="p-3 bg-white text-body-sm italic text-on-surface-variant border-t border-outline-variant/20">
+                                Фигура 1: Взаимодействие между корен и микоризни хифи в почвата.
+                            </div>
+</div>
+<div class="chat-bubble-ai rounded-tr-2xl rounded-br-2xl rounded-bl-2xl p-4 text-body-base leading-relaxed">
+                            Гъбите отделят ензими (фосфатази), които минерализират органичния фосфор, правейки го усвоим. В замяна растението предоставя въглехидрати, получени чрез фотосинтеза.
+                        </div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 bg-white/80 border-t border-outline-variant/20 glass-panel">
+<div class="max-w-3xl mx-auto relative">
+<textarea class="w-full bg-surface-container-low border border-outline-variant/40 rounded-2xl py-4 pl-4 pr-14 focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all resize-none min-h-[60px] max-h-32 text-body-base" placeholder="Попитайте Вашия ментор..."></textarea>
+<div class="absolute right-2 bottom-2 flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<button class="p-2 bg-primary text-white rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<p class="text-center text-[10px] text-on-surface-variant mt-2 opacity-60">AI може да прави грешки. Винаги проверявайте важни научни факти.</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl bg-surface/95 dark:bg-inverse-surface/95 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex justify-around items-center px-margin-mobile py-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-badge text-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-badge text-label-badge">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/20 rounded-xl px-3 py-1 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-badge text-label-badge">AI Tutor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Simple micro-interactions for the chat input
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Background movement effect for luxury feel
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.backgroundPosition = `${x * 20}px ${y * 20}px`;
+        });
+    </script>
+</body></html>

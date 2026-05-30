@@ -31,113 +31,69 @@ export default function Navbar() {
   const showClerkLink = Boolean(clerkPublishableKey);
 
   const navLink =
-    "nav-link-futuristic text-sm font-semibold text-muted-foreground rounded-full px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-ring/50";
+    "nav-link-futuristic text-sm font-medium text-slate-300 hover:text-white rounded-md px-3 py-2 transition-colors";
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-4 sm:px-5 sm:pt-5">
+    <div className="fixed inset-x-0 top-0 z-50 flex flex-col">
+      {/* Top Navbar */}
       <motion.nav
-        layout
-        className={cn(
-          "pointer-events-auto w-full max-w-5xl rounded-full glass-float px-2 py-2 sm:px-3",
-          "transition-shadow duration-slow ease-cinematic hover:shadow-[0_0_60px_-20px_rgb(45_212_191/0.2)]",
-        )}
+        className="w-full bg-[#0B0F19] border-b border-white/5 flex items-center px-4 md:px-8 py-4 justify-between"
         initial={reduceMotion ? false : { opacity: 0, y: -14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={
-          reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }
-        }
+        transition={reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }}
       >
-        <div className="flex h-12 items-center justify-between gap-2 sm:h-14 sm:gap-4 md:px-1">
-          <Link
-            href="/"
-            className="group flex min-w-0 items-center gap-2 rounded-full py-1 pl-1 pr-2 transition-transform duration-normal ease-spring hover:scale-[1.02]"
-          >
-            <AiAvatar size="sm" className="shrink-0 shadow-md" />
-            <span className="truncate bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-base font-semibold tracking-tight text-transparent sm:text-lg">
-              AI Agro
-            </span>
+        <div className="flex items-center gap-2">
+          <AiAvatar size="sm" className="shrink-0" />
+          <span className="text-xl font-bold tracking-tight text-white">
+            Agro<span className="text-primary">Academy</span>
+          </span>
+        </div>
+
+        <div className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
+          <Link href="/courses" className={navLink}>Възможности</Link>
+          <Link href="/faculty" className={navLink}>Сравни</Link>
+          <Link href="/labs" className={navLink}>Абонаменти</Link>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" className="hidden sm:flex text-slate-300 hover:text-white text-sm font-medium">
+            <span className="mr-2">🌐</span> Български
+          </Button>
+          {isAuthenticated ? (
+            <Link href="/dashboard">
+              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium">
+                Моят профил
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium">
+                Вход
+              </Button>
+            </Link>
+          )}
+          <Link href="/register">
+            <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-5 py-2 font-medium text-sm transition-all">
+              Започни безплатно &rarr;
+            </Button>
           </Link>
-          <div className="hidden min-w-0 items-center gap-0.5 md:flex">
-            <Link href="/courses" className={navLink}>
-              Курсове
-            </Link>
-            <Link href="/faculty/agromind" className={navLink}>
-              AI Факултет
-            </Link>
-            <Link href="/labs" className={navLink}>
-              Лаборатории
-            </Link>
-            <Link href="/labs/vision" className={navLink}>
-              CV / Roboflow
-            </Link>
-            <Link href="/knowledge" className={navLink}>
-              База знания
-            </Link>
-          </div>
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            {showClerkLink && (
-              <Link href="/sign-in">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full border-border/60 bg-card/40 text-xs backdrop-blur-sm transition-all duration-normal ease-cinematic hover:border-primary/40 hover:bg-primary/10 hover:text-primary sm:text-sm"
-                >
-                  Clerk
-                </Button>
-              </Link>
-            )}
-            {isAuthenticated ? (
-              <>
-                <Link href="/dashboard">
-                  <Button
-                    size="sm"
-                    className="rounded-full px-4 shadow-md transition-transform duration-normal ease-spring hover:-translate-y-0.5 sm:px-5 glow-primary"
-                  >
-                    <User className="mr-1.5 h-4 w-4" />
-                    <span className="hidden sm:inline">Моят профил</span>
-                    <span className="sm:hidden">Профил</span>
-                  </Button>
-                </Link>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={cn(
-                    "rounded-full px-2 text-xs font-semibold text-muted-foreground sm:px-3 sm:text-sm",
-                    "transition-colors duration-normal hover:bg-destructive/15 hover:text-destructive",
-                  )}
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    window.location.href = "/";
-                  }}
-                >
-                  Изход
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link href="/login">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="rounded-full text-xs font-semibold sm:text-sm"
-                  >
-                    Вход
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button
-                    variant="neon"
-                    size="sm"
-                    className="rounded-full px-4 shadow-md transition-transform duration-normal ease-spring hover:-translate-y-0.5 sm:px-5"
-                  >
-                    Регистрация →
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
         </div>
       </motion.nav>
+
+      {/* Gradient Banner underneath */}
+      <motion.div 
+        className="w-full bg-gradient-to-r from-[#6366f1] via-[#3b82f6] to-[#06b6d4] py-3 px-4 flex items-center justify-center gap-4 shadow-md"
+        initial={reduceMotion ? false : { opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.4 }}
+      >
+        <span className="text-white font-medium text-sm hidden sm:block">
+          Всички Агро AI Инструменти. Една Платформа. Нулеви Усилия.
+        </span>
+        <Button variant="secondary" size="sm" className="bg-white text-black hover:bg-slate-100 rounded-full font-bold px-4 h-8 text-xs">
+          Опитай Академията Безплатно &rarr;
+        </Button>
+      </motion.div>
     </div>
   );
 }

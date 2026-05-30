@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>AgroAcademy - Test Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#241a00",
+                      "surface-dim": "#d0ddd3",
+                      "surface-variant": "#d9e6dc",
+                      "tertiary-container": "#cea72c",
+                      "surface-bright": "#f0fdf2",
+                      "on-secondary-container": "#55645b",
+                      "surface-container-highest": "#d9e6dc",
+                      "primary-container": "#1a4d3a",
+                      "on-secondary-fixed": "#111e18",
+                      "inverse-primary": "#9ed2b9",
+                      "surface": "#f0fdf2",
+                      "primary": "#003625",
+                      "inverse-surface": "#28332c",
+                      "background": "#f0fdf2",
+                      "secondary": "#536259",
+                      "on-primary-fixed": "#002115",
+                      "inverse-on-surface": "#e7f4ea",
+                      "surface-container-highest": "#d9e6dc",
+                      "on-surface": "#131e18",
+                      "on-primary-fixed-variant": "#1d4f3c",
+                      "on-tertiary-fixed-variant": "#584400",
+                      "on-surface-variant": "#404944",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "outline": "#717974",
+                      "on-tertiary-container": "#4f3d00",
+                      "secondary-container": "#d1e1d6",
+                      "secondary-fixed-dim": "#bacac0",
+                      "outline-variant": "#c0c9c2",
+                      "primary-fixed": "#b9eed4",
+                      "on-primary-container": "#89bda4",
+                      "surface-tint": "#366853",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed-variant": "#3c4a42",
+                      "primary-fixed-dim": "#9ed2b9",
+                      "secondary-fixed": "#d6e6db",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#ecc246",
+                      "surface-container-low": "#eaf7ec",
+                      "tertiary": "#755b00",
+                      "on-error-container": "#93000a",
+                      "on-background": "#131e18"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "lg": "24px",
+                      "xxl": "48px",
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "margin-mobile": "12px",
+                      "base": "4px",
+                      "xl": "32px",
+                      "container-max": "1140px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-md": ["DM Sans"],
+                      "body-sm": ["DM Sans"],
+                      "headline-sm": ["DM Sans"],
+                      "body-base": ["DM Sans"],
+                      "display-lg": ["DM Sans"],
+                      "label-eyebrow": ["DM Sans"],
+                      "display-lg-mobile": ["DM Sans"],
+                      "label-badge": ["DM Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                      "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                      "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .circle-progress { transform: rotate(-90deg); transition: stroke-dashoffset 1.5s ease-out; }
+        .success-glow { box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15); }
+        .harvest-gold-border { border-top: 4px solid #cea72c; }
+        .parchment-bg { background: linear-gradient(180deg, #ffffff 0%, #fefcf0 100%); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between px-margin-mobile h-12">
+<div class="flex items-center gap-2">
+<button class="transition-all duration-200 active:scale-95 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile text-primary font-bold">AgroAcademy</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">insights</span>
+</div>
+</header>
+<main class="pt-20 px-margin-mobile max-w-container-max mx-auto space-y-lg">
+<!-- Celebratory Header -->
+<section class="text-center animate-in fade-in slide-in-from-top duration-700">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-tertiary-container/20 text-tertiary mb-md">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-primary mb-xs">Excellent Work!</h2>
+<p class="font-body-base text-on-surface-variant">You've mastered the Precision Farming module.</p>
+</section>
+<!-- Central Score Gauge -->
+<section class="relative flex flex-col items-center justify-center py-lg overflow-hidden">
+<div class="relative w-64 h-64">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="text-secondary-container" cx="50" cy="50" fill="transparent" r="45" stroke="currentColor" stroke-width="8"></circle>
+<circle class="circle-progress" cx="50" cy="50" fill="transparent" r="45" stroke="#003625" stroke-dasharray="282.7" stroke-dashoffset="42.4" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-md text-headline-md text-primary">85%</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant tracking-widest uppercase">CORRECT</span>
+</div>
+</div>
+<div class="mt-md flex gap-gutter">
+<div class="text-center px-4">
+<p class="font-headline-sm text-primary">17/20</p>
+<p class="font-label-badge text-on-surface-variant">QUESTIONS</p>
+</div>
+<div class="w-px h-10 bg-outline-variant"></div>
+<div class="text-center px-4">
+<p class="font-headline-sm text-primary">12m</p>
+<p class="font-label-badge text-on-surface-variant">TIME TAKEN</p>
+</div>
+</div>
+</section>
+<!-- Performance Breakdown -->
+<section class="space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-primary">Performance Breakdown</h3>
+<span class="material-symbols-outlined text-secondary">analytics</span>
+</div>
+<div class="space-y-4">
+<!-- Category 1 -->
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant/30">
+<div class="flex justify-between mb-2">
+<span class="font-body-base font-bold text-primary">Soil Microbiology</span>
+<span class="font-body-sm font-bold text-tertiary">92%</span>
+</div>
+<div class="h-2 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 92%"></div>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant/30">
+<div class="flex justify-between mb-2">
+<span class="font-body-base font-bold text-primary">Precision Farming</span>
+<span class="font-body-sm font-bold text-tertiary">85%</span>
+</div>
+<div class="h-2 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%"></div>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant/30">
+<div class="flex justify-between mb-2">
+<span class="font-body-base font-bold text-primary">Crop Yield Forecasting</span>
+<span class="font-body-sm font-bold text-tertiary">78%</span>
+</div>
+<div class="h-2 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 78%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Unlock Premium Insights Card -->
+<section class="parchment-bg harvest-gold-border p-lg rounded-xl success-glow relative overflow-hidden group transition-all duration-300 hover:scale-[1.02]">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-tertiary-container/10 rounded-full blur-2xl group-hover:bg-tertiary-container/20 transition-all"></div>
+<div class="relative z-10">
+<div class="flex items-start justify-between mb-md">
+<div>
+<span class="font-label-badge text-tertiary uppercase tracking-widest bg-tertiary-container/10 px-2 py-1 rounded">Passed Upgrade</span>
+<h4 class="font-headline-sm text-primary mt-2">Unlock AI Mentor Insights</h4>
+</div>
+<span class="material-symbols-outlined text-tertiary text-4xl" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<p class="font-body-sm text-on-surface-variant mb-lg">Passers get exclusive 1-on-1 analysis of their mistakes from our AI Agronomist. Optimize your farm's efficiency with personalized strategy adjustments.</p>
+<ul class="space-y-2 mb-lg">
+<li class="flex items-center gap-2 text-primary font-body-sm">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                        Deep-dive answer explanations
+                    </li>
+<li class="flex items-center gap-2 text-primary font-body-sm">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                        Regional soil composition tips
+                    </li>
+</ul>
+<button class="w-full bg-primary text-white h-12 rounded-full font-bold transition-all active:scale-95 hover:bg-primary-container">
+                    Unlock Premium Insights
+                </button>
+</div>
+<div class="mt-4 flex justify-center">
+<img alt="Farmer reviewing data" class="w-full h-32 object-cover rounded-lg" data-alt="A professional young agronomist in a lush green corn field, holding a tablet displaying complex data visualizations and farm yields. The sunlight is warm and golden during a late afternoon harvest time, creating a high-quality agricultural corporate aesthetic with professional lighting and focus on the technological device. The colors are deep forest greens and harvest golds." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAvJj_YZApv0JALinFoEkzPVvdcupP-C3N4q7KHx9EsG-4j54nT1JXzRjr1Sh695PrvaXlauMyc28tK1ZdIT8ogwVVIQMIwbscmz7hOEmOZRq2pBLEDisJHy5ZtIrU9tpkdkbclvtGccyaV5LMtVsjv38zAsHEaNe_V5pL7-gU2cTH9hXGD9OuCEbrc9F1j6-xFX3UsDku4NNzhi8QsO_tJezaMgUXlLQn0PJ_Pw5yqUmeSNZAAzxvB1p3Q3Ik1QF986cu3cHv-6E"/>
+</div>
+</section>
+<!-- Primary Actions -->
+<div class="flex flex-col gap-md">
+<button class="w-full bg-primary text-white h-12 rounded-full font-bold flex items-center justify-center gap-2 transition-all active:scale-95">
+                Continue to Dashboard
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full bg-transparent border border-outline text-primary h-12 rounded-full font-bold flex items-center justify-center gap-2 transition-all active:scale-95 hover:bg-primary-container/10">
+<span class="material-symbols-outlined">list_alt</span>
+                Review Answers
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-surface-container-highest shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-secondary-fixed-variant hover:bg-secondary-container/50 transition-transform duration-300 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-badge text-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-transform duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-badge text-label-badge">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-fixed-variant hover:bg-secondary-container/50 transition-transform duration-300 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-badge text-label-badge">AI Tutor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-fixed-variant hover:bg-secondary-container/50 transition-transform duration-300 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple entry animation for progress bar
+        window.addEventListener('DOMContentLoaded', () => {
+            const circle = document.querySelector('.circle-progress');
+            if (circle) {
+                // Triggered by the CSS transition
+                circle.style.strokeDashoffset = "42.4"; // (282.7 * (1 - 0.85))
+            }
+        });
+
+        // Haptic feedback simulation
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', () => {
+                if (window.navigator.vibrate) window.navigator.vibrate(5);
+            });
+        });
+    </script>
+</body></html>

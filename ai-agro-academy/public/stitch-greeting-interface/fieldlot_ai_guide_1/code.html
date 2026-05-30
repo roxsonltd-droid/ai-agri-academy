@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fdfbf0 100%);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.15);
+        }
+        .chat-bubble-user {
+            border-radius: 18px 18px 4px 18px;
+        }
+        .chat-bubble-ai {
+            border-radius: 18px 18px 18px 4px;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c0c9c2;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#4f3d00",
+                        "on-primary-container": "#89bda4",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-tertiary-fixed": "#241a00",
+                        "outline-variant": "#c0c9c2",
+                        "on-background": "#131e18",
+                        "surface-container-low": "#eaf7ec",
+                        "secondary": "#536259",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#e4f1e7",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#404944",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d0ddd3",
+                        "tertiary": "#755b00",
+                        "surface-variant": "#d9e6dc",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "secondary-container": "#d1e1d6",
+                        "primary-container": "#1a4d3a",
+                        "on-primary-fixed": "#002115",
+                        "on-secondary-container": "#55645b",
+                        "on-surface": "#131e18",
+                        "on-secondary-fixed": "#111e18",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f0fdf2",
+                        "tertiary-container": "#cea72c",
+                        "background": "#f0fdf2",
+                        "primary": "#003625",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#366853",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "inverse-primary": "#9ed2b9",
+                        "secondary-fixed-dim": "#bacac0",
+                        "surface": "#f0fdf2",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d6e6db",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "outline": "#717974",
+                        "surface-container-high": "#deebe1",
+                        "primary-fixed": "#b9eed4",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "tertiary-fixed": "#ffe08e",
+                        "inverse-on-surface": "#e7f4ea",
+                        "inverse-surface": "#28332c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-max": "1140px",
+                        "margin-mobile": "12px",
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] max-w-container-max mx-auto bg-surface/96 glass-header border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">FieldLot</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant">
+<img alt="FieldLot Logo" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a modern Bulgarian agricultural consultant in his 40s. He is wearing a clean, high-quality green outdoor vest over a light button-down shirt. The lighting is soft, warm afternoon sun, creating a trustworthy and reliable atmosphere. The background is a blurred, fertile agricultural landscape under a clear blue sky, maintaining a clean and minimalist corporate-agricultural aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ5_QxZpMRjLNASqtZQtz32PjJuXP0YnKxqIq53W-ia4BXaiVQqkB9FzBHW6cwTA_tz3FhcT_0ORLKFY_9oRHl1OuzF5Ht1NGK6EpSUjH2JStc83nqU2urqlJvStfdL4VIw7lEGdD_pdJEFs1Q4D8QvPDJP7HUHTAIwQN472as4ofMdF4PY7s6lDiVjVUTRqcyZalJlqBihY8yappn5vf7chNKmIxBg1kin6ByyaXxM8M7BYntdx3Qxh35HYX6Qm60wBDA2-b0iaM"/>
+</div>
+</div>
+</header>
+<!-- Main Content: AI Chat Interface -->
+<main class="flex-grow pt-[48px] pb-[80px] px-margin-mobile flex flex-col max-w-[600px] mx-auto w-full">
+<!-- Welcome Section (Conditional Visibility) -->
+<div class="mt-lg mb-md text-center" id="welcome-state">
+<div class="mb-md mx-auto w-16 h-16 rounded-full bg-tertiary-container flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-tertiary-container text-3xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<h1 class="text-headline-sm font-headline-sm text-primary mb-xs">AI Асистент FieldLot</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant px-xl">Здравейте! Аз съм Вашият персонален водач в земеделието. Попитайте ме за цени, семена или договори.</p>
+</div>
+<!-- Chat History -->
+<div class="flex-grow space-y-md custom-scrollbar overflow-y-auto py-md" id="chat-container">
+<!-- AI Message Example -->
+<div class="flex items-start gap-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="chat-bubble-ai bg-surface-container-high p-md text-body-base font-body-base max-w-[85%] text-on-surface border border-outline-variant/30">
+                    Здравейте! Как мога да Ви помогна с Вашата стопанска дейност днес?
+                </div>
+</div>
+<!-- User Message Example -->
+<div class="flex items-start gap-sm justify-end">
+<div class="chat-bubble-user bg-primary text-on-primary p-md text-body-base font-body-base max-w-[85%] shadow-sm">
+                    Какви са цените на слънчогледа днес?
+                </div>
+</div>
+<!-- AI Detailed Card Response -->
+<div class="flex items-start gap-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="max-w-[85%] space-y-sm">
+<div class="chat-bubble-ai bg-surface-container-high p-md text-body-base font-body-base text-on-surface border border-outline-variant/30">
+                        Днешните котировки за слънчоглед (FOB Варна) показват лек ръст от 2.4%. Ето актуалните цени:
+                    </div>
+<!-- Tactile Card for Data -->
+<div class="yellow-pages-card p-md rounded-lg">
+<div class="flex justify-between items-center border-b border-outline-variant/50 pb-sm mb-sm">
+<span class="font-bold text-primary">Слънчоглед (2023)</span>
+<span class="text-label-badge font-label-badge bg-tertiary-container text-on-tertiary-container px-2 py-1 rounded">АКТУАЛНО</span>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div>
+<p class="text-label-eyebrow font-label-eyebrow text-on-surface-variant uppercase">Мин. цена</p>
+<p class="text-headline-sm font-headline-sm text-primary">840 лв.</p>
+</div>
+<div>
+<p class="text-label-eyebrow font-label-eyebrow text-on-surface-variant uppercase">Макс. цена</p>
+<p class="text-headline-sm font-headline-sm text-primary">865 лв.</p>
+</div>
+</div>
+<p class="mt-sm text-body-sm font-body-sm text-secondary italic">Данните са базирани на реални сделки от Софийска стокова борса.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions / Prompts -->
+<div class="py-md space-y-sm">
+<p class="text-label-eyebrow font-label-eyebrow text-on-surface-variant uppercase px-xs">Предложения</p>
+<div class="flex flex-wrap gap-sm">
+<button class="bg-surface-container border border-outline-variant rounded-full px-md py-sm text-body-sm font-body-sm text-on-surface-variant hover:bg-primary-fixed-dim hover:text-primary transition-all active:scale-95" onclick="appendMessage('Намери ми семена за царевица')">
+                    Намери ми семена за царевица
+                </button>
+<button class="bg-surface-container border border-outline-variant rounded-full px-md py-sm text-body-sm font-body-sm text-on-surface-variant hover:bg-primary-fixed-dim hover:text-primary transition-all active:scale-95" onclick="appendMessage('Анализ на почвата в Добрич')">
+                    Анализ на почвата в Добрич
+                </button>
+<button class="bg-surface-container border border-outline-variant rounded-full px-md py-sm text-body-sm font-body-sm text-on-surface-variant hover:bg-primary-fixed-dim hover:text-primary transition-all active:scale-95" onclick="appendMessage('Държавни субсидии 2024')">
+                    Държавни субсидии 2024
+                </button>
+</div>
+</div>
+</main>
+<!-- Chat Input Area -->
+<div class="fixed bottom-[64px] left-0 w-full px-gutter pb-sm pt-2 bg-surface/80 backdrop-blur-sm">
+<div class="max-w-[600px] mx-auto flex items-center gap-sm bg-surface-container-highest border border-outline-variant rounded-full p-1 pl-4 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<input class="flex-grow bg-transparent border-none focus:ring-0 text-body-base font-body-base py-2" placeholder="Попитайте ме нещо..." type="text"/>
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center hover:brightness-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-2 pt-2 border-t border-outline-variant bg-surface shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-badge font-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-label-badge font-label-badge">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy" data-weight="fill">smart_toy</span>
+<span class="text-label-badge font-label-badge">AI Guide</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-badge font-label-badge">Profile</span>
+</a>
+</nav>
+<script>
+        function appendMessage(text) {
+            const chatContainer = document.getElementById('chat-container');
+            const welcomeState = document.getElementById('welcome-state');
+            
+            if(welcomeState) welcomeState.style.display = 'none';
+
+            const userMsg = `
+                <div class="flex items-start gap-sm justify-end animate-in slide-in-from-right-2 duration-300">
+                    <div class="chat-bubble-user bg-primary text-on-primary p-md text-body-base font-body-base max-w-[85%] shadow-sm">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.insertAdjacentHTML('beforeend', userMsg);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Simulate AI response
+            setTimeout(() => {
+                const aiMsg = `
+                    <div class="flex items-start gap-sm animate-in fade-in duration-500">
+                        <div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0 mt-1">
+                            <span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="smart_toy">smart_toy</span>
+                        </div>
+                        <div class="chat-bubble-ai bg-surface-container-high p-md text-body-base font-body-base max-w-[85%] text-on-surface border border-outline-variant/30">
+                            Проверявам базата данни за "${text}"... Ето какво намерих за Вас...
+                        </div>
+                    </div>
+                `;
+                chatContainer.insertAdjacentHTML('beforeend', aiMsg);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 800);
+        }
+
+        // Handle Enter Key
+        document.querySelector('input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                appendMessage(this.value);
+                this.value = '';
+            }
+        });
+
+        // Click Send Button
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            const input = document.querySelector('input');
+            if(input.value.trim() !== '') {
+                appendMessage(input.value);
+                input.value = '';
+            }
+        });
+    </script>
+</body></html>

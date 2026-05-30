@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#4f3d00",
+                        "on-primary-container": "#89bda4",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-tertiary-fixed": "#241a00",
+                        "outline-variant": "#c0c9c2",
+                        "on-background": "#131e18",
+                        "surface-container-low": "#eaf7ec",
+                        "secondary": "#536259",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#e4f1e7",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#404944",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d0ddd3",
+                        "tertiary": "#755b00",
+                        "surface-variant": "#d9e6dc",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "secondary-container": "#d1e1d6",
+                        "primary-container": "#1a4d3a",
+                        "on-primary-fixed": "#002115",
+                        "on-secondary-container": "#55645b",
+                        "on-surface": "#131e18",
+                        "on-secondary-fixed": "#111e18",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f0fdf2",
+                        "tertiary-container": "#cea72c",
+                        "background": "#f0fdf2",
+                        "primary": "#003625",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#366853",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "inverse-primary": "#9ed2b9",
+                        "secondary-fixed-dim": "#bacac0",
+                        "surface": "#f0fdf2",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d6e6db",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "outline": "#717974",
+                        "surface-container-high": "#deebe1",
+                        "primary-fixed": "#b9eed4",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "tertiary-fixed": "#ffe08e",
+                        "inverse-on-surface": "#e7f4ea",
+                        "inverse-surface": "#28332c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-max": "1140px",
+                        "margin-mobile": "12px",
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .yellow-pages-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fffdf0 100%);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .yellow-pages-card:hover {
+            border-top-color: #755b00;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 12px 32px rgba(201, 162, 39, 0.2);
+            transform: translateY(-2px);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes staggerFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .listing-card { animation: staggerFadeIn 0.5s ease forwards; opacity: 0; }
+        .listing-card:nth-child(1) { animation-delay: 0.1s; }
+        .listing-card:nth-child(2) { animation-delay: 0.2s; }
+        .listing-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-effect {
+            background: linear-gradient(90deg, #f0fdf2 25%, #d9e6dc 50%, #f0fdf2 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+        }
+
+        @keyframes fabEntry {
+            from { opacity: 0; transform: scale(0.5) rotate(-45deg); }
+            to { opacity: 1; transform: scale(1) rotate(0); }
+        }
+        .fab-entry { animation: fabEntry 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24 selection:bg-primary/10">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] max-w-container-max mx-auto bg-surface/96 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_27}}'">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">FieldLot</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container p-1 rounded-full transition-colors" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_30}}'">
+<img alt="FieldLot Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYi8LZB3GdhAgQe3DYH0vjJRo9ik1kQuz4G5XS2q017bDLJVDUW2Y-tkxN0yQJCbUFblBXfaiMZmU-RkCKuiT85cVSPS4QyKNRUWYREs-74pBUVt2kICxvdUEl9xwnYM7gh0670qHqgJ-biGRny-5mLfFIRfbA3UF3PRdQP3cbjM4a8GBuh2UvgWU1fDrBjrNeeTgRBdWChxTVz7P9HPlX8PtYWozZw-iDfn54m9CKnvBHxd3rWp07uBAIXvEBLjkEnSA7Fy1jGk4"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="pt-[60px] px-margin-mobile">
+<!-- Search & Filter Bar -->
+<section class="mb-6 space-y-4">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full h-[44px] pl-10 pr-4 rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-body-base" placeholder="Търсене на култури, техника..." type="text"/>
+</div>
+<!-- Category Scroll -->
+<div class="flex gap-2 overflow-x-auto hide-scrollbar -mx-margin-mobile px-margin-mobile pb-2">
+<button class="flex-none px-4 py-2 rounded-full bg-primary text-on-primary text-label-badge font-label-badge flex items-center gap-1 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[16px]" data-icon="grain">grain</span> Всички
+                </button>
+<button class="flex-none px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant text-label-badge font-label-badge flex items-center gap-1 border border-outline-variant/30 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[16px]" data-icon="agriculture">agriculture</span> Техника
+                </button>
+<button class="flex-none px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant text-label-badge font-label-badge flex items-center gap-1 border border-outline-variant/30 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[16px]" data-icon="engineering">engineering</span> Услуги
+                </button>
+<button class="flex-none px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant text-label-badge font-label-badge flex items-center gap-1 border border-outline-variant/30 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[16px]" data-icon="eco">eco</span> Торове
+                </button>
+</div>
+</section>
+<!-- Listing Grid -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Card 1 -->
+<div class="listing-card yellow-pages-card rounded-xl overflow-hidden">
+<div class="relative h-[180px] shimmer-effect">
+<img class="w-full h-full object-cover" data-alt="A wide cinematic shot of a golden wheat field in Bulgaria at sunset. The lighting is warm and dramatic, highlighting the texture of the grain. The visual style is crisp and professional, fitting for a premium agricultural B2B marketplace, with high contrast between the deep gold of the harvest and the darkening forest green horizon." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI5qrvgPtmxkDFVVQHEhrxE35BZox4pP77TrfACpCIh_6mwL6CFajpCSbiJj7_t_D6Q5EInS_d1tjkPgVNspmJjb8nE1HGn9KlSbP1IeQwBQLQh1Lip3hqvRUna8rNQNbtwnpG6k43qDk9ca1Rvliq-juL24BeRYmKsiOLQrLUB-pfPGB-ccan9D_6ZKcwMujE0D2hyNmdodCiB9NTw7KmduQJRUcFb6X8QXDCByY0da-oudovdgYx3TUJMuont4LjCg8DP2eV5N8"/>
+<div class="absolute top-2 right-2 bg-primary/90 text-on-primary px-3 py-1 rounded-lg text-label-badge font-label-badge">
+                        КУПУВА
+                    </div>
+</div>
+<div class="p-4 space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-primary leading-tight font-bold">Търся Пшеница - 500 тона</h3>
+<span class="text-tertiary font-bold text-body-sm">По договаряне</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
+<span>гр. Добрич</span>
+</div>
+<div class="flex items-center gap-4 pt-2">
+<div class="flex items-center gap-1 text-label-eyebrow text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span>
+                            Още 5 дни
+                        </div>
+<div class="flex items-center gap-1 text-label-eyebrow text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified_user">verified_user</span>
+                            Проверен
+                        </div>
+</div>
+<button class="w-full mt-2 h-[48px] rounded-full bg-primary text-on-primary font-bold transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+                        Детайли <span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Card 2 (Tractor) -->
+<div class="listing-card yellow-pages-card rounded-xl overflow-hidden cursor-pointer active:scale-[0.98]" onclick="window.location.href='{{DATA:SCREEN:SCREEN_10}}'">
+<div class="relative h-[180px] shimmer-effect">
+<img class="w-full h-full object-cover" data-alt="A modern green John Deere tractor operating in a vast, dark soil field under a clear blue sky. The scene is brightly lit with natural morning light, emphasizing a high-tech agricultural setting. The aesthetic is clean and corporate, utilizing a color palette of vibrant greens and deep earth tones to signify productivity and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4dGNJFRpdW97oy0pQ4qz6j_YuuSHRQkrx-v0z4k6hFPuNSwZly6JtP0HWYHSqpqjMROmbYqPgikdXvfb63rhw-fo0EXF1ti8-gK7KpfabMr33m4EJo7STosTd4-sLwxiCtSsBu4fRWUT2gWr1CbYF_AF164oLSjRRGUxrsClDLE_W3KgC3obxb2WJ8tM7EUk5BA6H3z9beVzNP5Fj3uOy47OlRsWPmAmatS8TtW4PCq0JDezwulrTAlDy97F5NWwDoitX2ejhB2I"/>
+<div class="absolute top-2 right-2 bg-secondary text-on-secondary px-3 py-1 rounded-lg text-label-badge font-label-badge">
+                        ПРОДАВА
+                    </div>
+</div>
+<div class="p-4 space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-primary leading-tight font-bold">Трактор John Deere 6155R</h3>
+<span class="text-tertiary font-bold text-body-sm">145,000 лв.</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
+<span>гр. Плевен</span>
+</div>
+<div class="flex items-center gap-4 pt-2">
+<div class="flex items-center gap-1 text-label-eyebrow text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="timer">timer</span>
+                            2,400 м.ч.
+                        </div>
+<div class="flex items-center gap-1 text-label-eyebrow text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="history">history</span>
+                            2019г.
+                        </div>
+</div>
+<button class="w-full mt-2 h-[48px] rounded-full bg-primary text-on-primary font-bold transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+                        Детайли <span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="listing-card yellow-pages-card rounded-xl overflow-hidden">
+<div class="relative h-[180px] shimmer-effect">
+<img class="w-full h-full object-cover" data-alt="A macro shot of sunflower seeds being poured into a storage container, captured with high-speed photography to show clarity and movement. The lighting is bright and industrial, reflecting a clean SaaS-style data-driven agricultural operation. The palette consists of vibrant yellows and deep blacks, maintaining a professional Bulgarian B2B trade feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZf8_8btDAlk_dW7IhN65g7AypJrzYnEQPZferFKmswADiA0Xd6USqV-Sn-b5C6oxOjXRPiATZtEEd-hVmvqwmQyeru-s0mtDTq-eIl2akcyT6LnF5V2Wn55vkcB9hDnIYbvk9FGJAoccaC8O06rS5yATZDENfniEyNGG6OHrGqlI5XtVAHC0G1Ohb2Xi2Wz2-omPxzpotVwD2bsOr24ggQH74H58M0zyv7KF8ZzeTC-eBT9CWHWdC3G522k556jYqk6wPSH34OY"/>
+<div class="absolute top-2 right-2 bg-primary/90 text-on-primary px-3 py-1 rounded-lg text-label-badge font-label-badge">
+                        КУПУВА
+                    </div>
+</div>
+<div class="p-4 space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-primary leading-tight font-bold">Слънчоглед за износ - 1000т.</h3>
+<span class="text-tertiary font-bold text-body-sm">840 лв./т</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
+<span>гр. Варна (Пристанище)</span>
+</div>
+<div class="flex items-center gap-4 pt-2">
+<div class="flex items-center gap-1 text-label-eyebrow text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="local_shipping">local_shipping</span>
+                            Транспорт
+                        </div>
+<div class="flex items-center gap-1 text-label-eyebrow text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="star">star</span>
+                            ТОП Оферта
+                        </div>
+</div>
+<button class="w-full mt-2 h-[48px] rounded-full bg-primary text-on-primary font-bold transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+                        Детайли <span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for adding listing -->
+<button class="fixed right-6 bottom-20 w-14 h-14 bg-tertiary-container text-on-tertiary-container rounded-2xl shadow-xl flex items-center justify-center transition-all active:scale-90 z-40 fab-entry">
+<span class="material-symbols-outlined font-bold text-[32px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-2 pt-2 bg-surface border-t border-outline-variant shadow-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_27}}'">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-badge font-label-badge">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-90 duration-150 ease-in-out active:scale-75 transition-transform">
+<span class="material-symbols-outlined" data-icon="storefront" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span class="text-label-badge font-label-badge">Market</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_8}}'">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-label-badge font-label-badge">Messages</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" onclick="window.location.href='{{DATA:SCREEN:SCREEN_30}}'">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-badge font-label-badge">Profile</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for scrolling effects
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm');
+            } else {
+                header.classList.remove('shadow-sm');
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Add ripple effect logic (simulated for buttons)
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                this.classList.add('brightness-125');
+                setTimeout(() => this.classList.remove('brightness-125'), 150);
+            });
+        });
+
+        // Remove shimmer once images load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.shimmer-effect').forEach(shimmer => {
+                const img = shimmer.querySelector('img');
+                if (img && img.complete) {
+                    shimmer.classList.remove('shimmer-effect');
+                } else if (img) {
+                    img.addEventListener('load', () => shimmer.classList.remove('shimmer-effect'));
+                }
+            });
+        });
+    </script>
+</body></html>

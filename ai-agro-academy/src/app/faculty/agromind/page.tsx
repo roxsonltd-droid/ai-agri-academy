@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit, Send, User, ChevronLeft, Sprout, Tractor, LineChart, Library, Presentation, Workflow } from "lucide-react";
+import { BrainCircuit, Send, User, ChevronLeft, Sprout, Tractor, LineChart, Library, Presentation, Workflow, Mic, MicOff } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -21,6 +21,58 @@ export default function RectorateChat() {
   const [activeExpert, setActiveExpert] = useState("AI Ректор");
   const [difficulty, setDifficulty] = useState("Студент");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Voice state
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Initialize Web Speech API
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = "bg-BG";
+
+        recognition.onresult = (event: any) => {
+          let currentTranscript = "";
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+             currentTranscript += event.results[i][0].transcript;
+          }
+          // Overwrite the input with the live transcript
+          setInput(currentTranscript);
+        };
+
+        recognition.onerror = (event: any) => {
+          console.error("Speech recognition error", event.error);
+          setIsListening(false);
+        };
+
+        recognition.onend = () => {
+          setIsListening(false);
+        };
+
+        recognitionRef.current = recognition;
+      }
+    }
+  }, []);
+
+  const toggleListen = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      if (recognitionRef.current) {
+        setInput(""); // Clear input when starting to listen
+        recognitionRef.current.start();
+        setIsListening(true);
+      } else {
+        alert("Гласовото разпознаване не се поддържа в този браузър. Моля, използвайте Google Chrome.");
+      }
+    }
+  };
 
   // Initialize with personalized context from localStorage
   useEffect(() => {
@@ -67,6 +119,11 @@ export default function RectorateChat() {
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    }
 
     const userMsg = input.trim();
     setInput("");
@@ -250,22 +307,39 @@ export default function RectorateChat() {
 
         <footer className="p-4 bg-background/40 backdrop-blur-md border-t border-border/30 shrink-0">
           <div className="max-w-3xl mx-auto relative">
-            <form onSubmit={sendMessage} className="relative flex items-center">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={`Попитай ${activeExpert}...`}
-                className="w-full bg-card/60 border border-border/80 rounded-full pl-6 pr-14 py-4 text-foreground placeholder:text-subtle-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all shadow-inner backdrop-blur-sm"
-                disabled={isLoading}
-              />
-              <Button 
-                type="submit" 
-                className="absolute right-2 h-10 w-10 rounded-full p-0 flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
-                disabled={!input.trim() || isLoading}
+            <form onSubmit={sendMessage} className="relative flex items-center gap-2">
+              <button
+                type="button"
+                onClick={toggleListen}
+                className={`flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center transition-all shadow-md ${
+                  isListening 
+                    ? "bg-red-500 hover:bg-red-600 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]" 
+                    : "bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700"
+                }`}
+                title={isListening ? "Спри микрофона" : "Говори (Разреши микрофона)"}
               >
-                <Send className="h-4 w-4 ml-0.5" />
-              </Button>
+                {isListening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+              </button>
+              
+              <div className="relative flex-1 flex items-center">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={isListening ? "Слушам ви..." : `Попитай ${activeExpert}...`}
+                  className={`w-full bg-card/60 border rounded-full pl-6 pr-14 py-4 text-foreground placeholder:text-subtle-foreground focus:outline-none transition-all shadow-inner backdrop-blur-sm ${
+                    isListening ? "border-red-500/50 ring-1 ring-red-500/50" : "border-border/80 focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                  }`}
+                  disabled={isLoading}
+                />
+                <Button 
+                  type="submit" 
+                  className="absolute right-2 h-10 w-10 rounded-full p-0 flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
+                  disabled={!input.trim() || isLoading}
+                >
+                  <Send className="h-4 w-4 ml-0.5" />
+                </Button>
+              </div>
             </form>
           </div>
         </footer>

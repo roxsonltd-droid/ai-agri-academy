@@ -2,9 +2,10 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ImagePlus, Loader2, Sparkles, FlaskConical } from "lucide-react";
+import { ChevronLeft, ImagePlus, Loader2, Target, ScanSearch, CheckCircle, BrainCircuit, Activity, Pill } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const apiBase = () => process.env.NEXT_PUBLIC_API_URL || "https://agro-academy-backend.onrender.com";
 
@@ -14,100 +15,65 @@ function readFileAsBase64(file: File): Promise<string> {
     r.onload = () => {
       const s = r.result;
       if (typeof s === "string") resolve(s);
-      else reject(new Error("read fail"));
+      else reject(new Error("Грешка при четене на файла"));
     };
     r.onerror = () => reject(r.error);
     r.readAsDataURL(file);
   });
 }
 
-export default function LabsVisionPage() {
+export default function DiagnosticLabPage() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [question, setQuestion] = useState(
-    "Има ли признаци на болест или вредител? Какво препоръчваш за третиране?",
-  );
-  const [inferJson, setInferJson] = useState<string | null>(null);
   const [agentReply, setAgentReply] = useState<string | null>(null);
-  const [loadingInfer, setLoadingInfer] = useState(false);
-  const [loadingAgent, setLoadingAgent] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
 
-  const onPick = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
+  // Drag and Drop State
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleFile = (f: File) => {
     setError(null);
-    setInferJson(null);
     setAgentReply(null);
-    if (!f) {
-      setFile(null);
-      setPreviewUrl(null);
-      return;
-    }
     if (!["image/jpeg", "image/png", "image/webp"].includes(f.type)) {
-      setError("Изберете JPEG, PNG или WebP.");
+      setError("Моля, качете валидна снимка (JPEG, PNG, WebP).");
       setFile(null);
       setPreviewUrl(null);
       return;
     }
     setFile(f);
     setPreviewUrl(URL.createObjectURL(f));
-  }, []);
-
-  const token = () =>
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
-  const runInfer = async () => {
-    if (!file) {
-      setError("Първо изберете снимка.");
-      return;
-    }
-    setLoadingInfer(true);
-    setError(null);
-    setInferJson(null);
-    try {
-      const t = token();
-      if (!t) {
-        setError("Влезте в акаунта (JWT), за да извикате Roboflow, или задайте X-Roboflow-Infer-Secret на бекенда.");
-        return;
-      }
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch(`${apiBase()}/api/v1/vision/roboflow/infer`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${t}` },
-        body: fd,
-      });
-      const text = await res.text();
-      if (!res.ok) {
-        setError(text || `HTTP ${res.status}`);
-        return;
-      }
-      try {
-        const j = JSON.parse(text);
-        setInferJson(JSON.stringify(j, null, 2));
-      } catch {
-        setInferJson(text);
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Мрежова грешка");
-    } finally {
-      setLoadingInfer(false);
-    }
   };
 
-  const runAgent = async () => {
+  const onPick = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) handleFile(f);
+  }, []);
+
+  const onDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const f = e.dataTransfer.files?.[0];
+    if (f) handleFile(f);
+  }, []);
+
+  const token = () => (typeof window !== "undefined" ? localStorage.getItem("token") : null);
+
+  const runDiagnostics = async () => {
     if (!file) {
-      setError("Първо изберете снимка.");
+      setError("Първо качете снимка за анализ.");
       return;
     }
-    setLoadingAgent(true);
+    setLoading(true);
+    setIsScanning(true);
     setError(null);
     setAgentReply(null);
+
     try {
       const t = token();
       if (!t) {
-        setError("Влезте в акаунта, за да ползвате агента с изображение.");
-        return;
+        throw new Error("Трябва да сте влезли в профила си, за да използвате Диагностичната Лаборатория.");
       }
       const image_base64 = await readFileAsBase64(file);
       const res = await fetch(`${apiBase()}/api/v1/agents/run`, {
@@ -117,145 +83,244 @@ export default function LabsVisionPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: question.trim(),
+          message: "Моля, направи пълен диагностичен анализ на тази снимка. Има ли болести, вредители или дефицити? Какво лечение предписваш?",
           image_base64,
         }),
       });
+      
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError((data as { detail?: string }).detail || JSON.stringify(data) || `HTTP ${res.status}`);
-        return;
+        throw new Error((data as { detail?: string }).detail || "Грешка при връзката със сървъра на Ректора.");
       }
-      setAgentReply((data as { reply?: string }).reply ?? "");
+      
+      setAgentReply((data as { reply?: string }).reply ?? "Няма намерен отговор.");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Мрежова грешка");
+      setError(e instanceof Error ? e.message : "Възникна неочаквана грешка.");
     } finally {
-      setLoadingAgent(false);
+      setLoading(false);
+      setIsScanning(false);
     }
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background font-sans text-foreground">
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
-        <div className="ai-mesh">
-          <div className="ai-mesh-blob -top-24 right-0 w-[55%] h-[45%] bg-gradient-to-bl from-primary/20 to-cyan-400/10" />
-          <div className="ai-mesh-blob bottom-0 left-0 w-[50%] h-[40%] bg-gradient-to-tr from-accent/15 to-transparent" />
-        </div>
+    <div className="relative min-h-screen bg-slate-950 font-sans text-slate-200 flex flex-col pt-16">
+      
+      {/* Dynamic Background Grid */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-accent/10 rounded-full blur-[120px]" />
       </div>
 
-      <header className="relative z-10 border-b border-border/50 glass-strong px-4 py-3">
-        <div className="container mx-auto flex flex-wrap items-center gap-3">
-          <Link
-            href="/labs"
-            className="inline-flex items-center text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Лаборатории
-          </Link>
-          <div className="h-4 w-px bg-border hidden sm:block" />
-          <h1 className="text-sm font-semibold text-foreground sm:text-base flex items-center gap-2">
-            <FlaskConical className="h-4 w-4 text-primary" />
-            Roboflow — компютърно зрение
-          </h1>
-        </div>
-      </header>
-
-      <main className="relative z-10 container mx-auto flex-1 px-4 py-8 pt-6 max-w-4xl">
-        <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-          Качете снимка (лист, култура, дрон). Бекендът извиква{" "}
-          <code className="rounded bg-muted px-1.5 py-0.5 text-xs">POST /api/v1/vision/roboflow/infer</code> или
-          агент (ReAct) с инструмент <code className="rounded bg-muted px-1.5 py-0.5 text-xs">roboflow_detect_uploaded</code> + Mistral.
-        </p>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="glass-subtle border-border/60">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <ImagePlus className="h-5 w-5 text-primary" />
-                Снимка
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-border/80 bg-muted/30 px-4 py-10 transition-colors hover:border-primary/40 hover:bg-muted/50">
-                <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={onPick} />
-                <ImagePlus className="h-10 w-10 text-muted-foreground mb-2" />
-                <span className="text-sm font-semibold text-foreground">Избери файл</span>
-                <span className="text-xs text-muted-foreground mt-1">JPEG · PNG · WebP</span>
-              </label>
-              {previewUrl && (
-                <img src={previewUrl} alt="Преглед" className="max-h-56 w-full rounded-lg object-contain ring-1 ring-border" />
-              )}
-            </CardContent>
-          </Card>
-
-          <Card className="glass-subtle border-border/60">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Sparkles className="h-5 w-5 text-accent" />
-                Въпрос към агента
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <textarea
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                rows={8}
-                className="w-full resize-y rounded-xl border border-border/80 bg-card/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40"
-                placeholder="Какво да анализира AI след Roboflow?"
-              />
-            </CardContent>
-          </Card>
-        </div>
-
-        {error && (
-          <div className="mt-6 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-            {error}
-          </div>
-        )}
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button type="button" onClick={runInfer} disabled={loadingInfer || !file} className="rounded-full">
-            {loadingInfer ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            Само Roboflow (JSON)
-          </Button>
-          <Button
-            type="button"
-            variant="neon"
-            onClick={runAgent}
-            disabled={loadingAgent || !file}
-            className="rounded-full"
-          >
-            {loadingAgent ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            Агент + Roboflow + Mistral
-          </Button>
-        </div>
-
-        {inferJson && (
-          <Card className="mt-8 border-border/60 glass-subtle">
-            <CardHeader>
-              <CardTitle className="text-base">Roboflow отговор</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <pre className="max-h-[420px] overflow-auto rounded-lg bg-background/80 p-4 text-xs leading-relaxed text-muted-foreground ring-1 ring-border/60">
-                {inferJson}
-              </pre>
-            </CardContent>
-          </Card>
-        )}
-
-        {agentReply && (
-          <Card className="mt-6 border-border/60 glass-subtle">
-            <CardHeader>
-              <CardTitle className="text-base">Отговор от агента</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap text-muted-foreground">
-                {agentReply}
+      <div className="container mx-auto px-4 py-8 mb-16 relative z-10 flex-1 max-w-5xl">
+        
+        {/* Header Area */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 border-b border-slate-800 pb-6">
+          <div>
+            <Link href="/labs" className="inline-flex items-center text-slate-500 hover:text-white transition-colors mb-4 text-sm font-medium">
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Към всички лаборатории
+            </Link>
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/20 border border-primary/50 shadow-[0_0_15px_rgba(45,212,191,0.2)]">
+                <ScanSearch className="w-5 h-5 text-primary" />
               </div>
-            </CardContent>
-          </Card>
-        )}
-      </main>
+              <h1 className="text-3xl font-bold text-white tracking-tight">AI Диагностична Лаборатория</h1>
+            </div>
+            <p className="text-slate-400">Качете снимка на вашето растение и оставете Ректора да анализира проблема чрез компютърно зрение.</p>
+          </div>
+          
+          <div className="mt-4 md:mt-0 flex items-center bg-slate-900 border border-slate-800 rounded-lg px-4 py-2 shadow-inner">
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse mr-3" />
+            <span className="text-sm font-mono text-primary uppercase tracking-widest">Vision System: ONLINE</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          
+          {/* LEFT: Upload & Image Area */}
+          <div className="lg:col-span-2 space-y-6">
+            {!previewUrl ? (
+              <div 
+                className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed h-80 transition-all duration-300 ease-in-out cursor-pointer overflow-hidden ${
+                  isDragging 
+                    ? "border-primary bg-primary/10 scale-[1.02] shadow-[0_0_30px_rgba(45,212,191,0.2)]" 
+                    : "border-slate-700 bg-slate-900/50 hover:border-slate-500 hover:bg-slate-800/50"
+                }`}
+                onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={onDrop}
+              >
+                <input type="file" accept="image/jpeg,image/png,image/webp" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onChange={onPick} />
+                <div className="flex flex-col items-center justify-center p-6 text-center pointer-events-none relative z-20">
+                  <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mb-4 border border-slate-700 shadow-inner">
+                    <ImagePlus className="w-8 h-8 text-slate-400" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Качете снимка</h3>
+                  <p className="text-sm text-slate-400 mb-4">Плъзнете файл тук или кликнете за да изберете от устройството си.</p>
+                  <span className="text-xs font-mono text-slate-500 bg-slate-950 px-3 py-1 rounded-full border border-slate-800">JPEG, PNG до 10MB</span>
+                </div>
+              </div>
+            ) : (
+              <div className="relative rounded-2xl border border-slate-700 bg-slate-900/80 overflow-hidden shadow-2xl group">
+                <div className="absolute top-3 right-3 z-30">
+                  <button 
+                    onClick={() => { setFile(null); setPreviewUrl(null); setAgentReply(null); }}
+                    className="bg-slate-900/80 hover:bg-red-500/80 text-white p-2 rounded-lg backdrop-blur-md transition-colors border border-slate-700"
+                  >
+                    X
+                  </button>
+                </div>
+                
+                {/* The Image */}
+                <img src={previewUrl} alt="Качена снимка" className="w-full h-80 object-cover opacity-90 transition-opacity" />
+                
+                {/* Scanner Animation Effect */}
+                {isScanning && (
+                  <>
+                    <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10"></div>
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-primary shadow-[0_0_20px_4px_rgba(45,212,191,0.8)] z-20 animate-[scan_2.5s_ease-in-out_infinite]" />
+                  </>
+                )}
+                
+                {/* Status Overlay */}
+                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-slate-950 to-transparent z-20">
+                  {isScanning ? (
+                    <div className="flex items-center text-primary font-mono text-sm font-bold">
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" /> 
+                      АНАЛИЗ В ПРОГРЕС...
+                    </div>
+                  ) : agentReply ? (
+                    <div className="flex items-center text-emerald-400 font-mono text-sm font-bold">
+                      <CheckCircle className="w-4 h-4 mr-2" /> 
+                      АНАЛИЗЪТ Е ЗАВЪРШЕН
+                    </div>
+                  ) : (
+                    <div className="flex items-center text-slate-300 font-mono text-sm">
+                      <Target className="w-4 h-4 mr-2" /> 
+                      ИЗОБРАЖЕНИЕТО Е ГОТОВО ЗА СКЕНИРАНЕ
+                    </div>
+                  )}
+                </div>
+                <style jsx>{`
+                  @keyframes scan {
+                    0% { top: 0; opacity: 0; }
+                    10% { opacity: 1; }
+                    90% { opacity: 1; }
+                    100% { top: 100%; opacity: 0; }
+                  }
+                `}</style>
+              </div>
+            )}
+
+            <Button 
+              onClick={runDiagnostics} 
+              disabled={!file || loading}
+              className={`w-full h-14 rounded-xl text-lg font-bold shadow-lg transition-all relative overflow-hidden ${
+                !file 
+                  ? 'bg-slate-800 text-slate-500' 
+                  : 'bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-slate-950 hover:scale-[1.02]'
+              }`}
+            >
+              {loading && (
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 animate-[pulse_1s_infinite]"></div>
+              )}
+              {loading ? (
+                <span className="flex items-center z-10 relative">
+                  <Loader2 className="w-5 h-5 mr-3 animate-spin" /> Обработка на данните...
+                </span>
+              ) : (
+                <span className="flex items-center z-10 relative">
+                  <ScanSearch className="w-5 h-5 mr-3" /> Стартирай AI Диагностика
+                </span>
+              )}
+            </Button>
+            
+            {error && (
+              <div className="p-4 rounded-xl bg-red-950/50 border border-red-500/50 text-red-400 text-sm flex items-start">
+                <Target className="w-5 h-5 mr-3 shrink-0" />
+                <p>{error}</p>
+              </div>
+            )}
+          </div>
+
+          {/* RIGHT: Results / Report Area */}
+          <div className="lg:col-span-3">
+            {!agentReply ? (
+              <div className="h-full flex flex-col items-center justify-center border-2 border-dashed border-slate-800 rounded-2xl bg-slate-900/30 p-10 text-center min-h-[400px]">
+                <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center border border-slate-800 shadow-inner mb-6">
+                  <Activity className="w-10 h-10 text-slate-700" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-500 mb-2">Очаква се изображение</h3>
+                <p className="text-slate-600 max-w-sm">Тук ще се появи официалният рапорт и предписанието за лечение от Главния AI Ректор.</p>
+              </div>
+            ) : (
+              <div className="relative h-full bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
+                {/* Report Header */}
+                <div className="bg-slate-950/80 border-b border-slate-800 p-6 shrink-0 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-4 opacity-10">
+                    <BrainCircuit className="w-24 h-24" />
+                  </div>
+                  <div className="flex items-center mb-4 relative z-10">
+                    <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/40 mr-4 shadow-[0_0_15px_rgba(45,212,191,0.15)]">
+                      <Pill className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-bold text-white tracking-tight">Дигитален Рапорт</h2>
+                      <p className="text-primary font-mono text-sm mt-1">Оторизирано от: AI Ректор АгроМайнд</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 relative z-10">
+                    <span className="inline-flex items-center px-3 py-1 rounded bg-slate-900 border border-slate-700 text-xs font-mono text-slate-400">
+                      ID: {Math.random().toString(36).substring(7).toUpperCase()}
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1 rounded bg-slate-900 border border-slate-700 text-xs font-mono text-slate-400">
+                      ДАТА: {new Date().toLocaleDateString('bg-BG')}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Report Body */}
+                <div className="p-6 md:p-8 overflow-y-auto flex-1 bg-slate-900/50 custom-scrollbar">
+                  <div className="prose prose-invert prose-emerald max-w-none prose-headings:font-bold prose-h3:text-white prose-p:text-slate-300 prose-a:text-primary prose-strong:text-emerald-400 prose-li:text-slate-300">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {agentReply}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+                
+                {/* Footer Action */}
+                <div className="bg-slate-950 border-t border-slate-800 p-4 flex justify-end shrink-0">
+                  <Button variant="outline" className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 mr-3">
+                    Запази в профила
+                  </Button>
+                  <Button className="bg-primary hover:bg-primary/90 text-slate-950 font-bold shadow-[0_0_15px_rgba(45,212,191,0.2)]">
+                    Разпечатай Рецепта
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+      
+      {/* Global Style for scrollbar in report */}
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(15, 23, 42, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(45, 212, 191, 0.3);
+          border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(45, 212, 191, 0.6);
+        }
+      `}</style>
     </div>
   );
 }

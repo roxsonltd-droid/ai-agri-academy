@@ -17,7 +17,15 @@ import {
   X,
   Plus,
   Zap,
-  Loader2
+  Loader2,
+  FolderOpen,
+  Eraser,
+  Search,
+  Trash2,
+  FileText,
+  UploadCloud,
+  CheckCircle2,
+  HardDrive
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -26,7 +34,7 @@ type Agent = {
   name: string;
   role: string;
   icon: any;
-  status: "idle" | "monitoring" | "alert";
+  status: "idle" | "monitoring" | "alert" | "active";
   color: string;
   bg: string;
 };
@@ -41,6 +49,15 @@ export default function AgentsMissionControl() {
   
   const [isSimulatingCron, setIsSimulatingCron] = useState(false);
   const [alerts, setAlerts] = useState<any[]>([]);
+  
+  // AI Clear States
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanComplete, setScanComplete] = useState(false);
+  const [isCleaning, setIsCleaning] = useState(false);
+  const [cleanComplete, setCleanComplete] = useState(false);
+
+  // Docs States
+  const [uploadingDoc, setUploadingDoc] = useState(false);
   
   const [agents, setAgents] = useState<Agent[]>([
     {
@@ -71,13 +88,31 @@ export default function AgentsMissionControl() {
       bg: "bg-emerald-500/10 border-emerald-500/30"
     },
     {
+      id: "docs",
+      name: "Агент Секретар",
+      role: "Документация и Архивни Срокове",
+      icon: FolderOpen,
+      status: "active",
+      color: "text-amber-400",
+      bg: "bg-amber-500/10 border-amber-500/30"
+    },
+    {
+      id: "clear",
+      name: "AI Clear",
+      role: "Почистване на Дигитален Боклук",
+      icon: Eraser,
+      status: "active",
+      color: "text-cyan-400",
+      bg: "bg-cyan-500/10 border-cyan-500/30"
+    },
+    {
       id: "mech",
       name: "Агент Техника",
       role: "Сензори и Поддръжка",
       icon: Tractor,
       status: "idle",
-      color: "text-amber-400",
-      bg: "bg-amber-500/10 border-amber-500/30"
+      color: "text-slate-400",
+      bg: "bg-slate-500/10 border-slate-500/30"
     }
   ]);
 
@@ -103,8 +138,8 @@ export default function AgentsMissionControl() {
       const formattedNotifs = notifs.map((n: any) => ({
          id: n.id,
          agentId: n.type,
-         severity: n.type === 'weather' ? 'high' : 'medium',
-         title: n.type === 'weather' ? `Метео Аларма: ${currentRegion}` : `Пазарно Известие`,
+         severity: n.type === 'weather' ? 'high' : n.type === 'market' ? 'medium' : 'low',
+         title: n.type === 'weather' ? `Метео Аларма: ${currentRegion}` : n.type === 'market' ? `Пазарно Известие` : `Системно Известие`,
          description: n.message,
          time: "Току-що",
          contextParam: `Здравей, получих известие: ${n.message}`
@@ -195,8 +230,57 @@ export default function AgentsMissionControl() {
     }, 1500);
   };
 
+  const handleAIClearScan = () => {
+    setIsScanning(true);
+    setScanComplete(false);
+    setCleanComplete(false);
+    setTimeout(() => {
+      setIsScanning(false);
+      setScanComplete(true);
+    }, 2500);
+  };
+
+  const handleAIClearClean = () => {
+    setIsCleaning(true);
+    setTimeout(() => {
+      setIsCleaning(false);
+      setScanComplete(false);
+      setCleanComplete(true);
+      
+      // Simulate system notification
+      const newNotif = {
+         id: Date.now().toString(),
+         type: "system",
+         message: `AI Clear успешно премахна 1.2 GB ненужни файлове, кеш и изтекли сесии.`,
+         date: new Date().toISOString(),
+         read: false
+       };
+       const current = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
+       localStorage.setItem("agro_notifications", JSON.stringify([newNotif, ...current]));
+       window.dispatchEvent(new Event("agro_notifications_updated"));
+    }, 2000);
+  };
+
+  const handleDocUpload = () => {
+    setUploadingDoc(true);
+    setTimeout(() => {
+      setUploadingDoc(false);
+      // Simulate system notification
+      const newNotif = {
+         id: Date.now().toString(),
+         type: "system",
+         message: `Секретарят обработи новия документ. Няма открити рискове. Категория: Фактури.`,
+         date: new Date().toISOString(),
+         read: false
+       };
+       const current = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
+       localStorage.setItem("agro_notifications", JSON.stringify([newNotif, ...current]));
+       window.dispatchEvent(new Event("agro_notifications_updated"));
+    }, 1500);
+  }
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans pt-20">
+    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans pt-20 pb-20">
       
       {/* Background Grid & Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -257,7 +341,9 @@ export default function AgentsMissionControl() {
                   key={agent.id} 
                   onClick={() => setSelectedAgent(agent)}
                   className={`p-4 rounded-xl border bg-slate-900/80 backdrop-blur-sm transition-all cursor-pointer hover:scale-[1.02] ${
-                    agent.status === 'alert' ? 'border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]' : 'border-slate-800 hover:border-slate-600'
+                    agent.status === 'alert' ? 'border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]' 
+                    : agent.id === 'clear' ? 'border-cyan-500/50 shadow-[0_0_15px_rgba(34,211,238,0.1)]'
+                    : 'border-slate-800 hover:border-slate-600'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -279,13 +365,18 @@ export default function AgentsMissionControl() {
                         Изчакване
                       </span>
                     )}
+                    {agent.status === "active" && (
+                      <span className="flex items-center text-[10px] uppercase font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">
+                        Наличен
+                      </span>
+                    )}
                   </div>
                   <div className="flex justify-between items-end">
                     <div>
                       <h3 className="font-bold text-white text-sm">{agent.name}</h3>
                       <p className="text-xs text-slate-400 mt-0.5">{agent.role}</p>
                     </div>
-                    <Settings className="w-4 h-4 text-slate-600" />
+                    <ChevronRight className="w-4 h-4 text-slate-600" />
                   </div>
                 </div>
               ))}
@@ -361,55 +452,192 @@ export default function AgentsMissionControl() {
         </div>
       </div>
 
-      {/* Settings Modal */}
+      {/* Dynamic Agent Modals */}
       <AnimatePresence>
         {selectedAgent && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 pt-20">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-md shadow-2xl relative"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className={`bg-slate-900 border rounded-2xl p-6 w-full shadow-2xl relative max-h-[80vh] overflow-y-auto custom-scrollbar ${
+                selectedAgent.id === 'clear' ? 'max-w-2xl border-cyan-500/40 shadow-[0_0_40px_rgba(34,211,238,0.1)]' 
+                : selectedAgent.id === 'docs' ? 'max-w-3xl border-amber-500/40 shadow-[0_0_40px_rgba(245,158,11,0.1)]'
+                : 'max-w-md border-slate-700'
+              }`}
             >
-              <button onClick={() => setSelectedAgent(null)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
+              <button onClick={() => setSelectedAgent(null)} className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-800/50 rounded-full hover:bg-red-500/20 hover:text-red-400 transition-colors">
                 <X className="w-5 h-5" />
               </button>
               
-              <div className="flex items-center mb-6">
-                <div className={`p-3 rounded-xl ${selectedAgent.bg} mr-4`}>
-                  <selectedAgent.icon className={`w-6 h-6 ${selectedAgent.color}`} />
+              <div className="flex items-center mb-8 border-b border-slate-800 pb-4">
+                <div className={`p-4 rounded-xl ${selectedAgent.bg} mr-4`}>
+                  <selectedAgent.icon className={`w-8 h-8 ${selectedAgent.color}`} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">{selectedAgent.name}</h3>
-                  <p className="text-sm text-slate-400">Настройки на агента</p>
+                  <h3 className="text-2xl font-bold text-white">{selectedAgent.name}</h3>
+                  <p className="text-slate-400">{selectedAgent.role}</p>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">Ниво на тревога (Сензитивност)</label>
-                  <select className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-primary focus:outline-none">
-                    <option>Нормално (Препоръчително)</option>
-                    <option>Високо (Съобщавай за всяка дреболия)</option>
-                    <option>Ниско (Само критични събития)</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">Специфичен фокус (За какво да внимава)</label>
-                  <textarea 
-                    placeholder="Напр: Следи специално за риск от мана или градушки..."
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-primary focus:outline-none h-24 resize-none"
-                  ></textarea>
-                </div>
+              {/* 1. AI CLEAR MODAL CONTENT */}
+              {selectedAgent.id === 'clear' && (
+                <div className="space-y-6">
+                  {!scanComplete && !cleanComplete && (
+                    <div className="text-center py-10">
+                      <HardDrive className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                      <h4 className="text-xl font-bold text-white mb-2">Дигитален скенер</h4>
+                      <p className="text-slate-400 max-w-md mx-auto mb-8">
+                        С течение на времето платформата натрупва кеширани данни, дублирани известия, стари отчети и временни файлове. 
+                      </p>
+                      <Button 
+                        onClick={handleAIClearScan}
+                        disabled={isScanning}
+                        className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-6 px-10 rounded-xl text-lg shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all"
+                      >
+                        {isScanning ? <Loader2 className="w-6 h-6 animate-spin mr-3" /> : <Search className="w-6 h-6 mr-3" />}
+                        {isScanning ? "Сканиране на системата..." : "Сканирай за боклук"}
+                      </Button>
+                    </div>
+                  )}
 
-                <Button 
-                  onClick={() => setSelectedAgent(null)} 
-                  className="w-full bg-primary hover:bg-primary/90 text-slate-950 font-bold py-3 mt-2"
-                >
-                  Запази Настройките
-                </Button>
-              </div>
+                  {scanComplete && !cleanComplete && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+                      <div className="bg-cyan-950/20 border border-cyan-500/30 rounded-xl p-6 text-center">
+                        <AlertTriangle className="w-12 h-12 text-amber-400 mx-auto mb-2" />
+                        <h4 className="text-xl font-bold text-white">Намерен е дигитален боклук!</h4>
+                        <p className="text-cyan-400 text-2xl font-bold mt-2">1.2 GB <span className="text-sm font-normal text-slate-400">ненужни данни</span></p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="p-4 bg-slate-950 rounded-lg border border-slate-800">
+                          <span className="text-slate-400 block mb-1">Стари метео-прогнози</span>
+                          <span className="text-white font-bold">450 MB</span>
+                        </div>
+                        <div className="p-4 bg-slate-950 rounded-lg border border-slate-800">
+                          <span className="text-slate-400 block mb-1">Изтекли сесии и кеш</span>
+                          <span className="text-white font-bold">320 MB</span>
+                        </div>
+                        <div className="p-4 bg-slate-950 rounded-lg border border-slate-800">
+                          <span className="text-slate-400 block mb-1">Дублирани документи</span>
+                          <span className="text-white font-bold">280 MB</span>
+                        </div>
+                        <div className="p-4 bg-slate-950 rounded-lg border border-slate-800">
+                          <span className="text-slate-400 block mb-1">Темпорални логове</span>
+                          <span className="text-white font-bold">150 MB</span>
+                        </div>
+                      </div>
+
+                      <Button 
+                        onClick={handleAIClearClean}
+                        disabled={isCleaning}
+                        className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-6 rounded-xl text-lg shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+                      >
+                        {isCleaning ? <Loader2 className="w-6 h-6 animate-spin mr-3" /> : <Eraser className="w-6 h-6 mr-3" />}
+                        {isCleaning ? "Почистване..." : "Почисти системата безопасно"}
+                      </Button>
+                    </motion.div>
+                  )}
+
+                  {cleanComplete && (
+                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center py-10">
+                      <div className="w-24 h-24 bg-cyan-500/20 border-2 border-cyan-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <CheckCircle2 className="w-12 h-12 text-cyan-400" />
+                      </div>
+                      <h4 className="text-2xl font-bold text-white mb-2">Системата е изчистена!</h4>
+                      <p className="text-slate-400">Вашето дигитално пространство е оптимизирано и работи на максимални обороти.</p>
+                      <Button onClick={() => setSelectedAgent(null)} variant="outline" className="mt-8 border-slate-700">
+                        Затвори
+                      </Button>
+                    </motion.div>
+                  )}
+                </div>
+              )}
+
+              {/* 2. SECRETARY MODAL CONTENT */}
+              {selectedAgent.id === 'docs' && (
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center bg-slate-950 p-4 rounded-xl border border-slate-800">
+                    <div>
+                      <h4 className="font-bold text-white">Интелигентен Архив</h4>
+                      <p className="text-xs text-slate-400">AI автоматично сортира и следи сроковете на вашите договори.</p>
+                    </div>
+                    <Button onClick={handleDocUpload} disabled={uploadingDoc} className="bg-amber-600 hover:bg-amber-500 text-white">
+                      {uploadingDoc ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <UploadCloud className="w-4 h-4 mr-2" />}
+                      Качи Документ
+                    </Button>
+                  </div>
+
+                  <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <table className="w-full text-left text-sm text-slate-300">
+                      <thead className="bg-slate-950 border-b border-slate-800 text-xs uppercase">
+                        <tr>
+                          <th className="px-6 py-4 font-medium">Име на документ</th>
+                          <th className="px-6 py-4 font-medium">Категория</th>
+                          <th className="px-6 py-4 font-medium">Изтича на</th>
+                          <th className="px-6 py-4 font-medium">AI Статус</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-800">
+                        <tr className="hover:bg-slate-800/50 transition-colors">
+                          <td className="px-6 py-4 flex items-center"><FileText className="w-4 h-4 mr-3 text-amber-400" /> Договор за Аренда - Нива 12</td>
+                          <td className="px-6 py-4">Договори</td>
+                          <td className="px-6 py-4 text-red-400 font-medium">След 14 дни</td>
+                          <td className="px-6 py-4"><span className="bg-red-500/10 text-red-400 px-2 py-1 rounded text-xs">Изисква внимание</span></td>
+                        </tr>
+                        <tr className="hover:bg-slate-800/50 transition-colors">
+                          <td className="px-6 py-4 flex items-center"><FileText className="w-4 h-4 mr-3 text-blue-400" /> Фактура за Торове #109</td>
+                          <td className="px-6 py-4">Счетоводство</td>
+                          <td className="px-6 py-4">-</td>
+                          <td className="px-6 py-4"><span className="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs">Обработено</span></td>
+                        </tr>
+                        <tr className="hover:bg-slate-800/50 transition-colors">
+                          <td className="px-6 py-4 flex items-center"><FileText className="w-4 h-4 mr-3 text-purple-400" /> Заявление за Субсидия (2025)</td>
+                          <td className="px-6 py-4">ДФЗ</td>
+                          <td className="px-6 py-4 text-amber-400">15.06.2026</td>
+                          <td className="px-6 py-4"><span className="bg-amber-500/10 text-amber-400 px-2 py-1 rounded text-xs">В срок</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div className="bg-amber-950/20 border border-amber-500/30 rounded-xl p-4 flex items-start">
+                    <ShieldCheck className="w-5 h-5 text-amber-500 mr-3 shrink-0 mt-0.5" />
+                    <p className="text-sm text-slate-300">
+                      <strong className="text-amber-400">AI Бележка:</strong> Договорът за аренда за Нива 12 изтича скоро. Желаете ли да подготвя чернова за анекс за удължаване?
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* 3. DEFAULT SETTINGS MODAL CONTENT (for Weather, Market, etc) */}
+              {selectedAgent.id !== 'clear' && selectedAgent.id !== 'docs' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-300 mb-2">Ниво на тревога (Сензитивност)</label>
+                    <select className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-primary focus:outline-none">
+                      <option>Нормално (Препоръчително)</option>
+                      <option>Високо (Съобщавай за всяка дреболия)</option>
+                      <option>Ниско (Само критични събития)</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-300 mb-2">Специфичен фокус (За какво да внимава)</label>
+                    <textarea 
+                      placeholder="Напр: Следи специално за риск от мана или градушки..."
+                      className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-primary focus:outline-none h-24 resize-none"
+                    ></textarea>
+                  </div>
+
+                  <Button 
+                    onClick={() => setSelectedAgent(null)} 
+                    className="w-full bg-primary hover:bg-primary/90 text-slate-950 font-bold py-3 mt-2"
+                  >
+                    Запази Настройките
+                  </Button>
+                </div>
+              )}
             </motion.div>
           </div>
         )}

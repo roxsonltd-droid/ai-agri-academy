@@ -51,7 +51,7 @@ export default function Navbar() {
         </div>
 
         {/* Center: Links (hidden on smaller screens to prevent overlap) */}
-        <div className="hidden lg:flex items-center gap-4 absolute left-1/2 -translate-x-1/2 z-0">
+        <div className="hidden lg:flex items-center justify-center flex-1 gap-4 z-0 px-4">
           <Link href="/courses" className={navLink}>Курсове</Link>
           <Link href="/faculty/agromind" className={navLink}>AI Факултет</Link>
           <Link href="/labs" className={navLink}>Лаборатории</Link>

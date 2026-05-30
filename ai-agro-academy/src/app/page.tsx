@@ -28,8 +28,8 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-[#0B0F19]">
       {/* Centered Hero Section */}
       <section className="relative w-full pt-40 pb-20 md:pt-48 md:pb-28 overflow-hidden flex flex-col items-center text-center">
-        {/* Background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-gradient-to-b from-blue-500/20 via-purple-500/10 to-transparent blur-[100px] -z-10 rounded-full" />
+        {/* Background glow - Optimized blur for performance */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-gradient-to-b from-blue-500/10 via-purple-500/5 to-transparent blur-[40px] md:blur-[60px] -z-10 rounded-full" />
         
         <div className="container px-6 lg:px-8 mx-auto z-10 flex flex-col items-center">
           

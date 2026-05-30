@@ -22,6 +22,7 @@ export default function Navbar() {
   const reduceMotion = useReducedMotion();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPro, setIsPro] = useState(false);
   
   // Notifications State
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -31,6 +32,7 @@ export default function Navbar() {
     const token = localStorage.getItem("token");
     queueMicrotask(() => {
       setIsAuthenticated(Boolean(token));
+      setIsPro(localStorage.getItem("agro_pro") === "true");
     });
 
     // Load notifications
@@ -47,7 +49,14 @@ export default function Navbar() {
 
     // Custom event listener for when another component adds a notification
     window.addEventListener("agro_notifications_updated", loadNotifications);
-    return () => window.removeEventListener("agro_notifications_updated", loadNotifications);
+    
+    const checkProStatus = () => setIsPro(localStorage.getItem("agro_pro") === "true");
+    window.addEventListener("agro_pro_updated", checkProStatus);
+    
+    return () => {
+      window.removeEventListener("agro_notifications_updated", loadNotifications);
+      window.removeEventListener("agro_pro_updated", checkProStatus);
+    };
   }, []);
 
   // Close mobile menu when route changes
@@ -104,12 +113,19 @@ export default function Navbar() {
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
-          <Link href="/" className="flex items-center gap-2">
-            <AiAvatar size="sm" className="shrink-0" />
-            <span className="text-xl font-bold tracking-tight text-white">
-              Agro<span className="text-primary">Academy</span>
-            </span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
+              <AiAvatar size="sm" className="shrink-0" />
+              <span className="text-xl font-bold tracking-tight text-white hidden sm:block">
+                Agro<span className="text-primary">Academy</span>
+              </span>
+            </Link>
+            {isPro && (
+              <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ml-1 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
+                PRO
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Center: Desktop Links */}

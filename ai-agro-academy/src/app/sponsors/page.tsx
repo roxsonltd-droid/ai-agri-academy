@@ -152,15 +152,17 @@ export default function SponsorsPage() {
                       </li>
                     ))}
                   </ul>
-                  <Button 
-                    className={`w-full h-12 rounded-xl text-md font-bold shadow-lg transition-all ${
-                      board.popular 
-                        ? 'bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-primary-foreground shadow-primary/25 hover:scale-[1.02]' 
-                        : 'bg-muted hover:bg-muted/80 text-foreground'
-                    }`}
-                  >
-                    Запази това табло <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
+                  <Link href={`/checkout?planId=${encodeURIComponent(board.title)}&price=${displayPrice}&annual=${isAnnual}`}>
+                    <Button 
+                      className={`w-full h-12 rounded-xl text-md font-bold shadow-lg transition-all ${
+                        board.popular 
+                          ? 'bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-primary-foreground shadow-primary/25 hover:scale-[1.02]' 
+                          : 'bg-muted hover:bg-muted/80 text-foreground'
+                      }`}
+                    >
+                      Запази това табло <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             );

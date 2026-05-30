@@ -10,7 +10,7 @@ export default function Home() {
   const reduceMotion = useReducedMotion();
 
   const features = [
-    { title: "Агро Чат", desc: "Разговаряйте с най-добрите AI модели (GPT-4o, Claude 3) за земеделие.", icon: MessageSquare, color: "from-teal-400 to-teal-500", bg: "bg-teal-500/10" },
+    { title: "Агро Чат", desc: "Разговаряйте с най-добрите AI модели (GPT-4o, Claude 3) за земеделие.", icon: MessageSquare, color: "from-teal-400 to-teal-500", bg: "bg-teal-500/10", href: "/chat" },
     { title: "Автономни Агенти", desc: "Агенти, които мислят, планират и управляват вашите ресурси автономно.", icon: Bot, color: "from-purple-400 to-purple-500", bg: "bg-purple-500/10" },
     { title: "Симулации", desc: "Тествайте стратегии за засаждане и торене във виртуална среда.", icon: Code2, color: "from-blue-400 to-blue-500", bg: "bg-blue-500/10" },
     { title: "Анализ на Снимки", desc: "Разпознаване на болести по растенията чрез компютърно зрение.", icon: ImageIcon, color: "from-orange-400 to-orange-500", bg: "bg-orange-500/10" },
@@ -72,17 +72,40 @@ export default function Home() {
             variants={staggerInViewContainer}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6"
           >
-            {features.map((feature, idx) => (
-              <motion.div key={idx} variants={viewportFadeUpVariants} className="h-full">
-                <div className="h-full rounded-2xl border border-white/5 bg-[#131825] p-6 hover:bg-[#1a2030] transition-colors duration-300 group cursor-default">
-                  <div className={`h-12 w-12 rounded-xl flex items-center justify-center mb-5 ${feature.bg}`}>
-                    <feature.icon className={`h-6 w-6 text-transparent bg-clip-text bg-gradient-to-br ${feature.color}`} style={{ color: "inherit" }} />
+            {features.map((feature, idx) => {
+              const CardContent = (
+                <div className="relative h-full bg-white/5 border border-white/10 p-6 md:p-8 rounded-2xl md:rounded-[2rem] overflow-hidden group hover:border-white/20 transition-all duration-500">
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 md:mb-8 border border-white/5 group-hover:scale-110 transition-transform duration-500 ease-out`}>
+                      <feature.icon className="w-7 h-7 md:w-8 md:h-8 text-white opacity-90" />
+                    </div>
+                    
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4 tracking-tight">
+                      {feature.title}
+                    </h3>
+                    
+                    <p className="text-slate-400 text-sm md:text-base leading-relaxed mt-auto">
+                      {feature.desc}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                  <p className="text-slate-400 text-sm font-medium leading-relaxed">{feature.desc}</p>
+
+                  {/* Hover Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500`} />
                 </div>
-              </motion.div>
-            ))}
+              );
+
+              return (
+                <motion.div key={idx} variants={viewportFadeUpVariants} className="h-full">
+                  {feature.href ? (
+                    <Link href={feature.href} className="block h-full cursor-pointer">
+                      {CardContent}
+                    </Link>
+                  ) : (
+                    CardContent
+                  )}
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>

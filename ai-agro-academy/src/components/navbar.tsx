@@ -50,9 +50,10 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
-          <Link href="/courses" className={navLink}>Възможности</Link>
-          <Link href="/faculty" className={navLink}>Сравни</Link>
-          <Link href="/labs" className={navLink}>Абонаменти</Link>
+          <Link href="/courses" className={navLink}>Курсове</Link>
+          <Link href="/faculty/agromind" className={navLink}>AI Факултет</Link>
+          <Link href="/labs" className={navLink}>Лаборатории</Link>
+          <Link href="/knowledge" className={navLink}>База Знания</Link>
         </div>
 
         <div className="flex items-center gap-3">

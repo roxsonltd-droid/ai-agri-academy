@@ -55,6 +55,10 @@ class Settings(BaseSettings):
     # After successful ingest into knowledge/uploads, remove object from R2
     R2_DELETE_AFTER_INGEST: bool = True
 
+    # Typesense Search
+    TYPESENSE_HOST: str | None = None
+    TYPESENSE_ADMIN_API_KEY: str | None = None
+
     # ElevenLabs TTS — see docs/ELEVENLABS_VOICE.md
     ELEVENLABS_API_KEY: str | None = None
     ELEVENLABS_VOICE_ID: str | None = None

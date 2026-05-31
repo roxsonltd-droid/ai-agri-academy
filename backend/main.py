@@ -14,6 +14,11 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
+@app.on_event("startup")
+async def startup_event():
+    from core.search import init_typesense_collections
+    init_typesense_collections()
+
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(

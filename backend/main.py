@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
-from api import users, chat, auth, courses, lab, knowledge, platform, agents_route, storage, voice, vision, stream
+from api import users, chat, auth, courses, admin_courses, lab, knowledge, platform, agents_route, storage, voice, vision, stream
 from db.database import engine, Base
 
 # Dev SQLite: auto-create tables. PostgreSQL: use `alembic upgrade head`.
@@ -34,6 +34,7 @@ app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["aut
 app.include_router(users.router, prefix=f"{settings.API_V1_STR}/users", tags=["users"])
 app.include_router(chat.router, prefix=f"{settings.API_V1_STR}/chat", tags=["ai-chat"])
 app.include_router(courses.router, prefix=f"{settings.API_V1_STR}/courses", tags=["courses"])
+app.include_router(admin_courses.router, prefix=f"{settings.API_V1_STR}/admin", tags=["admin"])
 app.include_router(lab.router, prefix=f"{settings.API_V1_STR}/lab", tags=["lab"])
 app.include_router(knowledge.router, prefix=f"{settings.API_V1_STR}/knowledge", tags=["knowledge-rag"])
 app.include_router(storage.router, prefix=f"{settings.API_V1_STR}/storage", tags=["storage"])

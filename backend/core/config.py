@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     
     # AI 
     MISTRAL_API_KEY: str | None = None
+    
+    # Platform Admins
+    ADMIN_EMAILS: list[str] = ["lukezester@gmail.com"]
     # RAG over backend/knowledge/*.md (Mistral embeddings + in-memory retrieval)
     RAG_ENABLED: bool = True
     RAG_TOP_K: int = 4

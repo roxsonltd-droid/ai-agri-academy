@@ -49,11 +49,15 @@ async def resolve_user_from_bearer(
 
     return None
 
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
+from db.database import get_db
+from fastapi.security import HTTPBearer
+
+security = HTTPBearer(auto_error=False)
 
 async def ensure_admin(
-    creds: HTTPAuthorizationCredentials | None,
-    db: Session,
+    creds: HTTPAuthorizationCredentials | None = Depends(security),
+    db: Session = Depends(get_db),
 ) -> User:
     user = await resolve_user_from_bearer(creds, db)
     if not user or user.role != "admin":

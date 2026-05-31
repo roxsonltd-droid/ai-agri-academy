@@ -42,10 +42,14 @@ function Hit({ hit }: any) {
       </div>
       <div>
         <h4 className="font-medium text-slate-200">
-          <Highlight attribute="title" hit={hit} className="bg-emerald-500/30 text-emerald-300 px-1 rounded" />
+          <span className="[&>mark]:bg-emerald-500/30 [&>mark]:text-emerald-300 [&>mark]:rounded-sm">
+            <Highlight attribute="title" hit={hit} />
+          </span>
         </h4>
         <p className="text-sm text-slate-500 mt-1 line-clamp-2">
-          <Highlight attribute="content" hit={hit} className="bg-emerald-500/30 text-emerald-300 px-1 rounded" />
+          <span className="[&>mark]:bg-emerald-500/30 [&>mark]:text-emerald-300 [&>mark]:rounded-sm">
+            <Highlight attribute="content" hit={hit} />
+          </span>
         </p>
       </div>
     </div>

@@ -14,7 +14,9 @@ class Settings(BaseSettings):
         "http://localhost:3000", 
         "http://127.0.0.1:3000", 
         "https://agro-academy-frontend-dzjv.onrender.com",
-        "https://agro-academy-frontend.onrender.com"
+        "https://agro-academy-frontend.onrender.com",
+        "https://academyagri.com",
+        "https://www.academyagri.com"
     ]
     
     # AI 

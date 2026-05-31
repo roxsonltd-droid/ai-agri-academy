@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Bell, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
+import { Menu, Sprout, ChevronDown, User, FileText, Video, Bell, LogOut, Settings as SettingsIcon, X, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
+import { GlobalSearchBar } from "./global-search";
 import { easeCinematic, transitionCinematic } from "@/lib/motion";
 import { AiAvatar } from "@/components/ai-avatar";
 
@@ -128,13 +129,11 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Center: Desktop Links */}
-        <div className="hidden lg:flex items-center justify-center flex-1 gap-4 z-0 px-4">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={`${desktopNavLinkStyle} ${link.className || ''}`}>
-              {link.name}
-            </Link>
-          ))}
+        {/* Center: Search */}
+        <div className="hidden md:flex flex-1 justify-center max-w-xl mx-8">
+          <div className="w-full">
+            <GlobalSearchBar />
+          </div>
         </div>
 
         {/* Right: Actions */}

@@ -7,7 +7,7 @@ import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, Sprout, ChevronDown, User, FileText, Video, Bell, LogOut, Settings as SettingsIcon, X, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
 import { GlobalSearchBar } from "./global-search";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { easeCinematic, transitionCinematic } from "@/lib/motion";
 import { AiAvatar } from "@/components/ai-avatar";
 
@@ -143,20 +143,23 @@ export default function Navbar() {
             <span className="mr-2">🌐</span> <span>Български</span>
           </Button>
 
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
-                Вход
-              </Button>
-            </SignInButton>
-            <SignInButton mode="modal">
-              <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-3 sm:px-5 py-2 font-medium text-xs sm:text-sm transition-all whitespace-nowrap">
-                Започни безплатно
-              </Button>
-            </SignInButton>
-          </SignedOut>
+          {!isAuthenticated && (
+            <>
+              <SignInButton mode="modal">
+                <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
+                  Вход
+                </Button>
+              </SignInButton>
+              <SignInButton mode="modal">
+                <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-3 sm:px-5 py-2 font-medium text-xs sm:text-sm transition-all whitespace-nowrap">
+                  Започни безплатно
+                </Button>
+              </SignInButton>
+            </>
+          )}
 
-          <SignedIn>
+          {isAuthenticated && (
+            <>
             <div className="relative">
               <Button 
                 variant="ghost" 
@@ -227,13 +230,13 @@ export default function Navbar() {
                   <span className="hidden sm:inline">Админ Панел</span>
                </Button>
             </Link>
-
-            <UserButton afterSignOutUrl="/" appearance={{
+            <UserButton appearance={{
               elements: {
                 userButtonAvatarBox: "w-9 h-9 border border-white/10"
               }
             }} />
-          </SignedIn>
+            </>
+          )}
         </div>
       </motion.nav>
 

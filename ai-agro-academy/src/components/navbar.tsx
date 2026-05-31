@@ -7,6 +7,7 @@ import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, Sprout, ChevronDown, User, FileText, Video, Bell, LogOut, Settings as SettingsIcon, X, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
 import { GlobalSearchBar } from "./global-search";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { easeCinematic, transitionCinematic } from "@/lib/motion";
 import { AiAvatar } from "@/components/ai-avatar";
 
@@ -137,98 +138,95 @@ export default function Navbar() {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-2 sm:gap-3 z-10 shrink-0 relative">
-          
-          {/* Notification Bell */}
-          <div className="relative">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              className="text-slate-300 hover:text-white hover:bg-white/10 rounded-full relative"
-              onClick={() => {
-                setShowNotifications(!showNotifications);
-                if (!showNotifications && unreadCount > 0) markAllAsRead();
-              }}
-            >
-              <Bell className="w-5 h-5" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
-              )}
-            </Button>
-
-            {/* Notification Dropdown */}
-            <AnimatePresence>
-              {showNotifications && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-2 w-80 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50"
-                >
-                  <div className="p-3 border-b border-slate-700 bg-slate-950 flex justify-between items-center">
-                    <h3 className="font-bold text-white text-sm">Известия</h3>
-                    {notifications.length > 0 && (
-                      <button onClick={clearNotifications} className="text-slate-400 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                  <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
-                    {notifications.length === 0 ? (
-                      <div className="p-6 text-center text-slate-500">
-                        <Bell className="w-8 h-8 mx-auto mb-2 opacity-20" />
-                        <p className="text-sm">Нямате нови известия</p>
-                      </div>
-                    ) : (
-                      <div className="divide-y divide-slate-800">
-                        {notifications.slice().reverse().map((notif) => (
-                          <div key={notif.id} className={`p-4 transition-colors hover:bg-slate-800/50 ${!notif.read ? 'bg-primary/5' : ''}`}>
-                            <div className="flex gap-3">
-                              <div className="shrink-0 mt-0.5">
-                                {notif.type === 'weather' && <CloudRain className="w-5 h-5 text-blue-400" />}
-                                {notif.type === 'market' && <LineChart className="w-5 h-5 text-emerald-400" />}
-                                {notif.type === 'system' && <ShieldAlert className="w-5 h-5 text-amber-400" />}
-                              </div>
-                              <div>
-                                <p className="text-sm text-slate-200 leading-snug">{notif.message}</p>
-                                <p className="text-xs text-slate-500 mt-1">{new Date(notif.date).toLocaleString('bg-BG')}</p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
+        <div className="flex items-center justify-end flex-1 gap-2 sm:gap-4 z-10">
           <Button variant="ghost" className="hidden md:flex text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
             <span className="mr-2">🌐</span> <span>Български</span>
           </Button>
-          
-          {isAuthenticated ? (
-            <Link href="/dashboard">
-              <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
-                <span className="hidden sm:inline">Моят профил</span>
-                <span className="sm:hidden">Профил</span>
-              </Button>
-            </Link>
-          ) : (
-            <Link href="/login" className="hidden sm:block">
+
+          <SignedOut>
+            <SignInButton mode="modal">
               <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
                 Вход
               </Button>
-            </Link>
-          )}
-          
-          <Link href="/register">
-            <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-3 sm:px-5 py-2 font-medium text-xs sm:text-sm transition-all whitespace-nowrap">
-              {isAuthenticated ? "Напред" : "Започни безплатно"}
-            </Button>
-          </Link>
+            </SignInButton>
+            <SignInButton mode="modal">
+              <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-3 sm:px-5 py-2 font-medium text-xs sm:text-sm transition-all whitespace-nowrap">
+                Започни безплатно
+              </Button>
+            </SignInButton>
+          </SignedOut>
+
+          <SignedIn>
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10" 
+                onClick={() => {
+                  setShowNotifications(!showNotifications);
+                  if (!showNotifications && unreadCount > 0) markAllAsRead();
+                }}
+              >
+                <Bell className="w-5 h-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                )}
+              </Button>
+
+              <AnimatePresence>
+                {showNotifications && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 mt-2 w-80 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50"
+                  >
+                    <div className="p-3 border-b border-slate-700 bg-slate-950 flex justify-between items-center">
+                      <h3 className="font-bold text-white text-sm">Известия</h3>
+                      {notifications.length > 0 && (
+                        <button onClick={clearNotifications} className="text-slate-400 hover:text-red-400 transition-colors">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                    <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
+                      {notifications.length === 0 ? (
+                        <div className="p-6 text-center text-slate-500">
+                          <Bell className="w-8 h-8 mx-auto mb-2 opacity-20" />
+                          <p className="text-sm">Нямате нови известия</p>
+                        </div>
+                      ) : (
+                        <div className="divide-y divide-slate-800">
+                          {notifications.slice().reverse().map((notif) => (
+                            <div key={notif.id} className={`p-4 transition-colors hover:bg-slate-800/50 ${!notif.read ? 'bg-primary/5' : ''}`}>
+                              <div className="flex gap-3">
+                                <div className="shrink-0 mt-0.5">
+                                  {notif.type === 'weather' && <CloudRain className="w-5 h-5 text-blue-400" />}
+                                  {notif.type === 'market' && <LineChart className="w-5 h-5 text-emerald-400" />}
+                                  {notif.type === 'system' && <ShieldAlert className="w-5 h-5 text-amber-400" />}
+                                </div>
+                                <div>
+                                  <p className="text-sm text-slate-200 leading-snug">{notif.message}</p>
+                                  <p className="text-xs text-slate-500 mt-1">{new Date(notif.date).toLocaleString('bg-BG')}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <UserButton afterSignOutUrl="/" appearance={{
+              elements: {
+                userButtonAvatarBox: "w-9 h-9 border border-white/10"
+              }
+            }} />
+          </SignedIn>
         </div>
       </motion.nav>
 

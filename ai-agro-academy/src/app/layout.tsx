@@ -47,27 +47,31 @@ export const metadata: Metadata = {
   },
 };
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="bg"
-      className={`${inter.variable} h-full antialiased`}
-    >
-      <body className="cinematic-ui relative flex min-h-full flex-col bg-background font-sans text-foreground selection:bg-primary/25 selection:text-foreground">
-        <AmbientBackground />
-        <div className="relative z-10 flex min-h-full flex-1 flex-col">
-          <AppProviders>
-            <Navbar />
-            <main className="flex-1 pt-[5.25rem] sm:pt-24">
-              {children}
-            </main>
-          </AppProviders>
-        </div>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="bg"
+        className={`${inter.variable} h-full antialiased`}
+      >
+        <body className="cinematic-ui relative flex min-h-full flex-col bg-background font-sans text-foreground selection:bg-primary/25 selection:text-foreground">
+          <AmbientBackground />
+          <div className="relative z-10 flex min-h-full flex-1 flex-col">
+            <AppProviders>
+              <Navbar />
+              <main className="flex-1 pt-[5.25rem] sm:pt-24">
+                {children}
+              </main>
+            </AppProviders>
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -220,6 +220,13 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </div>
+            
+            <Link href="/admin/courses">
+               <Button variant="ghost" className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 text-sm font-medium px-2 sm:px-4 border border-emerald-500/20 rounded-full">
+                  <ShieldAlert className="w-4 h-4 mr-2" />
+                  <span className="hidden sm:inline">Админ Панел</span>
+               </Button>
+            </Link>
 
             <UserButton afterSignOutUrl="/" appearance={{
               elements: {

@@ -18,18 +18,22 @@ from api.knowledge import ensure_can_upload
 router = APIRouter()
 bearer_scheme = HTTPBearer(auto_error=False)
 
-_ALLOWED_SUFFIX = {".md", ".txt", ".pdf"}
+_ALLOWED_SUFFIX = {".md", ".txt", ".pdf", ".docx", ".png", ".jpg", ".jpeg"}
 _CT_BY_SUFFIX: dict[str, set[str]] = {
     ".pdf": {"application/pdf"},
     ".md": {"text/markdown", "text/x-markdown", "text/plain"},
     ".txt": {"text/plain", "application/octet-stream"},
+    ".docx": {"application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+    ".png": {"image/png"},
+    ".jpg": {"image/jpeg"},
+    ".jpeg": {"image/jpeg"},
 }
 
 
 class PresignRequest(BaseModel):
     filename: str = Field(..., min_length=1, max_length=255)
     content_type: str = Field(..., min_length=3, max_length=120)
-    purpose: Literal["rag"] = "rag"
+    purpose: Literal["rag", "asset"] = "rag"
 
 
 class PresignResponse(BaseModel):
@@ -71,7 +75,12 @@ async def presign_put(
             detail=f"Content-Type не съответства на разширението {suf}. Очаквано едно от: {', '.join(sorted(_CT_BY_SUFFIX[suf]))}",
         )
 
-    object_key = build_rag_object_key(body.filename, suf)
+    if body.purpose == "asset":
+        from core.r2 import build_asset_object_key
+        object_key = build_asset_object_key(body.filename, suf)
+    else:
+        object_key = build_rag_object_key(body.filename, suf)
+        
     try:
         url, expires_in = presigned_put_url(object_key=object_key, content_type=body.content_type.split(";")[0].strip())
     except RuntimeError as e:

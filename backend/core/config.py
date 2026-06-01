@@ -10,11 +10,20 @@ class Settings(BaseSettings):
     # Using SQLite for local development, will be replaced with Supabase URL later
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./agro_academy.db")
     
-    # CORS setup (Allow Next.js frontend to talk to this backend)
-    BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000", "https://agro-academy-frontend.onrender.com"]
+    BACKEND_CORS_ORIGINS: list[str] = [
+        "http://localhost:3000", 
+        "http://127.0.0.1:3000", 
+        "https://agro-academy-frontend-dzjv.onrender.com",
+        "https://agro-academy-frontend.onrender.com",
+        "https://academyagri.com",
+        "https://www.academyagri.com"
+    ]
     
     # AI 
     MISTRAL_API_KEY: str | None = None
+    
+    # Platform Admins
+    ADMIN_EMAILS: list[str] = ["lukezester@gmail.com"]
     # RAG over backend/knowledge/*.md (Mistral embeddings + in-memory retrieval)
     RAG_ENABLED: bool = True
     RAG_TOP_K: int = 4
@@ -50,6 +59,10 @@ class Settings(BaseSettings):
     R2_PRESIGN_EXPIRES_SECONDS: int = 900
     # After successful ingest into knowledge/uploads, remove object from R2
     R2_DELETE_AFTER_INGEST: bool = True
+
+    # Typesense Search
+    TYPESENSE_HOST: str | None = None
+    TYPESENSE_ADMIN_API_KEY: str | None = None
 
     # ElevenLabs TTS — see docs/ELEVENLABS_VOICE.md
     ELEVENLABS_API_KEY: str | None = None

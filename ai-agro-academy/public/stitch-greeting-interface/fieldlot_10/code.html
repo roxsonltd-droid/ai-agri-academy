@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#755b00",
+                        "on-error-container": "#93000a",
+                        "on-background": "#131e18",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "surface-container-low": "#eaf7ec",
+                        "surface-tint": "#366853",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "secondary-fixed": "#d6e6db",
+                        "on-tertiary-container": "#4f3d00",
+                        "secondary-container": "#d1e1d6",
+                        "secondary-fixed-dim": "#bacac0",
+                        "outline-variant": "#c0c9c2",
+                        "primary-fixed": "#b9eed4",
+                        "on-primary-container": "#89bda4",
+                        "outline": "#717974",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-surface-variant": "#404944",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#131e18",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "tertiary-fixed": "#ffe08e",
+                        "surface-container": "#e4f1e7",
+                        "surface-container-high": "#deebe1",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#d9e6dc",
+                        "primary": "#003625",
+                        "inverse-surface": "#28332c",
+                        "background": "#f0fdf2",
+                        "secondary": "#536259",
+                        "on-primary-fixed": "#002115",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#e7f4ea",
+                        "surface": "#f0fdf2",
+                        "surface-variant": "#d9e6dc",
+                        "tertiary-container": "#cea72c",
+                        "surface-bright": "#f0fdf2",
+                        "on-secondary-container": "#55645b",
+                        "surface-dim": "#d0ddd3",
+                        "on-tertiary-fixed": "#241a00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "12px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "container-max": "1140px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "gutter": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-badge": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "display-lg": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "headline-sm": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .yellow-pages-shadow {
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+        }
+        .parchment-bg {
+            background: linear-gradient(180deg, #ffffff 0%, #fdfbf0 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c0c9c2;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body-base text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant shadow-sm h-12 flex justify-between items-center px-4 lg:px-xxl">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">agriculture</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">Логистичен анализ</h1>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden border border-primary/20">
+<img alt="Admin Profile" data-alt="A professional headshot of a Bulgarian agricultural manager with a warm, confident expression. The lighting is soft and natural, reflecting a modern corporate office setting with agricultural motifs in the background. The style is clean and high-fidelity, matching a premium B2B SaaS interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBScuIm_EllD8WFJyDNi6b90rGFPnNA04Mx43juH8_2FIf3RJj4iGNR4IbNbOhGhO1FNPAQ3clOoWcN-9xVRNubG04JfrxJESBr4-2qDztKt1w2vdil6fyLwzAZRunzS-xk9KSCpIiTmwnI1jkumfFronLhlf7YNjbQAlyAanJiuY7Eef5t4Y64yolzkhPWp4Xj4RZLzYJ48mxJpUwlaz3-wZBlPbJ5bwrxUqzAKRbkZfcl2riuBPqx4ZbBS6HibdcTD-FKqOxMz3A"/>
+</div>
+</header>
+<main class="pt-16 px-margin-mobile space-y-lg max-w-container-max mx-auto">
+<!-- Active Deliveries Overview -->
+<section class="space-y-md">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm-mobile text-primary">Активни доставки</h2>
+<span class="font-label-badge text-label-badge bg-secondary-container px-sm py-xs rounded-full text-on-secondary-container">3 НА ПЪТ</span>
+</div>
+<div class="flex gap-md overflow-x-auto pb-base custom-scrollbar snap-x">
+<!-- Shipment Card 1 -->
+<div class="snap-start min-w-[280px] bg-surface-container-lowest p-md rounded-xl border border-outline-variant parchment-bg yellow-pages-shadow border-t-4 border-t-tertiary-container">
+<div class="flex justify-between mb-sm">
+<span class="font-label-eyebrow text-label-eyebrow text-on-surface-variant uppercase">ID: FL-4829</span>
+<span class="flex items-center gap-xs font-label-badge text-label-badge text-tertiary">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span> В ТРАНЗИТ
+                        </span>
+</div>
+<p class="font-headline-sm text-headline-sm-mobile text-primary mb-base">Пшеница - Склад Плевен</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Дестинация: Порт Варна</p>
+<div class="space-y-xs">
+<div class="flex justify-between font-label-badge text-label-badge">
+<span>Напредък: 65%</span>
+<span>ETA: 14:30</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 65%"></div>
+</div>
+</div>
+</div>
+<!-- Shipment Card 2 -->
+<div class="snap-start min-w-[280px] bg-surface-container-lowest p-md rounded-xl border border-outline-variant parchment-bg yellow-pages-shadow border-t-4 border-t-tertiary-container">
+<div class="flex justify-between mb-sm">
+<span class="font-label-eyebrow text-label-eyebrow text-on-surface-variant uppercase">ID: FL-4831</span>
+<span class="flex items-center gap-xs font-label-badge text-label-badge text-on-secondary-container">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span> ТОВАРЕНЕ
+                        </span>
+</div>
+<p class="font-headline-sm text-headline-sm-mobile text-primary mb-base">Слънчоглед - Добрич</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Дестинация: Рафинерия Пловдив</p>
+<div class="space-y-xs">
+<div class="flex justify-between font-label-badge text-label-badge">
+<span>Напредък: 10%</span>
+<span>ETA: 18:45</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container" style="width: 10%"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Cost Efficiency Metrics -->
+<section class="grid grid-cols-2 gap-md">
+<div class="col-span-2 bg-primary p-md rounded-xl text-white flex justify-between items-center">
+<div>
+<p class="font-label-eyebrow text-label-eyebrow opacity-80 uppercase mb-xs">Общ разход за месеца</p>
+<p class="font-headline-sm text-headline-sm">14,250 лв.</p>
+</div>
+<div class="text-right">
+<span class="bg-primary-container text-on-primary-container font-label-badge text-label-badge px-sm py-xs rounded-full">-5.2% Спрямо мин. месец</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mb-sm">analytics</span>
+<p class="font-label-badge text-label-badge text-on-surface-variant uppercase">Цена на т/км</p>
+<p class="font-headline-sm text-headline-sm-mobile text-primary">0.82 лв.</p>
+</div>
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-tertiary mb-sm">gas_meter</span>
+<p class="font-label-badge text-label-badge text-on-surface-variant uppercase">Горивна еф.</p>
+<p class="font-headline-sm text-headline-sm-mobile text-primary">28л/100</p>
+</div>
+</section>
+<!-- Route Map Visualization -->
+<section class="space-y-sm">
+<h2 class="font-headline-sm text-headline-sm-mobile text-primary">Активни маршрути</h2>
+<div class="relative w-full h-48 rounded-xl overflow-hidden border border-outline-variant shadow-sm group">
+<div class="absolute inset-0 bg-surface-variant">
+<img alt="Route Map" class="w-full h-full object-cover opacity-60 mix-blend-multiply" data-alt="A stylized digital map of Bulgaria showcasing agricultural trade routes. The map is presented in a minimalist, topographical style using soft greens and creams. Glowing paths connect major hubs like Pleven, Dobrich, Plovdiv, and Varna, illustrating logistics flow. The overall mood is sophisticated, technical, and data-driven." data-location="Bulgaria" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBND2H26ayHdh2qw9mBQFTEbxYSuPZhQETL-Fx6HmRMPeIIXrEASTgBEs_0mSpLxzgcyXFKB2_t_Ral5GDjBtFM3zLzDQD8K91ng2T3QSjLjEl0H8vF-LlmEPtvuL-Iu3ifHtm6ZQdbq3J2BnIJ244fI8_mHJ_teIYWcdeZLIW6ncJoHiAuNge2AIswMYkKa8TSPV5l7tiW2cMX1vCRtSRKOrJyy_Ap1nZBAkX2NDWVNznEGZwQIRpome4wX-ILy_ZdTq59Wjo6cz8"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+<div class="absolute top-md left-md bg-surface/90 backdrop-blur-sm p-sm rounded-lg border border-outline-variant font-label-badge text-label-badge">
+<div class="flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>4 Активни камиона в реално време</span>
+</div>
+</div>
+<button class="absolute bottom-md right-md bg-white p-sm rounded-full shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">fullscreen</span>
+</button>
+</div>
+</section>
+<!-- Storage & Silo Capacity -->
+<section class="space-y-md">
+<h2 class="font-headline-sm text-headline-sm-mobile text-primary">Капацитет на складове</h2>
+<div class="bg-surface-container p-md rounded-xl space-y-md">
+<div class="flex items-center gap-md">
+<div class="relative w-16 h-16 shrink-0">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-outline-variant/30" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-primary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="35" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-label-badge text-label-badge">80%</div>
+</div>
+<div class="flex-1">
+<p class="font-body-base text-body-base font-bold text-primary">Централен Силоз - Плевен</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Пшеница: 12,000 / 15,000 тона</p>
+</div>
+</div>
+<div class="flex items-center gap-md border-t border-outline-variant pt-md">
+<div class="relative w-16 h-16 shrink-0">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-outline-variant/30" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-tertiary-container" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="100" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-label-badge text-label-badge">42%</div>
+</div>
+<div class="flex-1">
+<p class="font-body-base text-body-base font-bold text-primary">База Добрич</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Слънчоглед: 4,200 / 10,000 тона</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Partner Carriers -->
+<section class="space-y-md">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm-mobile text-primary">Логистични партньори</h2>
+<button class="text-primary font-label-badge text-label-badge underline uppercase">Виж всички</button>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-secondary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+</div>
+<div>
+<p class="font-body-base text-body-base font-bold">ТрансАгро ЕООД</p>
+<div class="flex items-center gap-xs text-tertiary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-badge text-label-badge">4.9 (124 доставки)</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-badge text-label-badge text-on-primary-fixed-variant bg-primary-fixed px-sm py-xs rounded-full">НАЛИЧЕН</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer opacity-70">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-secondary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">conveyor_belt</span>
+</div>
+<div>
+<p class="font-body-base text-body-base font-bold">БулЛогистик</p>
+<div class="flex items-center gap-xs text-tertiary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-badge text-label-badge">4.7 (89 доставки)</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-badge text-label-badge text-on-surface-variant bg-surface-variant px-sm py-xs rounded-full">ЗАНЕТ</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around items-center px-gutter py-sm pb-safe z-50 shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-badge text-label-badge">Начало</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-tertiary-fixed text-on-tertiary-fixed rounded-xl px-md py-xs active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+<span class="font-label-badge text-label-badge">Анализ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-badge text-label-badge">Съобщения</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-badge text-label-badge">Профил</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.yellow-pages-shadow').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'translateY(2px)';
+                card.style.boxShadow = 'none';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'translateY(0px)';
+                card.style.boxShadow = '0 3px 0 rgba(0,0,0,0.12)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+                card.style.boxShadow = '0 3px 0 rgba(0,0,0,0.12)';
+            });
+        });
+    </script>
+</body></html>

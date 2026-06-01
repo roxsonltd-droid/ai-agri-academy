@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#ffe08e",
+                    "surface-container": "#e4f1e7",
+                    "surface-container-high": "#deebe1",
+                    "on-surface": "#131e18",
+                    "on-primary-fixed-variant": "#1d4f3c",
+                    "on-tertiary-fixed-variant": "#584400",
+                    "on-surface-variant": "#404944",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "outline": "#717974",
+                    "on-tertiary-container": "#4f3d00",
+                    "secondary-container": "#d1e1d6",
+                    "secondary-fixed-dim": "#bacac0",
+                    "outline-variant": "#c0c9c2",
+                    "primary-fixed": "#b9eed4",
+                    "on-primary-container": "#89bda4",
+                    "surface-tint": "#366853",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#3c4a42",
+                    "primary-fixed-dim": "#9ed2b9",
+                    "secondary-fixed": "#d6e6db",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ecc246",
+                    "surface-container-low": "#eaf7ec",
+                    "tertiary": "#755b00",
+                    "on-error-container": "#93000a",
+                    "on-background": "#131e18",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-dim": "#d0ddd3",
+                    "surface-variant": "#d9e6dc",
+                    "tertiary-container": "#cea72c",
+                    "surface-bright": "#f0fdf2",
+                    "on-secondary-container": "#55645b",
+                    "surface-container-highest": "#d9e6dc",
+                    "primary-container": "#1a4d3a",
+                    "on-secondary-fixed": "#111e18",
+                    "inverse-primary": "#9ed2b9",
+                    "surface": "#f0fdf2",
+                    "primary": "#003625",
+                    "inverse-surface": "#28332c",
+                    "background": "#f0fdf2",
+                    "secondary": "#536259",
+                    "on-primary-fixed": "#002115",
+                    "inverse-on-surface": "#e7f4ea",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "12px",
+                    "base": "4px",
+                    "container-max": "1140px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "xxl": "48px",
+                    "gutter": "16px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "display-lg": ["DM Sans"],
+                    "body-base": ["DM Sans"],
+                    "headline-sm": ["DM Sans"],
+                    "headline-md": ["DM Sans"],
+                    "body-sm": ["DM Sans"],
+                    "label-badge": ["DM Sans"],
+                    "label-eyebrow": ["DM Sans"],
+                    "display-lg-mobile": ["DM Sans"]
+            },
+            "fontSize": {
+                    "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                    "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .yellow-pages-card {
+            border-top: 4px solid #cea72c;
+            background: linear-gradient(180deg, #ffffff 0%, #fdfcf5 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+        }
+        .yellow-pages-card:hover {
+            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15);
+            transform: translateY(-2px);
+            border-top-color: #755b00;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c0c9c2; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-20 md:pb-0">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<div class="flex justify-between items-center px-4 h-14 w-full max-w-[1140px] mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+<h1 class="font-headline-sm text-headline-sm font-bold tracking-tight text-primary">AGRI ACADEMY</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:opacity-80 transition-opacity" href="#">НАЧАЛО</a>
+<a class="font-label-badge text-label-badge text-primary font-bold transition-opacity" href="#">КУРСОВЕ</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:opacity-80 transition-opacity" href="#">AI ТЮТОР</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:opacity-80 transition-opacity" href="#">ПРОФИЛ</a>
+</nav>
+<button class="material-symbols-outlined text-primary hover:opacity-80 active:scale-95 duration-200" data-icon="notifications">notifications</button>
+</div>
+<button class="md:hidden material-symbols-outlined text-primary" data-icon="search">search</button>
+</div>
+</header>
+<main class="pt-20 px-4 md:px-margin-mobile max-w-[1140px] mx-auto pb-24">
+<!-- Hero Section -->
+<section class="mb-12">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Академичен Каталог</h2>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-2xl">Престижни курсове за модерното земеделие, водени от световнопризнати експерти в областта на агро-технологиите и устойчивото развитие.</p>
+</section>
+<!-- Search & Filter Bar -->
+<div class="sticky top-16 z-40 bg-background/80 backdrop-blur-sm py-4 mb-8">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="relative flex-grow">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full h-11 pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-full focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-body-sm text-body-sm" placeholder="Търсене на курсове или инструктори..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+<button class="whitespace-nowrap px-6 h-11 rounded-full bg-primary text-on-primary font-label-badge text-label-badge flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span> ФИЛТРИ
+                    </button>
+<button class="whitespace-nowrap px-6 h-11 rounded-full bg-secondary-container text-on-secondary-container font-label-badge text-label-badge">Всички</button>
+<button class="whitespace-nowrap px-6 h-11 rounded-full border border-outline-variant text-on-surface-variant font-label-badge text-label-badge">Agri-Robotics</button>
+<button class="whitespace-nowrap px-6 h-11 rounded-full border border-outline-variant text-on-surface-variant font-label-badge text-label-badge">Sustainable Architecture</button>
+</div>
+</div>
+</div>
+<!-- Course Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Course Card 1 -->
+<div class="yellow-pages-card p-6 rounded-xl flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary-container/20 text-on-tertiary-container px-3 py-1 rounded-full font-label-badge text-label-badge">AGRI-ROBOTICS</span>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" data-weight="fill">star</span>
+<span class="font-label-badge text-label-badge">4.9</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2 line-clamp-2">Автономни системи за прецизно земеделие</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 line-clamp-3">Интеграция на дрони и наземни роботизирани платформи за мониторинг и обработка на култури в реално време.</p>
+<div class="mt-auto">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Instructor" data-alt="A professional headshot of a distinguished male professor in his late 50s. He has a warm smile and is wearing a crisp white shirt and a dark green blazer. The background is a soft-focus laboratory setting with subtle green plants and high-tech equipment. The lighting is clean, bright, and professional, maintaining a sophisticated academic aesthetic with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGO9ETgBAwB6lQBV0nLRTIATIv5iHlfBxPCFrWCF2QxP6sVWmaz89zZgSV0xgjgMGqXm-oDH0B3q59W_tHzfQBzOCNieX5EatZRQT4uLPIKtBgJnjtBSBJDqiJUz5aj5pHqPhJt-5WnpkvnpDZ6x37AO7cObeYSLwY6bGMLXgUWVlwQvBo1fSnauW3lJIBFJSOQfiMYgtlWMDjBZvrcBSONnyOjR3JrVK3AUig8d5LnQ4R4ETILiXZjE-bSlvQcxRmiS6w3PMC21U"/>
+</div>
+<div>
+<p class="font-label-badge text-label-badge text-primary">ИНСТРУКТОР</p>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Д-р Иван Петров</p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-badge text-label-badge text-on-surface-variant">
+<span>ПРОГРЕС</span>
+<span>65%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="yellow-pages-card p-6 rounded-xl flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-badge text-label-badge">AI DATA ANALYSIS</span>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" data-weight="fill">star</span>
+<span class="font-label-badge text-label-badge">5.0</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2 line-clamp-2">Прогнозен анализ на реколтата с AI</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 line-clamp-3">Използване на машинно обучение за предвиждане на добиви и ранно откриване на болести по растенията чрез сателитни данни.</p>
+<div class="mt-auto">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Instructor" data-alt="A professional portrait of a female AI researcher in a minimalist office setting. She has a confident posture, wearing a dark forest green professional suit. Behind her is a large screen displaying complex agricultural data visualizations in soft greens and yellows. The lighting is high-key and modern, reflecting a tech-focused academic environment with a clean corporate finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx88VmNfdk8b2W1iHkIkQQNOQuZeAVcKy_PY9rles2-eCXyc8NmcuPZWP_88_Qb0me12c3tCqN6q0-yv_mbzCY-nBgPJZh3-1qOmDQ55h1rFV9mmWvt-Eb1jKbta5LGmiw6865ziF3e9d3fkE-QMB9XgQJMaYk5PBWURYu5AIeOcrNYR7aQQJLCfFwL_i4WS1YH3z3RcuN780t9UujZaZbm87mkmJef4t5hTiRLCLEErQmJr0wyvRENRQo6l4TA7oYcuMxb699Unk"/>
+</div>
+<div>
+<p class="font-label-badge text-label-badge text-primary">ИНСТРУКТОР</p>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Проф. Мария Димитрова</p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-badge text-label-badge text-on-surface-variant">
+<span>ПРОГРЕС</span>
+<span>12%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 12%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="yellow-pages-card p-6 rounded-xl flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full font-label-badge text-label-badge">SUSTAINABLE ARCH.</span>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" data-weight="fill">star</span>
+<span class="font-label-badge text-label-badge">4.8</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2 line-clamp-2">Вертикални ферми в градска среда</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 line-clamp-3">Проектиране на енергийно ефективни хидропонни системи интегрирани в съвременната архитектура на големия град.</p>
+<div class="mt-auto">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Instructor" data-alt="A portrait of a male sustainable architect standing in front of a modern glass building overgrown with lush green vines. He is dressed in professional business casual attire in earthy tones of slate and charcoal. The lighting is natural morning sunlight, casting soft shadows and highlighting the organic textures of the plants against the sharp glass and steel. The atmosphere is grounded yet innovative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFjXPLEIjno-o574w7TmKeTjgbvhFDpbD8C9IS8HXpS2nHZNT3ZWGFC_N_YfdGRf6QlXeEdTYhAzMkh7tI5OPcsIe69UJCr6jMVwuUkAgKytGT71_shBsxX6Il5uiszksNGdmlOfgDBTJIDMzCrG7u3WNFE1Ajx10toLam0sJrEcdCHD4wDKuz8j9JEJpm6BEG2T3pMNOEV2t5oSuQ5PAdQ2oe9u7RvXnnUl8H_a4oe75lDLtJUT_qEIQp7-ZnnK-NXaDWqWuMilE"/>
+</div>
+<div>
+<p class="font-label-badge text-label-badge text-primary">ИНСТРУКТОР</p>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Арх. Стефан Колев</p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-badge text-label-badge text-on-surface-variant">
+<span>ПРОГРЕС</span>
+<span>90%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 90%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Course Card 4 - New Layout Variation -->
+<div class="yellow-pages-card p-6 rounded-xl flex flex-col h-full lg:col-span-2">
+<div class="flex flex-col md:flex-row gap-8">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-tertiary text-on-tertiary px-3 py-1 rounded-full font-label-badge text-label-badge">СПЕЦИАЛИЗИРАН КУРС</span>
+<span class="text-on-surface-variant font-label-badge text-label-badge flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span> 40 часа
+                            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-4">Генетика и селекция в затворени екосистеми</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6">Дълбоко изследване на молекулярната биология и генното инженерство за създаване на устойчиви сортове, способни да виреят в контролирани климатични условия.</p>
+<div class="flex flex-wrap gap-3 mb-6">
+<span class="bg-surface-container px-3 py-1 rounded-lg text-primary font-label-badge text-label-badge border border-outline-variant/30">ГЕНЕТИКА</span>
+<span class="bg-surface-container px-3 py-1 rounded-lg text-primary font-label-badge text-label-badge border border-outline-variant/30">БИОТЕХНОЛОГИИ</span>
+</div>
+</div>
+<div class="md:w-64 flex flex-col justify-between p-6 bg-surface-container-low rounded-xl">
+<div>
+<p class="font-label-badge text-label-badge text-primary mb-4">ЛЕКТОР</p>
+<div class="flex items-center gap-3 mb-2">
+<img alt="Instructor" class="w-12 h-12 rounded-full border-2 border-white shadow-sm" data-alt="A close-up portrait of a female geneticist in a bright, white-walled laboratory. She is wearing professional safety goggles and a clean white lab coat. Her expression is focused and intelligent. The background features blurred glass vials and green botanical specimens. The lighting is sterile yet inviting, with a palette of crisp whites, soft greens, and clinical grays." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtTaM7oHtWh3vdYQdmPNOOrOGjclAykTVzBBy0x-UlXj2N4vCdhO9iak6zzbiq2OWlvaEuAvBryHDnNxnG3bsdlqqknC72sCBjhh_O6RNEGCzJiVs5nQxxUYVuO9z0RufG1Uo0FGcXpFoF4SZl5dtdZmIU0si1OjIwT2lbLPx_FjFK3aeXQ-AZRY_9xUAEBxGMH3Be1yE7r5IGxhBj_iU9fk51VjPUajr9-koc-Yu6QelNLPssua7gVFjtK_t6OzprveLPXDels4"/>
+<span class="font-body-sm text-body-sm font-bold text-on-surface">Доц. Елена Радева</span>
+</div>
+<p class="font-label-badge text-[9px] text-on-surface-variant leading-tight">Институт по растителни генетични ресурси</p>
+</div>
+<button class="w-full mt-8 bg-primary text-on-primary h-12 rounded-full font-label-badge text-label-badge hover:opacity-90 active:scale-95 transition-all">ЗАПИСВАНЕ</button>
+</div>
+</div>
+</div>
+<!-- Course Card 5 -->
+<div class="yellow-pages-card p-6 rounded-xl flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-surface-container-highest text-on-surface px-3 py-1 rounded-full font-label-badge text-label-badge">MANAGEMENT</span>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" data-weight="fill">star</span>
+<span class="font-label-badge text-label-badge">4.7</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2 line-clamp-2">Управление на агро-вериги за доставки</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 line-clamp-3">Оптимизация на логистичните процеси от полето до трапезата чрез блокчейн технологии за прозрачност.</p>
+<div class="mt-auto">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Instructor" data-alt="A portrait of a male corporate manager in a high-rise office building overlooking a rural agricultural landscape. He is wearing a sharp, tailored slate-gray suit. The lighting is warm golden hour sunlight streaming through the windows, creating a bridge between corporate elegance and rural productivity. The aesthetic is clean, high-contrast, and deeply professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXMzF_6pizUc5lwGvc66h4UXkaAdEMclUAC_RXTl5HlQVMwk_ueePexEjZp0Skd96tSKGRcFIo2TgMGeHcRCwbniCgxEOnWKA6p9kU6fm43lCugHVYh5tvp76XcwNK-6YD6ClV-yHzMITYtPsP76a_BhBhAoLf4k49NZMUqnqv_kAscmz77Ki9rgFtDp_mCO9ftxfhyb-zI6bipZ8nFKFYfQRSGzHnAo6iO0WqjEJa9hzFjhFjsR9hqyMHg9lZlsKp96KJYDer_gg"/>
+</div>
+<div>
+<p class="font-label-badge text-label-badge text-primary">ИНСТРУКТОР</p>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Георги Ангелов</p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-badge text-label-badge text-on-surface-variant">
+<span>ПРОГРЕС</span>
+<span>0%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 0%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface/95 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex justify-around items-center px-margin-mobile py-2 z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home_analytics">analytics</span>
+<span class="font-label-badge text-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/20 rounded-xl px-3 py-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-badge text-label-badge">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-badge text-label-badge">AI Tutor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</a>
+</nav>
+<!-- Floating Action Button Contextual (Courses View) -->
+<button class="fixed bottom-24 right-6 md:bottom-12 md:right-12 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-[28px]" data-icon="chat_bubble">chat_bubble</span>
+</button>
+<script>
+        // Micro-interactions for filters
+        document.querySelectorAll('.flex.gap-2 button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Reset others
+                document.querySelectorAll('.flex.gap-2 button').forEach(btn => {
+                    if (btn.classList.contains('bg-primary')) {
+                        btn.classList.remove('bg-primary', 'text-on-primary');
+                        btn.classList.add('border', 'border-outline-variant', 'text-on-surface-variant');
+                    }
+                });
+                // Toggle active (if not the primary filter button)
+                if (!button.innerText.includes('ФИЛТРИ')) {
+                    button.classList.add('bg-primary', 'text-on-primary');
+                    button.classList.remove('border', 'border-outline-variant', 'text-on-surface-variant');
+                }
+            });
+        });
+
+        // Simple scroll effect for Header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

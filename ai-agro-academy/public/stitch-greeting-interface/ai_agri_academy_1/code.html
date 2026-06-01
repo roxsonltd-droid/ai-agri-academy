@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#1d4f3c",
+                    "on-secondary-fixed": "#002115",
+                    "on-error-container": "#93000a",
+                    "on-background": "#171d1b",
+                    "background": "#f5faf7",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f0f5f2",
+                    "secondary-fixed-dim": "#9ed2b9",
+                    "tertiary": "#865300",
+                    "surface-container-high": "#e4e9e6",
+                    "inverse-surface": "#2c3230",
+                    "on-secondary-container": "#3b6c57",
+                    "on-primary-container": "#005027",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#00210c",
+                    "outline-variant": "#bbcbbb",
+                    "on-tertiary-container": "#633c00",
+                    "error-container": "#ffdad6",
+                    "outline": "#6c7b6d",
+                    "tertiary-container": "#f8a018",
+                    "on-surface": "#171d1b",
+                    "surface-container-highest": "#dee4e1",
+                    "surface": "#f5faf7",
+                    "surface-bright": "#f5faf7",
+                    "primary-fixed": "#6bfe9c",
+                    "inverse-primary": "#4ae183",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#006d37",
+                    "surface-container": "#eaefec",
+                    "tertiary-fixed-dim": "#ffb961",
+                    "primary-container": "#2ecc71",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "secondary": "#366853",
+                    "secondary-container": "#b6ebd1",
+                    "primary": "#006d37",
+                    "surface-dim": "#d6dbd8",
+                    "on-tertiary-fixed": "#2b1700",
+                    "on-primary-fixed-variant": "#005228",
+                    "primary-fixed-dim": "#4ae183",
+                    "on-surface-variant": "#3d4a3e",
+                    "inverse-on-surface": "#edf2ef",
+                    "on-tertiary-fixed-variant": "#663e00",
+                    "tertiary-fixed": "#ffddb9",
+                    "surface-variant": "#dee4e1",
+                    "secondary-fixed": "#b9eed4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "base": "8px",
+                    "md": "24px",
+                    "sm": "12px",
+                    "lg": "48px",
+                    "xl": "80px",
+                    "margin": "32px"
+            },
+            "fontFamily": {
+                    "headline-md": ["DM Sans"],
+                    "headline-lg": ["DM Sans"],
+                    "label-md": ["DM Sans"],
+                    "headline-lg-mobile": ["DM Sans"],
+                    "label-sm": ["DM Sans"],
+                    "body-md": ["DM Sans"],
+                    "headline-xl": ["DM Sans"],
+                    "body-lg": ["DM Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .field-container {
+            padding: 24px;
+        }
+        @media (max-width: 768px) {
+            .field-container {
+                padding: 16px;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24 md:pb-0 md:pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface dark:bg-surface-dim">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-size: 28px;">agriculture</span>
+<span class="font-headline-md text-headline-md-mobile font-bold text-primary dark:text-primary-fixed-dim">AgriAcademy</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-transform active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<!-- Desktop Nav Links -->
+<nav class="hidden md:flex items-center gap-6 ml-4">
+<a class="font-label-md text-label-md text-primary font-bold" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary" href="#">Courses</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary" href="#">AI Tutor</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary" href="#">Profile</a>
+</nav>
+</div>
+</header>
+<!-- Hero / Header Section -->
+<main class="max-w-7xl mx-auto pt-8">
+<section class="field-container">
+<h1 class="font-headline-xl text-headline-lg-mobile text-on-surface mb-4">Нашите Курсове</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Открийте бъдещето на земеделието. Нашите курсове съчетават традиционни методи с най-новите AI технологии.
+            </p>
+</section>
+<!-- Search and Filter Section -->
+<section class="field-container space-y-6">
+<div class="flex flex-col md:flex-row gap-4 items-center">
+<!-- Search Bar -->
+<div class="relative w-full md:flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="Търсене на курсове..." type="text"/>
+</div>
+<!-- Desktop Filters Button -->
+<button class="hidden md:flex items-center gap-2 px-6 py-4 border-2 border-secondary text-secondary font-bold rounded-xl hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+                    Филтри
+                </button>
+</div>
+<!-- Categories / Chips -->
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
+<button class="whitespace-nowrap px-6 py-2 bg-primary text-white rounded-full font-label-md text-label-md transition-transform active:scale-95">Всички</button>
+<button class="whitespace-nowrap px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-secondary-container transition-transform active:scale-95">AI в агро</button>
+<button class="whitespace-nowrap px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-secondary-container transition-transform active:scale-95">Почвено здраве</button>
+<button class="whitespace-nowrap px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-secondary-container transition-transform active:scale-95">Техника</button>
+<button class="whitespace-nowrap px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-secondary-container transition-transform active:scale-95">Био Земеделие</button>
+</div>
+</section>
+<!-- Course Grid -->
+<section class="field-container">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Course Card 1 (Active) -->
+<div class="group bg-surface-container-lowest border border-[#E0EADD] rounded-xl overflow-hidden flex flex-col hover:shadow-[0px_4px_20px_rgba(26,77,58,0.08)] transition-all duration-300">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A high-tech tractor operating in a sun-drenched organic farm field, equipped with futuristic sensors and glowing green AI interface overlays. The lighting is golden hour warm, highlighting the lush green crops and the metallic texture of the modern machinery. The aesthetic is clean and corporate, blending agricultural grit with digital precision and a growth-oriented mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrFY3kAX9xkMIrhfTsnEVJB5tZ2cec8Nf7drqVjuNQezpphtUQTY4guXD0cUFRgbA5Cx9r3HaONOScW8v10TQtdLtMfGLqw6o0hy6CggczAXrSXVe3gs50TWHhY4jp6Eq7vGdV119iKOp3VfrM21t41pWlN_Gknl3tuGvSBp7oDltozskp_Fx5eqqM0Gw54v1UZtNnNFbJ9TXPOF2W3i360BKDosGVyVSChZE7u3qL-Cb9TNprkLSP1qNSq-1EctlAt8G5MNlUpXc"/>
+<span class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg font-label-sm text-label-sm">Beginner</span>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h3 class="font-headline-md text-secondary mb-2">Въведение в Прецизното Земеделие</h3>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed-dim flex items-center justify-center text-on-secondary-fixed text-xs font-bold">ИП</div>
+<span class="font-label-md text-on-surface-variant">инж. Иван Петров</span>
+<div class="ml-auto flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md">4.9</span>
+</div>
+</div>
+<div class="flex gap-4 mb-6 text-on-surface-variant font-label-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                12 часа
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">layers</span>
+                                8 модула
+                            </div>
+</div>
+<!-- Progress Bar -->
+<div class="mt-auto">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-sm text-primary">Прогрес: 65%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 65%"></div>
+</div>
+<button class="w-full mt-6 bg-primary text-white py-3 rounded-xl font-bold hover:brightness-110 transition-all active:scale-95">Продължи</button>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="group bg-surface-container-lowest border border-[#E0EADD] rounded-xl overflow-hidden flex flex-col hover:shadow-[0px_4px_20px_rgba(26,77,58,0.08)] transition-all duration-300">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Macro photography of a healthy soil sample inside a laboratory setting with soft focus on a green sprout emerging from the earth. The background is a clean, academic research facility with soft sage green and white tones. Professional lighting creates a bright, hopeful atmosphere focused on scientific soil health and ecological sustainability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_w0u0UYrdIFmjio93lldF-rEFV42MWxpkRlxMzzB3DlhwGpatOTC1POt3Ap3EAu4EL0ncvMx7brMOsatqWOIQWv7iCOWMCglKbqhP5ywiGwTzU1tVBOb__ibCoJq87kpUbRhc6Macmh96N_KTTqckztdSgUcbNr3FCj2x-cEUgHYxeW0Iu_vCdHiec12V_pOwCFuRn7MNAL0GZ5TTWDRvWSevRGMTBkPIPkabEPXfSZtei_E5T1XsMev3eBXbNnAeJEBDl5fmpk4"/>
+<span class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg font-label-sm text-label-sm">Advanced</span>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h3 class="font-headline-md text-secondary mb-2">Анализ на Почвеното Здраве с AI</h3>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed text-xs font-bold">МН</div>
+<span class="font-label-md text-on-surface-variant">д-р Мария Николова</span>
+<div class="ml-auto flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md">4.8</span>
+</div>
+</div>
+<div class="flex gap-4 mb-6 text-on-surface-variant font-label-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                24 часа
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">layers</span>
+                                15 модула
+                            </div>
+</div>
+<button class="mt-auto w-full border-2 border-secondary text-secondary py-3 rounded-xl font-bold hover:bg-secondary-container transition-all active:scale-95">Виж подробности</button>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="group bg-surface-container-lowest border border-[#E0EADD] rounded-xl overflow-hidden flex flex-col hover:shadow-[0px_4px_20px_rgba(26,77,58,0.08)] transition-all duration-300">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="An autonomous agricultural drone flying over a vast sunflower field, scanning the plants with digital light beams. The sky is a clear morning blue, suggesting high-tech surveillance and efficiency. The composition uses a minimalist aesthetic with strong greens and yellows, representing the intersection of nature and advanced aerial robotics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1DM4sMesV377S9gA_L5w8tmSBiYQRscJavgWgyrNjouYlvKW4xQ6iyAb3PEl7rUWZYP6fBpKiLukUyoFrzpv1Fj4067VmOnU_JYNCSGOPIcNYc7V8tNL_68pCS_IanoT0W9JRpVkXed1__6Ab_DMMzeakTLbKUhsqQNX15HFgT9PgqAWy3wfpk7MWGTOO5w_ClQ1nQ0XicUXFju3DgZgnIEq7TtfZR8PzadXJx8ZSbiyD4NR9ExHwEi-pY9hfoj4TZ_t_SfakVCk"/>
+<span class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg font-label-sm text-label-sm">Intermediate</span>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h3 class="font-headline-md text-secondary mb-2">Дронове и Автономна Техника</h3>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed text-xs font-bold">ГК</div>
+<span class="font-label-md text-on-surface-variant">Георги Колев</span>
+<div class="ml-auto flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md">5.0</span>
+</div>
+</div>
+<div class="flex gap-4 mb-6 text-on-surface-variant font-label-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                18 часа
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">layers</span>
+                                10 модула
+                            </div>
+</div>
+<button class="mt-auto w-full border-2 border-secondary text-secondary py-3 rounded-xl font-bold hover:bg-secondary-container transition-all active:scale-95">Виж подробности</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Special AI Assistant Section (Bento Highlight) -->
+<section class="field-container mb-12">
+<div class="bg-gradient-to-br from-primary to-secondary p-8 rounded-3xl text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+<div class="max-w-xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary-fixed" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-md uppercase tracking-widest text-primary-fixed">AI Асистент</span>
+</div>
+<h2 class="font-headline-lg mb-4">Не сте сигурни откъде да започнете?</h2>
+<p class="font-body-md text-primary-fixed/80 mb-6">Нашият AI ментор ще създаде индивидуален учебен план за вас, базиран на вашите цели и текущи познания в агросектора.</p>
+<button class="bg-primary-fixed text-on-primary-fixed px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform">Попитай AI</button>
+</div>
+<div class="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+<!-- Atmospheric Effect -->
+<div class="absolute inset-0 bg-primary-fixed/20 blur-3xl rounded-full animate-pulse"></div>
+<span class="material-symbols-outlined text-[120px] md:text-[180px] text-primary-fixed opacity-90" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface-dim border-t border-outline-variant shadow-sm rounded-t-xl">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-5 py-1 scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm">Courses</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">AI Tutor</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</footer>
+<script>
+        // Simple micro-interaction for filter buttons
+        const categoryButtons = document.querySelectorAll('.scrollbar-hide button');
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryButtons.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white');
+                    b.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                });
+                btn.classList.add('bg-primary', 'text-white');
+                btn.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

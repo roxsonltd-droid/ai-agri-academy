@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>FieldLot - Моите Обяви</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#ecc246",
+                    "surface-container-high": "#deebe1",
+                    "on-tertiary-container": "#4f3d00",
+                    "primary-container": "#1a4d3a",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#c0c9c2",
+                    "tertiary-container": "#cea72c",
+                    "on-surface-variant": "#404944",
+                    "on-surface": "#131e18",
+                    "surface-container-low": "#eaf7ec",
+                    "surface-tint": "#366853",
+                    "on-primary-fixed-variant": "#1d4f3c",
+                    "on-primary-fixed": "#002115",
+                    "tertiary-fixed": "#ffe08e",
+                    "outline": "#717974",
+                    "on-background": "#131e18",
+                    "surface-variant": "#d9e6dc",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#d9e6dc",
+                    "tertiary": "#755b00",
+                    "primary-fixed": "#b9eed4",
+                    "surface-container": "#e4f1e7",
+                    "on-tertiary-fixed": "#241a00",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#d1e1d6",
+                    "inverse-on-surface": "#e7f4ea",
+                    "secondary": "#536259",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f0fdf2",
+                    "primary-fixed-dim": "#9ed2b9",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#9ed2b9",
+                    "surface-dim": "#d0ddd3",
+                    "surface": "#f0fdf2",
+                    "background": "#f0fdf2",
+                    "on-secondary-fixed-variant": "#3c4a42",
+                    "secondary-fixed-dim": "#bacac0",
+                    "primary": "#003625",
+                    "on-secondary-container": "#55645b",
+                    "on-tertiary-fixed-variant": "#584400",
+                    "on-primary-container": "#89bda4",
+                    "secondary-fixed": "#d6e6db",
+                    "on-secondary-fixed": "#111e18",
+                    "inverse-surface": "#28332c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1140px",
+                    "margin-mobile": "12px",
+                    "lg": "24px",
+                    "xxl": "48px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-badge": ["DM Sans"],
+                    "headline-sm": ["DM Sans"],
+                    "display-lg-mobile": ["DM Sans"],
+                    "label-eyebrow": ["DM Sans"],
+                    "body-sm": ["DM Sans"],
+                    "display-lg": ["DM Sans"],
+                    "body-base": ["DM Sans"],
+                    "headline-md": ["DM Sans"]
+            },
+            "fontSize": {
+                    "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .tactile-elevation { box-shadow: 0 3px 0 rgba(0,0,0,0.12); }
+        .harvest-aura { box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15); }
+        .yellow-pages-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fffef0 100%);
+            border-top: 4px solid #ecc246;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .active-tab-glow {
+            position: relative;
+        }
+        .active-tab-glow::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #003625;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant shadow-sm h-12">
+<div class="flex justify-between items-center px-4 h-full max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">agriculture</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">FieldLot</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="A professional portrait of a merchant user for a mobile app dashboard. The man is wearing a clean linen shirt, looking confident and approachable. The background is a soft-focus agricultural landscape during the golden hour, blending corporate professionalism with Bulgarian farming heritage in a high-key light mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbxwBzAjV-mmFW9_ll4lpE6I6jWdii-azO2Bf1ZDsztPpfeKSblfsylzjejXgcY_gBztA13By8IUWHGBzdKfOTMwriJVybpMo6Cuantr1DSn0Dbhi1a66-5xwc4KOIqD-Rlh06ujn_3jYHQG5IUptbt0amhkALG-IVa9AWp7QF04SuhxSbOto3gyz6uJborgrbXC2ky1fu17Sy-3Ga6E8hCP_9N_mLfcKyB0wXU-ytAcFh0Kb7uQtY2atq4WoHjr3e6xSf5wVwalE"/>
+</div>
+</div>
+</header>
+<main class="pt-12 pb-24 px-4 max-w-container-max mx-auto">
+<!-- Header Content -->
+<div class="mt-6 mb-4">
+<h1 class="font-headline-sm text-headline-sm-mobile text-primary font-bold">Моите Обяви</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Управлявайте активните си предложения в реално време.</p>
+</div>
+<!-- Search Bar -->
+<div class="relative mb-6">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full h-[44px] bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-4 text-body-base font-body-base focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all" placeholder="Търсене в обявите..." type="text"/>
+</div>
+<!-- Segmented Control (Filters) -->
+<div class="flex p-1 bg-surface-container-high rounded-xl mb-6 overflow-x-auto hide-scrollbar">
+<button class="flex-1 py-2 px-4 rounded-lg font-label-eyebrow text-label-eyebrow whitespace-nowrap bg-surface-container-lowest text-primary shadow-sm transition-all" onclick="setActiveTab(this)">
+                АКТИВНИ
+            </button>
+<button class="flex-1 py-2 px-4 rounded-lg font-label-eyebrow text-label-eyebrow whitespace-nowrap text-on-surface-variant transition-all" onclick="setActiveTab(this)">
+                ИЗЧАКВАЩИ
+            </button>
+<button class="flex-1 py-2 px-4 rounded-lg font-label-eyebrow text-label-eyebrow whitespace-nowrap text-on-surface-variant transition-all" onclick="setActiveTab(this)">
+                ПРИКЛЮЧИЛИ
+            </button>
+</div>
+<!-- Listings List -->
+<div class="space-y-4">
+<!-- Card 1: Grain -->
+<div class="yellow-pages-card rounded-xl overflow-hidden tactile-elevation harvest-aura group">
+<div class="flex p-3 gap-3">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Пшеница сорт Енола" class="w-full h-full object-cover" data-alt="A macro shot of high-quality golden wheat grains 'Enola' variety, captured with sharp detail and warm morning sunlight. The lighting is bright and natural, emphasizing the texture of the grains against a soft parchment background. The visual style is tactile and premium, suitable for an agricultural marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdbbJzM91lxB971kzDJ6aZuwmPSD2KRUyPmY0EPL3huJHGh6LkZwzhjRAaev9u9scKpBKMcXUjN-aIiD9UUZd-SGTmsioT-idygTBIH6Un1kBx7Et3iHPkhgKbRyzfByjb-1WzXqmEuC-yvXa8jyjqTsBdEXPGFvOS8icTW64tZv8Yt7LBrzsatDtLubSuE7FIvvzKASr_F3__6E0TDjXOegQ4_ofnxPEG3gs2XT0XWfLvO5IMiFkpq2un9jtA5xMlM4eiG_Fzmbc"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded font-label-badge text-label-badge">АКТИВНА</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">24 Май</span>
+</div>
+<h3 class="font-body-base text-body-base font-bold text-on-surface mt-1">Пшеница сорт Енола - 200т.</h3>
+<p class="font-body-sm text-body-sm text-tertiary font-semibold">1,250 лв/т</p>
+</div>
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">visibility</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">142</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">chat_bubble</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">8 запитвания</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex border-t border-outline-variant/50 p-2 gap-2 bg-white/50">
+<button class="flex-1 h-10 rounded-lg border border-outline text-on-surface-variant font-label-eyebrow text-label-eyebrow hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        РЕДАКТИРАЙ
+                    </button>
+<button class="flex-1 h-10 rounded-lg border border-outline text-on-surface-variant font-label-eyebrow text-label-eyebrow hover:bg-error-container/30 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">pause_circle</span>
+                        СПРИ
+                    </button>
+</div>
+</div>
+<!-- Card 2: Machinery -->
+<div class="yellow-pages-card rounded-xl overflow-hidden tactile-elevation harvest-aura">
+<div class="flex p-3 gap-3">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Комбайн John Deere" class="w-full h-full object-cover" data-alt="A modern green tractor working in a field at sunset, focusing on the mechanical details and powerful design. The lighting is dramatic and warm, with high-tech SaaS aesthetic overlays. The overall mood is rugged but refined, representing high-end agricultural equipment for a professional B2B platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmBa9kA_3sonZ4oP991sgm7Onkm4_NrYKqOnwB6AJJUnoRgNE9x5sSAVzjCla25ENtzxwbSmCnDy_xpymjcBCR86IAtRcl6E9kgZ58-vv69zoqjkeUGMkJqKvhTzvMFgWwES_LzhDEu7150IapWyQ574FKYYbhZmRrdvShreleqZsScE97cDMTcrTMmCl76GDcf8eM-08dot9fAqRK7u4_mo7QC7EC5-cdtfGaViQRP4avH05SitPtLumeZpZj4GETVKXG0pot_Hs"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded font-label-badge text-label-badge">АКТИВНА</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">18 Май</span>
+</div>
+<h3 class="font-body-base text-body-base font-bold text-on-surface mt-1">Комбайн John Deere S700</h3>
+<p class="font-body-sm text-body-sm text-tertiary font-semibold">По договаряне</p>
+</div>
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">visibility</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">512</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">chat_bubble</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">24 запитвания</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex border-t border-outline-variant/50 p-2 gap-2 bg-white/50">
+<button class="flex-1 h-10 rounded-lg border border-outline text-on-surface-variant font-label-eyebrow text-label-eyebrow hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        РЕДАКТИРАЙ
+                    </button>
+<button class="flex-1 h-10 rounded-lg border border-outline text-on-surface-variant font-label-eyebrow text-label-eyebrow hover:bg-error-container/30 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">pause_circle</span>
+                        СПРИ
+                    </button>
+</div>
+</div>
+<!-- Card 3: Pending/Expired style (Sample) -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden opacity-80">
+<div class="flex p-3 gap-3">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container grayscale">
+<img alt="Слънчоглед" class="w-full h-full object-cover" data-alt="A stack of baled hay in an empty barn, symbolizing a completed sale or inactive listing. The lighting is subdued and cool, reflecting a quiet, post-transaction atmosphere. The style is minimalist and clean, utilizing a professional corporate modernism palette of grays and muted forest tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzQglSFF_55oeCW9pUIuyZg2u340J5Or9v03eCIvzaFPqfFR8inKkzSO5skr6KLQrTb29iamt5AoWKvV2MecaPH0U1rhsyydbCgmvfXFri3JgB5qpEDhvdQTEeb5jJs_txA8830L5Hs_jqVB3JqC_EZJWdmq03kfwYCJcmSbNgnvWbDvAGKIupSeK6qTfvL7wn8LlCyKsH_Txim3cCbWajFbkxmXYobK-ma-kwCCGGKfKszAUOW1wLA-61tstRrvbvtT9UefQxR9g"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<span class="bg-outline-variant text-on-surface-variant px-2 py-0.5 rounded font-label-badge text-label-badge uppercase">ПРИКЛЮЧИЛА</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">12 Май</span>
+</div>
+<h3 class="font-body-base text-body-base font-bold text-on-surface mt-1">Слънчоглед 'Лимагрейн'</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70 italic">Продадено</p>
+</div>
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">visibility</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">89</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex border-t border-outline-variant/50 p-2 gap-2">
+<button class="flex-1 h-10 rounded-lg border border-outline text-on-surface-variant font-label-eyebrow text-label-eyebrow hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+                        ОБНОВИ
+                    </button>
+<button class="w-12 h-10 rounded-lg border border-outline text-on-surface-variant flex items-center justify-center hover:bg-error-container/20">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-20 right-4 w-14 h-14 bg-primary text-white rounded-full shadow-lg active:scale-95 transition-transform flex items-center justify-center z-50">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-6 bg-surface border-t border-outline-variant z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-badge text-label-badge">Начало</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-tertiary-fixed text-on-tertiary-fixed rounded-xl px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+<span class="font-label-badge text-label-badge">Обяви</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-badge text-label-badge">Съобщения</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-badge text-label-badge">Профил</span>
+</button>
+</nav>
+<script>
+        function setActiveTab(button) {
+            // Find all siblings in the parent
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+                btn.classList.add('text-on-surface-variant');
+            });
+            
+            // Set active styles
+            button.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            button.classList.remove('text-on-surface-variant');
+        }
+
+        // Simple tactile interaction feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'translateY(1px)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

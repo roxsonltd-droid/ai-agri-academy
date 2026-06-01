@@ -15,8 +15,8 @@ from core.config import settings
 
 logger = logging.getLogger(__name__)
 
-# Keys produced by presign: rag/{uuid8}__{stem}.{pdf|md|txt}
-RAG_OBJECT_KEY_RE = re.compile(r"^rag/[a-f0-9]{8}__[A-Za-z0-9._\-]+\.(?:pdf|md|txt)$")
+# Keys produced by presign: rag/{uuid8}__{stem}.{ext} or assets/{uuid8}__{stem}.{ext}
+RAG_OBJECT_KEY_RE = re.compile(r"^(?:rag|assets)/[a-f0-9]{8}__[A-Za-z0-9._\-]+\.(?:pdf|md|txt|docx|png|jpg|jpeg)$")
 
 
 def r2_enabled() -> bool:
@@ -49,9 +49,15 @@ def safe_stem_r2(name: str) -> str:
 
 
 def build_rag_object_key(original_filename: str, suffix: str) -> str:
-    """Return S3 object key under rag/ prefix (suffix must be .pdf, .md, or .txt)."""
+    """Return S3 object key under rag/ prefix."""
     suf = suffix.lower()
     return f"rag/{uuid.uuid4().hex[:8]}__{safe_stem_r2(original_filename)}{suf}"
+
+
+def build_asset_object_key(original_filename: str, suffix: str) -> str:
+    """Return S3 object key under assets/ prefix (for images/certificates)."""
+    suf = suffix.lower()
+    return f"assets/{uuid.uuid4().hex[:8]}__{safe_stem_r2(original_filename)}{suf}"
 
 
 def presigned_put_url(*, object_key: str, content_type: str) -> tuple[str, int]:

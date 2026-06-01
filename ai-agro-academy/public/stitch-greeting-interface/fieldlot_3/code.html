@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot | Анализ на продажбите</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "secondary-fixed-dim": "#bacac0",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#b9eed4",
+                    "inverse-surface": "#28332c",
+                    "surface-container": "#e4f1e7",
+                    "on-background": "#131e18",
+                    "tertiary": "#755b00",
+                    "surface-bright": "#f0fdf2",
+                    "secondary-fixed": "#d6e6db",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-variant": "#d9e6dc",
+                    "surface-dim": "#d0ddd3",
+                    "inverse-on-surface": "#e7f4ea",
+                    "on-error": "#ffffff",
+                    "outline": "#717974",
+                    "inverse-primary": "#9ed2b9",
+                    "secondary": "#536259",
+                    "on-secondary-fixed-variant": "#3c4a42",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#002115",
+                    "on-tertiary-fixed-variant": "#584400",
+                    "surface": "#f0fdf2",
+                    "primary-fixed-dim": "#9ed2b9",
+                    "on-surface": "#131e18",
+                    "tertiary-fixed-dim": "#ecc246",
+                    "on-surface-variant": "#404944",
+                    "on-primary-container": "#89bda4",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#111e18",
+                    "outline-variant": "#c0c9c2",
+                    "primary-container": "#1a4d3a",
+                    "secondary-container": "#d1e1d6",
+                    "on-secondary": "#ffffff",
+                    "surface-container-high": "#deebe1",
+                    "tertiary-fixed": "#ffe08e",
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#eaf7ec",
+                    "tertiary-container": "#cea72c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#1d4f3c",
+                    "surface-tint": "#366853",
+                    "surface-container-highest": "#d9e6dc",
+                    "on-secondary-container": "#55645b",
+                    "background": "#f0fdf2",
+                    "primary": "#003625",
+                    "on-tertiary-container": "#4f3d00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1140px",
+                    "base": "4px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "margin-mobile": "12px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "xxl": "48px",
+                    "xl": "32px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "label-eyebrow": ["DM Sans"],
+                    "label-badge": ["DM Sans"],
+                    "headline-md": ["DM Sans"],
+                    "body-sm": ["DM Sans"],
+                    "body-base": ["DM Sans"],
+                    "display-lg": ["DM Sans"],
+                    "headline-sm": ["DM Sans"],
+                    "display-lg-mobile": ["DM Sans"]
+            },
+            "fontSize": {
+                    "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                    "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                    "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .yellow-pages-card {
+            border-top: 4px solid #cea72c;
+            background: linear-gradient(180deg, #ffffff 0%, #fdfcf5 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+            transition: all 0.2s ease-in-out;
+        }
+        .yellow-pages-card:hover {
+            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15);
+            transform: translateY(-2px);
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .chart-bar {
+            transition: height 1s ease-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 md:pb-0 md:pt-12">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-[48px] max-w-container-max mx-auto bg-surface/96 dark:bg-surface-dim/96 backdrop-blur-md border-b border-outline-variant dark:border-outline glass-header">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">FieldLot</span>
+</div>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-primary font-bold text-label-eyebrow font-label-eyebrow hover:bg-surface-container-high transition-colors px-3 py-1 rounded-full" href="#">АНАЛИЗИ</a>
+<a class="text-on-surface-variant text-label-eyebrow font-label-eyebrow hover:bg-surface-container-high transition-colors px-3 py-1 rounded-full" href="#">ПАЗАР</a>
+<a class="text-on-surface-variant text-label-eyebrow font-label-eyebrow hover:bg-surface-container-high transition-colors px-3 py-1 rounded-full" href="#">ИНВЕНТАР</a>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold border border-outline-variant">
+                ИП
+            </div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-gutter py-8 mt-12">
+<!-- Header & Date Filter -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-display-lg-mobile md:text-display-lg font-display-lg text-primary">Анализ на продажбите</h1>
+<p class="text-body-base font-body-base text-on-surface-variant">Преглед на търговската активност и пазарни тенденции.</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low p-1 rounded-full border border-outline-variant">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full text-label-eyebrow font-label-eyebrow">Последните 30 дни</button>
+<button class="px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-full text-label-eyebrow font-label-eyebrow">Тримесечие</button>
+<span class="material-symbols-outlined px-2 text-on-surface-variant cursor-pointer" data-icon="calendar_month">calendar_month</span>
+</div>
+</section>
+<!-- Key Metrics Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-1">
+<span class="text-label-eyebrow font-label-eyebrow text-on-surface-variant">ОБЩ ОБОРОТ</span>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-sm font-headline-sm text-primary">142,500 лв.</span>
+<span class="text-label-badge font-label-badge text-green-600 flex items-center"><span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span> +12%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-1">
+<span class="text-label-eyebrow font-label-eyebrow text-on-surface-variant">ПРОДАДЕНО КОЛИЧЕСТВО</span>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-sm font-headline-sm text-primary">850 т.</span>
+<span class="text-label-badge font-label-badge text-green-600 flex items-center"><span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span> +5.4%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-1">
+<span class="text-label-eyebrow font-label-eyebrow text-on-surface-variant">СРЕДНА СТОЙНОСТ НА СДЕЛКА</span>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-sm font-headline-sm text-primary">12,400 лв.</span>
+<span class="text-label-badge font-label-badge text-error flex items-center"><span class="material-symbols-outlined text-[14px]" data-icon="trending_down">trending_down</span> -2.1%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-1">
+<span class="text-label-eyebrow font-label-eyebrow text-on-surface-variant">АКТИВНИ ОБЯВИ</span>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-sm font-headline-sm text-primary">24</span>
+<span class="text-label-badge font-label-badge text-on-surface-variant">БЕЗ ПРОМЯНА</span>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-8">
+<!-- Sales Chart -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-headline-sm font-headline-sm text-primary">Тенденции на продажбите</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-1"><span class="w-3 h-3 bg-primary rounded-full"></span> <span class="text-label-badge font-label-badge">ПРИХОДИ</span></div>
+<div class="flex items-center gap-1"><span class="w-3 h-3 bg-secondary rounded-full"></span> <span class="text-label-badge font-label-badge">ОБЕМ</span></div>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 px-2 relative">
+<!-- Simple CSS Chart bars to simulate visual -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-32 chart-bar flex flex-col justify-end">
+<div class="w-full bg-primary rounded-t-sm" style="height: 60%"></div>
+</div>
+<span class="text-label-badge font-label-badge opacity-60">Сед 1</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-40 chart-bar flex flex-col justify-end">
+<div class="w-full bg-primary rounded-t-sm" style="height: 75%"></div>
+</div>
+<span class="text-label-badge font-label-badge opacity-60">Сед 2</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-48 chart-bar flex flex-col justify-end">
+<div class="w-full bg-primary rounded-t-sm" style="height: 90%"></div>
+</div>
+<span class="text-label-badge font-label-badge opacity-60">Сед 3</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-36 chart-bar flex flex-col justify-end">
+<div class="w-full bg-primary rounded-t-sm" style="height: 65%"></div>
+</div>
+<span class="text-label-badge font-label-badge opacity-60">Сед 4</span>
+</div>
+</div>
+</div>
+<!-- Insights Section -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-lg flex flex-col gap-4 shadow-lg border border-primary/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="smart_toy">smart_toy</span>
+<h3 class="text-headline-sm font-headline-sm font-bold tracking-tight">AI Прогнози</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-surface/10 p-md rounded-lg border border-on-primary-container/10">
+<p class="text-body-sm font-body-sm font-medium mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="lightbulb">lightbulb</span> Търсенето расте
+                        </p>
+<p class="text-body-sm font-body-sm opacity-90">Търсенето на мека пшеница в регион Варна се е повишило с 18% през последните 10 дни. Помислете за актуализация на цените.</p>
+</div>
+<div class="bg-surface/10 p-md rounded-lg border border-on-primary-container/10">
+<p class="text-body-sm font-body-sm font-medium mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span> Оптимизация на обяви
+                        </p>
+<p class="text-body-sm font-body-sm opacity-90">Обявите с професионални снимки на силозите имат 3 пъти по-висока конверсия. Добавете медийни файлове към "Слънчоглед Реколта 2023".</p>
+</div>
+</div>
+<button class="mt-auto w-full py-3 bg-white text-primary rounded-full font-bold text-label-eyebrow hover:bg-surface-container-high transition-colors">ВИЖ ПЪЛНИЯ ДОКЛАД</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Sales by Category -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="text-headline-sm font-headline-sm text-primary mb-6">Продажби по култури</h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-body-base font-body-base">
+<span>Пшеница</span>
+<span class="font-bold">62,400 лв.</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-body-base font-body-base">
+<span>Царевица</span>
+<span class="font-bold">45,100 лв.</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-body-base font-body-base">
+<span>Слънчоглед</span>
+<span class="font-bold">35,000 лв.</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full rounded-full" style="width: 35%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Performing Listings -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="text-headline-sm font-headline-sm text-primary">Най-успешни обяви</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-label-eyebrow font-label-eyebrow text-on-surface-variant">
+<tr>
+<th class="px-lg py-3">ОБЯВА</th>
+<th class="px-lg py-3">ПРЕГЛЕДИ</th>
+<th class="px-lg py-3">КОНВЕРСИЯ</th>
+<th class="px-lg py-3 text-right">ПРИХОД</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-4 font-medium text-body-base">Пшеница - Сорт Енола</td>
+<td class="px-lg py-4 text-body-sm">1,240</td>
+<td class="px-lg py-4 text-body-sm"><span class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-1 rounded-full text-[10px] font-bold">8.2%</span></td>
+<td class="px-lg py-4 text-right font-bold text-primary">42,000 лв.</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-4 font-medium text-body-base">Царевица за фураж</td>
+<td class="px-lg py-4 text-body-sm">890</td>
+<td class="px-lg py-4 text-body-sm"><span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded-full text-[10px] font-bold">5.4%</span></td>
+<td class="px-lg py-4 text-right font-bold text-primary">28,500 лв.</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-4 font-medium text-body-base">Слънчоглед Високоолеинов</td>
+<td class="px-lg py-4 text-body-sm">650</td>
+<td class="px-lg py-4 text-body-sm"><span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-1 rounded-full text-[10px] font-bold">4.1%</span></td>
+<td class="px-lg py-4 text-right font-bold text-primary">15,200 лв.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Yellow Pages Style Listings Highlight -->
+<section class="mt-12">
+<h3 class="text-headline-sm font-headline-sm text-primary mb-6">Пазарен фокус (Локални оферти)</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Listing Card 1 -->
+<div class="yellow-pages-card p-lg rounded-lg flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="text-label-badge font-label-badge bg-primary text-on-primary px-2 py-1 rounded">ПРЕМИУМ</span>
+<span class="text-label-badge font-label-badge text-on-surface-variant">ДНЕС, 10:30</span>
+</div>
+<img alt="Wheat field" class="w-full h-40 object-cover rounded-md" data-alt="A sun-drenched close-up of golden wheat stalks swaying in a gentle Bulgarian breeze during the peak of harvest season. The lighting is warm and golden, reminiscent of late afternoon sun, highlighting the intricate textures of the grain. The background shows a vast, clean agricultural horizon under a clear pale blue sky, maintaining a grounded yet modern aesthetic with rich forest green accents in the periphery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7qM8hCo9GfWxbs5pc5NskPs88rqjNQzPNyeEgRCMuTsa7OMVhYRLAusAByDoqVD_TPsJqCgsmMo98mXVeTk6IsIKD14cEgg9xES8O11h1f1l4olQquSce7ahplvrCsq494OjQpZU0KEWYAg4SYN_TASlKd0DpcdlL-KEE2qsdoP7ram-geH18hOUnRi1QvcQbeIKtMfoRndbqXgXpljr_zOreZIHQK0A7BTVBwAYPWx01D_9vO2PCcX6d_j1CYVrx38pH3XpDDsc"/>
+<div>
+<h4 class="text-body-base font-bold text-primary">Пшеница - Регион Добрич</h4>
+<p class="text-body-sm text-on-surface-variant">Качество: Група Б1 | Протеин: 12.5%</p>
+</div>
+<div class="mt-auto flex justify-between items-center border-t border-outline-variant pt-4">
+<span class="text-headline-sm font-headline-sm text-tertiary">420 лв/т</span>
+<button class="px-4 py-2 border border-primary text-primary rounded-full hover:bg-primary hover:text-on-primary transition-all text-label-eyebrow font-label-eyebrow">ДЕТАЙЛИ</button>
+</div>
+</div>
+<!-- Listing Card 2 -->
+<div class="yellow-pages-card p-lg rounded-lg flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="text-label-badge font-label-badge bg-secondary text-on-secondary px-2 py-1 rounded">АКТУАЛНО</span>
+<span class="text-label-badge font-label-badge text-on-surface-variant">ВЧЕРА</span>
+</div>
+<img alt="Corn field" class="w-full h-40 object-cover rounded-md" data-alt="A professional, high-resolution shot of freshly harvested corn kernels overflowing from a modern silver industrial grain hopper. The scene is illuminated by bright, diffused morning light that emphasizes the vibrant yellow of the corn and the clean metallic surfaces of the machinery. The composition is tight and focused, conveying a sense of productivity and technological efficiency in a clean, agro-modern business environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaF_l5zwVKrteDuQqmdq676CEbmEOI6HkWA0qYxzNq8J32lz2bh9V88Y4SDwFOilCGRdkMf3h1C_GcZ2-zCd48xGc3eEwoT3ECtpp6lellIN8o6oDbQdBiawbFZ98tez0LDwBtMfHoQ9bJ5PaDotvX1HjOnFs3wIp80ytYyXO_FfHfbkzfGy2iuxdHFllRdLB-5WoB_1qJOZZ8XO_P0_kVFRz1Vi_-ByjW-_X6HYhTW4jtB98hup7kFloiC1v5-Lc3t_aOI-mnrjc"/>
+<div>
+<h4 class="text-body-base font-bold text-primary">Царевица - Влажност 14%</h4>
+<p class="text-body-sm text-on-surface-variant">Франко склад: Плевен | Обем: 200т</p>
+</div>
+<div class="mt-auto flex justify-between items-center border-t border-outline-variant pt-4">
+<span class="text-headline-sm font-headline-sm text-tertiary">380 лв/т</span>
+<button class="px-4 py-2 border border-primary text-primary rounded-full hover:bg-primary hover:text-on-primary transition-all text-label-eyebrow font-label-eyebrow">ДЕТАЙЛИ</button>
+</div>
+</div>
+<!-- Listing Card 3 -->
+<div class="yellow-pages-card p-lg rounded-lg flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="text-label-badge font-label-badge bg-tertiary-container text-on-tertiary-container px-2 py-1 rounded">ЕКО</span>
+<span class="text-label-badge font-label-badge text-on-surface-variant">ПРЕДИ 2 ДНИ</span>
+</div>
+<img alt="Sunflower seeds" class="w-full h-40 object-cover rounded-md" data-alt="A macro photograph of high-quality sunflower seeds, showing detailed patterns and deep black hues with subtle grey stripes. The lighting is crisp and even, suitable for a professional B2B marketplace interface. The background is a soft, out-of-focus wooden texture that adds a touch of traditional Bulgarian heritage and warmth to the clean, technical presentation of the agricultural product." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaWqerVhD5Kd7LRrXXZljO8M_OSUvXUdMC64VSfGG5jGRPgDkE3JhW7Jjp0m13vwOaTPusTYc3A0ur14MzG78y-IfQtqQWuvzPKS8WiDUhc8Wr1IthChCfpekN04NUlgkf-L0XUZPn29-3wTdnfY9BBvbful8nImjDWJOCSHEdN7vYlljtROvz7Y93bOEvPAnwcvtmwLxU6IAMzZv4cmrYVbqj-_E2X-DCz7hWokzPqKcg3R8sA9qB09IFn2msdc_2oMD9XUmmUxw"/>
+<div>
+<h4 class="text-body-base font-bold text-primary">Слънчоглед за Масло</h4>
+<p class="text-body-sm text-on-surface-variant">Масленост: 44% | Примеси: 2%</p>
+</div>
+<div class="mt-auto flex justify-between items-center border-t border-outline-variant pt-4">
+<span class="text-headline-sm font-headline-sm text-tertiary">710 лв/т</span>
+<button class="px-4 py-2 border border-primary text-primary rounded-full hover:bg-primary hover:text-on-primary transition-all text-label-eyebrow font-label-eyebrow">ДЕТАЙЛИ</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-2 pt-2 bg-surface border-t border-outline-variant dark:border-outline shadow-lg">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-badge font-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-label-badge font-label-badge">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="text-label-badge font-label-badge">AI Guide</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-badge font-label-badge">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for chart animation on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.chart-bar div');
+            bars.forEach(bar => {
+                const height = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = height;
+                }, 300);
+            });
+        });
+    </script>
+</body></html>

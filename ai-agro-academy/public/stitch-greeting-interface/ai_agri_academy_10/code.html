@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgroAcademy AI - Forum</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#cea72c",
+                        "on-surface-variant": "#404944",
+                        "primary-container": "#1a4d3a",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "surface-container-high": "#deebe1",
+                        "on-tertiary-container": "#4f3d00",
+                        "outline-variant": "#c0c9c2",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#d9e6dc",
+                        "on-background": "#131e18",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#131e18",
+                        "surface-tint": "#366853",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "on-primary-fixed": "#002115",
+                        "tertiary-fixed": "#ffe08e",
+                        "outline": "#717974",
+                        "surface-container-low": "#eaf7ec",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#d1e1d6",
+                        "inverse-on-surface": "#e7f4ea",
+                        "error": "#ba1a1a",
+                        "secondary": "#536259",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#241a00",
+                        "tertiary": "#755b00",
+                        "primary-fixed": "#b9eed4",
+                        "surface-container": "#e4f1e7",
+                        "on-secondary-container": "#55645b",
+                        "on-secondary-fixed": "#111e18",
+                        "inverse-surface": "#28332c",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "on-primary-container": "#89bda4",
+                        "secondary-fixed": "#d6e6db",
+                        "surface-dim": "#d0ddd3",
+                        "surface": "#f0fdf2",
+                        "background": "#f0fdf2",
+                        "surface-bright": "#f0fdf2",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#9ed2b9",
+                        "secondary-fixed-dim": "#bacac0",
+                        "primary": "#003625",
+                        "on-secondary-fixed-variant": "#3c4a42"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "xs": "4px",
+                        "xxl": "48px",
+                        "margin-mobile": "12px",
+                        "lg": "24px",
+                        "container-max": "1140px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "label-eyebrow": ["DM Sans"],
+                        "body-sm": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(145deg, #ffffff 0%, #fdfbf0 100%);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.08);
+        }
+        .yellow-pages-card:hover {
+            border-top-color: #755b00;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 12px 32px rgba(201, 162, 39, 0.15);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface/96 dark:bg-surface-dim/96 backdrop-blur-md text-primary dark:text-primary-fixed fixed top-0 w-full z-50 border-b border-outline-variant dark:border-outline shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-lg h-12 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:text-headline-sm tracking-tight">AgroAcademy AI</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-xs hover:bg-surface-container-high rounded-full transition-colors" data-icon="search">search</button>
+<div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional high-resolution headshot of a modern agronomist wearing a clean green polo shirt. The lighting is bright and natural, suggesting a professional studio setting with a soft-focus background of a sunlit wheat field. The overall aesthetic is clean, corporate, and trustworthy, aligning with a high-tech agricultural platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA06FRQDrulNckeSQ5eM3xi57h9AKxsSWzgjLRoxLDQLwJIMo0Avxj8N516jv9WLpi-mBtP-_5nD_7nyLpspb02gObY8G0OAVfEsgzbi5KPODxsJyf6iNBMgwDHSNrSBfpkZeGPfJeKAW1QqjoeemXfsNl9Yd6CqfrH68XBkqUvmRG5ilWl7NfogImfL15zNNwqkhEmZZz6H-ll1KOnDHWMm-59E739VyGORkr2bvDtSiHjbU73HTVDkWPBgM9wXUIx6L7lrT_YdFE"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-16 pb-24 px-margin-mobile md:px-lg max-w-container-max mx-auto">
+<!-- AI Moderation Banner -->
+<section class="mb-lg">
+<div class="bg-primary-container text-on-primary-container p-md rounded-xl flex items-center gap-md border border-primary/20">
+<div class="bg-primary p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<p class="font-headline-sm text-label-eyebrow uppercase tracking-widest text-primary-fixed mb-1">AI Модерация</p>
+<p class="font-body-sm text-body-sm opacity-90">Тази общност се модерира от AI за осигуряване на професионална и конструктивна среда. Обидният език се филтрира автоматично.</p>
+</div>
+</div>
+</section>
+<!-- Search & Action Bar -->
+<section class="mb-lg flex flex-col md:flex-row gap-md items-center">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors" data-icon="search">search</span>
+<input class="w-full h-12 pl-12 pr-md bg-surface-container-lowest border border-outline-variant rounded-full font-body-base focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all outline-none" placeholder="Търсене на дискусии..." type="text"/>
+</div>
+<button class="w-full md:w-auto h-12 px-lg bg-primary text-on-primary rounded-full font-headline-sm text-body-base flex items-center justify-center gap-sm hover:translate-y-[-2px] active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Нова Тема
+            </button>
+</section>
+<!-- Filters Scroll -->
+<section class="mb-lg overflow-x-auto hide-scrollbar -mx-margin-mobile px-margin-mobile flex gap-sm">
+<button class="whitespace-nowrap px-lg py-sm rounded-full bg-primary-container text-on-primary-container font-semibold border border-primary/20">Всички</button>
+<button class="whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-high text-on-surface-variant font-medium hover:bg-surface-container-highest transition-colors">Изследвания</button>
+<button class="whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-high text-on-surface-variant font-medium hover:bg-surface-container-highest transition-colors">Полеви Тестове</button>
+<button class="whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-high text-on-surface-variant font-medium hover:bg-surface-container-highest transition-colors">Почвен Анализ</button>
+<button class="whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-high text-on-surface-variant font-medium hover:bg-surface-container-highest transition-colors">Техника</button>
+</section>
+<!-- Forum Threads List -->
+<div class="grid grid-cols-1 gap-md">
+<!-- Thread Item 1 -->
+<article class="yellow-pages-card p-md rounded-xl transition-all flex flex-col md:flex-row gap-md">
+<div class="flex-1">
+<div class="flex flex-wrap gap-xs mb-sm">
+<span class="bg-tertiary-container/10 text-tertiary font-label-badge text-label-badge px-sm py-1 rounded uppercase tracking-wider border border-tertiary/20">Почвен Анализ</span>
+<span class="bg-secondary-container text-on-secondary-container font-label-badge text-label-badge px-sm py-1 rounded uppercase tracking-wider">Тракия</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md cursor-pointer hover:underline">Оптимални нива на NPK за Слънчоглед в района на Тракия</h3>
+<div class="flex items-center gap-sm">
+<img alt="Иван Петров" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A detailed portrait of a mature Bulgarian farmer standing proudly in front of a modern green tractor. He is wearing a rugged canvas work jacket and a cap. The lighting is warm golden hour sunlight, highlighting the textures of his weathered skin and the metallic shine of the agricultural machinery in the background. The style is cinematic and realistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU4MNXrxHskEJnHPL_6_k3mfZUbouu-WLud4lqY-4BARosLqEZAXtCC77qTMPEMYn7PxloEuWIxEiqyW99KHXvA-9bWllDICEYqMF7L9XwNWWZ93REC3Gibqj9UUBrhnelQT5xJjR0s-zsHQXorNVjGB1H36eeFsUkoo3KyFUtDMHHz4A0Qqojhrmtf2oG4PqyqRBvpgi1-ks-ekWHRu2IDo3Lm-Ae675dGJB1vDx4PLWYR967PiJ85hONPxsJjkaYi9YvnFYoMzk"/>
+<div class="flex flex-col">
+<span class="font-body-base text-body-sm font-bold text-on-surface">Иван Петров</span>
+<span class="text-label-badge text-on-surface-variant">Агроном-консултант</span>
+</div>
+</div>
+</div>
+<div class="flex md:flex-col justify-between md:justify-center items-end md:items-center gap-md md:min-w-[120px] pt-md md:pt-0 border-t md:border-t-0 md:border-l border-outline-variant/30">
+<div class="flex md:flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="forum">forum</span>
+<span class="font-bold text-primary">24</span>
+<span class="text-label-badge text-on-surface-variant uppercase md:hidden">Отговора</span>
+</div>
+<div class="flex md:flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="visibility">visibility</span>
+<span class="font-bold text-primary">1.2k</span>
+<span class="text-label-badge text-on-surface-variant uppercase md:hidden">Прегледа</span>
+</div>
+<div class="hidden md:block text-center">
+<p class="text-label-badge text-on-surface-variant uppercase">Активност</p>
+<p class="text-body-sm font-semibold">преди 2ч</p>
+</div>
+</div>
+</article>
+<!-- Thread Item 2 -->
+<article class="yellow-pages-card p-md rounded-xl transition-all flex flex-col md:flex-row gap-md">
+<div class="flex-1">
+<div class="flex flex-wrap gap-xs mb-sm">
+<span class="bg-tertiary-container/10 text-tertiary font-label-badge text-label-badge px-sm py-1 rounded uppercase tracking-wider border border-tertiary/20">Изследвания</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md cursor-pointer hover:underline">Ефект от новите био-стимуланти при есенниците</h3>
+<div class="flex items-center gap-sm">
+<img alt="Мария Димитрова" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A high-quality photo of a young female agricultural scientist in a bright white lab coat, working with vibrant green plant samples in a modern, sun-drenched laboratory. Large glass windows in the background reveal a sprawling, high-tech greenhouse. The mood is scientific, precise, and optimistic, with a soft morning light palette and emerald green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY4ojdFB_PInnsUiCjyUtiERLLdD2VLsmdB8877ROkVET5XORgFjRQtTpdhf0QggICg4QBj-t-9UT-iK08yezTq-oqy-U706HrVmiVARzK1hBmV9zizLe2GoaHSdzQmrFOkYU1pZkkdO3ewxiny1XoX5JgIYcZhelm8i9BU4CKa6fV_sFLdm-YTsHqV5yNg1ZYhFcAwEHLttU7y96hyXup-Sr5CyTUHo4TC4piYa5Wmc2m-0rHI6mDSRVkID-TZOBOiOCY4lWwB5g"/>
+<div class="flex flex-col">
+<span class="font-body-base text-body-sm font-bold text-on-surface">д-р Мария Димитрова</span>
+<span class="text-label-badge text-on-surface-variant">Изследовател</span>
+</div>
+</div>
+</div>
+<div class="flex md:flex-col justify-between md:justify-center items-end md:items-center gap-md md:min-w-[120px] pt-md md:pt-0 border-t md:border-t-0 md:border-l border-outline-variant/30">
+<div class="flex md:flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="forum">forum</span>
+<span class="font-bold text-primary">15</span>
+</div>
+<div class="flex md:flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="visibility">visibility</span>
+<span class="font-bold text-primary">850</span>
+</div>
+<div class="hidden md:block text-center">
+<p class="text-label-badge text-on-surface-variant uppercase">Активност</p>
+<p class="text-body-sm font-semibold">преди 5ч</p>
+</div>
+</div>
+</article>
+<!-- Thread Item 3 -->
+<article class="yellow-pages-card p-md rounded-xl transition-all flex flex-col md:flex-row gap-md">
+<div class="flex-1">
+<div class="flex flex-wrap gap-xs mb-sm">
+<span class="bg-tertiary-container/10 text-tertiary font-label-badge text-label-badge px-sm py-1 rounded uppercase tracking-wider border border-tertiary/20">Полеви Тестове</span>
+<span class="bg-secondary-container text-on-secondary-container font-label-badge text-label-badge px-sm py-1 rounded uppercase tracking-wider">Технология</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md cursor-pointer hover:underline">Сравнение на дрон системи за пръскане - опит 2023</h3>
+<div class="flex items-center gap-sm">
+<img alt="Стоян Георгиев" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A sharp, dynamic image of a tech-focused agriculturist operating a professional agricultural drone in a wide, lush green field. The setting sun creates long shadows and a rich orange glow. The person is wearing high-visibility tech gear. The aesthetic is futuristic and high-tech, emphasizing precision and the digital transformation of farming." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHUXiIsyjJ90TsdrmWHOzz-y-_kkAgtMAy1ZjQo_QE6sURTz8QZyYQeh85xTMpBN_q6Jjs11MRNaZjOpBFE66p69gFXSMqvZouQXPT6i87QKMLXCFBB3DQ76eLU0j2ukXJ3p0ZzwDZ7FgnxslsE3VHUgOAH_35LJLHaIkkXC2VoSFWlHuDfIY1qbrEJ0faPCdMgTt6f5SRcasM_AzUvWZYJHck8AF228le9UTD7p-9Ek04j_8Vg1mNvgkSAljWTs2i9QttF3_ID24"/>
+<div class="flex flex-col">
+<span class="font-body-base text-body-sm font-bold text-on-surface">Стоян Георгиев</span>
+<span class="text-label-badge text-on-surface-variant">Иноватор</span>
+</div>
+</div>
+</div>
+<div class="flex md:flex-col justify-between md:justify-center items-end md:items-center gap-md md:min-w-[120px] pt-md md:pt-0 border-t md:border-t-0 md:border-l border-outline-variant/30">
+<div class="flex md:flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="forum">forum</span>
+<span class="font-bold text-primary">42</span>
+</div>
+<div class="flex md:flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="visibility">visibility</span>
+<span class="font-bold text-primary">3.4k</span>
+</div>
+<div class="hidden md:block text-center">
+<p class="text-label-badge text-on-surface-variant uppercase">Активност</p>
+<p class="text-body-sm font-semibold">преди 10мин</p>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-surface-dim fixed bottom-0 left-0 w-full flex justify-around items-center h-16 pb-safe px-4 border-t border-outline-variant dark:border-outline z-50 shadow-[0_-1px_3px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest/30 px-4 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-badge text-label-badge">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed font-bold hover:bg-surface-container-highest/30 px-4 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-badge text-label-badge">Threads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest/30 px-4 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-badge text-label-badge">Ask AI</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest/30 px-4 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('article').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Filter tabs logic
+        const filterBtns = document.querySelectorAll('section[class*="overflow-x-auto"] button');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-semibold');
+                    b.classList.add('bg-surface-container-high', 'text-on-surface-variant', 'font-medium');
+                });
+                btn.classList.add('bg-primary-container', 'text-on-primary-container', 'font-semibold');
+                btn.classList.remove('bg-surface-container-high', 'text-on-surface-variant', 'font-medium');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgriAcademy - Бъдещето на земеделието</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#1d4f3c",
+                        "on-secondary-fixed": "#002115",
+                        "on-error-container": "#93000a",
+                        "on-background": "#171d1b",
+                        "background": "#f5faf7",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f0f5f2",
+                        "secondary-fixed-dim": "#9ed2b9",
+                        "tertiary": "#865300",
+                        "surface-container-high": "#e4e9e6",
+                        "inverse-surface": "#2c3230",
+                        "on-secondary-container": "#3b6c57",
+                        "on-primary-container": "#005027",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#00210c",
+                        "outline-variant": "#bbcbbb",
+                        "on-tertiary-container": "#633c00",
+                        "error-container": "#ffdad6",
+                        "outline": "#6c7b6d",
+                        "tertiary-container": "#f8a018",
+                        "on-surface": "#171d1b",
+                        "surface-container-highest": "#dee4e1",
+                        "surface": "#f5faf7",
+                        "surface-bright": "#f5faf7",
+                        "primary-fixed": "#6bfe9c",
+                        "inverse-primary": "#4ae183",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#006d37",
+                        "surface-container": "#eaefec",
+                        "tertiary-fixed-dim": "#ffb961",
+                        "primary-container": "#2ecc71",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary": "#366853",
+                        "secondary-container": "#b6ebd1",
+                        "primary": "#006d37",
+                        "surface-dim": "#d6dbd8",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-primary-fixed-variant": "#005228",
+                        "primary-fixed-dim": "#4ae183",
+                        "on-surface-variant": "#3d4a3e",
+                        "inverse-on-surface": "#edf2ef",
+                        "on-tertiary-fixed-variant": "#663e00",
+                        "tertiary-fixed": "#ffddb9",
+                        "surface-variant": "#dee4e1",
+                        "secondary-fixed": "#b9eed4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "md": "24px",
+                        "sm": "12px",
+                        "lg": "48px",
+                        "xl": "80px",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["DM Sans"],
+                        "headline-lg": ["DM Sans"],
+                        "label-md": ["DM Sans"],
+                        "headline-lg-mobile": ["DM Sans"],
+                        "label-sm": ["DM Sans"],
+                        "body-md": ["DM Sans"],
+                        "headline-xl": ["DM Sans"],
+                        "body-lg": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 234, 221, 1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface dark:bg-surface-dim">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary font-bold text-headline-md" style="font-variation-settings: 'FILL' 1;">agriculture</span>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md font-bold text-primary">AgriAcademy</h1>
+</div>
+<div class="hidden md:flex gap-6 items-center">
+<nav class="flex gap-4">
+<a class="font-label-md text-label-md text-primary" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-1 rounded-full" href="#">Courses</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-1 rounded-full" href="#">AI Tutor</a>
+</nav>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</header>
+<main class="pt-16 pb-20 md:pb-0">
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-surface py-xl px-gutter md:px-margin lg:flex lg:items-center lg:gap-12 min-h-[707px]">
+<div class="absolute inset-0 z-0 opacity-10">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full filter blur-[100px]"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary-container rounded-full filter blur-[80px]"></div>
+</div>
+<div class="relative z-10 lg:w-1/2">
+<h2 class="font-headline-xl text-headline-lg-mobile md:text-headline-xl text-on-surface mb-md max-w-2xl leading-tight">
+                    Бъдещето на земеделието започва с теб
+                </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg max-w-xl">
+                    Научи как AI трансформира агробизнеса. Безплатни курсове от водещи експерти.
+                </p>
+<div class="flex flex-wrap gap-sm">
+<button class="bg-primary-container hover:shadow-lg text-on-primary-container font-headline-md px-lg py-sm rounded-xl transition-all active:scale-95 duration-150">
+                        Започни да учиш
+                    </button>
+<button class="border-2 border-primary text-primary font-headline-md px-lg py-sm rounded-xl transition-all hover:bg-primary/5 active:scale-95 duration-150">
+                        Виж програмата
+                    </button>
+</div>
+</div>
+<div class="relative z-10 mt-xl lg:mt-0 lg:w-1/2 group">
+<div class="relative rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
+<img alt="Modern Agriculture" class="w-full h-[400px] object-cover" data-alt="A lush green field at sunrise where a modern autonomous tractor navigates between rows of crops. Soft, golden morning light illuminates the scene, highlighting the vibrant green plants and the sleek, futuristic design of the machine. The image conveys a high-tech yet organic agricultural setting, utilizing a clean, corporate photography style with deep greens and warm ambers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4EsMCO3mZESKrNrwLHySXvXyW4jvQzvoDPRAHFUoZK3iOg0qRx8CFnOH30mM97NeQY2xnA2duZnGogZOPMo_UlImOnfjPq_0CFqNQ5fDyQXcc9V61HpdFc6qIbT8MOg76iGU-7sFlhuqVwZxXmoB3dnJpzYtp6IqtCFH4M9vFQTe-NisQ_KpU9HU5OShq18ZS0RxTWTOHlXGEXTrOjAAyruDWivCWBDC32RpElkWEND4mLMkPgq4wntpjPupsVJ1kAPpebzQx79w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<!-- AI Badge Float -->
+<div class="absolute -bottom-6 -left-6 glass-card p-md rounded-2xl shadow-xl animate-bounce flex items-center gap-3">
+<div class="bg-primary-container p-2 rounded-full">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">AI Учител на линия</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Готов за въпроси 24/7</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-xl px-gutter md:px-margin bg-surface-container-lowest">
+<div class="text-center mb-xl">
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-xs">Защо да избереш нас?</h3>
+<div class="h-1.5 w-24 bg-primary-container mx-auto rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- AI Feature -->
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm hover:shadow-md transition-shadow">
+<div class="w-12 h-12 bg-secondary-container flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-secondary">AI Учител</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Вашият личен асистент, който разбира тънкостите на земеделието и отговаря на въпросите ви незабавно 24/7.
+                    </p>
+</div>
+<!-- Practice Feature -->
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm hover:shadow-md transition-shadow">
+<div class="w-12 h-12 bg-primary-container flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary">Практически курсове</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Обучение разработено от практици. От полето за полето — научете как да прилагате технологиите веднага.
+                    </p>
+</div>
+<!-- Certification Feature -->
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm hover:shadow-md transition-shadow">
+<div class="w-12 h-12 bg-tertiary-container flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-tertiary">Сертифициране</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Валидирайте вашите нови умения с международно признат сертификат за "AI в Земеделието".
+                    </p>
+</div>
+</div>
+</section>
+<!-- Trending Courses Section -->
+<section class="py-xl px-gutter md:px-margin bg-surface">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Популярни Курсове</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Най-търсените теми за месеца</p>
+</div>
+<a class="text-tertiary font-label-md flex items-center gap-1 hover:underline" href="#">
+                    Всички курсове <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Course Card 1 -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant hover:shadow-xl transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img alt="Precision Farming" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A clean, professional macro shot of a young farmer using a tablet computer in a high-tech greenhouse. Soft, natural light filters through the glass structure, casting a gentle glow on the bright green seedlings. The interface on the tablet displays agricultural data charts in vibrant greens and forest tones. The image evokes a sense of modern, data-driven farming with a high-end corporate edtech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOrFHCWV38B8_4pHtv2o5Jjg82VVEePIC03yWtQV2ogGUc_l4wcpYn-AehhSXgk4tp5SUzprNiDI0N48E-CI3oqU4A0vTzKbMn82YLwUn6yVtjLOTSbl4PgNntH3_JbvLSKVPzvopiQHLXEaWQce3RUmSyHBFC9f-ruHpGAm2tCsoqB3VNxLy4UpxPFRTKC7TyS8h7mNl30QZ6QJpxLWihUwr-qz2nkG6TkNxnoXn-USd47anUVt8PUqyPUGBHjtant5YxePTnG-4"/>
+<span class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container font-label-sm px-2 py-1 rounded-lg">Начинаещи</span>
+</div>
+<div class="p-md">
+<h4 class="font-headline-md text-headline-md text-secondary mb-xs">Основи на Прецизното Земеделие</h4>
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">12 часа</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant ml-2">group</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1.2k студенти</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full mb-md">
+<div class="bg-primary-container h-2 rounded-full w-[0%]"></div>
+</div>
+<button class="w-full bg-surface text-primary border border-primary hover:bg-primary/5 py-2 rounded-lg font-label-md transition-colors">Преглед на курса</button>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant hover:shadow-xl transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img alt="AI Drone Monitoring" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A wide angle, panoramic view of a vast sunflower field with a sleek agricultural drone flying overhead. The lighting is dramatic during the blue hour, creating deep shadows and luminous yellow petals. Digital data overlays are subtly visible around the drone, symbolizing AI analysis. The overall style is minimalist and advanced, using a palette of deep blues, forest greens, and bright golds." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC2otAs5Sui7NuOjy9fEXUxZ-AX9AxtXs8urTEiHoEI2EDOJbZBKr_6njK7G9JIwoL6ewz3C9HEYV_7vr-iLacT2BKcJHmDpZ7dqAF0IM_rxfmaE1Gh7V__FU3Wy96FNN77FZO6St3oJCwCypckn5fi4f5VUjQAJnBO-_Z_7HOSBmlY5O7ODTMhofcLkTZ64GnNmHtjMMSxul-eqmZIJHEvW0h4xN4vdpW1xkuCD27sst98bvFEHN5vMkE7zpLGg3IVG4oBRIyZw8"/>
+<span class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container font-label-sm px-2 py-1 rounded-lg">Средно напреднали</span>
+</div>
+<div class="p-md">
+<h4 class="font-headline-md text-headline-md text-secondary mb-xs">Дронове и AI Анализ на Посеви</h4>
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">8 часа</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant ml-2">group</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">850 студенти</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full mb-md">
+<div class="bg-primary-container h-2 rounded-full w-[0%]"></div>
+</div>
+<button class="w-full bg-surface text-primary border border-primary hover:bg-primary/5 py-2 rounded-lg font-label-md transition-colors">Преглед на курса</button>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant hover:shadow-xl transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img alt="Agri-Data Analysis" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close-up of a high-tech circuit board resting on a textured wooden table next to a small, healthy green plant sprout. The lighting is focused and warm, symbolizing the intersection of nature and technology. The color palette is composed of natural wood tones, bright growth green, and metallic silver accents. The image represents modern scientific resource management in agriculture with a professional, academic feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4xhUYLLFvJzLH-aS_uCGTgv8rZw0556_71r1VVHuuwAQiRmbamesJ1vVpjAE2qSAmkkoGvDZgjAe1DSOJXVBsnqDt6b_J5vi_6zNRsIMMkK4UjTkc73iVQEwfg2q1DIw_U-_y2qSPkMcl7Crh0MOdyt75wGKPaJbDaHG9Pc1bolOleWPXp0_UfoTV_rxbdDdaodZs-N4NJqeRf29q9MM8sFQki3IwDza07fuWOFkaFf8lSJ3UEnPCe-KPvFxxap58PS4ekpX_82M"/>
+<span class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container font-label-sm px-2 py-1 rounded-lg">Напреднали</span>
+</div>
+<div class="p-md">
+<h4 class="font-headline-md text-headline-md text-secondary mb-xs">Big Data и Прогнозиране на Реколта</h4>
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">20 часа</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant ml-2">group</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">420 студенти</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full mb-md">
+<div class="bg-primary-container h-2 rounded-full w-[0%]"></div>
+</div>
+<button class="w-full bg-surface text-primary border border-primary hover:bg-primary/5 py-2 rounded-lg font-label-md transition-colors">Преглед на курса</button>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-xl px-gutter md:px-margin text-center bg-secondary-container">
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-secondary-container mb-md">Готови ли сте да промените вашето стопанство?</h3>
+<p class="font-body-lg text-body-lg text-on-secondary-container mb-lg max-w-2xl mx-auto">
+                Присъединете се към хиляди фермери, които вече използват силата на изкуствения интелект.
+            </p>
+<button class="bg-primary hover:bg-on-primary-fixed-variant text-white font-headline-md px-xl py-md rounded-2xl shadow-lg transition-transform hover:-translate-y-1 active:scale-95">
+                Започнете безплатно сега
+            </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest py-xl px-gutter md:px-margin border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-lg">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-primary font-bold text-headline-md">agriculture</span>
+<h2 class="font-headline-md text-headline-md text-primary">AI Agri Academy</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+                    Мисията ни е да демократизираме достъпа до най-съвременните технологии в земеделието чрез качествено, достъпно и безплатно образование.
+                </p>
+</div>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface mb-md">Контакт</h5>
+<ul class="flex flex-col gap-sm font-label-sm text-label-sm text-on-surface-variant">
+<li>info@agrinexus.eu</li>
+<li>+359 88 000 0000</li>
+<li>София, България</li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface mb-md">Проект</h5>
+<ul class="flex flex-col gap-sm font-label-sm text-label-sm text-on-surface-variant">
+<li>AgriNexus LTD</li>
+<li>AI Agri Academy</li>
+<li>Партньори</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 AgriNexus LTD. Всички права запазени.</p>
+<div class="flex gap-md">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary" href="#">Общи условия</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary" href="#">Политика за поверителност</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface-dim border-t border-outline-variant shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">AI Tutor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and atmospheric effects
+        document.addEventListener('mousemove', (e) => {
+            const cursorGlow = document.createElement('div');
+            cursorGlow.className = 'fixed pointer-events-none w-8 h-8 bg-primary/5 rounded-full blur-xl z-[9999]';
+            cursorGlow.style.left = e.clientX - 16 + 'px';
+            cursorGlow.style.top = e.clientY - 16 + 'px';
+            document.body.appendChild(cursorGlow);
+            setTimeout(() => cursorGlow.remove(), 1000);
+        });
+
+        // Simple scroll reveal
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

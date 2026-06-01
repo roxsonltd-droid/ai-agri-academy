@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Анализатор на почвата | AgriAcademy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f0fdf2;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(240, 253, 242, 0.96);
+            backdrop-filter: blur(12px);
+        }
+        .yellow-pages-card {
+            border-top: 4px solid #cea72c;
+            background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.15);
+        }
+        .grid-pattern {
+            background-image: radial-gradient(#c0c9c2 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#e7f4ea",
+                      "tertiary-fixed": "#ffe08e",
+                      "surface-container": "#e4f1e7",
+                      "surface-container-high": "#deebe1",
+                      "surface": "#f0fdf2",
+                      "outline": "#717974",
+                      "secondary-fixed": "#d6e6db",
+                      "secondary": "#536259",
+                      "surface-container-highest": "#d9e6dc",
+                      "outline-variant": "#c0c9c2",
+                      "on-tertiary-fixed-variant": "#584400",
+                      "on-surface-variant": "#404944",
+                      "inverse-surface": "#28332c",
+                      "on-background": "#131e18",
+                      "inverse-primary": "#9ed2b9",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#bacac0",
+                      "on-secondary-container": "#55645b",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#b9eed4",
+                      "on-tertiary-container": "#4f3d00",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-container-low": "#eaf7ec",
+                      "on-primary-fixed-variant": "#1d4f3c",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d9e6dc",
+                      "surface-bright": "#f0fdf2",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#d0ddd3",
+                      "primary": "#003625",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#cea72c",
+                      "primary-container": "#1a4d3a",
+                      "primary-fixed-dim": "#9ed2b9",
+                      "tertiary": "#755b00",
+                      "on-primary-fixed": "#002115",
+                      "on-surface": "#131e18",
+                      "tertiary-fixed-dim": "#ecc246",
+                      "on-secondary-fixed-variant": "#3c4a42",
+                      "surface-tint": "#366853",
+                      "secondary-container": "#d1e1d6",
+                      "on-tertiary-fixed": "#241a00",
+                      "background": "#f0fdf2",
+                      "on-secondary-fixed": "#111e18",
+                      "on-primary-container": "#89bda4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xxl": "48px",
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "margin-mobile": "12px",
+                      "container-max": "1140px",
+                      "base": "4px",
+                      "lg": "24px",
+                      "md": "16px",
+                      "xl": "32px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "display-lg": ["DM Sans"],
+                      "body-base": ["DM Sans"],
+                      "label-eyebrow": ["DM Sans"],
+                      "body-sm": ["DM Sans"],
+                      "headline-md": ["DM Sans"],
+                      "display-lg-mobile": ["DM Sans"],
+                      "label-badge": ["DM Sans"],
+                      "headline-sm": ["DM Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                      "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                      "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Top Navigation -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 glass-header">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+<span class="font-headline-md text-headline-md-mobile font-bold text-primary">AgriAcademy</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-all text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden border-2 border-primary-container">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRS1QfAgtpyhnLbMXairzRi1QvBxlJQMZguKrlHo193JpaD3YBF_DuNXEUF7aT6nKl94wBZpZLUfT8O0mD3yUO4ndafixSPLRjwZCgJNkrqhPVKE4vqtsAxJMkQF4l9Ybsvn_SCTKJxFDqmYai_jXXNw-lvUV_yv0XcBJyu0hzSuqtGFIvIUBvFq8pz2XjmF4EB2hEX-gs1D4Iue5AGYvigVBR1wXZgNtNO4XmUSxGA3QqGUhbu0vy0rJSYO4t6xIRAWkFa5UHaEc"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-[1140px] mx-auto grid-pattern min-h-screen">
+<!-- Welcome Section -->
+<section class="mb-10">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-2">Анализ на почвата</h1>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-2xl">Прецизен лабораторен анализ и AI препоръки за оптимизиране на добива чрез коригиране на хранителния баланс.</p>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Input Column -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Upload Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4">Входни данни</h3>
+<div class="space-y-4">
+<label class="block w-full cursor-pointer">
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-surface-container-low transition-colors group">
+<span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:text-primary" data-icon="upload_file">upload_file</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">Качете PDF протокол</span>
+<span class="text-xs text-outline mt-1">Поддържани: PDF, JPG (до 5MB)</span>
+</div>
+<input class="hidden" type="file"/>
+</label>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 text-outline font-label-badge text-label-badge">ИЛИ РЪЧНО</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<div class="space-y-3">
+<div>
+<label class="text-xs font-bold text-outline-variant block mb-1">АЗОТ (N) - mg/kg</label>
+<input class="w-full h-11 px-4 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="0.0" type="number"/>
+</div>
+<div>
+<label class="text-xs font-bold text-outline-variant block mb-1">ФОСФОР (P) - mg/100g</label>
+<input class="w-full h-11 px-4 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="0.0" type="number"/>
+</div>
+<div>
+<label class="text-xs font-bold text-outline-variant block mb-1">КАЛИЙ (K) - mg/100g</label>
+<input class="w-full h-11 px-4 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="0.0" type="number"/>
+</div>
+</div>
+<button class="w-full h-12 bg-primary text-white rounded-full font-bold flex items-center justify-center gap-2 hover:scale-[0.98] transition-transform active:scale-95 shadow-lg">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                            Анализирай данните
+                        </button>
+</div>
+</div>
+<!-- Field Info -->
+<div class="bg-primary-container p-6 rounded-xl text-on-primary-container">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-eyebrow text-label-eyebrow tracking-widest uppercase opacity-70">Текуща локация</span>
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</div>
+<div class="aspect-video w-full rounded-lg bg-surface-dim mb-4 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A cinematic satellite-view aerial photograph of a vast, meticulously organized rectangular farm field in the Bulgarian countryside. The landscape is a rich tapestry of deep greens and golden browns under the warm, hazy afternoon sun of a late summer day. The visual style is crisp and professional, capturing the rhythmic patterns of tractor tracks and the lush texture of the soil. The lighting is soft and natural, emphasizing the rural agricultural heritage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNzWGS7dTlvMNB1MA_V44RiF-F2HUGumNYWKbQJG01okSmc0yazSqopTf5GqAVw_4sv9I9k6UUNWRGB7iHYdMYsabThhgJo7ptbYtIXGwW7uT2q_yjCuu--440SNJLadCR5mB_eEs6lLFntNOVMbKsaYRc4OiHvVLqy94kmo_V675LlxV28xh5y-L27y-0JaYtI-qYhuSfug_3UEZksnu47nNzZ9YRv2dv-HNrEXuPZRtt5txdKhgy-wKX0QO1CfGRx0vxk08NqiE"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+<div class="bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">Парцел #241: „Чернозем“</div>
+</div>
+</div>
+<p class="text-sm">Последна проба: 12 Март 2024</p>
+</div><div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant mt-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-sm text-headline-sm text-primary">История на пробите</h3>
+<span class="material-symbols-outlined text-outline" data-icon="history">history</span>
+</div>
+<p class="text-xs text-on-surface-variant mb-4">Проследяване на подобренията за Парцел #241</p>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
+<div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center font-bold text-on-primary-fixed-variant">12</div>
+<div class="flex-grow">
+<div class="text-sm font-bold text-on-surface">Март 2024 (Текуща)</div>
+<div class="text-xs text-outline">Дефицит на Азот</div>
+</div>
+<div class="text-right">
+<div class="text-xs font-bold text-primary">Активен</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg opacity-70">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed-variant">15</div>
+<div class="flex-grow">
+<div class="text-sm font-bold text-on-surface">Ноември 2023</div>
+<div class="text-xs text-outline">Дефицит на Фосфор</div>
+</div>
+<div class="text-right">
+<div class="text-xs font-bold text-on-surface-variant">Коригирано</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg opacity-70">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed-variant">02</div>
+<div class="flex-grow">
+<div class="text-sm font-bold text-on-surface">Юни 2023</div>
+<div class="text-xs text-outline">Балансирана</div>
+</div>
+<div class="text-right">
+<div class="text-xs font-bold text-on-surface-variant">Успешно</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-primary font-bold text-xs uppercase tracking-widest hover:bg-surface-container transition-colors rounded-lg border border-primary/20">
+        Виж пълна история
+    </button>
+</div>
+</div>
+<!-- Analysis Column -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Scientific Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-primary">Резултати от анализа</h2>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded-full">КРИТИЧЕН ДЕФИЦИТ</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container text-on-surface-variant font-label-md text-label-md">
+<tr>
+<th class="px-6 py-4">Елемент</th>
+<th class="px-6 py-4">Наличност</th>
+<th class="px-6 py-4">Оптимално</th>
+<th class="px-6 py-4">Статус</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-fixed flex items-center justify-center font-bold text-primary">N</div>
+<div>
+<div class="font-bold">Азот</div>
+<div class="text-xs text-outline italic">Нитратен азот</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-bold">14.2 mg/kg</td>
+<td class="px-6 py-5 text-outline">25-35 mg/kg</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_downward">arrow_downward</span>
+<span class="text-xs font-bold">НИСКО</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary-fixed flex items-center justify-center font-bold text-on-tertiary-fixed-variant">P</div>
+<div>
+<div class="font-bold">Фосфор</div>
+<div class="text-xs text-outline italic">P2O5 усвоим</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-bold">28.5 mg/100g</td>
+<td class="px-6 py-5 text-outline">20-30 mg/100g</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span class="text-xs font-bold">НОРМА</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed-variant">K</div>
+<div>
+<div class="font-bold">Калий</div>
+<div class="text-xs text-outline italic">K2O обменен</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-bold">18.0 mg/100g</td>
+<td class="px-6 py-5 text-outline">25-40 mg/100g</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+<span class="text-xs font-bold">УМЕРЕНО</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- AI Prescription Card (Premium Style) -->
+<div class="yellow-pages-card rounded-xl p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10 scale-150 pointer-events-none">
+<span class="material-symbols-outlined text-9xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-tertiary rounded-lg text-white">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">AI Предписание за Корекция</h3>
+<p class="text-xs text-tertiary font-bold tracking-tighter uppercase">Технологично препоръчано решение • Сезон Пролет 2024</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container font-bold">1</div>
+<div>
+<p class="font-bold text-primary mb-1">Амониева селитра (34.4% N)</p>
+<p class="text-body-sm text-on-surface-variant">Приложете 250 кг/ха преди сеитба. Разделете на две дози при наличие на обилни валежи.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container font-bold">2</div>
+<div>
+<p class="font-bold text-primary mb-1">Калиев хлорид (60% K2O)</p>
+<p class="text-body-sm text-on-surface-variant">Нужни са 120 кг/ха за запълване на дефицита и укрепване на кореновата система.</p>
+</div>
+</div>
+</div>
+<div class="bg-white/50 border border-tertiary/20 rounded-lg p-5">
+<h4 class="font-label-md text-label-md text-tertiary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="lightbulb">lightbulb</span>
+                                    Експертен съвет
+                                </h4>
+<p class="text-body-sm italic text-on-surface">"Вашата почва показва признаци на леко вкисляване (pH 5.8). Препоръчваме варуване в края на есенния цикъл за трайно подобряване на структурата."</p>
+<div class="mt-4 pt-4 border-t border-tertiary/10 flex justify-between items-center">
+<span class="text-[10px] font-bold text-outline uppercase">Прогнозен добив:</span>
+<span class="text-primary font-bold">+12% очакван ръст</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 pt-6 border-t border-tertiary/10">
+<div class="bg-tertiary/5 p-4 rounded-xl border border-tertiary/10">
+<h4 class="text-xs font-bold text-tertiary uppercase mb-2">Очаквани разходи</h4>
+<div class="flex justify-between items-baseline">
+<span class="text-headline-sm font-bold text-primary">2,450 лв.</span>
+<span class="text-xs text-outline">~245 лв/ха</span>
+</div>
+</div>
+<div class="bg-primary/5 p-4 rounded-xl border border-primary/10">
+<h4 class="text-xs font-bold text-primary uppercase mb-2">Прогнозен ROI (6 месеца)</h4>
+<div class="flex justify-between items-baseline">
+<span class="text-headline-sm font-bold text-primary">+185%</span>
+<span class="text-xs text-primary font-bold">+6,800 лв нетна печалба</span>
+</div>
+</div>
+</div><div class="flex flex-wrap gap-4"><button class="h-12 px-8 bg-primary text-white rounded-full font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-md">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+    Поръчай всички торове
+</button>
+<button class="h-12 px-8 border border-outline text-on-surface rounded-full font-bold hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+    Експорт на PDF
+</button></div>
+</div>
+</div>
+<!-- Community Insight Section -->
+<div class="flex flex-col md:flex-row gap-6 items-center p-6 bg-surface-container rounded-xl border border-outline-variant">
+<div class="w-20 h-20 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="groups">groups</span>
+</div>
+<div class="text-center md:text-left flex-grow">
+<h4 class="font-bold text-primary mb-1">Сравнение с региона</h4>
+<p class="text-body-sm text-on-surface-variant">Вашият Азотен дефицит е често срещан в област Плевен тази пролет. 64% от колегите ви са избрали течен азотен тор за по-бързо усвояване.</p>
+</div>
+<a class="text-primary font-bold text-sm underline flex items-center gap-1" href="#">
+                        Виж форума
+                        <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface border-t border-outline-variant rounded-t-xl shadow-sm">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Начало</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm">Курсове</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-sm text-label-sm">AI Тютор</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Профил</span>
+</div>
+</nav>
+<!-- Desktop Floating Menu Indicator (Subtle) -->
+<div class="hidden md:flex fixed right-8 bottom-8 flex-col gap-4">
+<button class="w-14 h-14 rounded-full bg-primary text-white shadow-xl flex items-center justify-center hover:scale-110 transition-transform group relative">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<div class="absolute right-full mr-4 px-3 py-1 bg-primary text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Помощ от агроном</div>
+</button>
+</div>
+<script>
+        // Micro-interaction for inputs
+        const inputs = document.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.classList.add('scale-[1.01]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+
+        // Simple reveal animation simulation
+        window.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.bg-surface-container-lowest, .yellow-pages-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease-out';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

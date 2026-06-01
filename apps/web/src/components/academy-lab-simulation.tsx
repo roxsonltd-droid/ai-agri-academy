@@ -27,6 +27,51 @@ const defaultInputs: LabInputs = {
 	expectedPricePerTon: 240,
 };
 
+/** Същите граници като в `runLabSimulation` — полето винаги показва реално използваната площ. */
+function clampAreaHaFromInput(v: string): number {
+	const n = parseFloat(v);
+	if (!Number.isFinite(n)) return 0.1;
+	const clamped = Math.max(0.1, Math.min(5000, n));
+	return Math.round(clamped * 1000) / 1000;
+}
+
+function nonNegFromInput(v: string): number {
+	const n = parseFloat(v);
+	return Math.max(0, Number.isFinite(n) ? n : 0);
+}
+
+/** Граници и подразбирания като в `runLabSimulation` (`finiteOr` + min/max на плъзгачите). */
+const LAB_SLIDER_SPECS = {
+	soilN: { lo: 0, hi: 120, default: 55, int: true },
+	soilP: { lo: 0, hi: 120, default: 48, int: true },
+	soilK: { lo: 0, hi: 120, default: 52, int: true },
+	organicMatterPct: { lo: 0, hi: 12, default: 3.5, step: 0.1 },
+	ph: { lo: 4.5, hi: 8.5, default: 6.5, step: 0.1 },
+	seasonRainMm: { lo: 80, hi: 600, default: 320, int: true },
+	avgTempC: { lo: 8, hi: 30, default: 18, step: 0.5 },
+	frostRiskDays: { lo: 0, hi: 14, default: 0, int: true },
+} as const;
+
+type LabSliderKey = keyof typeof LAB_SLIDER_SPECS;
+
+function parseLabSlider(
+	v: string,
+	spec: (typeof LAB_SLIDER_SPECS)[LabSliderKey],
+): number {
+	const raw = "int" in spec && spec.int ? parseInt(v, 10) : parseFloat(v);
+	let x = Number.isFinite(raw) ? raw : spec.default;
+	x = Math.max(spec.lo, Math.min(spec.hi, x));
+	if ("step" in spec && spec.step != null) {
+		const s = spec.step;
+		x = Math.round(x / s) * s;
+		const dec = s >= 1 ? 0 : (String(s).split(".")[1]?.length ?? 0);
+		x = Number(x.toFixed(dec));
+	} else if ("int" in spec && spec.int) {
+		x = Math.round(x);
+	}
+	return x;
+}
+
 function Field({
 	label,
 	className,
@@ -49,9 +94,14 @@ export function AcademyLabSimulation() {
 
 	const result = useMemo(() => runLabSimulation(i), [i]);
 
-	function num<K extends keyof LabInputs>(key: K, v: string, int = false) {
-		const n = int ? parseInt(v, 10) : parseFloat(v);
-		setI((p) => ({ ...p, [key]: Number.isFinite(n) ? n : 0 }));
+	function setSlider(key: LabSliderKey, v: string) {
+		setI((p) => ({ ...p, [key]: parseLabSlider(v, LAB_SLIDER_SPECS[key]) }));
+	}
+
+	type NonNegField = "costSeed" | "costFert" | "costFuel" | "costChem" | "costOther" | "expectedPricePerTon";
+
+	function numNonNeg(key: NonNegField, v: string) {
+		setI((p) => ({ ...p, [key]: nonNegFromInput(v) }));
 	}
 
 	return (
@@ -85,7 +135,7 @@ export function AcademyLabSimulation() {
 								step={0.1}
 								className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
 								value={i.areaHa}
-								onChange={(e) => num("areaHa", e.target.value)}
+								onChange={(e) => setI((p) => ({ ...p, areaHa: clampAreaHaFromInput(e.target.value) }))}
 							/>
 						</Field>
 					</div>
@@ -101,7 +151,7 @@ export function AcademyLabSimulation() {
 								min={0}
 								max={120}
 								value={i.soilN}
-								onChange={(e) => num("soilN", e.target.value, true)}
+								onChange={(e) => setSlider("soilN", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.soilN}</span>
 						</Field>
@@ -111,7 +161,7 @@ export function AcademyLabSimulation() {
 								min={0}
 								max={120}
 								value={i.soilP}
-								onChange={(e) => num("soilP", e.target.value, true)}
+								onChange={(e) => setSlider("soilP", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.soilP}</span>
 						</Field>
@@ -121,7 +171,7 @@ export function AcademyLabSimulation() {
 								min={0}
 								max={120}
 								value={i.soilK}
-								onChange={(e) => num("soilK", e.target.value, true)}
+								onChange={(e) => setSlider("soilK", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.soilK}</span>
 						</Field>
@@ -132,7 +182,7 @@ export function AcademyLabSimulation() {
 								max={12}
 								step={0.1}
 								value={i.organicMatterPct}
-								onChange={(e) => num("organicMatterPct", e.target.value)}
+								onChange={(e) => setSlider("organicMatterPct", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.organicMatterPct}</span>
 						</Field>
@@ -143,7 +193,7 @@ export function AcademyLabSimulation() {
 								max={8.5}
 								step={0.1}
 								value={i.ph}
-								onChange={(e) => num("ph", e.target.value)}
+								onChange={(e) => setSlider("ph", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.ph}</span>
 						</Field>
@@ -159,7 +209,7 @@ export function AcademyLabSimulation() {
 								min={80}
 								max={600}
 								value={i.seasonRainMm}
-								onChange={(e) => num("seasonRainMm", e.target.value, true)}
+								onChange={(e) => setSlider("seasonRainMm", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.seasonRainMm} mm</span>
 						</Field>
@@ -170,7 +220,7 @@ export function AcademyLabSimulation() {
 								max={30}
 								step={0.5}
 								value={i.avgTempC}
-								onChange={(e) => num("avgTempC", e.target.value)}
+								onChange={(e) => setSlider("avgTempC", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.avgTempC} °C</span>
 						</Field>
@@ -180,7 +230,7 @@ export function AcademyLabSimulation() {
 								min={0}
 								max={14}
 								value={i.frostRiskDays}
-								onChange={(e) => num("frostRiskDays", e.target.value, true)}
+								onChange={(e) => setSlider("frostRiskDays", e.target.value)}
 							/>
 							<span className="text-xs text-slate-600">{i.frostRiskDays} дни</span>
 						</Field>
@@ -206,7 +256,7 @@ export function AcademyLabSimulation() {
 									step={5}
 									className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
 									value={i[key]}
-									onChange={(e) => num(key, e.target.value)}
+									onChange={(e) => numNonNeg(key, e.target.value)}
 								/>
 							</Field>
 						))}
@@ -217,7 +267,7 @@ export function AcademyLabSimulation() {
 								step={5}
 								className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
 								value={i.expectedPricePerTon}
-								onChange={(e) => num("expectedPricePerTon", e.target.value)}
+								onChange={(e) => numNonNeg("expectedPricePerTon", e.target.value)}
 							/>
 						</Field>
 					</div>
@@ -236,7 +286,8 @@ export function AcademyLabSimulation() {
 						<p className="text-xs uppercase tracking-wide text-emerald-800">Очакван добив</p>
 						<p className="text-3xl font-bold text-emerald-950">{result.estimatedYieldPerHa} t/ha</p>
 						<p className="mt-1 text-xs text-slate-600">
-							≈ {Math.round(result.estimatedYieldPerHa * i.areaHa * 10) / 10} t общо за {i.areaHa} ha
+							≈ {Math.round(result.estimatedYieldPerHa * result.effectiveAreaHa * 10) / 10} t общо за{" "}
+							{result.effectiveAreaHa} ha
 						</p>
 					</div>
 					<div className="sm:col-span-2 rounded-xl border border-white/60 bg-white/90 p-4">

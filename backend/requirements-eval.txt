@@ -1,0 +1,13 @@
+# Optional evaluation dependencies (LangSmith + RAGAS)
+#
+# Install in a SEPARATE venv or only on CI machines — versions may conflict with
+# backend/requirements.txt (langchain-mistralai 0.2.x). Example:
+#   python -m venv .venv-eval && .venv-eval\Scripts\activate
+#   pip install -r requirements.txt -r requirements-eval.txt
+#
+# For RAGAS judge metrics you typically need an LLM API key (OpenAI and/or Mistral),
+# plus LangSmith if you want traces of evaluation calls.
+
+langsmith>=0.1.147,<0.4
+ragas>=0.1.8,<0.3
+datasets>=3.0.0,<4

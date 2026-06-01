@@ -2,11 +2,14 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Play, Pause, BrainCircuit, TrendingUp, CloudLightning, Sprout, ScanSearch, Bot, BookOpen, ArrowRight } from "lucide-react";
+import { formatRagScore } from "@/lib/formatRagScore";
 
 export type AcademySource = {
 	source?: string;
 	topic?: string;
 	course?: string;
+	/** RAG similarity / rank score when backend sends it */
+	score?: number;
 };
 
 export type DebateTurn = {
@@ -209,7 +212,14 @@ export default function AnimatedDebateTimeline({
 					<ul className="mt-3 space-y-1.5 text-sm text-slate-600 dark:text-slate-300">
 						{academySources.map((s, i) => (
 							<li key={`${s.source ?? "s"}-${i}`} className="border-l-2 border-emerald-500/40 pl-3">
-								{s.topic ? <span className="font-medium text-slate-800 dark:text-slate-100">{s.topic}</span> : null}
+								<div className="flex flex-wrap items-baseline gap-2">
+									{s.topic ? <span className="font-medium text-slate-800 dark:text-slate-100">{s.topic}</span> : null}
+									{typeof s.score === "number" && Number.isFinite(s.score) ? (
+										<span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200">
+											{formatRagScore(s.score)}
+										</span>
+									) : null}
+								</div>
 								{s.course ? (
 									<span className="text-slate-500 dark:text-slate-400"> · курс: {s.course}</span>
 								) : null}

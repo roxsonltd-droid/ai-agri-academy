@@ -21,6 +21,10 @@ _COMPILED: Any | None = None
 
 SYS_REACT = (
     "Ти си AI агент на AI Agro Academy. Отговаряй кратко и експертно на български. Без емоджита.\n\n"
+    "Отказвай ясно заявки извън земеделие, образование и устойчивост (без политика, без медицински съвети, без търговски "
+    "препоръки за конкретни финансови инструменти).\n\n"
+    "Имаш инструмент academy_knowledge_search: семантично търсене във вътрешната база знания. Извиквай го, когато "
+    "потребителят пита за факти от учебни материали или вътрешни политики на академията.\n\n"
     "Имаш инструмент roboflow_detect_uploaded: стартира Roboflow върху прикачената от потребителя снимка "
     "(само ако заявката включва такава). Извиквай го само когато е нужно компютърно зрение — например "
     "идентификация на болести/вредители по листа, броене или локализиране на обекти, визуална класификация. "
@@ -32,24 +36,23 @@ SYS_REACT = (
 def _try_build_graph():
     try:
         from langgraph.prebuilt import create_react_agent
-        from langchain_mistralai import ChatMistralAI
         from core.config import settings
+        from core.llm_factory import get_chat_llm
 
-        if not settings.MISTRAL_API_KEY:
+        if not settings.MISTRAL_API_KEY and not settings.HELICONE_API_KEY:
             return None
 
         from agents.tools_roboflow import roboflow_detect_uploaded
+        from agents.tools_rag import academy_knowledge_search
 
-        llm = ChatMistralAI(
-            model="mistral-large-latest",
-            temperature=0.5,
-            api_key=settings.MISTRAL_API_KEY,
-        )
-        return create_react_agent(
-            llm,
-            tools=[roboflow_detect_uploaded],
-            prompt=SYS_REACT,
-        )
+        llm = get_chat_llm(temperature=0.5)
+        tools_list = [academy_knowledge_search, roboflow_detect_uploaded]
+        try:
+            from langgraph.checkpoint.memory import MemorySaver
+
+            return create_react_agent(llm, tools_list, prompt=SYS_REACT, checkpointer=MemorySaver())
+        except (TypeError, ImportError):
+            return create_react_agent(llm, tools_list, prompt=SYS_REACT)
     except ImportError:
         logger.info("LangGraph not installed — optional. See requirements-ai.txt")
         return None
@@ -87,10 +90,15 @@ def _final_answer_text(messages: list[BaseMessage]) -> str:
     return ""
 
 
-async def run_agro_agent(question: str, image_base64: str | None = None) -> str:
+async def run_agro_agent(
+    question: str,
+    image_base64: str | None = None,
+    thread_id: str = "default",
+) -> str:
     """
     Run the ReAct LangGraph agent. Optional ``image_base64`` is exposed only to
     ``roboflow_detect_uploaded`` — Mistral decides whether to call the tool.
+    ``thread_id`` — кратка сесийна нишка за MemorySaver (LangGraph), ако е наличен checkpointer.
     """
     from langchain_core.messages import HumanMessage
 
@@ -108,6 +116,8 @@ async def run_agro_agent(question: str, image_base64: str | None = None) -> str:
 
     b64 = (image_base64.strip() if image_base64 else "") or ""
 
+    tid = (thread_id or "default").strip() or "default"
+
     def _invoke():
         # ContextVar must be set on the same thread that runs the graph (tool node).
         token = None
@@ -116,7 +126,10 @@ async def run_agro_agent(question: str, image_base64: str | None = None) -> str:
                 token = set_request_image_b64(b64)
             return compiled.invoke(
                 {"messages": [HumanMessage(content=q)]},
-                {"recursion_limit": 25},
+                {
+                    "recursion_limit": 25,
+                    "configurable": {"thread_id": tid},
+                },
             )
         finally:
             if token is not None:

@@ -19,6 +19,7 @@ def platform_status():
             and settings.PLATFORM_RAG_BACKEND == "llamaindex"
         ),
         "mistral_configured": bool(settings.MISTRAL_API_KEY),
+        "helicone_configured": bool(settings.HELICONE_API_KEY),
         "clerk_verify_configured": bool(settings.CLERK_JWKS_URL and settings.CLERK_ISSUER),
         "cloudflare_stream_configured": bool(
             settings.CLOUDFLARE_ACCOUNT_ID and settings.CLOUDFLARE_STREAM_API_TOKEN
@@ -36,4 +37,7 @@ def platform_status():
             and settings.ROBOFLOW_PROJECT
             and settings.ROBOFLOW_VERSION
         ),
+        "chat_rate_limit_per_minute": settings.CHAT_RATE_LIMIT_PER_MINUTE,
+        "rag_retrieval_logging": settings.RAG_LOG_RETRIEVAL,
+        "llm_max_output_tokens": settings.LLM_MAX_OUTPUT_TOKENS,
     }

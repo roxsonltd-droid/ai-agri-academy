@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
-from api import users, chat, auth, courses, admin_courses, lab, knowledge, platform, agents_route, storage, voice, vision, stream
+from api import users, chat, auth, courses, admin_courses, lab, knowledge, platform, agents_route, storage, voice, vision, stream, feedback, tutor_compat
 from db.database import engine, Base
+
+# Регистриране на ORM модели за create_all (SQLite dev)
+import models.feedback  # noqa: F401
 
 # Dev SQLite: auto-create tables. PostgreSQL: use `alembic upgrade head`.
 if settings.DATABASE_URL.startswith("sqlite"):
@@ -43,6 +46,9 @@ app.include_router(vision.router, prefix=f"{settings.API_V1_STR}/vision", tags=[
 app.include_router(platform.router, prefix=f"{settings.API_V1_STR}/platform", tags=["platform"])
 app.include_router(agents_route.router, prefix=f"{settings.API_V1_STR}/agents", tags=["agents"])
 app.include_router(stream.router, prefix=f"{settings.API_V1_STR}/stream", tags=["stream"])
+app.include_router(feedback.router, prefix=f"{settings.API_V1_STR}/feedback", tags=["feedback"])
+# Next.js прокси: POST /api/tutor/chat (prefix вече е /api в router-а)
+app.include_router(tutor_compat.router)
 
 @app.get("/health")
 def health_check():

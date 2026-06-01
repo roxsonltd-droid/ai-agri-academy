@@ -4,6 +4,7 @@ import { useCallback, useId, useState } from "react";
 import { BookOpen, Loader2, MessagesSquare, Sparkles } from "lucide-react";
 
 import AnimatedDebateTimeline from "@/components/AnimatedDebateTimeline";
+import { formatRagScore } from "@/lib/formatRagScore";
 
 export type AcademyRagLabels = {
 	title: string;
@@ -18,7 +19,7 @@ export type AcademyRagLabels = {
 	hintBackend: string;
 };
 
-type SourceItem = { source?: string; topic?: string; course?: string };
+type SourceItem = { source?: string; topic?: string; course?: string; score?: number };
 
 type Props = {
 	slug: string;
@@ -182,7 +183,14 @@ export function AcademyRagDebatePanel({ slug, labels }: Props) {
 					<ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600 dark:text-slate-300">
 						{sources.map((s, i) => (
 							<li key={`${s.source ?? i}-${i}`}>
-								{s.topic ? <span className="font-medium">{s.topic}</span> : null}
+								<span className="inline-flex flex-wrap items-baseline gap-2">
+									{s.topic ? <span className="font-medium">{s.topic}</span> : null}
+									{typeof s.score === "number" && Number.isFinite(s.score) ? (
+										<span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200">
+											{formatRagScore(s.score)}
+										</span>
+									) : null}
+								</span>
 								{s.source ? <span className="text-slate-500"> — {s.source}</span> : null}
 							</li>
 						))}

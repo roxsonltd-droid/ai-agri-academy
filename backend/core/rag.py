@@ -13,14 +13,15 @@ from langchain_mistralai import MistralAIEmbeddings
 
 from core.config import settings
 from core.rag_paths import KNOWLEDGE_ROOT, knowledge_uploads_dir
+from core.rag_types import RagRetrieval, RagSourceItem
 
 logger = logging.getLogger(__name__)
 
 _MAX_CHUNK = 1200
 _MIN_CHUNK = 200
 
-
-_chunks: list[str] = []
+_chunk_texts: list[str] = []
+_chunk_sources: list[str] = []
 _matrix: np.ndarray | None = None
 _embedder: MistralAIEmbeddings | None = None
 _build_lock = asyncio.Lock()
@@ -40,7 +41,6 @@ def _split_into_chunks(text: str) -> list[str]:
             buf = p if len(p) <= _MAX_CHUNK else p[:_MAX_CHUNK]
     if buf:
         chunks.append(buf)
-    # merge tiny trailing pieces into previous chunk
     merged: list[str] = []
     for c in chunks:
         if merged and len(c) < _MIN_CHUNK:
@@ -50,19 +50,22 @@ def _split_into_chunks(text: str) -> list[str]:
     return merged
 
 
-def _load_corpus() -> list[str]:
+def _load_corpus() -> list[tuple[str, str]]:
+    """(chunk_text, source_label) — label е име на файл или upload:име."""
+    rows: list[tuple[str, str]] = []
     if not KNOWLEDGE_ROOT.is_dir():
         logger.warning("RAG knowledge directory missing: %s", KNOWLEDGE_ROOT)
-        return []
-    all_chunks: list[str] = []
-    for path in sorted(KNOWLEDGE_ROOT.glob("*.md")):
-        try:
-            raw = path.read_text(encoding="utf-8")
-        except OSError as e:
-            logger.warning("Could not read %s: %s", path, e)
-            continue
-        all_chunks.extend(_split_into_chunks(raw))
-        logger.info("RAG loaded %s (%d chunks so far)", path.name, len(all_chunks))
+    else:
+        for path in sorted(KNOWLEDGE_ROOT.glob("*.md")):
+            try:
+                raw = path.read_text(encoding="utf-8")
+            except OSError as e:
+                logger.warning("Could not read %s: %s", path, e)
+                continue
+            label = path.name
+            for c in _split_into_chunks(raw):
+                rows.append((c, label))
+            logger.info("RAG loaded %s (%d chunks so far)", path.name, len(rows))
 
     uploads = knowledge_uploads_dir()
     if uploads.is_dir():
@@ -73,9 +76,11 @@ def _load_corpus() -> list[str]:
             except OSError as e:
                 logger.warning("Could not read %s: %s", path, e)
                 continue
-            all_chunks.extend(_split_into_chunks(raw))
-            logger.info("RAG loaded upload %s (%d chunks so far)", path.name, len(all_chunks))
-    return all_chunks
+            label = f"upload:{path.name}"
+            for c in _split_into_chunks(raw):
+                rows.append((c, label))
+            logger.info("RAG loaded upload %s (%d chunks so far)", path.name, len(rows))
+    return rows
 
 
 def _cosine_sim(query: np.ndarray, mat: np.ndarray) -> np.ndarray:
@@ -97,66 +102,43 @@ async def _ensure_embedder() -> MistralAIEmbeddings | None:
 
 
 async def _build_index_unlocked() -> None:
-    global _chunks, _matrix, _corpus_empty
+    global _chunk_texts, _chunk_sources, _matrix, _corpus_empty
     if _corpus_empty:
         return
-    corpus = _load_corpus()
-    if not corpus:
+    rows = _load_corpus()
+    if not rows:
         _corpus_empty = True
-        _chunks = []
+        _chunk_texts = []
+        _chunk_sources = []
         _matrix = None
         return
     emb = await _ensure_embedder()
     if emb is None:
-        _chunks = []
+        _chunk_texts = []
+        _chunk_sources = []
         _matrix = None
         return
 
+    texts = [r[0] for r in rows]
+    sources = [r[1] for r in rows]
+
     def _embed_all() -> list[list[float]]:
-        return emb.embed_documents(corpus)
+        return emb.embed_documents(texts)
 
     try:
         vectors = await asyncio.to_thread(_embed_all)
     except Exception:
         logger.exception("RAG embedding failed; continuing without knowledge index")
-        _chunks = []
+        _chunk_texts = []
+        _chunk_sources = []
         _matrix = None
         return
-    _chunks = corpus
+    _chunk_texts = texts
+    _chunk_sources = sources
     _matrix = np.array(vectors, dtype=np.float32)
 
 
-async def retrieve_context(query: str, k: int | None = None) -> str:
-    """
-    Returns top-k knowledge snippets for the query, or empty string if RAG is off / unavailable.
-    """
-    if not settings.RAG_ENABLED:
-        return ""
-    top = k if k is not None else settings.RAG_TOP_K
-    if not query.strip():
-        return ""
-    if _corpus_empty:
-        return ""
-
-    async with _build_lock:
-        if _matrix is None:
-            await _build_index_unlocked()
-        if _matrix is None or not _chunks:
-            return ""
-        mat = _matrix
-        ch = list(_chunks)
-
-    emb = await _ensure_embedder()
-    if emb is None:
-        return ""
-
-    def _qvec() -> list[float]:
-        return emb.embed_query(query)
-
-    q = np.array(await asyncio.to_thread(_qvec), dtype=np.float32)
-    scores = _cosine_sim(q, mat)
-    idx = np.argsort(-scores)[:top]
-    picked = [ch[i] for i in idx if i < len(ch)]
+def _format_prompt_block(picked: list[str]) -> str:
     if not picked:
         return ""
     body = "\n\n---\n\n".join(picked)
@@ -167,10 +149,66 @@ async def retrieve_context(query: str, k: int | None = None) -> str:
     )
 
 
+async def retrieve_context_bundle(query: str, k: int | None = None) -> RagRetrieval:
+    """Top-k chunks + метаданни за източници (scores, preview)."""
+    if not settings.RAG_ENABLED:
+        return RagRetrieval(prompt_block="", sources=[])
+    top = k if k is not None else settings.RAG_TOP_K
+    if not query.strip():
+        return RagRetrieval(prompt_block="", sources=[])
+    if _corpus_empty:
+        return RagRetrieval(prompt_block="", sources=[])
+
+    async with _build_lock:
+        if _matrix is None:
+            await _build_index_unlocked()
+        if _matrix is None or not _chunk_texts:
+            return RagRetrieval(prompt_block="", sources=[])
+        mat = _matrix
+        ch = list(_chunk_texts)
+        src = list(_chunk_sources)
+
+    emb = await _ensure_embedder()
+    if emb is None:
+        return RagRetrieval(prompt_block="", sources=[])
+
+    def _qvec() -> list[float]:
+        return emb.embed_query(query)
+
+    q = np.array(await asyncio.to_thread(_qvec), dtype=np.float32)
+    scores = _cosine_sim(q, mat)
+    idx = np.argsort(-scores)[:top]
+    picked: list[str] = []
+    sources_out: list[RagSourceItem] = []
+    for i in idx:
+        if int(i) >= len(ch):
+            continue
+        text = ch[int(i)]
+        picked.append(text)
+        sc = float(scores[int(i)])
+        preview = " ".join(text.split())[:200]
+        sources_out.append(
+            RagSourceItem(source=src[int(i)] if int(i) < len(src) else "unknown", score=sc, preview=preview)
+        )
+        if settings.RAG_LOG_RETRIEVAL:
+            logger.info("RAG hit source=%s score=%.4f", src[int(i)] if int(i) < len(src) else "?", sc)
+
+    if not picked:
+        return RagRetrieval(prompt_block="", sources=[])
+    return RagRetrieval(prompt_block=_format_prompt_block(picked), sources=sources_out)
+
+
+async def retrieve_context(query: str, k: int | None = None) -> str:
+    """Съвместимост: само текстовият блок за prompt."""
+    bundle = await retrieve_context_bundle(query, k=k)
+    return bundle.prompt_block
+
+
 async def invalidate_rag_index() -> None:
     """Call after adding/removing knowledge files so the next query rebuilds embeddings."""
-    global _chunks, _matrix, _corpus_empty
+    global _chunk_texts, _chunk_sources, _matrix, _corpus_empty
     async with _build_lock:
-        _chunks = []
+        _chunk_texts = []
+        _chunk_sources = []
         _matrix = None
         _corpus_empty = False

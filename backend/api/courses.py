@@ -6,14 +6,10 @@ from pydantic import BaseModel
 from typing import List
 import json
 import uuid
-from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import SystemMessage, HumanMessage
-from core.config import settings
+from core.llm_factory import get_chat_llm
 from core.rag_facade import retrieve_for_prompt
 from api.seed_lesson_content import SEED_LESSON_MARKDOWN
-
-# Initialize LLM for Course Generation
-llm = ChatMistralAI(model="mistral-large-latest", temperature=0.7, api_key=settings.MISTRAL_API_KEY)
 
 router = APIRouter()
 
@@ -193,8 +189,9 @@ async def generate_course(
     ]
     
     try:
+        llm = get_chat_llm(temperature=0.7)
         response = await llm.ainvoke(messages)
-        content = response.content.strip()
+        content = (response.content if isinstance(response.content, str) else str(response.content)).strip()
         if content.startswith("```json"):
             content = content[7:-3].strip()
         elif content.startswith("```"):

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SupabaseLoginForm } from "@/components/Auth/SupabaseLoginForm";
@@ -11,11 +12,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 	return locale === "bg"
 		? {
 				title: "Вход · AgriNexus",
-				description: "Вход с Supabase (Google или magic link).",
+				description: "Вход с имейл и парола, magic link или Google (Supabase).",
 			}
 		: {
 				title: "Login · AgriNexus",
-				description: "Sign in with Supabase (Google or magic link).",
+				description: "Sign in with email & password, magic link, or Google (Supabase).",
 			};
 }
 
@@ -50,7 +51,11 @@ export default async function LoginPage({ params }: PageProps) {
 				{c.body} <code className="rounded bg-slate-200 px-1">NEXT_PUBLIC_SUPABASE_*</code> {c.bodyMid}
 			</p>
 			<div className="mt-8">
-				<SupabaseLoginForm locale={appLocale} />
+				<Suspense
+					fallback={<p className="text-sm text-slate-500">{locale === "bg" ? "Зареждане…" : "Loading…"}</p>}
+				>
+					<SupabaseLoginForm locale={appLocale} />
+				</Suspense>
 			</div>
 			<p className="mt-8 text-sm">
 				<Link href="/" className="text-emerald-800 underline underline-offset-4">

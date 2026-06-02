@@ -1,5 +1,6 @@
 "use client";
 
+import type { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -11,6 +12,52 @@ function safeInternalPath(next: string | null, fallback: string): string {
 	return next;
 }
 
+function loginPathFromLocale(locale: string | null): string {
+	return locale === "bg" ? "/bg/login" : "/login";
+}
+
+async function resolveSessionAfterRedirect(): Promise<Session | null> {
+	if (typeof window === "undefined") return null;
+
+	const url = window.location.href;
+	const code = new URLSearchParams(window.location.search).get("code");
+	if (code) {
+		const { error } = await supabase.auth.exchangeCodeForSession(url);
+		if (error) {
+			console.error("exchangeCodeForSession:", error);
+			return null;
+		}
+	}
+
+	let {
+		data: { session },
+	} = await supabase.auth.getSession();
+	if (session?.user) return session;
+
+	return await new Promise((resolve) => {
+		let done = false;
+		let timeoutId: number;
+
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((_event, s) => {
+			if (s?.user && !done) {
+				done = true;
+				window.clearTimeout(timeoutId);
+				subscription.unsubscribe();
+				resolve(s);
+			}
+		});
+
+		timeoutId = window.setTimeout(() => {
+			if (done) return;
+			done = true;
+			subscription.unsubscribe();
+			void supabase.auth.getSession().then(({ data: { session: s } }) => resolve(s?.user ? s : null));
+		}, 2800);
+	});
+}
+
 export function AuthCallbackContent() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -19,14 +66,19 @@ export function AuthCallbackContent() {
 	useEffect(() => {
 		let cancelled = false;
 		const next = safeInternalPath(searchParams.get("next"), "/dashboard");
+		const locale = searchParams.get("locale");
+		const loginPath = loginPathFromLocale(locale);
+		const authFailedMsg =
+			locale === "bg"
+				? "Неуспешен вход — опитайте отново или поискайте нов линк."
+				: "Sign-in failed — try again or request a new link.";
 
 		(async () => {
-			const {
-				data: { session },
-			} = await supabase.auth.getSession();
+			const session = await resolveSessionAfterRedirect();
 			if (cancelled) return;
+
 			if (!session?.user) {
-				router.replace("/login");
+				router.replace(`${loginPath}?error=${encodeURIComponent(authFailedMsg)}`);
 				return;
 			}
 

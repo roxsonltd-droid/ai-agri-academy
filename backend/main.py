@@ -8,8 +8,18 @@ from models.progress import UserLessonProgress
 # Регистриране на ORM модели за create_all (SQLite dev)
 import models.feedback  # noqa: F401
 
-# Dev SQLite: auto-create tables. PostgreSQL: use `alembic upgrade head`.
+# Dev SQLite: auto-create tables. PostgreSQL: use `alembic upgrade head` or auto-create.
 if settings.DATABASE_URL.startswith("sqlite"):
+    Base.metadata.create_all(bind=engine)
+elif settings.DATABASE_URL.startswith("postgresql"):
+    try:
+        from sqlalchemy import text
+        with engine.connect() as conn:
+            conn.execute(text("CREATE EXTENSION IF NOT EXISTS postgis;"))
+            conn.commit()
+    except Exception:
+        pass
+    # For now, let's also auto-create tables in Postgres for dev convenience
     Base.metadata.create_all(bind=engine)
 
 app = FastAPI(

@@ -28,3 +28,4 @@ opentelemetry-instrumentation-fastapi>=0.40b0
 prometheus-client>=0.17.1,<1
 GeoAlchemy2>=0.15.1,<1
 shapely>=2.0.4,<3
+pyotp>=2.9.0,<3

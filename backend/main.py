@@ -31,6 +31,9 @@ app = FastAPI(
 from core.observability import setup_observability
 setup_observability(app)
 
+from core.audit_middleware import AuditMiddleware
+app.add_middleware(AuditMiddleware)
+
 @app.on_event("startup")
 async def startup_event():
     from core.search import init_typesense_collections

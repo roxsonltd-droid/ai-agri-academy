@@ -33,3 +33,39 @@ def decode_access_token(token: str) -> dict | None:
         return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
         return None
+
+from fastapi import HTTPException, status, Security, Depends
+from fastapi.security.api_key import APIKeyHeader
+from models.user import User
+from db.database import get_db
+from sqlalchemy.orm import Session
+
+class RoleChecker:
+    def __init__(self, allowed_roles: list[str]):
+        self.allowed_roles = allowed_roles
+
+    def __call__(self, user: User):
+        if user.role not in self.allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Operation not permitted for this role"
+            )
+        return user
+
+api_key_header_auth = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+def verify_api_key(
+    api_key_header: str = Security(api_key_header_auth),
+    db: Session = Depends(get_db)
+):
+    from models.security import ApiKey
+    if not api_key_header:
+        raise HTTPException(status_code=403, detail="API Key missing")
+        
+    # In production, compare hashes. Here we assume direct match for demonstration.
+    key_record = db.query(ApiKey).filter(ApiKey.hashed_key == api_key_header).first()
+    if not key_record:
+        raise HTTPException(status_code=403, detail="Invalid API Key")
+        
+    return key_record
+

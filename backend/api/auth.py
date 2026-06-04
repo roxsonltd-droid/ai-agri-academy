@@ -96,5 +96,36 @@ def read_users_me(user: User = Depends(get_current_user)):
         "id": user.id,
         "email": user.email,
         "full_name": user.full_name,
-        "role": user.role
+        "role": user.role,
+        "mfa_enabled": getattr(user, 'mfa_enabled', False)
     }
+
+import pyotp
+
+@router.post("/mfa/setup")
+def setup_mfa(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if getattr(user, 'mfa_enabled', False):
+        raise HTTPException(status_code=400, detail="MFA is already enabled")
+        
+    secret = pyotp.random_base32()
+    user.mfa_secret = secret
+    db.commit()
+    
+    uri = pyotp.totp.TOTP(secret).provisioning_uri(name=user.email, issuer_name="AgriOS")
+    return {"secret": secret, "qr_uri": uri}
+
+class VerifyMFA(BaseModel):
+    code: str
+
+@router.post("/mfa/verify")
+def verify_mfa(payload: VerifyMFA, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if not getattr(user, 'mfa_secret', None):
+        raise HTTPException(status_code=400, detail="MFA setup not initiated")
+        
+    totp = pyotp.TOTP(user.mfa_secret)
+    if totp.verify(payload.code):
+        user.mfa_enabled = True
+        db.commit()
+        return {"status": "MFA enabled successfully"}
+    
+    raise HTTPException(status_code=400, detail="Invalid MFA code")

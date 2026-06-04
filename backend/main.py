@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from core.config import settings
-from api import users, chat, auth, courses, admin_courses, lab, knowledge, platform, agents_route, storage, voice, vision, stream, feedback, tutor_compat, academy_tutor
+from backend.core.config import settings
+from backend.api import users, chat, auth, courses, admin_courses, lab, knowledge, platform, agents_route, storage, voice, vision, stream, feedback, tutor_compat, academy_tutor
+from backend.api.graphql import router as graphql_router
 from db.database import engine, Base
 from models.progress import UserLessonProgress
 
@@ -49,7 +50,10 @@ async def startup_event():
     # Init FastStream Event Broker (RabbitMQ)
     from core.events import broker
     from workers.vision_worker import vision_router
-    broker.include_router(vision_router)
+    from workers.prediction_worker import prediction_router
+    from workers.collective_intelligence_worker import collective_router
+    broker.include_router(prediction_router)
+    broker.include_router(collective_router)
     # Attempt to connect (will fail gracefully if RabbitMQ is not running locally)
     try:
         await broker.connect()
@@ -97,6 +101,7 @@ app.include_router(agents_route.router, prefix=f"{settings.API_V1_STR}/agents", 
 app.include_router(academy_tutor.router, prefix=f"{settings.API_V1_STR}/academy/tutor", tags=["academy-tutor"])
 app.include_router(stream.router, prefix=f"{settings.API_V1_STR}/stream", tags=["stream"])
 app.include_router(feedback.router, prefix=f"{settings.API_V1_STR}/feedback", tags=["feedback"])
+app.include_router(graphql_router, prefix=f"{settings.API_V1_STR}/graphql", tags=["prediction"])
 
 from api import sync
 app.include_router(sync.router, prefix=f"{settings.API_V1_STR}/sync", tags=["sync"])

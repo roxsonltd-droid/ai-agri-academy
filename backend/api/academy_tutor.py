@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from ai.academy_debate_graph import run_academy_debate
 from ai.academy_rag import combined_academy_context
 from core.config import settings
-from db.database import get_db
+from backend.db.database import get_db
 
 router = APIRouter()
 

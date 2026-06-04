@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db.database import get_db
+from backend.db.database import get_db
 from models.course import Course, Module, Lesson
 from models.user import User
 from core.bearer_user import ensure_admin

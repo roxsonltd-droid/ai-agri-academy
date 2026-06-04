@@ -19,9 +19,16 @@ class ChatResponse(BaseModel):
     rag_sources: list[RagSourceItem] = []
 
 
-from fastapi_limiter.depends import RateLimiter
+try:
+    from fastapi_limiter.depends import RateLimiter
+except ImportError:
+    def RateLimiter(*args, **kwargs):
+        """Fallback RateLimiter that does nothing when fastapi_limiter is unavailable."""
+        def dummy():
+            return None
+        return dummy
 
-@router.post("/", response_model=ChatResponse, dependencies=[Depends(RateLimiter(times=10, seconds=60))])
+
 async def chat_with_agromind(request: Request, body: ChatRequest):
     try:
         out: TutorChatResult = await ask_agromind(body.message)

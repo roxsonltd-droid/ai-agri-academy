@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+faststream[rabbitmq]
+strawberry-graphql
+neo4j
+scikit-learn
+xgboost
+prophet
+joblib
+pandas

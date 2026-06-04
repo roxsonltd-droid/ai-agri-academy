@@ -30,3 +30,8 @@ GeoAlchemy2>=0.15.1,<1
 shapely>=2.0.4,<3
 pyotp>=2.9.0,<3
 faststream[rabbit]>=0.4.0,<1
+neo4j==5.20.0
+strawberry-graphql==0.224.0
+scikit-learn==1.5.0
+xgboost==2.1.0
+prophet==1.1.5

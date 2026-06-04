@@ -41,6 +41,22 @@ services:
       - redis_data:/data
     restart: unless-stopped
 
+  neo4j:
+    image: neo4j:5.20
+    environment:
+      - NEO4J_AUTH=neo4j/test
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   pgdata:
   redis_data:
+  neo4j_data:

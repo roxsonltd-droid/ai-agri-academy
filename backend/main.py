@@ -22,6 +22,21 @@ app = FastAPI(
 async def startup_event():
     from core.search import init_typesense_collections
     init_typesense_collections()
+    
+    # Init Redis & Rate Limiting
+    from core.redis_client import init_redis
+    from fastapi_limiter import FastAPILimiter
+    redis_client = await init_redis()
+    if redis_client:
+        await FastAPILimiter.init(redis_client)
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    from core.redis_client import close_redis
+    from fastapi_limiter import FastAPILimiter
+    await close_redis()
+    # FastAPILimiter.close() might not exist in older versions, but we can safely close redis
+
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:

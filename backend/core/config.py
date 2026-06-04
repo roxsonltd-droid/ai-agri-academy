@@ -99,6 +99,9 @@ class Settings(BaseSettings):
 
     # POST /api/v1/chat: max заявки на IP за 60 s (0 = без лимит)
     CHAT_RATE_LIMIT_PER_MINUTE: int = 0
+    
+    # Redis configuration for cache, rate limiting, and background jobs
+    REDIS_URL: str = "redis://localhost:6379/0"
 
     class Config:
         env_file = ".env"

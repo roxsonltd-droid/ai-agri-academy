@@ -19,9 +19,10 @@ class ChatResponse(BaseModel):
     rag_sources: list[RagSourceItem] = []
 
 
-@router.post("/", response_model=ChatResponse)
+from fastapi_limiter.depends import RateLimiter
+
+@router.post("/", response_model=ChatResponse, dependencies=[Depends(RateLimiter(times=10, seconds=60))])
 async def chat_with_agromind(request: Request, body: ChatRequest):
-    enforce_chat_rate_limit(request)
     try:
         out: TutorChatResult = await ask_agromind(body.message)
         return ChatResponse(reply=out.reply, rag_sources=out.rag_sources)

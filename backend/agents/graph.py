@@ -56,10 +56,18 @@ async def _try_build_graph_async():
         tools_list.extend(mcp_tools)
         
         try:
-            from langgraph.checkpoint.memory import MemorySaver
-
-            return create_react_agent(llm, tools_list, prompt=SYS_REACT, checkpointer=MemorySaver())
+            from langgraph.checkpoint.redis.aio import AsyncRedisSaver
+            from core.redis_client import get_redis
+            
+            redis_client = get_redis()
+            if redis_client:
+                # Use Redis for persistent AI memory
+                return create_react_agent(llm, tools_list, prompt=SYS_REACT, checkpointer=AsyncRedisSaver(redis_client))
+            else:
+                from langgraph.checkpoint.memory import MemorySaver
+                return create_react_agent(llm, tools_list, prompt=SYS_REACT, checkpointer=MemorySaver())
         except (TypeError, ImportError):
+            logger.warning("RedisSaver not available, falling back to stateless/MemorySaver agent.")
             return create_react_agent(llm, tools_list, prompt=SYS_REACT)
     except ImportError:
         logger.info("LangGraph not installed — optional. See requirements-ai.txt")

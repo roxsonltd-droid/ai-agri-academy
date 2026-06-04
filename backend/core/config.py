@@ -45,8 +45,14 @@ class Settings(BaseSettings):
     ACADEMY_LESSON_RAG_TOP_K: int = 4
     ACADEMY_DEBATE_MAX_ROUNDS: int = 3
 
-    # Platform: RAG backend — "files" (bundled MD + uploads + Mistral embed) or "llamaindex" (Pinecone)
-    PLATFORM_RAG_BACKEND: str = "files"
+    # Platform: RAG backend — "files" (bundled MD), "llamaindex" (Qdrant), or "elasticsearch"
+    PLATFORM_RAG_BACKEND: str = "elasticsearch"
+
+    # Elasticsearch / OpenSearch (Hybrid Search path)
+    ELASTICSEARCH_URL: str | None = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
+    ELASTICSEARCH_USERNAME: str | None = os.getenv("ELASTICSEARCH_USERNAME")
+    ELASTICSEARCH_PASSWORD: str | None = os.getenv("ELASTICSEARCH_PASSWORD")
+    ELASTICSEARCH_INDEX_NAME: str = "agro_knowledge_hybrid"
 
     # Qdrant + OpenAI embeddings (LlamaIndex path)
     QDRANT_URL: str | None = None

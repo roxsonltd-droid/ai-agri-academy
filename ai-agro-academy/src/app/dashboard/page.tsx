@@ -1,321 +1,175 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BrainCircuit, BookOpen, PlayCircle, Loader2, Sparkles } from "lucide-react";
-import { easeOutExpo, listContainerVariants, listItemVariants, transitionSnappy } from "@/lib/motion";
-
-type MeUser = {
-  id?: string | number;
-  email?: string;
-  full_name?: string;
-};
-
-type CourseSummary = {
-  id: string | number;
-  title: string;
-  modules: {
-    id: string;
-    lessons: { id: string; title: string; completed?: boolean }[];
-  }[];
-};
+import { ChevronLeft, CloudRain, ShieldAlert, CircleDollarSign, Tractor, LineChart, Cpu, Sun, ThermometerSnowflake, Droplets, ArrowUpRight, BrainCircuit } from "lucide-react";
 
 export default function DashboardPage() {
-  const reduceMotion = useReducedMotion();
-  const [user, setUser] = useState<MeUser | null>(null);
-  const [courses, setCourses] = useState<CourseSummary[]>([]);
-  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [newTopic, setNewTopic] = useState("");
-
-  useEffect(() => {
-    const fetchUserAndCourses = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        window.location.href = "/login";
-        return;
-      }
-
-      try {
-        const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/auth/me`,  {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-
-        if (!userResponse.ok) {
-          throw new Error("Invalid token");
-        }
-
-        const userData = await userResponse.json();
-        setUser(userData);
-
-        // Fetch courses
-        const coursesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/courses/`);
-        if (coursesResponse.ok) {
-          const coursesData = await coursesResponse.json();
-          setCourses(coursesData);
-        }
-
-        // Fetch progress
-        const progressResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/courses/progress/my`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        });
-        if (progressResponse.ok) {
-          const progData = await progressResponse.json();
-          setCompletedLessons(progData.completed_lessons || []);
-        }
-      } catch {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserAndCourses();
-  }, []);
-
-  const handleGenerateCourse = async () => {
-    if (!newTopic.trim()) return;
-    setIsGenerating(true);
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/courses/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: newTopic })
-      });
-      if (response.ok) {
-        const newCourse = await response.json();
-        setCourses([...courses, newCourse]);
-        setNewTopic("");
-      }
-    } catch (error) {
-      console.error("Error generating course:", error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="h-8 w-8 text-primary animate-spin" />
-      </div>
-    );
-  }
-
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background font-sans text-foreground">
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
-        <div className="ai-mesh">
-          <div className="ai-mesh-blob -top-20 right-0 w-[60%] h-[50%] bg-gradient-to-bl from-primary/20 to-cyan-400/10" />
-          <div className="ai-mesh-blob bottom-0 left-0 w-[50%] h-[45%] bg-gradient-to-tr from-accent/15 to-transparent" />
-        </div>
+    <div className="relative min-h-screen bg-slate-950 font-sans text-slate-200 flex flex-col pt-16 overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-emerald-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-indigo-900/10 rounded-full blur-[120px]" />
       </div>
 
-      <main className="container mx-auto px-4 py-8 pt-36">
-        <motion.div
-          className="mb-8"
-          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: transitionSnappy.duration, ease: easeOutExpo }}
-        >
-          <h1 className="text-3xl font-bold tracking-tight mb-2 text-foreground">
-            Здравейте, {user?.full_name?.split(" ")[0] || "Колега"}
-          </h1>
-          <p className="text-muted-foreground text-lg">Добре дошли във вашия студентски портал.</p>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-          variants={listContainerVariants}
-          initial={reduceMotion ? "show" : "hidden"}
-          animate="show"
-        >
-          <motion.div variants={listItemVariants} className="col-span-1 md:col-span-3">
-          <Card className="h-full overflow-hidden border border-white/10 bg-gradient-to-br from-band via-band to-primary/35 text-band-foreground shadow-elevated ring-1 ring-white/10">
-            <CardContent className="relative p-8 flex flex-col sm:flex-row items-center justify-between">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(5_150_105/0.35),transparent_55%)]" />
-              <div className="relative flex items-center space-x-6 mb-4 sm:mb-0">
-                <div className="h-16 w-16 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-md ring-1 ring-white/20">
-                  <BrainCircuit className="h-8 w-8 text-cyan-300" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold mb-1">Проф. АгроМайнд е на линия</h2>
-                  <p className="text-slate-300">Вашият личен AI агроном ви очаква за консултация.</p>
-                </div>
+      <div className="container mx-auto px-4 py-8 mb-16 relative z-10 flex-1 max-w-[1400px] flex flex-col">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-slate-800 pb-6 shrink-0">
+          <div>
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                <Cpu className="w-5 h-5 text-emerald-400" />
               </div>
-              <div className="relative z-10 flex flex-col gap-2 sm:flex-row sm:items-center">
-                <Link href="/faculty/agromind">
-                  <Button className="h-12 px-6 border-0 shadow-md glow-primary">Свържи се сега</Button>
-                </Link>
-                <Link href="/knowledge">
-                  <Button
-                    variant="outline"
-                    className="h-12 px-6 border-white/35 bg-white/10 text-band-foreground backdrop-blur-sm hover:bg-white/20 hover:text-band-foreground"
-                  >
-                    Качи документи (RAG)
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-          </motion.div>
+              <h1 className="text-3xl font-bold text-white tracking-tight">AI Farm Command Center</h1>
+            </div>
+            <p className="text-slate-400">Главно табло за управление. Управлявано от <strong className="text-emerald-400">Super AI Farmer</strong>.</p>
+          </div>
+          
+          <div className="mt-4 md:mt-0 flex items-center bg-slate-900 border border-slate-800 rounded-lg px-4 py-2 shadow-inner">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-3" />
+            <span className="text-sm font-mono text-emerald-400 uppercase tracking-widest">Системата е Синхронизирана</span>
+          </div>
+        </div>
 
-          <motion.div variants={listItemVariants} className="col-span-1 md:col-span-3">
-          <Card className="h-full glass-subtle border-border/60 shadow-card hover:shadow-elevated hover-lift transition-all">
-            <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
-              <div className="flex items-center space-x-5 mb-4 sm:mb-0">
-                <div className="h-14 w-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 shadow-sm">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    className="text-indigo-400"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-                  </svg>
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-foreground mb-1">Дигитален Паспорт на Полето</h2>
-                  <p className="text-muted-foreground text-sm">История, разходи, сателитни карти и метеорология за всеки парцел.</p>
-                </div>
-              </div>
-              <Link href="/passport">
-                <Button variant="outline" className="h-11 px-6 font-semibold border-indigo-500/40 text-indigo-400 hover:bg-indigo-500/10">
-                  Отвори Паспорта
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-          </motion.div>
-
-          <motion.div variants={listItemVariants} className="col-span-1 md:col-span-3">
-          <Card className="h-full glass border-primary/20 bg-gradient-to-r from-secondary/80 to-primary/5 shadow-card">
-            <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
-              <div className="flex items-center space-x-5 mb-4 sm:mb-0 w-full sm:w-1/2">
-                <div className="h-14 w-14 rounded-2xl bg-card/90 backdrop-blur-sm flex items-center justify-center shadow-sm shrink-0 border border-border/60">
-                  <Sparkles className="h-7 w-7 text-primary" />
-                </div>
-                <div className="w-full">
-                  <h2 className="text-xl font-bold text-foreground mb-1">AI Създател на Курсове</h2>
-                  <p className="text-muted-foreground text-sm mb-3">
-                    Въведи тема и изкуственият интелект ще ти генерира персонализиран курс.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 w-full mt-4">
-                    <input
-                      type="text"
-                      placeholder="Напиши тема (напр. Оранжерии, Дронове, Пчели)..."
-                      className="flex-1 h-14 px-5 rounded-xl border-2 border-primary/25 bg-card/80 backdrop-blur-sm shadow-inner text-lg font-medium text-foreground focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all placeholder:text-subtle-foreground"
-                      value={newTopic}
-                      onChange={(e) => setNewTopic(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleGenerateCourse()}
-                    />
-                    <Button
-                      onClick={handleGenerateCourse}
-                      disabled={isGenerating || !newTopic.trim()}
-                      className="h-14 px-8 text-lg rounded-xl shadow-md transition-all whitespace-nowrap"
-                    >
-                      {isGenerating ? <Loader2 className="h-6 w-6 animate-spin" /> : "Генерирай"}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          </motion.div>
-
-          <motion.div variants={listItemVariants} className="col-span-1 md:col-span-3">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-foreground">Моите Курсове и Прогрес</h2>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 lg:gap-6 flex-1 auto-rows-min">
+          
+          {/* Main AI Agent Action Center */}
+          <div className="col-span-1 md:col-span-4 lg:col-span-8 lg:row-span-2 bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 p-8 opacity-5">
+              <Cpu className="w-48 h-48 text-emerald-500" />
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => {
-                const totalLessons = course.modules?.reduce((acc, m) => acc + (m.lessons?.length || 0), 0) || 0;
-                const completedInCourse = course.modules?.reduce((acc, m) => {
-                  return acc + (m.lessons?.filter(l => completedLessons.includes(l.id)).length || 0);
-                }, 0) || 0;
-                
-                const progressPercent = totalLessons > 0 ? Math.round((completedInCourse / totalLessons) * 100) : 0;
-                
-                // Find next lesson
-                let nextLessonId = "";
-                let nextLessonTitle = "";
-                if (course.modules) {
-                  for (const m of course.modules) {
-                    for (const l of m.lessons || []) {
-                      if (!completedLessons.includes(l.id)) {
-                        nextLessonId = l.id;
-                        nextLessonTitle = l.title;
-                        break;
-                      }
-                    }
-                    if (nextLessonId) break;
-                  }
-                }
-
-                return (
-                  <Card
-                    key={course.id}
-                    className="h-full overflow-hidden border-border/60 bg-card/70 backdrop-blur-md shadow-card hover:shadow-elevated hover-lift transition-all hover:border-primary/25 flex flex-col"
-                  >
-                    <div className="h-32 bg-muted/60 border-b border-border/50 flex items-center justify-center backdrop-blur-sm">
-                      <BookOpen className="h-12 w-12 text-subtle-foreground" />
-                    </div>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-lg line-clamp-2">{course.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-1 flex flex-col justify-end">
-                      <div className="w-full bg-muted rounded-full h-2 mb-2 overflow-hidden">
-                        <div className="bg-primary h-2 rounded-full transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
-                      </div>
-                      <div className="flex justify-between items-center mb-4">
-                        <p className="text-sm font-medium text-primary">{progressPercent}% Завършен</p>
-                        <p className="text-xs text-muted-foreground">{completedInCourse} / {totalLessons} урока</p>
-                      </div>
-                      
-                      {nextLessonTitle && (
-                        <div className="mb-4 text-sm bg-muted/50 p-2 rounded-lg border border-border/50">
-                          <span className="text-xs text-muted-foreground block mb-1">Следващ урок:</span>
-                          <span className="font-medium truncate block" title={nextLessonTitle}>{nextLessonTitle}</span>
-                        </div>
-                      )}
-
-                      <Link href={`/courses/${course.id}`} className="w-full mt-auto">
-                        <Button variant={progressPercent > 0 ? "default" : "outline"} className={`w-full ${progressPercent > 0 ? 'glow-primary' : 'border-border/80'}`}>
-                          <PlayCircle className="h-4 w-4 mr-2" />
-                          {progressPercent > 0 ? (progressPercent >= 100 ? "Преговор" : "Продължи") : "Започни"}
-                        </Button>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-
-              <Card className="h-full border-dashed border-border/70 bg-muted/30 backdrop-blur-sm flex flex-col items-center justify-center text-center p-6 min-h-[300px] hover:border-primary/30 transition-colors">
-                <div className="h-12 w-12 rounded-full bg-card shadow-sm flex items-center justify-center mb-4 text-primary ring-1 ring-border/60">
-                  +
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Запиши нов курс</h3>
-                <p className="text-sm text-muted-foreground">Разгледайте каталога с всички налични обучения.</p>
-              </Card>
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+                <BrainCircuit className="w-8 h-8 text-emerald-400" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-white">Super AI Farmer</h2>
+                <p className="text-emerald-400 font-mono text-sm">Главен Оркестратор (LangGraph)</p>
+              </div>
             </div>
-          </motion.div>
-        </motion.div>
-      </main>
+
+            <div className="flex-1">
+              <div className="bg-slate-950 border border-slate-800 rounded-xl p-5 mb-6">
+                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Дневен План за Действие</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xs font-bold mr-3 shrink-0">1</span>
+                    <p className="text-slate-300 text-sm">Открито е локално засушаване в Блок 101. Пуснете поливната система (Сектор А) за 4 часа.</p>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold mr-3 shrink-0">2</span>
+                    <p className="text-slate-300 text-sm">Пазарната цена на слънчогледа се покачи с 5%. Препоръчително е да продадете 30% от наличностите днес в FIELDLOT.</p>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold mr-3 shrink-0">3</span>
+                    <p className="text-slate-300 text-sm">Трактор John Deere #2 се нуждае от смяна на масло след 15 моточаса. Графикът на оператора е свободен утре.</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="relative">
+              <input 
+                type="text" 
+                placeholder='Попитай: "Какво трябва да направя тази седмица?"' 
+                className="w-full bg-slate-900 border border-emerald-500/50 rounded-xl pl-6 pr-4 py-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+              />
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-bold transition-colors">
+                Анализирай
+              </button>
+            </div>
+          </div>
+
+          {/* Weather Mini-Module */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 relative overflow-hidden group hover:border-blue-500/50 transition-colors">
+            <Link href="/weather" className="absolute inset-0 z-10" />
+            <div className="flex justify-between items-start mb-4 relative z-20">
+              <h3 className="font-bold text-white flex items-center">
+                <CloudRain className="w-4 h-4 mr-2 text-blue-400" /> Времето
+              </h3>
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors" />
+            </div>
+            <div className="flex items-center mb-6">
+              <Sun className="w-12 h-12 text-yellow-400 mr-4" />
+              <div>
+                <p className="text-3xl font-bold text-white">24°</p>
+                <p className="text-sm text-slate-400">Слънчево • Пловдив</p>
+              </div>
+            </div>
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+              <p className="text-xs text-amber-400 font-bold flex items-center">
+                <ShieldAlert className="w-3 h-3 mr-1" /> Очакват се валежи в Сряда
+              </p>
+            </div>
+          </div>
+
+          {/* Finance Mini-Module */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 relative overflow-hidden group hover:border-amber-500/50 transition-colors">
+            <Link href="/finance" className="absolute inset-0 z-10" />
+            <div className="flex justify-between items-start mb-4 relative z-20">
+              <h3 className="font-bold text-white flex items-center">
+                <CircleDollarSign className="w-4 h-4 mr-2 text-amber-400" /> Финанси
+              </h3>
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-colors" />
+            </div>
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs text-slate-500 uppercase">Очаквана Печалба</p>
+                <p className="text-2xl font-bold text-emerald-400">+124,500 лв</p>
+              </div>
+              <div className="h-12 flex items-end space-x-1">
+                {[40, 60, 45, 80, 50, 90, 70].map((h, i) => (
+                  <div key={i} className="flex-1 bg-amber-500/40 rounded-t-sm transition-all hover:bg-amber-500" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Satellite & Fields */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-6 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 relative overflow-hidden group hover:border-teal-500/50 transition-colors">
+            <Link href="/satellite" className="absolute inset-0 z-10" />
+            <div className="flex justify-between items-start mb-4 relative z-20">
+              <h3 className="font-bold text-white flex items-center">
+                <LineChart className="w-4 h-4 mr-2 text-teal-400" /> Сателит & Полета
+              </h3>
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-teal-400 transition-colors" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-slate-950 rounded-xl p-4 border border-slate-800">
+                <p className="text-xs text-slate-500 uppercase mb-1">Среден NDVI</p>
+                <p className="text-xl font-bold text-teal-400">0.78 <span className="text-xs text-slate-500 font-normal">Нормално</span></p>
+              </div>
+              <div className="bg-slate-950 rounded-xl p-4 border border-slate-800">
+                <p className="text-xs text-slate-500 uppercase mb-1">Активни Блокове</p>
+                <p className="text-xl font-bold text-white">12 <span className="text-xs text-slate-500 font-normal">от 15</span></p>
+              </div>
+            </div>
+          </div>
+
+          {/* Machinery Mini-Module */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-6 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 relative overflow-hidden group hover:border-slate-400/50 transition-colors">
+            <Link href="/agents/machinery" className="absolute inset-0 z-10" />
+            <div className="flex justify-between items-start mb-4 relative z-20">
+              <h3 className="font-bold text-white flex items-center">
+                <Tractor className="w-4 h-4 mr-2 text-slate-400" /> Техника
+              </h3>
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-slate-400 transition-colors" />
+            </div>
+            <div className="space-y-3 mt-2">
+              <div className="flex justify-between items-center bg-slate-950 px-3 py-2 rounded-lg border border-slate-800">
+                <span className="text-sm font-bold text-white">Трактор J.D. R8R</span>
+                <span className="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded">В Движение</span>
+              </div>
+              <div className="flex justify-between items-center bg-slate-950 px-3 py-2 rounded-lg border border-slate-800">
+                <span className="text-sm font-bold text-white">Пръскачка R4040</span>
+                <span className="text-xs text-amber-400 bg-amber-400/10 px-2 py-1 rounded">Сервиз (Утре)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }
-

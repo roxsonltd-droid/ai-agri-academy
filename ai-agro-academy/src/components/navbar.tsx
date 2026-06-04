@@ -87,7 +87,8 @@ export default function Navbar() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const navLinks = [
-    { name: "Agri Intelligence", href: "/intelligence", className: "text-emerald-400 font-bold" },
+    { name: "AI Command Center", href: "/dashboard", className: "text-emerald-400 font-bold" },
+    { name: "FIELDLOT Пазар", href: "/marketplace", className: "text-amber-400 font-bold" },
     { name: "Финанси", href: "/finance" },
     { name: "Дигитален Паспорт", href: "/passport" },
     { name: "Метеорология", href: "/weather" },

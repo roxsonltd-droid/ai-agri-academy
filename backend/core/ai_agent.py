@@ -64,7 +64,7 @@ async def route_to_expert(message: str, llm: "BaseChatModel") -> str:
         return "agromind"
 
 
-async def ask_agromind(message: str, llm_extra_headers: dict[str, str] | None = None) -> TutorChatResult:
+async def ask_agromind(message: str, llm_extra_headers: dict[str, str] | None = None, user_id: str = "default") -> TutorChatResult:
     llm = get_chat_llm(temperature=0.7, extra_headers=llm_extra_headers)
     teacher_id = await route_to_expert(message, llm)
     teacher = get_teacher(teacher_id) or get_teacher("agromind")
@@ -73,6 +73,15 @@ async def ask_agromind(message: str, llm_extra_headers: dict[str, str] | None = 
     human = f"{bundle.prompt_block}\n\nВъпрос на студента:\n{message}" if bundle.prompt_block else message
 
     full_system_prompt = f"{GLOBAL_SYSTEM_PROMPT}\n\nТвоята роля: {teacher.system_prompt_extension_bg}"
+    
+    # 1. Fetch Long-Term Memory context
+    from core.memory_store import get_memory_store
+    store = get_memory_store()
+    if store:
+        items = await store.asearch(("user_facts", user_id))
+        if items:
+            facts = "\n".join([f"- {item.value.get('fact', '')}" for item in items])
+            full_system_prompt += f"\n\nФАКТИ ЗА ТОЗИ ПОТРЕБИТЕЛ (Запазени в LTM):\n{facts}\nИзползвай ги, за да персонализираш отговора си."
 
     messages = [
         SystemMessage(content=full_system_prompt),

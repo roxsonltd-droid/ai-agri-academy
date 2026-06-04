@@ -102,6 +102,9 @@ class Settings(BaseSettings):
     
     # Redis configuration for cache, rate limiting, and background jobs
     REDIS_URL: str = "redis://localhost:6379/0"
+    
+    # PostgreSQL configuration for LangGraph Agent Long-Term Memory (Store API)
+    POSTGRES_STORE_URL: str | None = os.getenv("POSTGRES_STORE_URL", "postgresql://postgres:postgres@localhost:5432/agro_academy")
 
     class Config:
         env_file = ".env"

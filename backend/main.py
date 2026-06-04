@@ -45,13 +45,30 @@ async def startup_event():
     redis_client = await init_redis()
     if redis_client:
         await FastAPILimiter.init(redis_client)
+        
+    # Init FastStream Event Broker (RabbitMQ)
+    from core.events import broker
+    from workers.vision_worker import vision_router
+    broker.include_router(vision_router)
+    # Attempt to connect (will fail gracefully if RabbitMQ is not running locally)
+    try:
+        await broker.connect()
+        import logging
+        logging.getLogger(__name__).info("EDA: Connected to RabbitMQ Event Bus")
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning(f"EDA: RabbitMQ connection failed: {e}. Event Bus disabled.")
 
 @app.on_event("shutdown")
 async def shutdown_event():
     from core.redis_client import close_redis
-    from fastapi_limiter import FastAPILimiter
     await close_redis()
-    # FastAPILimiter.close() might not exist in older versions, but we can safely close redis
+    
+    from core.events import broker
+    try:
+        await broker.disconnect()
+    except Exception:
+        pass
 
 
 # Set all CORS enabled origins

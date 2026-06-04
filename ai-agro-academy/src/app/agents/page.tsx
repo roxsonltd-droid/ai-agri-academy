@@ -28,8 +28,9 @@ import {
   CheckCircle2,
   HardDrive,
   Mail,
-  Send
-} from "lucide-react";
+  Send,
+  Sprout,
+  PawPrint
 import { Button } from "@/components/ui/button";
 
 type Agent = {
@@ -348,6 +349,62 @@ export default function AgentsMissionControl() {
           <div className="mt-4 md:mt-0 flex items-center bg-slate-900 border border-slate-800 rounded-lg px-4 py-2 shadow-inner">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-3" />
             <span className="text-sm font-medium text-emerald-400 uppercase tracking-widest">Системата е активна</span>
+          </div>
+        </div>
+
+        {/* Level 1: Specialized Experts */}
+        <div className="mb-10">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 flex items-center mb-4">
+            <BrainCircuit className="w-4 h-4 mr-2" /> Специализирани Експерти (Ниво 1)
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link href="/agents/agronomist" className="group">
+              <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-colors h-full flex flex-col">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                    <Sprout className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-white">Главен Агроном</h3>
+                </div>
+                <p className="text-xs text-slate-400 flex-1">Експерт по торене, сеитба, почви и третиране с препарати.</p>
+              </div>
+            </Link>
+            
+            <Link href="/agents/plant-doctor" className="group">
+              <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-colors h-full flex flex-col">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-rose-500/10 text-rose-500">
+                    <Bug className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-white">Plant Doctor</h3>
+                </div>
+                <p className="text-xs text-slate-400 flex-1">Качи снимка за диагностика на болести чрез компютърно зрение.</p>
+              </div>
+            </Link>
+
+            <Link href="/agents/livestock" className="group">
+              <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-colors h-full flex flex-col">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-amber-500/10 text-amber-500">
+                    <PawPrint className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-white">Животновъд</h3>
+                </div>
+                <p className="text-xs text-slate-400 flex-1">Съвети за хранене и ветеринарни грижи за фермерски животни.</p>
+              </div>
+            </Link>
+
+            <Link href="/agents/machinery" className="group">
+              <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-colors h-full flex flex-col">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-slate-500/10 text-slate-400">
+                    <Tractor className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-white">Механизатор</h3>
+                </div>
+                <p className="text-xs text-slate-400 flex-1">Настройки и ремонт на трактори, пръскачки и комбайни.</p>
+              </div>
+            </Link>
           </div>
         </div>
 

@@ -87,6 +87,9 @@ export default function Navbar() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const navLinks = [
+    { name: "Дигитален Паспорт", href: "/passport" },
+    { name: "Метеорология", href: "/weather" },
+    { name: "Сателити", href: "/satellite" },
     { name: "Курсове", href: "/courses" },
     { name: "AI Факултет", href: "/faculty/agromind" },
     { name: "Лаборатории", href: "/labs" },

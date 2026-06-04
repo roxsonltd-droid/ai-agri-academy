@@ -171,7 +171,7 @@ export default function DashboardPage() {
           <Card className="h-full glass-subtle border-border/60 shadow-card hover:shadow-elevated hover-lift transition-all">
             <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
               <div className="flex items-center space-x-5 mb-4 sm:mb-0">
-                <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-sm">
+                <div className="h-14 w-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 shadow-sm">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -179,24 +179,22 @@ export default function DashboardPage() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    className="text-primary"
+                    className="text-indigo-400"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <path d="M4.5 3h15" />
-                    <path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3" />
-                    <path d="M6 14h12" />
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-foreground mb-1">Интерактивна Лаборатория</h2>
-                  <p className="text-muted-foreground text-sm">Симулатор за почвен анализ и взимане на решения за засаждане.</p>
+                  <h2 className="text-xl font-bold text-foreground mb-1">Дигитален Паспорт на Полето</h2>
+                  <p className="text-muted-foreground text-sm">История, разходи, сателитни карти и метеорология за всеки парцел.</p>
                 </div>
               </div>
-              <Link href="/labs">
-                <Button variant="outline" className="h-11 px-6 font-semibold border-primary/40 text-primary hover:bg-primary/10">
-                  Отвори Симулатора
+              <Link href="/passport">
+                <Button variant="outline" className="h-11 px-6 font-semibold border-indigo-500/40 text-indigo-400 hover:bg-indigo-500/10">
+                  Отвори Паспорта
                 </Button>
               </Link>
             </CardContent>

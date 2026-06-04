@@ -90,7 +90,7 @@ export default function PodcastPage() {
         };
       }
     } catch (err: any) {
-      setError("Грешка при пускане на подкаста.");
+      setError(err.message || "Грешка при пускане на подкаста.");
     } finally {
       setIsLoadingAudio(false);
     }

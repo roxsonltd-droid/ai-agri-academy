@@ -56,22 +56,22 @@ export default function MarketplacePage() {
 
         {/* Tabs & Search */}
         <div className="flex flex-col lg:flex-row gap-6 mb-8">
-          <div className="flex bg-slate-900 rounded-xl p-1 border border-slate-800 w-full lg:w-auto">
+          <div className="flex flex-col sm:flex-row bg-slate-900 rounded-xl p-1 border border-slate-800 w-full lg:w-auto gap-1 sm:gap-0">
             <button
               onClick={() => setActiveTab("grains")}
-              className={`flex-1 lg:px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center ${activeTab === 'grains' ? 'bg-slate-800 text-amber-400 shadow-sm' : 'text-slate-400 hover:text-white'}`}
+              className={`flex-1 lg:px-6 py-3 sm:py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center ${activeTab === 'grains' ? 'bg-slate-800 text-amber-400 shadow-sm' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
             >
               <Wheat className="w-4 h-4 mr-2" /> Продукция
             </button>
             <button
               onClick={() => setActiveTab("machinery")}
-              className={`flex-1 lg:px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center ${activeTab === 'machinery' ? 'bg-slate-800 text-amber-400 shadow-sm' : 'text-slate-400 hover:text-white'}`}
+              className={`flex-1 lg:px-6 py-3 sm:py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center ${activeTab === 'machinery' ? 'bg-slate-800 text-amber-400 shadow-sm' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
             >
               <Tractor className="w-4 h-4 mr-2" /> Техника
             </button>
             <button
               onClick={() => setActiveTab("land")}
-              className={`flex-1 lg:px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center ${activeTab === 'land' ? 'bg-slate-800 text-amber-400 shadow-sm' : 'text-slate-400 hover:text-white'}`}
+              className={`flex-1 lg:px-6 py-3 sm:py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center ${activeTab === 'land' ? 'bg-slate-800 text-amber-400 shadow-sm' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
             >
               <Map className="w-4 h-4 mr-2" /> Земя
             </button>

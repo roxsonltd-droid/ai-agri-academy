@@ -69,13 +69,13 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative flex flex-col sm:block gap-3">
               <input 
                 type="text" 
                 placeholder='Попитай: "Какво трябва да направя тази седмица?"' 
-                className="w-full bg-slate-900 border border-emerald-500/50 rounded-xl pl-6 pr-4 py-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+                className="w-full bg-slate-900 border border-emerald-500/50 rounded-xl pl-4 sm:pl-6 pr-4 sm:pr-36 py-3 sm:py-4 text-sm sm:text-base text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-bold transition-colors">
+              <button className="w-full sm:w-auto sm:absolute sm:right-2 sm:top-1/2 sm:-translate-y-1/2 bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 sm:py-2 rounded-lg font-bold transition-colors">
                 Анализирай
               </button>
             </div>

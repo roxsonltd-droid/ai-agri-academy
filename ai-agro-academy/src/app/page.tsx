@@ -48,7 +48,7 @@ export default function Home() {
             </div>
             
             {/* Massive Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] max-w-4xl">
               Всички Агро Инструменти.<br />
               <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Една Платформа.</span><br />
               <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">Нула Усилия.</span>

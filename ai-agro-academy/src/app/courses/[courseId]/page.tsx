@@ -47,6 +47,7 @@ export default function CoursePlayerPage() {
 
   useEffect(() => {
     const fetchCourse = async () => {
+      try {
         const token = localStorage.getItem("token");
         const headers: HeadersInit = token ? { "Authorization": `Bearer ${token}` } : {};
 

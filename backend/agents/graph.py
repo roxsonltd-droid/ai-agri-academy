@@ -33,7 +33,7 @@ SYS_REACT = (
 )
 
 
-def _try_build_graph():
+async def _try_build_graph_async():
     try:
         from langgraph.prebuilt import create_react_agent
         from core.config import settings
@@ -44,9 +44,17 @@ def _try_build_graph():
 
         from agents.tools_roboflow import roboflow_detect_uploaded
         from agents.tools_rag import academy_knowledge_search
+        from agents.mcp_client import get_mcp_tools
 
         llm = get_chat_llm(temperature=0.5)
+        
+        # Load standard tools
         tools_list = [academy_knowledge_search, roboflow_detect_uploaded]
+        
+        # Load MCP tools dynamically (AI Layer 2.0)
+        mcp_tools = await get_mcp_tools()
+        tools_list.extend(mcp_tools)
+        
         try:
             from langgraph.checkpoint.memory import MemorySaver
 
@@ -61,10 +69,10 @@ def _try_build_graph():
         return None
 
 
-def _get_graph():
+async def _get_graph_async():
     global _COMPILED
     if _COMPILED is None:
-        _COMPILED = _try_build_graph()
+        _COMPILED = await _try_build_graph_async()
     return _COMPILED
 
 
@@ -104,7 +112,7 @@ async def run_agro_agent(
 
     from agents.tools_roboflow import reset_request_image_b64, set_request_image_b64
 
-    compiled = _get_graph()
+    compiled = await _get_graph_async()
     if not compiled:
         raise RuntimeError(
             "LangGraph agent unavailable. Install requirements-ai.txt and set MISTRAL_API_KEY."

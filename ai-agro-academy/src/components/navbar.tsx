@@ -107,26 +107,36 @@ export default function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }}
       >
-        {/* Left: Mobile Menu Toggle & Logo */}
-        <div className="flex items-center gap-3 z-10 shrink-0">
-          <button 
-            className="lg:hidden p-1 text-slate-300 hover:text-white focus:outline-none"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
-              <AiAvatar size="sm" className="shrink-0" />
-              <span className="text-xl font-bold tracking-tight text-white hidden sm:block">
-                Agro<span className="text-primary">Academy</span>
-              </span>
-            </Link>
-            {isPro && (
-              <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ml-1 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
-                PRO
-              </span>
-            )}
+        {/* Left: Mobile Menu Toggle, Logo and Desktop Nav */}
+        <div className="flex items-center gap-6 z-10 shrink-0">
+          <div className="flex items-center gap-3">
+            <button 
+              className="lg:hidden p-1 text-slate-300 hover:text-white focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+            <div className="flex items-center gap-2">
+              <Link href="/" className="flex items-center gap-2">
+                <AiAvatar size="sm" className="shrink-0" />
+                <span className="text-xl font-bold tracking-tight text-white hidden sm:block">
+                  Agro<span className="text-primary">Academy</span>
+                </span>
+              </Link>
+              {isPro && (
+                <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ml-1 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
+                  PRO
+                </span>
+              )}
+            </div>
+          </div>
+          
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href} className={`${desktopNavLinkStyle} ${link.className || ''}`}>
+                {link.name}
+              </Link>
+            ))}
           </div>
         </div>
 

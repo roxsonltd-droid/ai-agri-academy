@@ -18,6 +18,9 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
+from core.observability import setup_observability
+setup_observability(app)
+
 @app.on_event("startup")
 async def startup_event():
     from core.search import init_typesense_collections

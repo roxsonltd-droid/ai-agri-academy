@@ -77,6 +77,10 @@ app.include_router(agents_route.router, prefix=f"{settings.API_V1_STR}/agents", 
 app.include_router(academy_tutor.router, prefix=f"{settings.API_V1_STR}/academy/tutor", tags=["academy-tutor"])
 app.include_router(stream.router, prefix=f"{settings.API_V1_STR}/stream", tags=["stream"])
 app.include_router(feedback.router, prefix=f"{settings.API_V1_STR}/feedback", tags=["feedback"])
+
+from api import sync
+app.include_router(sync.router, prefix=f"{settings.API_V1_STR}/sync", tags=["sync"])
+
 # Next.js прокси: POST /api/tutor/chat (prefix вече е /api в router-а)
 app.include_router(tutor_compat.router)
 

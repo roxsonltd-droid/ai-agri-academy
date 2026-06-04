@@ -2,6 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db.database import get_db
 from models.course import Course, Module, Lesson
+from models.progress import UserLessonProgress
+from models.user import User
+from api.auth import get_current_user
 from pydantic import BaseModel
 from typing import List
 import json
@@ -11,6 +14,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from core.config import settings
 from core.rag_facade import retrieve_for_prompt
 from api.seed_lesson_content import SEED_LESSON_MARKDOWN
+from ai.academy_rag import invalidate_lesson_rag_index
 
 # Initialize LLM for Course Generation
 llm = ChatMistralAI(model="mistral-large-latest", temperature=0.7, api_key=settings.MISTRAL_API_KEY)
@@ -63,6 +67,29 @@ def get_course(course_id: str, db: Session = Depends(get_db)):
         m.lessons.sort(key=lambda l: l.order)
         
     return course
+
+@router.get("/progress/my")
+def get_my_progress(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    progress = db.query(UserLessonProgress).filter(UserLessonProgress.user_id == current_user.id).all()
+    return {"completed_lessons": [p.lesson_id for p in progress]}
+
+@router.post("/progress/{lesson_id}")
+def mark_lesson_completed(lesson_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    lesson = db.query(Lesson).filter(Lesson.id == lesson_id).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+        
+    existing = db.query(UserLessonProgress).filter(
+        UserLessonProgress.user_id == current_user.id,
+        UserLessonProgress.lesson_id == lesson_id
+    ).first()
+    
+    if not existing:
+        new_prog = UserLessonProgress(user_id=current_user.id, lesson_id=lesson_id, completed=True)
+        db.add(new_prog)
+        db.commit()
+    
+    return {"status": "success", "message": "Lesson marked as completed"}
 
 @router.post("/seed")
 def seed_courses(db: Session = Depends(get_db)):
@@ -141,6 +168,8 @@ def seed_courses(db: Session = Depends(get_db)):
     db.add_all([l4, l5])
     
     db.commit()
+
+    invalidate_lesson_rag_index()
     
     return {"message": "Database seeded successfully"}
 
@@ -239,10 +268,12 @@ async def generate_course(request: GenerateCourseRequest, db: Session = Depends(
                 
             module_order += 1
             
-        db.commit()
-        db.refresh(course)
-        
-        return get_course(course_id, db)
+    db.commit()
+    db.refresh(course)
+
+    invalidate_lesson_rag_index()
+
+    return get_course(course_id, db)
         
     except Exception as e:
         print(f"Error generating course: {e}")

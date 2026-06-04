@@ -68,6 +68,8 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 | `RAG_TOP_K` | Не | Брой chunks за RAG |
 | `RAG_UPLOAD_SECRET` | Не | Споделен секрет за header `X-RAG-Upload-Secret` при качване на документи |
 | `RAG_MAX_UPLOAD_BYTES` | Не | Лимит на upload (по подразбиране 10 MB) |
+| `ACADEMY_LESSON_RAG_TOP_K` | Не | Брой chunks от уроци в БД за Academy Tutor RAG (по подразбиране `4`) |
+| `ACADEMY_DEBATE_MAX_ROUNDS` | Не | Макс. кръга критик за LangGraph дебат (по подразбиране `3`) |
 | `PLATFORM_RAG_BACKEND` | Не | `files` (вградени MD + Mistral) или `llamaindex` (Pinecone през LlamaIndex). Бъдещо: `weaviate` — виж [LANGCHAIN_VECTOR_DB.md](../docs/LANGCHAIN_VECTOR_DB.md) |
 | `PINECONE_API_KEY` | За LlamaIndex path | Pinecone API ключ |
 | `PINECONE_INDEX_NAME` | За LlamaIndex path | Име на индекс |
@@ -146,6 +148,7 @@ python -m alembic downgrade -1      # една стъпка назад (ако d
 | Vision (Roboflow) | `/api/v1/vision` |
 | Platform | `/api/v1/platform` |
 | Agents | `/api/v1/agents` |
+| Academy Tutor (LangGraph дебат) | `/api/v1/academy/tutor` |
 
 ## Deploy (кратко)
 
@@ -156,6 +159,7 @@ python -m alembic downgrade -1      # една стъпка назад (ако d
 Глас (ElevenLabs TTS): **`../docs/ELEVENLABS_VOICE.md`**.  
 Vision (Roboflow): **`../docs/ROBOFLOW_VISION.md`**.  
 Multi-agent факултет (LangGraph, личности, памет): **`../docs/MULTI_AI_TEACHERS.md`**.  
+Academy Tutor (RAG уроци + файлове, Tutor/Critic LangGraph): **`../docs/ACADEMY_TUTOR_LANGGRAPH.md`**.  
 Видео обучение (уроци, прогрес, Stream): **`../docs/VIDEO_LEARNING_SYSTEM.md`**.
 
 ---

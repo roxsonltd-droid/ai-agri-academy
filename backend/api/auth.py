@@ -67,8 +67,7 @@ def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = 
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/me")
-def read_users_me(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     from jose import JWTError, jwt
     from core.security import SECRET_KEY, ALGORITHM
     
@@ -89,6 +88,10 @@ def read_users_me(db: Session = Depends(get_db), token: str = Depends(oauth2_sch
     if user is None:
         raise credentials_exception
         
+    return user
+
+@router.get("/me")
+def read_users_me(user: User = Depends(get_current_user)):
     return {
         "id": user.id,
         "email": user.email,

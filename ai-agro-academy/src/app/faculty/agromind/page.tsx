@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit, Send, User, ChevronLeft, Sprout } from "lucide-react";
+import { BrainCircuit, Send, User, ChevronLeft, Sprout, Mic, MicOff, Volume2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -11,6 +11,14 @@ import remarkGfm from "remark-gfm";
 interface Message {
   role: "user" | "ai";
   content: string;
+}
+
+// Global declaration for SpeechRecognition
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
 }
 
 export default function AgroMindChat() {
@@ -23,6 +31,8 @@ export default function AgroMindChat() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -32,6 +42,68 @@ export default function AgroMindChat() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
+
+  const startRecording = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Вашият браузър не поддържа гласово въвеждане.");
+      return;
+    }
+    
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'bg-BG';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    
+    recognition.onstart = () => setIsRecording(true);
+    recognition.onend = () => setIsRecording(false);
+    recognition.onerror = () => setIsRecording(false);
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(prev => (prev + " " + transcript).trim());
+    };
+    
+    recognition.start();
+  };
+
+  const playVoice = async (text: string, index: number) => {
+    if (isPlaying === index) return;
+    setIsPlaying(index);
+    
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/voice/tts`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ text })
+      });
+      
+      if (!res.ok) {
+        if (res.status === 503) {
+          alert("Гласовият асистент (ElevenLabs) не е конфигуриран на сървъра.");
+        } else {
+          alert("Грешка при генериране на глас.");
+        }
+        setIsPlaying(null);
+        return;
+      }
+      
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.onended = () => {
+        setIsPlaying(null);
+        URL.revokeObjectURL(url);
+      };
+      audio.play();
+    } catch (error) {
+      console.error("Voice play error:", error);
+      setIsPlaying(null);
+    }
+  };
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,9 +204,28 @@ export default function AgroMindChat() {
                   {msg.role === "user" ? (
                     msg.content
                   ) : (
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {msg.content}
-                    </ReactMarkdown>
+                    <div className="relative group">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {msg.content}
+                      </ReactMarkdown>
+                      <button
+                        onClick={() => playVoice(msg.content, idx)}
+                        disabled={isPlaying !== null && isPlaying !== idx}
+                        className="mt-2 text-primary hover:text-primary-hover transition-colors flex items-center text-xs font-semibold uppercase tracking-wider"
+                      >
+                        {isPlaying === idx ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                            Генериране...
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="h-4 w-4 mr-1" />
+                            Чуй аудио
+                          </>
+                        )}
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -175,15 +266,27 @@ export default function AgroMindChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Попитай Проф. АгроМайнд..."
-              className="w-full bg-muted/80 border border-border/80 rounded-full pl-6 pr-14 py-4 text-foreground placeholder:text-subtle-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-transparent transition-all shadow-inner backdrop-blur-sm"
-              disabled={isLoading}
+              className="w-full bg-muted/80 border border-border/80 rounded-full pl-14 pr-14 py-4 text-foreground placeholder:text-subtle-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-transparent transition-all shadow-inner backdrop-blur-sm"
+              disabled={isLoading || isRecording}
             />
+            
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={startRecording}
+              className={`absolute left-2 h-10 w-10 rounded-full p-0 flex items-center justify-center transition-colors ${isRecording ? "text-red-500 bg-red-500/10 hover:bg-red-500/20" : "text-muted-foreground hover:text-primary"}`}
+              disabled={isLoading || isRecording}
+            >
+              {isRecording ? <Mic className="h-5 w-5 animate-pulse" /> : <Mic className="h-5 w-5" />}
+            </Button>
+
             <Button 
               type="submit" 
               variant="default"
               size="sm" 
               className="absolute right-2 h-10 w-10 rounded-full p-0 flex items-center justify-center"
-              disabled={!input.trim() || isLoading}
+              disabled={!input.trim() || isLoading || isRecording}
             >
               <Send className="h-4 w-4 text-primary-foreground ml-0.5" />
             </Button>

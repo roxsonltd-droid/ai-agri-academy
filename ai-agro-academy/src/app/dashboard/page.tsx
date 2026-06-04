@@ -17,12 +17,17 @@ type MeUser = {
 type CourseSummary = {
   id: string | number;
   title: string;
+  modules: {
+    id: string;
+    lessons: { id: string; title: string; completed?: boolean }[];
+  }[];
 };
 
 export default function DashboardPage() {
   const reduceMotion = useReducedMotion();
   const [user, setUser] = useState<MeUser | null>(null);
   const [courses, setCourses] = useState<CourseSummary[]>([]);
+  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [newTopic, setNewTopic] = useState("");
@@ -54,6 +59,15 @@ export default function DashboardPage() {
         if (coursesResponse.ok) {
           const coursesData = await coursesResponse.json();
           setCourses(coursesData);
+        }
+
+        // Fetch progress
+        const progressResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://agro-academy-backend.onrender.com'}/api/v1/courses/progress/my`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (progressResponse.ok) {
+          const progData = await progressResponse.json();
+          setCompletedLessons(progData.completed_lessons || []);
         }
       } catch {
         localStorage.removeItem("token");
@@ -225,33 +239,72 @@ export default function DashboardPage() {
           </motion.div>
 
           <motion.div variants={listItemVariants} className="col-span-1 md:col-span-3">
-            <h2 className="text-xl font-bold mb-4 text-foreground">Моите Курсове</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-foreground">Моите Курсове и Прогрес</h2>
+            </div>
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
-                <Card
-                  key={course.id}
-                  className="h-full overflow-hidden border-border/60 bg-card/70 backdrop-blur-md shadow-card hover:shadow-elevated hover-lift transition-all hover:border-primary/25"
-                >
-                  <div className="h-32 bg-muted/60 border-b border-border/50 flex items-center justify-center backdrop-blur-sm">
-                    <BookOpen className="h-12 w-12 text-subtle-foreground" />
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{course.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="w-full bg-muted rounded-full h-2 mb-4 overflow-hidden">
-                      <div className="bg-primary h-2 rounded-full transition-all" style={{ width: "0%" }} />
+              {courses.map((course) => {
+                const totalLessons = course.modules?.reduce((acc, m) => acc + (m.lessons?.length || 0), 0) || 0;
+                const completedInCourse = course.modules?.reduce((acc, m) => {
+                  return acc + (m.lessons?.filter(l => completedLessons.includes(l.id)).length || 0);
+                }, 0) || 0;
+                
+                const progressPercent = totalLessons > 0 ? Math.round((completedInCourse / totalLessons) * 100) : 0;
+                
+                // Find next lesson
+                let nextLessonId = "";
+                let nextLessonTitle = "";
+                if (course.modules) {
+                  for (const m of course.modules) {
+                    for (const l of m.lessons || []) {
+                      if (!completedLessons.includes(l.id)) {
+                        nextLessonId = l.id;
+                        nextLessonTitle = l.title;
+                        break;
+                      }
+                    }
+                    if (nextLessonId) break;
+                  }
+                }
+
+                return (
+                  <Card
+                    key={course.id}
+                    className="h-full overflow-hidden border-border/60 bg-card/70 backdrop-blur-md shadow-card hover:shadow-elevated hover-lift transition-all hover:border-primary/25 flex flex-col"
+                  >
+                    <div className="h-32 bg-muted/60 border-b border-border/50 flex items-center justify-center backdrop-blur-sm">
+                      <BookOpen className="h-12 w-12 text-subtle-foreground" />
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">0% Завършен</p>
-                    <Link href={`/courses/${course.id}`} className="w-full">
-                      <Button variant="outline" className="w-full border-border/80">
-                        <PlayCircle className="h-4 w-4 mr-2" />
-                        Продължи
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg line-clamp-2">{course.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col justify-end">
+                      <div className="w-full bg-muted rounded-full h-2 mb-2 overflow-hidden">
+                        <div className="bg-primary h-2 rounded-full transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
+                      </div>
+                      <div className="flex justify-between items-center mb-4">
+                        <p className="text-sm font-medium text-primary">{progressPercent}% Завършен</p>
+                        <p className="text-xs text-muted-foreground">{completedInCourse} / {totalLessons} урока</p>
+                      </div>
+                      
+                      {nextLessonTitle && (
+                        <div className="mb-4 text-sm bg-muted/50 p-2 rounded-lg border border-border/50">
+                          <span className="text-xs text-muted-foreground block mb-1">Следващ урок:</span>
+                          <span className="font-medium truncate block" title={nextLessonTitle}>{nextLessonTitle}</span>
+                        </div>
+                      )}
+
+                      <Link href={`/courses/${course.id}`} className="w-full mt-auto">
+                        <Button variant={progressPercent > 0 ? "default" : "outline"} className={`w-full ${progressPercent > 0 ? 'glow-primary' : 'border-border/80'}`}>
+                          <PlayCircle className="h-4 w-4 mr-2" />
+                          {progressPercent > 0 ? (progressPercent >= 100 ? "Преговор" : "Продължи") : "Започни"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                );
+              })}
 
               <Card className="h-full border-dashed border-border/70 bg-muted/30 backdrop-blur-sm flex flex-col items-center justify-center text-center p-6 min-h-[300px] hover:border-primary/30 transition-colors">
                 <div className="h-12 w-12 rounded-full bg-card shadow-sm flex items-center justify-center mb-4 text-primary ring-1 ring-border/60">

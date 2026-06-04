@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     RAG_UPLOAD_SECRET: str | None = None
     RAG_MAX_UPLOAD_BYTES: int = 10 * 1024 * 1024  # 10 MB
 
+    # Academy Tutor (LangGraph debate) + lesson RAG
+    ACADEMY_LESSON_RAG_TOP_K: int = 4
+    ACADEMY_DEBATE_MAX_ROUNDS: int = 3
+
     # Platform: RAG backend — "files" (bundled MD + uploads + Mistral embed) or "llamaindex" (Pinecone)
     PLATFORM_RAG_BACKEND: str = "files"
 

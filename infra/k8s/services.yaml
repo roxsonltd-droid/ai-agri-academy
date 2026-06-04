@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: agrios-backend-svc
+  namespace: agrios-prod
+spec:
+  selector:
+    app: agrios-backend
+  ports:
+  - port: 80
+    targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agrios-frontend-svc
+  namespace: agrios-prod
+spec:
+  selector:
+    app: agrios-frontend
+  ports:
+  - port: 80
+    targetPort: 3000

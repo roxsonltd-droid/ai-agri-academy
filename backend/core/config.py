@@ -48,9 +48,10 @@ class Settings(BaseSettings):
     # Platform: RAG backend — "files" (bundled MD + uploads + Mistral embed) or "llamaindex" (Pinecone)
     PLATFORM_RAG_BACKEND: str = "files"
 
-    # Pinecone + OpenAI embeddings (LlamaIndex path)
-    PINECONE_API_KEY: str | None = None
-    PINECONE_INDEX_NAME: str | None = None
+    # Qdrant + OpenAI embeddings (LlamaIndex path)
+    QDRANT_URL: str | None = None
+    QDRANT_API_KEY: str | None = None
+    QDRANT_COLLECTION_NAME: str | None = None
     OPENAI_API_KEY: str | None = None
 
     # Clerk JWT verification (FastAPI)

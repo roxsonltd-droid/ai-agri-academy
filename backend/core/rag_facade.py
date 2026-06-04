@@ -9,16 +9,16 @@ from core.rag_types import RagRetrieval, RagSourceItem
 async def retrieve_for_prompt_bundle(query: str, k: int | None = None) -> RagRetrieval:
     """Пълен retrieval: текст за prompt + списък източници (за API / UI)."""
     if settings.PLATFORM_RAG_BACKEND == "llamaindex":
-        from rag.llamaindex_pinecone import query_pinecone_context
+        from rag.llamaindex_qdrant import query_qdrant_context
 
-        block = await query_pinecone_context(query, top_k=k)
+        block = await query_qdrant_context(query, top_k=k)
         if block:
             preview = block.replace("\n", " ")[:240]
             return RagRetrieval(
                 prompt_block=block,
                 sources=[
                     RagSourceItem(
-                        source="pinecone",
+                        source="qdrant",
                         score=None,
                         preview=preview,
                     )

@@ -31,6 +31,7 @@ import {
   Send,
   Sprout,
   PawPrint
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Agent = {

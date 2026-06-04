@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { PawPrint, Send, User, ChevronLeft, Loader2 } from "lucide-react";

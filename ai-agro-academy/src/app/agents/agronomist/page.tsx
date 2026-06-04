@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sprout, Send, User, ChevronLeft, Mic, Volume2, Loader2, Wheat } from "lucide-react";

@@ -1,0 +1,41 @@
+{
+	"slug": "maps-and-fields",
+	"modules": 3,
+	"title": { "bg": "Карти и полета", "en": "Maps and fields" },
+	"description": {
+		"bg": "Жива учебна карта: OSM, сателит, очертаване на блок и GeoJSON за упражнения.",
+		"en": "A live training map in the browser: streets (OSM), satellite, click-to-outline blocks, and GeoJSON export."
+	},
+	"lectures": [
+		{
+			"id": "mf-why-draw",
+			"file": "courses/maps-and-fields/01-vavedenie-karti-poleta.md",
+			"filename": "01-vavedenie-karti-poleta.md",
+			"title": { "bg": "Защо чертаем блокове и какво е полигон", "en": "Why we draw blocks and what a polygon is" },
+			"summary": {
+				"bg": "Ролята на картата между стопанството, агронома и машината; понятия преди лабораторията.",
+				"en": "The map as shared language between farm, agronomist, and machinery — concepts before the lab."
+			}
+		},
+		{
+			"id": "mf-live-map",
+			"file": "courses/maps-and-fields/02-zhiva-karta-lab.md",
+			"filename": "02-zhiva-karta-lab.md",
+			"title": { "bg": "Жива карта: лаборатория в AgriNexus", "en": "Live map: AgriNexus lab" },
+			"summary": {
+				"bg": "Страницата /academy/maps — реални плочки, сателит, клик за върхове и GeoJSON за упражнения.",
+				"en": "The /academy/maps page — real tiles, satellite, vertices by click, and GeoJSON for class exercises."
+			}
+		},
+		{
+			"id": "mf-export-workflow",
+			"file": "courses/maps-and-fields/03-eksport-i-raboten-potok.md",
+			"filename": "03-eksport-i-raboten-potok.md",
+			"title": { "bg": "От чертежа до техниката и партньорите", "en": "From sketch to machinery and partners" },
+			"summary": {
+				"bg": "Подаване на файл към FMIS/QGIS и проверки преди операция в полето.",
+				"en": "Handing files to FMIS/QGIS and checks before running an operation in the field."
+			}
+		}
+	]
+}

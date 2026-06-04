@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot | Active Orders Tracking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#366853",
+                        "on-tertiary-container": "#4f3d00",
+                        "primary-fixed": "#b9eed4",
+                        "inverse-on-surface": "#e7f4ea",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "on-secondary": "#ffffff",
+                        "outline": "#717974",
+                        "on-tertiary-fixed": "#241a00",
+                        "inverse-surface": "#28332c",
+                        "secondary-fixed": "#d6e6db",
+                        "secondary": "#536259",
+                        "on-surface": "#131e18",
+                        "primary-container": "#1a4d3a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "surface-container-high": "#deebe1",
+                        "surface-container": "#e4f1e7",
+                        "surface": "#f0fdf2",
+                        "tertiary-fixed": "#ffe08e",
+                        "on-secondary-container": "#55645b",
+                        "inverse-primary": "#9ed2b9",
+                        "tertiary-container": "#cea72c",
+                        "primary": "#003625",
+                        "secondary-fixed-dim": "#bacac0",
+                        "surface-dim": "#d0ddd3",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "on-primary-container": "#89bda4",
+                        "on-error-container": "#93000a",
+                        "background": "#f0fdf2",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#d9e6dc",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "outline-variant": "#c0c9c2",
+                        "surface-bright": "#f0fdf2",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#131e18",
+                        "on-primary-fixed": "#002115",
+                        "surface-container-highest": "#d9e6dc",
+                        "tertiary": "#755b00",
+                        "surface-container-low": "#eaf7ec",
+                        "on-secondary-fixed": "#111e18",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#404944",
+                        "secondary-container": "#d1e1d6",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "container-max": "1140px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "margin-mobile": "12px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-eyebrow": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "display-lg": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "headline-md": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                        "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(to bottom right, #ffffff, #fffdf2);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.08);
+            transition: all 0.3s ease;
+        }
+        .yellow-pages-card:hover {
+            border-top-color: #755b00;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 12px 32px rgba(201, 162, 39, 0.15);
+            transform: translateY(-2px);
+        }
+        .progress-line {
+            position: relative;
+            height: 4px;
+            background: #dde5df;
+            border-radius: 99px;
+        }
+        .progress-fill {
+            position: absolute;
+            height: 100%;
+            background: #366853;
+            border-radius: 99px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 dark:bg-surface-container-highest/95 backdrop-blur-md border-b border-outline-variant shadow-sm h-[56px]">
+<div class="flex items-center justify-between px-md h-full w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="agriculture">agriculture</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">FieldLot</h1>
+</div>
+<div class="hidden md:flex items-center gap-lg">
+<nav class="flex items-center gap-md">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Market</a>
+<a class="text-primary font-bold" href="#">Orders</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Profile</a>
+</nav>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User" class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged European man with a warm smile, wearing a clean, high-quality linen shirt. The background is a soft-focus agricultural landscape at dawn with golden lighting. The visual style is crisp and modern, reflecting a trustworthy B2B corporate persona in the agricultural sector." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ1_Uv_5OkwxxXIKXhYtpx9K6L-YcVe2NDveSxLHU19lhMo297egJyIKNdDLKAgSM_1HuVYgpa43y1o-3To7q2w7cEOgtCE3GZrdDjC9LIflYTiY6mJ3lNBJnMQHJFZh6k8OmsQ9e_p8bWxNGcsLG7Vxc6aU3Z9MYhTEVIoGrNatLwpAYAluwswqYcSPf8a4ZAjHpPHTmZpEuhEpuApocrTIr4RqOZqNMikNCopP18TtlIzqVxchGZDnNlK98jEk_UqfeBhhDh_94"/>
+</div>
+</div>
+<button class="md:hidden p-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="pt-[80px] px-margin-mobile md:px-lg max-w-container-max mx-auto">
+<!-- Dashboard Header -->
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary mb-xs">Active Orders</h2>
+<p class="font-body-base text-body-base text-on-surface-variant">Real-time logistics tracking for your grain and equipment trades.</p>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-sm overflow-x-auto pb-md no-scrollbar">
+<button class="px-md py-2 bg-primary text-on-primary rounded-full font-label-badge text-label-badge whitespace-nowrap">ALL ORDERS (12)</button>
+<button class="px-md py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-badge text-label-badge whitespace-nowrap hover:bg-primary-container/20">IN TRANSIT (4)</button>
+<button class="px-md py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-badge text-label-badge whitespace-nowrap hover:bg-primary-container/20">PENDING PICK-UP (3)</button>
+<button class="px-md py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-badge text-label-badge whitespace-nowrap hover:bg-primary-container/20">DELIVERED (5)</button>
+</div>
+<!-- Orders Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter mt-md">
+<!-- Order Card 1: In Transit -->
+<div class="yellow-pages-card rounded-xl p-lg flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-eyebrow text-label-eyebrow text-on-tertiary-fixed-variant uppercase">Grain Shipment</span>
+<h3 class="font-headline-sm text-headline-sm mt-xs">Wheat Class A</h3>
+</div>
+<span class="bg-[#e7f4ea] text-[#1a4d3a] px-3 py-1 rounded-full font-label-badge text-label-badge flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        IN TRANSIT
+                    </span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Quantity:</span>
+<span class="font-bold text-on-surface">45.5 Tons</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Transaction ID:</span>
+<span class="font-mono text-xs">#FL-2024-8891</span>
+</div>
+</div>
+<!-- Logistics Tracker -->
+<div class="mt-md">
+<div class="flex justify-between font-label-badge text-label-badge mb-2 text-primary">
+<span>Varna Port</span>
+<span>Sofia Hub (ETA 2h)</span>
+</div>
+<div class="progress-line">
+<div class="progress-fill" style="width: 75%"></div>
+<div class="absolute top-1/2 -translate-y-1/2 left-[75%] w-4 h-4 bg-primary rounded-full border-2 border-white shadow-md"></div>
+</div>
+</div>
+<button class="mt-md w-full h-[48px] bg-primary text-on-primary rounded-full font-bold hover:bg-primary-container transition-all active:scale-95">View Details</button>
+</div>
+<!-- Order Card 2: Pending -->
+<div class="yellow-pages-card rounded-xl p-lg flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-eyebrow text-label-eyebrow text-on-tertiary-fixed-variant uppercase">Oilseed</span>
+<h3 class="font-headline-sm text-headline-sm mt-xs">Sunflower Seeds</h3>
+</div>
+<span class="bg-tertiary-container/20 text-tertiary px-3 py-1 rounded-full font-label-badge text-label-badge">
+                        PENDING PICK-UP
+                    </span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Quantity:</span>
+<span class="font-bold text-on-surface">120 Tons</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Transaction ID:</span>
+<span class="font-mono text-xs">#FL-2024-9022</span>
+</div>
+</div>
+<div class="mt-md">
+<div class="flex justify-between font-label-badge text-label-badge mb-2 text-on-surface-variant">
+<span>Silo Alpha</span>
+<span>Processing Plant</span>
+</div>
+<div class="progress-line">
+<div class="progress-fill" style="width: 15%"></div>
+<div class="absolute top-1/2 -translate-y-1/2 left-[15%] w-4 h-4 bg-tertiary rounded-full border-2 border-white shadow-md"></div>
+</div>
+</div>
+<button class="mt-md w-full h-[48px] bg-primary text-on-primary rounded-full font-bold hover:bg-primary-container transition-all active:scale-95">View Details</button>
+</div>
+<!-- Order Card 3: Delivered -->
+<div class="yellow-pages-card rounded-xl p-lg flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-eyebrow text-label-eyebrow text-on-tertiary-fixed-variant uppercase">Fertilizers</span>
+<h3 class="font-headline-sm text-headline-sm mt-xs">NPK 15:15:15</h3>
+</div>
+<span class="bg-surface-container-high text-outline px-3 py-1 rounded-full font-label-badge text-label-badge flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        DELIVERED
+                    </span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Quantity:</span>
+<span class="font-bold text-on-surface">25 Tons (Bags)</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Transaction ID:</span>
+<span class="font-mono text-xs">#FL-2024-7741</span>
+</div>
+</div>
+<div class="mt-md">
+<div class="flex justify-between font-label-badge text-label-badge mb-2 text-on-surface-variant">
+<span>Distribution Center</span>
+<span>Stara Zagora Farm</span>
+</div>
+<div class="progress-line">
+<div class="progress-fill" style="width: 100%; background-color: #717974;"></div>
+</div>
+</div>
+<button class="mt-md w-full h-[48px] border border-outline text-on-surface-variant rounded-full font-bold hover:bg-surface-container-high transition-all active:scale-95">View Receipt</button>
+</div>
+<!-- Order Card 4: Equipment -->
+<div class="yellow-pages-card rounded-xl p-lg flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-eyebrow text-label-eyebrow text-on-tertiary-fixed-variant uppercase">Heavy Machinery</span>
+<h3 class="font-headline-sm text-headline-sm mt-xs">JD 8R Tractor</h3>
+</div>
+<span class="bg-[#e7f4ea] text-[#1a4d3a] px-3 py-1 rounded-full font-label-badge text-label-badge flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        IN TRANSIT
+                    </span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Units:</span>
+<span class="font-bold text-on-surface">1 Unit</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Transaction ID:</span>
+<span class="font-mono text-xs">#FL-2024-8115</span>
+</div>
+</div>
+<div class="mt-md">
+<div class="flex justify-between font-label-badge text-label-badge mb-2 text-primary">
+<span>Border Control</span>
+<span>Plovdiv Depot</span>
+</div>
+<div class="progress-line">
+<div class="progress-fill" style="width: 40%"></div>
+<div class="absolute top-1/2 -translate-y-1/2 left-[40%] w-4 h-4 bg-primary rounded-full border-2 border-white shadow-md"></div>
+</div>
+</div>
+<button class="mt-md w-full h-[48px] bg-primary text-on-primary rounded-full font-bold hover:bg-primary-container transition-all active:scale-95">View Details</button>
+</div>
+</div>
+<!-- Featured Section (Bento Style) -->
+<section class="mt-xxl mb-xxl">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-md">Market Insights</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="md:col-span-2 bg-primary-container text-on-primary-container p-lg rounded-2xl relative overflow-hidden flex flex-col justify-between min-h-[200px]">
+<div class="relative z-10">
+<h4 class="font-headline-sm">Logistics Report</h4>
+<p class="font-body-sm mt-2 opacity-80">Fuel prices in the Balkan region have decreased by 4%, optimizing transit routes for next week.</p>
+</div>
+<button class="relative z-10 w-fit px-md py-2 bg-on-primary-container text-primary rounded-full font-label-badge">READ FULL REPORT</button>
+<!-- Abstract Background Pattern -->
+<div class="absolute -right-8 -bottom-8 opacity-10">
+<span class="material-symbols-outlined text-[180px]">local_shipping</span>
+</div>
+</div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed p-lg rounded-2xl flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-4xl mb-2">monitoring</span>
+<span class="font-headline-sm">98.4%</span>
+<span class="font-label-badge uppercase">On-Time Delivery</span>
+</div>
+<div class="bg-surface-container-highest border border-outline-variant p-lg rounded-2xl flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">support_agent</span>
+<span class="font-body-base font-bold">24/7 Logistics Support</span>
+<button class="mt-4 text-primary font-bold text-sm">Contact Dispatcher</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-[64px] px-margin-mobile pb-safe bg-surface border-t border-outline-variant z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-badge text-label-badge">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-badge text-label-badge">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-badge text-label-badge">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.yellow-pages-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98) translateY(0)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+        });
+
+        // Dynamic background effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

@@ -28,6 +28,38 @@ async def resolve_user_from_bearer(
     if settings.CLERK_JWKS_URL and settings.CLERK_ISSUER:
         clerk_user = await verify_clerk_bearer_token(token)
         if clerk_user is not None and clerk_user.email:
-            return db.query(User).filter(User.email == clerk_user.email).first()
+            user = db.query(User).filter(User.email == clerk_user.email).first()
+            is_admin = clerk_user.email in settings.ADMIN_EMAILS
+            
+            if not user:
+                user = User(
+                    email=clerk_user.email,
+                    role="admin" if is_admin else "student",
+                    hashed_password="", # Managed by Clerk
+                    full_name=clerk_user.email.split("@")[0]
+                )
+                db.add(user)
+                db.commit()
+                db.refresh(user)
+            elif is_admin and user.role != "admin":
+                user.role = "admin"
+                db.commit()
+                
+            return user
 
     return None
+
+from fastapi import Depends, HTTPException
+from db.database import get_db
+from fastapi.security import HTTPBearer
+
+security = HTTPBearer(auto_error=False)
+
+async def ensure_admin(
+    creds: HTTPAuthorizationCredentials | None = Depends(security),
+    db: Session = Depends(get_db),
+) -> User:
+    user = await resolve_user_from_bearer(creds, db)
+    if not user or user.role != "admin":
+        raise HTTPException(status_code=403, detail="Достъпът е разрешен само за администратори.")
+    return user

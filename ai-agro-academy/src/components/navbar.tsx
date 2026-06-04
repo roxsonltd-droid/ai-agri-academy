@@ -3,141 +3,276 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
-import { clerkPublishableKey } from "@/lib/auth-mode";
+import { Menu, Sprout, ChevronDown, User, FileText, Video, Bell, LogOut, Settings as SettingsIcon, X, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
+import { GlobalSearchBar } from "./global-search";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { easeCinematic, transitionCinematic } from "@/lib/motion";
-import { cn } from "@/lib/utils";
 import { AiAvatar } from "@/components/ai-avatar";
+
+export type Notification = {
+  id: string;
+  type: "weather" | "market" | "system";
+  message: string;
+  date: string;
+  read: boolean;
+};
 
 export default function Navbar() {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPro, setIsPro] = useState(false);
+  
+  // Notifications State
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     queueMicrotask(() => {
       setIsAuthenticated(Boolean(token));
+      setIsPro(localStorage.getItem("agro_pro") === "true");
     });
+
+    // Load notifications
+    const loadNotifications = () => {
+      try {
+        const saved = localStorage.getItem("agro_notifications");
+        if (saved) {
+          setNotifications(JSON.parse(saved));
+        }
+      } catch (e) {}
+    };
+
+    loadNotifications();
+
+    // Custom event listener for when another component adds a notification
+    window.addEventListener("agro_notifications_updated", loadNotifications);
+    
+    const checkProStatus = () => setIsPro(localStorage.getItem("agro_pro") === "true");
+    window.addEventListener("agro_pro_updated", checkProStatus);
+    
+    return () => {
+      window.removeEventListener("agro_notifications_updated", loadNotifications);
+      window.removeEventListener("agro_pro_updated", checkProStatus);
+    };
   }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setShowNotifications(false);
+  }, [pathname]);
+
+  const markAllAsRead = () => {
+    const updated = notifications.map(n => ({ ...n, read: true }));
+    setNotifications(updated);
+    localStorage.setItem("agro_notifications", JSON.stringify(updated));
+  };
+
+  const clearNotifications = () => {
+    setNotifications([]);
+    localStorage.setItem("agro_notifications", "[]");
+    setShowNotifications(false);
+  };
 
   const hiddenRoutes = ["/faculty/agromind", "/login", "/register", "/sign-in", "/sign-up"];
   if (hiddenRoutes.includes(pathname || "")) {
     return null;
   }
 
-  const showClerkLink = Boolean(clerkPublishableKey);
+  const unreadCount = notifications.filter(n => !n.read).length;
 
-  const navLink =
-    "nav-link-futuristic text-sm font-semibold text-muted-foreground rounded-full px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-ring/50";
+  const navLinks = [
+    { name: "Курсове", href: "/courses" },
+    { name: "AI Факултет", href: "/faculty/agromind" },
+    { name: "Лаборатории", href: "/labs" },
+    { name: "Агенти 24/7", href: "/agents" },
+    { name: "База Знания", href: "/knowledge" },
+    { name: "Спонсори", href: "/sponsors", className: "text-primary" },
+  ];
+
+  const desktopNavLinkStyle = "nav-link-futuristic text-sm font-medium text-slate-300 hover:text-white rounded-md px-3 py-2 transition-colors";
+  const mobileNavLinkStyle = "block px-4 py-3 text-base font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors";
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-4 sm:px-5 sm:pt-5">
+    <div className="fixed inset-x-0 top-0 z-50 flex flex-col">
+      {/* Top Navbar */}
       <motion.nav
-        layout
-        className={cn(
-          "pointer-events-auto w-full max-w-5xl rounded-full glass-float px-2 py-2 sm:px-3",
-          "transition-shadow duration-slow ease-cinematic hover:shadow-[0_0_60px_-20px_rgb(45_212_191/0.2)]",
-        )}
+        className="w-full bg-[#0B0F19] border-b border-white/5 flex items-center px-4 md:px-8 py-4 justify-between relative z-50"
         initial={reduceMotion ? false : { opacity: 0, y: -14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={
-          reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }
-        }
+        transition={reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }}
       >
-        <div className="flex h-12 items-center justify-between gap-2 sm:h-14 sm:gap-4 md:px-1">
-          <Link
-            href="/"
-            className="group flex min-w-0 items-center gap-2 rounded-full py-1 pl-1 pr-2 transition-transform duration-normal ease-spring hover:scale-[1.02]"
+        {/* Left: Mobile Menu Toggle & Logo */}
+        <div className="flex items-center gap-3 z-10 shrink-0">
+          <button 
+            className="lg:hidden p-1 text-slate-300 hover:text-white focus:outline-none"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <AiAvatar size="sm" className="shrink-0 shadow-md" />
-            <span className="truncate bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-base font-semibold tracking-tight text-transparent sm:text-lg">
-              AI Agro
-            </span>
-          </Link>
-          <div className="hidden min-w-0 items-center gap-0.5 md:flex">
-            <Link href="/courses" className={navLink}>
-              Курсове
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+          <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
+              <AiAvatar size="sm" className="shrink-0" />
+              <span className="text-xl font-bold tracking-tight text-white hidden sm:block">
+                Agro<span className="text-primary">Academy</span>
+              </span>
             </Link>
-            <Link href="/faculty/agromind" className={navLink}>
-              AI Факултет
-            </Link>
-            <Link href="/labs" className={navLink}>
-              Лаборатории
-            </Link>
-            <Link href="/labs/vision" className={navLink}>
-              CV / Roboflow
-            </Link>
-            <Link href="/knowledge" className={navLink}>
-              База знания
-            </Link>
-          </div>
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            {showClerkLink && (
-              <Link href="/sign-in">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full border-border/60 bg-card/40 text-xs backdrop-blur-sm transition-all duration-normal ease-cinematic hover:border-primary/40 hover:bg-primary/10 hover:text-primary sm:text-sm"
-                >
-                  Clerk
-                </Button>
-              </Link>
-            )}
-            {isAuthenticated ? (
-              <>
-                <Link href="/dashboard">
-                  <Button
-                    size="sm"
-                    className="rounded-full px-4 shadow-md transition-transform duration-normal ease-spring hover:-translate-y-0.5 sm:px-5 glow-primary"
-                  >
-                    <User className="mr-1.5 h-4 w-4" />
-                    <span className="hidden sm:inline">Моят профил</span>
-                    <span className="sm:hidden">Профил</span>
-                  </Button>
-                </Link>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={cn(
-                    "rounded-full px-2 text-xs font-semibold text-muted-foreground sm:px-3 sm:text-sm",
-                    "transition-colors duration-normal hover:bg-destructive/15 hover:text-destructive",
-                  )}
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    window.location.href = "/";
-                  }}
-                >
-                  Изход
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link href="/login">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="rounded-full text-xs font-semibold sm:text-sm"
-                  >
-                    Вход
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button
-                    variant="neon"
-                    size="sm"
-                    className="rounded-full px-4 shadow-md transition-transform duration-normal ease-spring hover:-translate-y-0.5 sm:px-5"
-                  >
-                    Регистрация →
-                  </Button>
-                </Link>
-              </>
+            {isPro && (
+              <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ml-1 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
+                PRO
+              </span>
             )}
           </div>
         </div>
+
+        {/* Center: Search */}
+        <div className="hidden md:flex flex-1 justify-center max-w-xl mx-8">
+          <div className="w-full">
+            <GlobalSearchBar />
+          </div>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex items-center justify-end flex-1 gap-2 sm:gap-4 z-10">
+          <Button variant="ghost" className="hidden md:flex text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
+            <span className="mr-2">🌐</span> <span>Български</span>
+          </Button>
+
+          {!isAuthenticated && (
+            <>
+              <SignInButton mode="modal">
+                <Button variant="ghost" className="text-slate-300 hover:text-white text-sm font-medium px-2 sm:px-4">
+                  Вход
+                </Button>
+              </SignInButton>
+              <SignInButton mode="modal">
+                <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-3 sm:px-5 py-2 font-medium text-xs sm:text-sm transition-all whitespace-nowrap">
+                  Започни безплатно
+                </Button>
+              </SignInButton>
+            </>
+          )}
+
+          {isAuthenticated && (
+            <>
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10" 
+                onClick={() => {
+                  setShowNotifications(!showNotifications);
+                  if (!showNotifications && unreadCount > 0) markAllAsRead();
+                }}
+              >
+                <Bell className="w-5 h-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                )}
+              </Button>
+
+              <AnimatePresence>
+                {showNotifications && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 mt-2 w-80 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50"
+                  >
+                    <div className="p-3 border-b border-slate-700 bg-slate-950 flex justify-between items-center">
+                      <h3 className="font-bold text-white text-sm">Известия</h3>
+                      {notifications.length > 0 && (
+                        <button onClick={clearNotifications} className="text-slate-400 hover:text-red-400 transition-colors">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                    <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
+                      {notifications.length === 0 ? (
+                        <div className="p-6 text-center text-slate-500">
+                          <Bell className="w-8 h-8 mx-auto mb-2 opacity-20" />
+                          <p className="text-sm">Нямате нови известия</p>
+                        </div>
+                      ) : (
+                        <div className="divide-y divide-slate-800">
+                          {notifications.slice().reverse().map((notif) => (
+                            <div key={notif.id} className={`p-4 transition-colors hover:bg-slate-800/50 ${!notif.read ? 'bg-primary/5' : ''}`}>
+                              <div className="flex gap-3">
+                                <div className="shrink-0 mt-0.5">
+                                  {notif.type === 'weather' && <CloudRain className="w-5 h-5 text-blue-400" />}
+                                  {notif.type === 'market' && <LineChart className="w-5 h-5 text-emerald-400" />}
+                                  {notif.type === 'system' && <ShieldAlert className="w-5 h-5 text-amber-400" />}
+                                </div>
+                                <div>
+                                  <p className="text-sm text-slate-200 leading-snug">{notif.message}</p>
+                                  <p className="text-xs text-slate-500 mt-1">{new Date(notif.date).toLocaleString('bg-BG')}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            
+            <Link href="/admin/courses">
+               <Button variant="ghost" className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 text-sm font-medium px-2 sm:px-4 border border-emerald-500/20 rounded-full">
+                  <ShieldAlert className="w-4 h-4 mr-2" />
+                  <span className="hidden sm:inline">Админ Панел</span>
+               </Button>
+            </Link>
+            <UserButton appearance={{
+              elements: {
+                userButtonAvatarBox: "w-9 h-9 border border-white/10"
+              }
+            }} />
+            </>
+          )}
+        </div>
       </motion.nav>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden absolute top-full left-0 right-0 bg-[#0B0F19] border-b border-white/10 shadow-2xl z-40 px-4 py-4 max-h-[80vh] overflow-y-auto"
+          >
+            <div className="flex flex-col space-y-1 mb-4">
+              {navLinks.map((link) => (
+                <Link key={link.href} href={link.href} className={`${mobileNavLinkStyle} ${link.className || ''}`}>
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+            
+            <div className="border-t border-white/10 pt-4 flex flex-col gap-2">
+              <Button variant="ghost" className="justify-start text-slate-300 hover:text-white hover:bg-white/5">
+                <span className="mr-2">🌐</span> Български
+              </Button>
+              {!isAuthenticated && (
+                <Link href="/login" className="w-full">
+                  <Button variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-white/5">
+                    Вход
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -9,15 +9,11 @@ from pydantic import BaseModel
 from typing import List
 import json
 import uuid
-from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import SystemMessage, HumanMessage
-from core.config import settings
+from core.llm_factory import get_chat_llm
 from core.rag_facade import retrieve_for_prompt
 from api.seed_lesson_content import SEED_LESSON_MARKDOWN
 from ai.academy_rag import invalidate_lesson_rag_index
-
-# Initialize LLM for Course Generation
-llm = ChatMistralAI(model="mistral-large-latest", temperature=0.7, api_key=settings.MISTRAL_API_KEY)
 
 router = APIRouter()
 
@@ -203,8 +199,15 @@ COURSE_GENERATOR_PROMPT = """Ти си Професор АгроМайнд - г�
 5. Полето **content** за всеки урок е задължително — минимум 400 знака полезен текст по темата на урока.
 """
 
+from core.bearer_user import ensure_admin
+from models.user import User
+
 @router.post("/generate", response_model=CourseSchema)
-async def generate_course(request: GenerateCourseRequest, db: Session = Depends(get_db)):
+async def generate_course(
+    request: GenerateCourseRequest, 
+    db: Session = Depends(get_db),
+    admin: User = Depends(ensure_admin)
+):
     rag = await retrieve_for_prompt(request.topic)
     human_msg = f"Генерирай курс на тема: {request.topic}"
     if rag:
@@ -215,8 +218,9 @@ async def generate_course(request: GenerateCourseRequest, db: Session = Depends(
     ]
     
     try:
+        llm = get_chat_llm(temperature=0.7)
         response = await llm.ainvoke(messages)
-        content = response.content.strip()
+        content = (response.content if isinstance(response.content, str) else str(response.content)).strip()
         if content.startswith("```json"):
             content = content[7:-3].strip()
         elif content.startswith("```"):
@@ -232,6 +236,8 @@ async def generate_course(request: GenerateCourseRequest, db: Session = Depends(
             description=data.get("description", "Автоматично генериран курс.")
         )
         db.add(course)
+        
+        from core.search import index_lesson
         
         module_order = 1
         for mod_data in data.get("modules", []):
@@ -252,6 +258,8 @@ async def generate_course(request: GenerateCourseRequest, db: Session = Depends(
                 # Video ID is no longer used for YouTube scraping.
                 # We'll use this field to store a placeholder or an avatar ID in the future.
                 video_id = "" 
+                
+                les_content = (les_data.get("content") or "").strip() or None
 
                 lesson = Lesson(
                     id=les_id,
@@ -261,9 +269,19 @@ async def generate_course(request: GenerateCourseRequest, db: Session = Depends(
                     completed=False,
                     order=lesson_order,
                     module_id=mod_id,
-                    content=(les_data.get("content") or "").strip() or None,
+                    content=les_content,
                 )
                 db.add(lesson)
+                
+                # Index in Typesense
+                index_lesson(
+                    lesson_id=les_id,
+                    title=les_title,
+                    content=les_content or "",
+                    course_id=course_id,
+                    lesson_type="text"
+                )
+                
                 lesson_order += 1
                 
             module_order += 1

@@ -9,6 +9,7 @@ passlib==1.7.4
 bcrypt==4.2.1
 langchain-mistralai==0.2.4
 langchain-core>=0.3.45,<0.4
+langchain-openai>=0.2.14,<0.3
 numpy>=1.26.0,<3
 pydantic-settings==2.1.0
 email-validator==2.1.0.post1
@@ -18,3 +19,4 @@ alembic>=1.14.0,<2
 psycopg2-binary>=2.9.9,<3
 boto3>=1.35.0,<2
 langgraph>=0.2.55,<0.3
+typesense>=0.18.0,<1

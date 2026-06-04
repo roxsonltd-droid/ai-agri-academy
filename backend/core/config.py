@@ -10,17 +10,36 @@ class Settings(BaseSettings):
     # Using SQLite for local development, will be replaced with Supabase URL later
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./agro_academy.db")
     
-    # CORS setup (Allow Next.js frontend to talk to this backend)
-    BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000", "https://agro-academy-frontend.onrender.com"]
+    BACKEND_CORS_ORIGINS: list[str] = [
+        "http://localhost:3000", 
+        "http://127.0.0.1:3000", 
+        "https://agro-academy-frontend-dzjv.onrender.com",
+        "https://agro-academy-frontend.onrender.com",
+        "https://academyagri.com",
+        "https://www.academyagri.com"
+    ]
     
-    # AI 
+    # AI
     MISTRAL_API_KEY: str | None = None
+    # Max tokens за отговор на Mistral (LangChain ChatMistralAI)
+    LLM_MAX_OUTPUT_TOKENS: int = 2048
+    # LangSmith / LangChain: export LANGCHAIN_TRACING_V2=true и LANGCHAIN_API_KEY в .env (виж docs/AI_ENHANCEMENTS_ROADMAP.md)
+
+    # Helicone AI Gateway (OpenAI-съвместим) — алтернатива на директен Mistral за чат LLM; виж core/llm_factory.py
+    HELICONE_API_KEY: str | None = None
+    HELICONE_GATEWAY_BASE_URL: str = "https://ai-gateway.helicone.ai/v1"
+    HELICONE_GATEWAY_MODEL: str = "mistral/mistral-large-latest"
+
+    # Platform Admins
+    ADMIN_EMAILS: list[str] = ["lukezester@gmail.com"]
     # RAG over backend/knowledge/*.md (Mistral embeddings + in-memory retrieval)
     RAG_ENABLED: bool = True
     RAG_TOP_K: int = 4
     # Upload API: optional shared secret (header X-RAG-Upload-Secret), or JWT user with admin/instructor/superuser
     RAG_UPLOAD_SECRET: str | None = None
     RAG_MAX_UPLOAD_BYTES: int = 10 * 1024 * 1024  # 10 MB
+    # Логване на всеки RAG hit (source + score) — за отладка / observability
+    RAG_LOG_RETRIEVAL: bool = False
 
     # Academy Tutor (LangGraph debate) + lesson RAG
     ACADEMY_LESSON_RAG_TOP_K: int = 4
@@ -55,6 +74,10 @@ class Settings(BaseSettings):
     # After successful ingest into knowledge/uploads, remove object from R2
     R2_DELETE_AFTER_INGEST: bool = True
 
+    # Typesense Search
+    TYPESENSE_HOST: str | None = None
+    TYPESENSE_ADMIN_API_KEY: str | None = None
+
     # ElevenLabs TTS — see docs/ELEVENLABS_VOICE.md
     ELEVENLABS_API_KEY: str | None = None
     ELEVENLABS_VOICE_ID: str | None = None
@@ -72,6 +95,9 @@ class Settings(BaseSettings):
     ROBOFLOW_IMAGE_MAX_BYTES: int = 5 * 1024 * 1024
     ROBOFLOW_SERVERLESS_BASE: str = "https://serverless.roboflow.com"
     ROBOFLOW_INFER_SECRET: str | None = None
+
+    # POST /api/v1/chat: max заявки на IP за 60 s (0 = без лимит)
+    CHAT_RATE_LIMIT_PER_MINUTE: int = 0
 
     class Config:
         env_file = ".env"

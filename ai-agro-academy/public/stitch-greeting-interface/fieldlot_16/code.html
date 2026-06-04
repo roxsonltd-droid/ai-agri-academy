@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FieldLot Digital Wallet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .yellow-pages-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fffdf0 100%);
+            border-top: 4px solid #cea72c;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.15);
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c0c9c2; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#755b00",
+                        "surface-bright": "#f0fdf2",
+                        "primary-container": "#1a4d3a",
+                        "inverse-on-surface": "#e7f4ea",
+                        "outline": "#717974",
+                        "primary": "#003625",
+                        "inverse-primary": "#9ed2b9",
+                        "secondary-fixed": "#d6e6db",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#cea72c",
+                        "surface-variant": "#d9e6dc",
+                        "surface-dim": "#d0ddd3",
+                        "secondary-container": "#d1e1d6",
+                        "on-surface-variant": "#404944",
+                        "outline-variant": "#c0c9c2",
+                        "on-secondary-container": "#55645b",
+                        "on-tertiary-fixed": "#241a00",
+                        "primary-fixed-dim": "#9ed2b9",
+                        "surface-container-low": "#eaf7ec",
+                        "on-surface": "#131e18",
+                        "secondary-fixed-dim": "#bacac0",
+                        "primary-fixed": "#b9eed4",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#002115",
+                        "background": "#f0fdf2",
+                        "on-tertiary-container": "#4f3d00",
+                        "surface-container": "#e4f1e7",
+                        "on-secondary-fixed": "#111e18",
+                        "surface-container-highest": "#d9e6dc",
+                        "on-background": "#131e18",
+                        "surface-tint": "#366853",
+                        "surface-container-high": "#deebe1",
+                        "inverse-surface": "#28332c",
+                        "tertiary-fixed": "#ffe08e",
+                        "secondary": "#536259",
+                        "on-secondary-fixed-variant": "#3c4a42",
+                        "tertiary-fixed-dim": "#ecc246",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f0fdf2",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#1d4f3c",
+                        "on-primary-container": "#89bda4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "margin-mobile": "12px",
+                        "container-max": "1140px",
+                        "gutter": "16px",
+                        "xxl": "48px",
+                        "base": "4px",
+                        "lg": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "label-eyebrow": ["DM Sans"],
+                        "display-lg-mobile": ["DM Sans"],
+                        "body-base": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "label-badge": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "display-lg": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "label-eyebrow": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["34px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-base": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-md": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-badge": ["10px", { "lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["52px", { "lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 dark:bg-surface-container/95 glass-header border-b border-outline-variant dark:border-outline shadow-sm">
+<div class="flex justify-between items-center h-16 px-margin-mobile md:px-lg max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" data-icon="account_balance_wallet">account_balance_wallet</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary">Digital Wallet</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-95" data-icon="notifications">notifications</button>
+<div class="hidden md:flex items-center gap-sm bg-surface-container-high px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+<span class="font-body-sm text-body-sm">AgroTrade Ltd.</span>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-lg max-w-container-max mx-auto space-y-lg">
+<!-- Total Balance Card -->
+<section class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+<div class="bg-primary-container text-on-primary-container p-lg rounded-xl shadow-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-lg opacity-10">
+<span class="material-symbols-outlined text-[120px]" data-icon="payments">payments</span>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row md:justify-between md:items-end gap-lg">
+<div class="space-y-xs">
+<p class="font-label-eyebrow text-label-eyebrow uppercase opacity-80 tracking-widest">Текущ баланс</p>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-primary-container">45,680.00 лв.</h2>
+<div class="flex items-center gap-xs text-on-primary-container/70">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+<p class="font-body-sm text-body-sm italic">Портфейлът е верифициран по B2B стандарт</p>
+</div>
+</div>
+<button class="bg-tertiary-container text-on-tertiary-container font-bold px-xl py-md rounded-full hover:bg-tertiary transition-colors active:scale-95 self-start md:self-auto flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span>Теглене</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Quick Actions Grid -->
+<section class="grid grid-cols-3 gap-md">
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-low border border-outline-variant rounded-xl hover:bg-surface-container-high transition-colors group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-sm group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="add_card">add_card</span>
+</div>
+<span class="font-label-badge text-label-badge text-on-surface-variant uppercase text-center">Добави карта</span>
+</button>
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-low border border-outline-variant rounded-xl hover:bg-surface-container-high transition-colors group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-sm group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="receipt_long">receipt_long</span>
+</div>
+<span class="font-label-badge text-label-badge text-on-surface-variant uppercase text-center">Фактури</span>
+</button>
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-low border border-outline-variant rounded-xl hover:bg-surface-container-high transition-colors group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-sm group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="analytics">analytics</span>
+</div>
+<span class="font-label-badge text-label-badge text-on-surface-variant uppercase text-center">Отчети</span>
+</button>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Recent Transactions -->
+<section class="lg:col-span-2 space-y-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Последни трансакции</h3>
+<button class="text-primary font-body-sm text-body-sm underline decoration-tertiary underline-offset-4">Виж всички</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant divide-y divide-outline-variant">
+<!-- Item 1 -->
+<div class="p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="agriculture">agriculture</span>
+</div>
+<div>
+<p class="font-body-base text-body-base font-bold text-on-surface">Продажба: Пшеница Клас А</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Днес, 14:20</p>
+</div>
+</div>
+<span class="font-body-base text-body-base font-bold text-primary">+12,400.00 лв.</span>
+</div>
+<!-- Item 2 -->
+<div class="p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error" data-icon="local_shipping">local_shipping</span>
+</div>
+<div>
+<p class="font-body-base text-body-base font-bold text-on-surface">Транспортни разходи</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Вчера, 10:15</p>
+</div>
+</div>
+<span class="font-body-base text-body-base font-bold text-on-surface">-850.00 лв.</span>
+</div>
+<!-- Item 3 -->
+<div class="p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="star">star</span>
+</div>
+<div>
+<p class="font-body-base text-body-base font-bold text-on-surface">Абонамент Premium</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">12 Март, 09:00</p>
+</div>
+</div>
+<span class="font-body-base text-body-base font-bold text-on-surface">-49.00 лв.</span>
+</div>
+</div>
+</section>
+<!-- Pending Invoices -->
+<section class="space-y-md">
+<h3 class="font-headline-sm text-headline-sm text-primary">Чакащи плащания</h3>
+<div class="space-y-md">
+<!-- Invoice Card 1 -->
+<div class="yellow-pages-card p-md rounded-lg flex flex-col gap-sm">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-eyebrow text-label-eyebrow text-tertiary uppercase">ФАКТУРА #4592</p>
+<p class="font-body-base text-body-base font-bold text-on-surface">Доставка на тор</p>
+</div>
+<span class="material-symbols-outlined text-tertiary" data-icon="pending_actions">pending_actions</span>
+</div>
+<div class="flex justify-between items-center mt-sm">
+<div>
+<p class="font-display-lg-mobile text-display-lg-mobile text-primary">2,450.00 лв.</p>
+<p class="font-body-sm text-body-sm text-error">Срок: 15 Апр</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-full font-bold hover:bg-primary/90 transition-transform active:scale-95">Плати</button>
+</div>
+</div>
+<!-- Invoice Card 2 -->
+<div class="yellow-pages-card p-md rounded-lg flex flex-col gap-sm">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-eyebrow text-label-eyebrow text-tertiary uppercase">ФАКТУРА #4598</p>
+<p class="font-body-base text-body-base font-bold text-on-surface">Сервиз Техника</p>
+</div>
+<span class="material-symbols-outlined text-tertiary" data-icon="history_edu">history_edu</span>
+</div>
+<div class="flex justify-between items-center mt-sm">
+<div>
+<p class="font-display-lg-mobile text-display-lg-mobile text-primary">680.00 лв.</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Срок: 22 Апр</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-full font-bold hover:bg-primary/90 transition-transform active:scale-95">Плати</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Security Badge Card -->
+<section class="mt-lg">
+<div class="bg-surface-container flex flex-col md:flex-row items-center gap-lg p-lg rounded-xl border border-outline-variant/30">
+<div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="security" data-weight="fill">security</span>
+</div>
+<div class="text-center md:text-left">
+<h4 class="font-body-base text-body-base font-bold text-primary">Сигурност на вашите средства</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">Вашите трансакции са защитени с банково ниво на криптиране. FieldLot използва защитени ескроу сметки за всички B2B сделки в сектора, гарантирайки сигурност за купувачи и продавачи.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-container border-t border-outline-variant dark:border-outline shadow-lg md:hidden">
+<div class="flex justify-around items-center h-16 w-full pb-safe px-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-badge text-label-badge">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" data-weight="fill">account_balance_wallet</span>
+<span class="font-label-badge text-label-badge">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-badge text-label-badge">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-badge text-label-badge">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Desktop Floating Menu Sidebar Simulation (if needed per Design Guidance) -->
+<aside class="hidden md:block fixed left-0 top-16 h-full w-20 bg-surface border-r border-outline-variant z-40 transition-all hover:w-64 group overflow-hidden">
+<div class="flex flex-col h-full py-md gap-lg">
+<a class="flex items-center gap-lg px-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="opacity-0 group-hover:opacity-100 font-body-base whitespace-nowrap">Пазар</span>
+</a>
+<a class="flex items-center gap-lg px-md text-primary font-bold bg-primary-container/10 border-r-4 border-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="opacity-0 group-hover:opacity-100 font-body-base whitespace-nowrap">Портфейл</span>
+</a>
+<a class="flex items-center gap-lg px-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="opacity-0 group-hover:opacity-100 font-body-base whitespace-nowrap">Поръчки</span>
+</a>
+<a class="flex items-center gap-lg px-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="opacity-0 group-hover:opacity-100 font-body-base whitespace-nowrap">Анализи</span>
+</a>
+<div class="mt-auto border-t border-outline-variant pt-md">
+<a class="flex items-center gap-lg px-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="opacity-0 group-hover:opacity-100 font-body-base whitespace-nowrap">Настройки</span>
+</a>
+</div>
+</div>
+</aside>
+<script>
+        // Simple micro-interaction for balance hover
+        const balanceCard = document.querySelector('.bg-primary-container');
+        balanceCard.addEventListener('mousemove', (e) => {
+            const rect = balanceCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            balanceCard.style.setProperty('--x', `${x}px`);
+            balanceCard.style.setProperty('--y', `${y}px`);
+        });
+
+        // Add subtle animation to list items on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-500', 'opacity-0', 'translate-y-4');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

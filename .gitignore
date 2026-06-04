@@ -1,4 +1,26 @@
-# Node/Next.js
+node_modules/
+.env
+.env.local
+.vercel
+
+# IDE
+.idea/
+
+# Next.js app (монорепо)
+apps/web/.next/
+apps/web/node_modules/
+*.tsbuildinfo
+
+# Python backend (монорепо)
+apps/backend/.venv/
+apps/backend/venv/
+apps/backend/**/__pycache__/
+
+# Единно AI кошче — временни файлове, чернови, фрагменти (не се комитват)
+ai-trash/**
+!ai-trash/README.md
+
+# --- Слято от origin: архивен Next/Python layout (ai-agro-academy, backend, mobile в корена) ---
 ai-agro-academy/node_modules/
 ai-agro-academy/.next/
 ai-agro-academy/out/
@@ -7,7 +29,6 @@ ai-agro-academy/.env.local
 ai-agro-academy/.env.*.local
 ai-agro-academy/build/
 
-# Python/FastAPI
 backend/venv/
 backend/**/__pycache__/
 backend/.pytest_cache/
@@ -16,7 +37,6 @@ backend/.env
 backend/agro_academy.db
 backend/_alembic_test.db
 
-# Mobile (Expo)
 mobile/node_modules/
 mobile/.expo/
 mobile/dist/

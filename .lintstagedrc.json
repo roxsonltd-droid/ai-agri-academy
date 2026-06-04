@@ -1,0 +1,3 @@
+{
+	"apps/web/**/*.{ts,tsx}": "node scripts/lint-staged-web.mjs"
+}

@@ -29,6 +29,14 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 - **ReDoc:** [http://127.0.0.1:8000/api/v1/redoc](http://127.0.0.1:8000/api/v1/redoc)
 - **Health:** `GET /health`
 
+Пълен списък AI/RAG подобрения и бъдещи задачи: **[`../docs/AI_ENHANCEMENTS_ROADMAP.md`](../docs/AI_ENHANCEMENTS_ROADMAP.md)** · Eval (LangSmith, RAGAS, offline retrieval): **[`../docs/RAG_EVAL_AND_OBSERVABILITY.md`](../docs/RAG_EVAL_AND_OBSERVABILITY.md)**.
+
+## Опционално: LangSmith + RAGAS (evaluation)
+
+За офлайн RAGAS метрики и LangSmith клиент вижте **`requirements-eval.txt`** (отделен venv препоръчително — възможни конфликти с версиите в `requirements.txt`) и **[`../docs/RAG_EVAL_AND_OBSERVABILITY.md`](../docs/RAG_EVAL_AND_OBSERVABILITY.md)** § LangSmith + RAGAS.
+
+За **Helicone + Grafana** (LLM gateway, метрики, логове): **[`../docs/OBSERVABILITY_HELICONE_GRAFANA.md`](../docs/OBSERVABILITY_HELICONE_GRAFANA.md)**.
+
 ## PostgreSQL (локално с Docker)
 
 Пълно ръководство (SSL, Render, troubleshooting): **[`../docs/POSTGRES.md`](../docs/POSTGRES.md)**.
@@ -64,6 +72,9 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 | `DATABASE_URL` | Не | По подразбиране `sqlite:///./agro_academy.db`. За Postgres: `postgresql+psycopg2://USER:PASS@HOST:5432/DBNAME` |
 | `BACKEND_CORS_ORIGINS` | Не | Списък origin-и за CORS (по подразбиране включва `localhost:3000`). При задаване от env често се ползва JSON масив. |
 | `MISTRAL_API_KEY` | За AI чат / embeddings в „files“ RAG | API ключ към Mistral |
+| `LLM_MAX_OUTPUT_TOKENS` | Не | Макс. токени за отговор на Mistral (по подразбиране 2048) |
+| `RAG_LOG_RETRIEVAL` | Не | `true` — логване на RAG hit (източник + score) |
+| `CHAT_RATE_LIMIT_PER_MINUTE` | Не | `0` = без лимит; иначе max заявки/IP за 60 s към `POST /api/v1/chat` |
 | `RAG_ENABLED` | Не | `true` / `false` (по подразбиране логиката в кода е включена) |
 | `RAG_TOP_K` | Не | Брой chunks за RAG |
 | `RAG_UPLOAD_SECRET` | Не | Споделен секрет за header `X-RAG-Upload-Secret` при качване на документи |

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="bg"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Известия - АгроМаркет</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#55645b",
+                    "on-primary-container": "#89bda4",
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#eaf7ec",
+                    "on-background": "#131e18",
+                    "primary-fixed": "#b9eed4",
+                    "inverse-on-surface": "#e7f4ea",
+                    "outline": "#717974",
+                    "on-secondary-fixed": "#111e18",
+                    "error-container": "#ffdad6",
+                    "surface": "#f0fdf2",
+                    "surface-variant": "#d9e6dc",
+                    "outline-variant": "#c0c9c2",
+                    "on-tertiary-container": "#4f3d00",
+                    "tertiary-fixed": "#ffe08e",
+                    "tertiary-container": "#cea72c",
+                    "surface-dim": "#d0ddd3",
+                    "secondary": "#536259",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#755b00",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#584400",
+                    "surface-container-high": "#deebe1",
+                    "secondary-container": "#d1e1d6",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#404944",
+                    "tertiary-fixed-dim": "#ecc246",
+                    "on-primary-fixed": "#002115",
+                    "primary-container": "#1a4d3a",
+                    "on-primary-fixed-variant": "#1d4f3c",
+                    "secondary-fixed": "#d6e6db",
+                    "surface-container": "#e4f1e7",
+                    "primary": "#003625",
+                    "on-tertiary-fixed": "#241a00",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f0fdf2",
+                    "inverse-surface": "#28332c",
+                    "surface-container-highest": "#d9e6dc",
+                    "secondary-fixed-dim": "#bacac0",
+                    "background": "#f0fdf2",
+                    "surface-tint": "#366853",
+                    "on-surface": "#131e18",
+                    "inverse-primary": "#9ed2b9",
+                    "primary-fixed-dim": "#9ed2b9",
+                    "on-secondary-fixed-variant": "#3c4a42"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "base": "4px",
+                    "lg": "24px",
+                    "xxl": "48px",
+                    "xl": "32px",
+                    "container-max": "1140px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "margin-mobile": "12px"
+            },
+            "fontFamily": {
+                    "display-lg": ["DM Sans"],
+                    "body-sm": ["DM Sans"],
+                    "label-eyebrow": ["DM Sans"],
+                    "label-badge": ["DM Sans"],
+                    "headline-md": ["DM Sans"],
+                    "body-base": ["DM Sans"],
+                    "headline-sm": ["DM Sans"],
+                    "display-lg-mobile": ["DM Sans"]
+            },
+            "fontSize": {
+                    "display-lg": ["52px", {"lineHeight": "1.06", "letterSpacing": "-0.035em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-eyebrow": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "600"}],
+                    "label-badge": ["10px", {"lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                    "headline-md": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["34px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .yellow-page-card {
+            border-top: 4px solid #cea72c;
+            background: linear-gradient(180deg, #ffffff 0%, #fffef0 100%);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.12), 0 8px 24px rgba(201, 162, 39, 0.15);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c0c9c2;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base min-h-screen flex flex-col">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant shadow-sm">
+<div class="flex justify-between items-center h-16 px-margin-mobile md:px-lg max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary p-base rounded-full hover:bg-primary-container/10 transition-colors active:scale-95 duration-200">menu</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">АгроМаркет</h1>
+</div>
+<div class="hidden md:flex gap-xl items-center">
+<nav class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-bold" href="#">Начало</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Пазар</a>
+<a class="text-primary font-bold" href="#">Известия</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center border border-outline-variant overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8d3jvhP5aKe3goeV_jN2DoQEVbz4CWhTgI5EhcL81ea0crX0NWjpIEZ1Ms43dsILAIXro6s5qbytnXrqJf5xh4F1iKiJTe3Kx_Fn2LwQC9COQE0arfRI6e_p4BKaoMKTrmtgQC-EttsVTatiSKP040m25D9f_SSZurg-U84Y5ApPkiZKSqtdSIP1tr6ygW9D6jZ34Kc8t2gt_UzbwxEZB1zw6w_BiTYt36mu1raUXwUrWL__3RRQWeNjTs_v7LTRe1Kyr-lAgYz8"/>
+</div>
+</div>
+<div class="md:hidden w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center border border-outline-variant overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0eGsfzSuxVXvE6hbLMkUIck40MiVDM8X9jJ2DTxVGbhe8BTQ8YAv-CK0tye6Wj9lZa6gpelQ_pyQLCEviqVbWritSS4-kaFzxvtk-YgQvdCixSoyLqdxAsuuEJZkzJ9Sr13IP3K5rpROcEpdRnrMFCoqdvlEhG44V-2dSLuchpedmg2KQRbMYJzyfaKVzP1QJw1YHV1jiGeBIrN02QDBrjzbXGQcnbctnxnC5Tp4Ijd6yWLsBeB6Mw6V-pMxuiz7vnyZn3AVJDpI"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 pb-24 max-w-container-max mx-auto w-full px-margin-mobile md:px-lg">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<span class="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-widest">Център за съобщения</span>
+<h2 class="font-headline-md text-headline-md md:text-headline-md text-on-background">Известия</h2>
+</div>
+<button class="flex items-center gap-xs text-primary font-bold hover:underline transition-all" onclick="markAllAsRead()">
+<span class="material-symbols-outlined text-[20px]">done_all</span>
+<span class="font-body-sm text-body-sm">Маркирай всичко като прочетено</span>
+</button>
+</section>
+<!-- Tabs Filter -->
+<div class="flex gap-sm mb-lg overflow-x-auto pb-base custom-scrollbar">
+<button class="px-lg py-sm rounded-full bg-primary text-on-primary font-bold transition-all shadow-sm" id="tab-all" onclick="switchTab('all')">Всички</button>
+<button class="px-lg py-sm rounded-full bg-surface-container-high text-on-surface-variant hover:bg-secondary-container transition-all" id="tab-deals" onclick="switchTab('deals')">Сделки</button>
+<button class="px-lg py-sm rounded-full bg-surface-container-high text-on-surface-variant hover:bg-secondary-container transition-all" id="tab-system" onclick="switchTab('system')">Системни</button>
+</div>
+<!-- Notification List -->
+<div class="grid grid-cols-1 gap-md" id="notification-container">
+<!-- Unread: Deal -->
+<div class="yellow-page-card rounded-xl p-md flex gap-md items-start group hover:-translate-y-0.5 transition-all cursor-pointer relative notification-item" data-category="deals">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-primary">Успешно подписване</h3>
+<span class="font-label-badge text-label-badge text-secondary opacity-70">преди 5 мин</span>
+</div>
+<p class="font-body-base text-on-surface-variant mt-xs">Договорът за <span class="font-bold">FL-4829</span> е успешно подписан от купувача. Можете да пристъпите към експедиция.</p>
+</div>
+<div class="absolute right-4 bottom-4 w-2.5 h-2.5 bg-tertiary-container rounded-full ring-4 ring-white unread-dot"></div>
+</div>
+<!-- Unread: New Offer -->
+<div class="yellow-page-card rounded-xl p-md flex gap-md items-start group hover:-translate-y-0.5 transition-all cursor-pointer relative notification-item" data-category="deals">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">local_mall</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-primary">Нова оферта</h3>
+<span class="font-label-badge text-label-badge text-secondary opacity-70">преди 1 час</span>
+</div>
+<p class="font-body-base text-on-surface-variant mt-xs">Получихте ново предложение за <span class="font-bold">Пшеница (клас А)</span> от <span class="italic">'АгроТрейд' ООД</span>.</p>
+</div>
+<div class="absolute right-4 bottom-4 w-2.5 h-2.5 bg-tertiary-container rounded-full ring-4 ring-white unread-dot"></div>
+</div>
+<!-- System Notification -->
+<div class="bg-surface-container-highest/50 border border-outline-variant rounded-xl p-md flex gap-md items-start group hover:bg-surface-container-highest transition-all cursor-pointer notification-item" data-category="system">
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-error-container">warning</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-on-background">Системна профилактика</h3>
+<span class="font-label-badge text-label-badge text-secondary opacity-70">преди 3 часа</span>
+</div>
+<p class="font-body-base text-on-surface-variant mt-xs">Платформата ще бъде временно недостъпна на <span class="font-bold">15.03 от 02:00 ч.</span> поради техническо обслужване.</p>
+</div>
+</div>
+<!-- Read: Message -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md flex gap-md items-start group hover:bg-surface-container-highest transition-all cursor-pointer notification-item" data-category="all">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-fixed">chat_bubble</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-[18px] text-on-background">Ново съобщение</h3>
+<span class="font-label-badge text-label-badge text-secondary opacity-70">вчера</span>
+</div>
+<p class="font-body-base text-on-surface-variant mt-xs">Имате ново съобщение от консултант относно вашата обява за торове.</p>
+</div>
+</div>
+</div>
+<!-- Featured Resource Section (Visual Aesthetic) -->
+<section class="mt-xxl">
+<div class="relative rounded-xl overflow-hidden h-48 md:h-64 flex items-center p-xl">
+<div class="absolute inset-0 bg-primary/80 z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="A sprawling panoramic view of a lush green wheat field during the golden hour sunset. The lighting is warm and cinematic, casting long shadows across the organized rows of crops. The atmosphere is serene and professional, embodying the essence of high-tech modern agriculture and harvest wealth. Soft green and golden yellow tones dominate the palette, creating a sense of reliability and grounded success." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1GGsWp0sUdoF8uoCKcs7P5bjBuR9Nn6pXLNs0OQDgeUn-tT9c-41ZlW0jxxdXhDUHSZOgc7iXnVFdK7TKioQL2s95eo7PyD_8IXyfLsWageEclYkD_jJf18rQQGWb0KI9qyaQDevCyrOEafruWyW0zfBcYvyVWWFkI-qnMgUdV6g5TClAihcodPGnaHNWwM33zsdHTZ4lrUMDfCwaXFyPKjA6wyU5tjWWm_VzbtaQR3z7o563hmgg_TtaVxbm8JUcxKjfnEDVvDg"/>
+<div class="relative z-20 max-w-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-primary mb-sm">Пазарен анализ: Март 2024</h3>
+<p class="font-body-sm text-on-primary/80 mb-md">Разгледайте новите тенденции в ценообразуването на зърнените култури за региона на Балканите.</p>
+<button class="bg-tertiary-container text-on-tertiary-fixed px-lg py-sm rounded-full font-bold hover:scale-105 transition-transform active:scale-95">Научи повече</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Cluster -->
+<footer class="bg-surface-container-highest border-t border-outline-variant w-full py-xl mt-xxl">
+<div class="flex flex-col md:flex-row justify-between items-center gap-md px-margin-mobile md:px-lg max-w-container-max mx-auto">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">АгроМаркет Б2Б</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 АгроМаркет Б2Б. Всички права запазени.</p>
+</div>
+<nav class="flex gap-lg">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">За нас</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Помощ</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Условия</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Контакти</a>
+</nav>
+</div>
+</footer>
+<!-- Mobile Bottom Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface/95 backdrop-blur-md border-t border-outline-variant flex justify-around items-center h-16 z-50">
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-badge">Начало</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-badge">Пазар</span>
+</button>
+<button class="flex flex-col items-center text-primary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="font-label-badge">Известия</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-badge">Профил</span>
+</button>
+</nav>
+<script>
+        function switchTab(type) {
+            const container = document.getElementById('notification-container');
+            const items = container.getElementsByClassName('notification-item');
+            const tabs = ['all', 'deals', 'system'];
+
+            // Update UI tabs
+            tabs.forEach(tab => {
+                const el = document.getElementById(`tab-${tab}`);
+                if (tab === type) {
+                    el.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                    el.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+                } else {
+                    el.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                    el.classList.remove('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+                }
+            });
+
+            // Filter logic
+            Array.from(items).forEach(item => {
+                if (type === 'all') {
+                    item.style.display = 'flex';
+                } else if (item.getAttribute('data-category') === type) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function markAllAsRead() {
+            const dots = document.querySelectorAll('.unread-dot');
+            dots.forEach(dot => {
+                dot.style.opacity = '0';
+                dot.style.transform = 'scale(0)';
+            });
+            
+            // Visual feedback
+            const cards = document.querySelectorAll('.yellow-page-card');
+            cards.forEach(card => {
+                card.classList.remove('yellow-page-card');
+                card.classList.add('bg-surface-container-low', 'border', 'border-outline-variant');
+                card.style.boxShadow = 'none';
+                card.style.borderTop = 'none';
+            });
+        }
+
+        // Add some micro-interactions
+        document.querySelectorAll('.notification-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const dot = this.querySelector('.unread-dot');
+                if (dot) {
+                    dot.style.opacity = '0';
+                    dot.style.transform = 'scale(0)';
+                }
+                this.classList.add('opacity-70');
+            });
+        });
+    </script>
+</body></html>

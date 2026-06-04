@@ -1,0 +1,22 @@
+// Optional: use Prisma from Node tooling against the same Postgres as the Python API.
+//   npx prisma migrate dev --schema apps/backend/prisma/schema.prisma
+// Python reads `academy_courses` via raw SQL in `app/api/academy.py`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AcademyCourse {
+  id          String   @id @db.Text
+  slug        String   @unique @db.Text
+  title       String   @db.Text
+  description String?  @default("") @db.Text
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("academy_courses")
+}

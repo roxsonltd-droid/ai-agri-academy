@@ -1,120 +1,119 @@
-# AI Agro Academy
+# AgriNexus 🌾
 
-**Образование + AI асистент + практически инструменти** за модерно земеделие — в един монорепо: уеб (Next.js), API (FastAPI), мобилно (Expo) и документация.
+**An operating system that senses, thinks, acts.**
 
-| Документ | Съдържание |
-|----------|------------|
-| **[VISION.md](./VISION.md)** | Какво е продуктът, за кого е, стратегия и успех. |
-| **[ROADMAP.md](./ROADMAP.md)** | Квартали (вкл. Q3/Q4 2025 и напред), приоритети, извън обхват. |
+Канонично GitHub репо (Academy / монорепо): **[roxsonltd-droid/ai-agri-academy](https://github.com/roxsonltd-droid/ai-agri-academy)**.
 
-Репозиторий: [github.com/roxsonltd-droid/ai-agri-academy](https://github.com/roxsonltd-droid/ai-agri-academy)
+AgriNexus is a complete infrastructure for modern farming. It replaces the traditional "black box AI" with a transparent, explainable ecosystem of specialized agents that help farmers make data-driven decisions.
 
----
+## Quick links
 
-## Какво представлява платформата?
+| Topic | Where |
+|--------|--------|
+| **GitHub (canonical repo)** | [github.com/roxsonltd-droid/ai-agri-academy](https://github.com/roxsonltd-droid/ai-agri-academy) |
+| **Локален корен (канонично)** | `C:\Users\expre\Academy` — виж [`docs/CANONICAL-WORKSPACE-BG.md`](docs/CANONICAL-WORKSPACE-BG.md) и `Open-Academy-Terminal.cmd` |
+| **Roadmap** | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
+| **Onboarding** (web Supabase + mobile first-run) | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
+| **Deploy (Render / Railway)** | [`docs/DEPLOY-RENDER-RAILWAY.md`](docs/DEPLOY-RENDER-RAILWAY.md) |
+| **Vercel (Next vs статичен корен)** | [`docs/VERCEL.md`](docs/VERCEL.md) |
+| **Local dev** (Next + FastAPI + Expo + Docker) | [`docs/LOCAL-DEV.md`](docs/LOCAL-DEV.md) |
+| **Environment & secrets** (`.env.example`, Doppler) | [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) |
+| **Backend HTTP API** (OpenAPI, auth, tutor) | [`docs/BACKEND_API.md`](docs/BACKEND_API.md) |
+| **Web app** (routes, Playwright, Supabase) | [`apps/web/README.md`](apps/web/README.md) |
+| **Mobile** | [`apps/mobile/README.md`](apps/mobile/README.md) |
+| **Backend (Python)** | [`apps/backend/README.md`](apps/backend/README.md) |
 
-1. **Образование** — курсове, структурирани материали и маршрути за учене.  
-2. **AI асистент** — чат с **RAG** върху платформени и качени знания (Mistral и др., виж `backend/README.md`).  
-3. **Практически инструменти** — **лаборатории**, компютърно **зрение**, **глас** (при конфигурирани ключове), **storage** — за експеримент и приложение на теорията.
+**Auth (Supabase):** Next.js `apps/web` uses `@supabase/ssr` — browser client in `src/lib/supabase.ts`, session refresh in `src/middleware.ts` together with `next-intl`. Localized login: `/login` and `/bg/login` with Google OAuth and email magic link when `NEXT_PUBLIC_SUPABASE_*` are set. FastAPI verifies the same users via `SUPABASE_JWT_SECRET` on `GET /api/auth/me` and optional `AUTH_REQUIRED_FOR_TUTOR`.
 
-Цел: потребителят да мине от „чета“ към „разбирам и пробвам“ с подкрепа на AI, който цитира контекст, а не халюцинира в празно.
+**AI Tutor (LangGraph):** `POST /api/tutor/graph` — minimal graph (classify → draft). With `MISTRAL_API_KEY` the draft node calls Mistral; otherwise a stub answer (see `docs/BACKEND_API.md`). Heavier RAG routes remain `POST /api/tutor/chat` and `POST /api/tutor/deep-debate` when the optional `rag/` stack is installed.
 
----
+**AI кошче:** временни чернови, фрагменти и еднократни артефакти от работа с ИИ — папка **`ai-trash/`** (съдържанието е в `.gitignore`, виж `ai-trash/README.md`). Правило за агентите: `.cursor/rules/ai-trash.mdc`.
 
-## Целева аудитория
+**Windows + кирилица в пътя:** ако имаш и `Desktop\проект\…` и друго копие, лесно се работи върху „грешното“. Виж **`docs/WORKSPACE-CYRILLIC-PATH-BG.md`** и скрипта **`scripts/windows/link-cyrillic-desktop-folder.ps1`** (junction по подразбиране към **`C:\Users\expre\Academy`**).
 
-- **Начинаещи фермери и малки стопанства** — ясни обяснения, бързи отговори, ориентация в теми без да търсят из десет източника.  
-- **Студенти и курсисти** — курсове, лаборатории, връзка теория ↔ инструменти.  
-- **Професионалисти** — RAG върху документи, API, по-напреднали lab сценарии.
+**Графичен слой:** споделени стилове в **`styles/agri-market-shared.css`** + **`styles/agri-marketing-supplement.css`** за начална/агенти; описание и таблица: **`docs/DESIGN-SYSTEM.md`**.
 
-Подробности: [VISION.md](./VISION.md).
+## DevEx (монорепо `apps/*`)
 
----
+- **Pre-commit:** [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — след `npm ci` в корена ESLint за стейджнати `apps/web/**/*.{ts,tsx}`.
+- **CI:** `.github/workflows/ci.yml` — root typecheck, **web** (lint, typecheck, build, Playwright smoke), **mobile** typecheck, **backend** (pytest + `ruff check tests`), **fieldlot**.
+- **Секрети / Doppler:** `docs/ENVIRONMENT.md` и коренов `.env.example`.
 
-## MVP (основни функции)
+## Project Structure & Core Pages
 
-Минималният продукт, върху който стъпваме:
+### 1. Academy home (`index.html`, `bg/index.html`)
+**Public site is Academy-first:** short entry with links to the full **library** (`academy.html` / `bg/academy.html`), a **lab** section (safe experiments, Tutor anchor), and a **compare** block (two mental models + self-check—no “correct” click). The earlier agent marketing mesh lives on **`agents.html`** (archive).
 
-| Област | Функция |
-|--------|---------|
-| **Потребители** | Регистрация / вход (Clerk във frontend; JWT/JWKS към backend). |
-| **Курсове** | Списък и страница по курс (`/courses`, `/courses/[courseId]`). |
-| **AI чат** | API `/api/v1/chat` — разговор с контекст. |
-| **Knowledge / RAG** | Качване и търсене в знания (`/api/v1/knowledge`), конфигурация през env. |
-| **Табло** | `/dashboard` — входна точка след login. |
-| **Лаборатории** | `/labs`, включително vision (`/labs/vision`). |
-| **Faculty / AgroMind** | `/faculty/agromind` — AI-фокусирана зона. |
-| **Backend** | Auth, users, courses, chat, lab, knowledge, storage, voice, vision, platform, agents — виж `backend/main.py`. |
+### 2. Market Intelligence (`market-intelligence.html`)
+**"Trade your harvest like a hedge fund."**
+A Bloomberg-meets-Stripe terminal aesthetic, designed for farmers. Styles live in **`styles/agri-market-shared.css`** (shared with **`analytics.html`**).
+- **Live Ticker & chart:** `npm run dev` then open the page — data comes from **`/api/market-data`** and **`/api/market-history`** (delayed Yahoo CBOT symbols `ZW=F` / `ZC=F`). Plain static hosting (`npm run serve`) serves files only; APIs will not run.
+- **The Engine:** Forecast targets combined with the farmer's break-even metrics to show potential profit.
+- **Signal Stack:** Synthesizes news, satellite data, FX rates, and USDA reports into an actionable Orchestrator Synthesis (e.g., "+2.0% bullish bias").
+- **Optimal Selling Window:** A clear visualization (Sell Now vs. Sell Sep vs. Hold) proving ROI (+€18/tonne).
 
-Мобилното приложение е в **`mobile/`** (Expo) — целта е паритет с основните потоци в по-късен етап ([ROADMAP.md](./ROADMAP.md)).
+### 3. Platform Architecture (`platform.html`)
+**"Three layers, one nervous system."**
+A transparent look at how data flows through the system.
+- **01 SENSE:** Satellites (10m/px), IoT Mesh, Market Feeds, Field Reports.
+- **02 THINK:** Unified Data Lake, the Agent Mesh (LangGraph), Model Library.
+- **03 ACT:** Daily Briefings, Autonomous Actions, Mobile & Web UI.
+- **Integrations:** Sits seamlessly on top of existing setups (John Deere, Trimble, Sentinel Hub, Rabobank, etc.).
+- **Foundation:** Built on Data Sovereignty (EU GDPR), Auditable Decisions (SOC 2), and Developer Access.
 
----
+### 4. Academy (`academy.html`)
+**"A library that grows with you."**
+A warm, educational space operating on a different emotional register—designed for learning, not just marketing.
+- **Learning Paths:** Structured curriculum for modern farming.
+- **Field Notes Podcast:** Real stories from real farmers (e.g., "The day I stopped guessing the market").
+- **Farmer's Table Community:** A living pulse of peer-to-peer support, alpha sharing, and success stories.
+- **Academy Tutor (implemented):** On `academy.html` / `bg/academy.html`, the **Ask the Academy Tutor** panel calls `POST /api/academy-tutor`. It uses Mistral plus a **delayed Yahoo Finance snapshot** (same family as `/api/market-data`) only as **teaching context**, not trading advice.
+- **Product & architecture docs:** `docs/ACADEMY_PRODUCT_VISION.md` (визия, MVP, фази), `docs/ACADEMY_ARCHITECTURE.md` (потокове и файлове в репото).
+- **Roadmap on the page:** MVP highlights on `academy.html` and `bg/academy.html`, localized through `scripts/academy-hub.js`.
+- **„AI фермерски мозък“:** same pages — title plus four short lines (teach → analyze → decide → automate); details in `docs/ACADEMY_PRODUCT_VISION.md` §3 and `docs/ACADEMY_ARCHITECTURE.md` §2.
 
-## Структура на репото
+### 5. Dashboard (`dashboard.html`)
+**The Command Center.**
+The actual product from the inside. A calm, highly functional UI where the farmer starts their morning with a cup of coffee. It transitions the user from learning and exploring into executing and managing their farm operations.
 
-```
-ai-agri-academy/
-├── backend/           # FastAPI, Alembic, SQLite/Postgres, RAG
-├── ai-agro-academy/   # Next.js 16, React 19, Tailwind 4
-├── mobile/            # Expo
-├── docs/              # Postgres, vector DB, др.
-├── docker-compose.yml
-├── render.yaml
-├── Agro-Academy.code-workspace
-└── Open-Academy-Terminal.cmd
-```
+## Implementation vs. product story
 
----
+- **“18 specialists”** on **`agents.html`** is a product map for agent families and autonomy levels. In this repository, the **executable** agent mesh is the **LangGraph** flow in `api/chat.ts` (orchestrator → analytics, market, weather, crop, field monitoring, operations, finance, compliance, sustainability, news, academy, and general agents) plus the separate **`POST /api/academy-tutor`** endpoint for the Academy pages.
+- **Market quotes** in the mesh and Academy use **Yahoo Finance** (delayed); the LLM must **not invent** prices when the snapshot is present (see `api/lib/market-snapshot.ts` and `api/lib/agrinexus-policy.ts`).
+- **Fieldlot** (subfolder) has its own chat + RAG pipeline; `fieldlot/scripts/sync-gov-listings.ts` **fails the build** if `MISTRAL_API_KEY` is set but the semantic RAG index has **chunks and zero embeddings** (misconfigured embed step).
 
-## Терминал в Cursor / VS Code
+## Marketing site + Yahoo APIs (repo root)
 
-### Ако **не можеш да промениш cwd** или настройките не се прилагат
-
-1. **Workspace файл (най-надеждно):** в Explorer двоен клик на **`Agro-Academy.code-workspace`**, или в Cursor: **File → Open Workspace from File…** и избери този файл. Терминалът трябва да е в корена на репото.
-2. **Без Cursor:** двоен клик на **`Open-Academy-Terminal.cmd`** в корена — отваря се PowerShell вече в папката на проекта.
-3. **От произволен терминал:**  
-   `& "C:\Users\expre\Academy\scripts\academy.ps1"`  
-   (коригирай пътя, ако репото не е на това място.)
-
-### Нормален поток (ако `.vscode` работи)
-
-1. **Отвори тази папка като workspace:** `File` → `Open Folder` → папката на репото.
-2. Новият интегриран терминал стартира в **корена** (`.vscode/settings.json`).
-3. За подпапки: `cd backend` или `cd ai-agro-academy`.
-
----
-
-## Tasks (Terminal → Run Task…)
-
-| Task | Действие |
-|------|----------|
-| **Backend: alembic upgrade head** | Миграции от папка `backend/` |
-| **Backend: uvicorn (reload)** | API на `http://127.0.0.1:8000` |
-| **Frontend: npm install** | Зависимости на Next.js |
-| **Frontend: dev** | `next dev` |
-
----
-
-## Бързи команди (ръчно)
-
-```powershell
-cd backend
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python -m alembic upgrade head
-python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-
-```powershell
-cd ai-agro-academy
+```bash
 npm install
 npm run dev
 ```
 
+Serves `http://127.0.0.1:3456` with static HTML/CSS plus **`/api/market-data`**, **`/api/market-history`**, **`POST /api/chat`** (LangGraph mesh, including **AI Analytics** / `ANALYTICS_AGENT`), waitlist, etc. **`market-intelligence.html`**, **`analytics.html`**, and RU mirrors load charts/ticker through these routes — use **`npm run dev`**, not **`npm run serve`** (static-only, no APIs).
+
+## Mobile app — React Native + Expo
+
+Кодът е в **`apps/mobile`**: **Expo Router**, TypeScript, EN/БГ превключвател, вход към FastAPI и каталог академия към Next (`/api/mobile/courses`). От корена на репото:
+
+```bash
+npm run dev:mobile
+```
+
+Пълни инструкции (`.env`, Android `10.0.2.2`, заедно с `dev:web` и backend): **`apps/mobile/README.md`**. Onboarding и първи екран: **`docs/ONBOARDING.md`**.
+
+## Target stack
+
+Продуктов слой: **Next.js** (`apps/web`), **Python + FastAPI** (`apps/backend`), **PostgreSQL** (OLTP + pgvector), **Supabase Auth**, **Docker** за локална база. По-нататък: по-силен agent mesh, managed vector search, VPS/Kubernetes — виж **`docs/TARGET-ARCHITECTURE.md`** и фазите в **`docs/ROADMAP.md`**. Скелет за локална работа: **`docs/LOCAL-DEV.md`**. HTTP повърхност и OpenAPI: **`docs/BACKEND_API.md`**.
+
+## CI
+
+GitHub Actions: `.github/workflows/ci.yml` — root `npm run typecheck`, advisory `npm run check:fieldlot-rag` (set `CHECK_FIELDLOT_RAG_STRICT=1` to hard-fail when the committed Fieldlot index has no vectors), and `fieldlot` `npm test`.
+
+Operator notes: `docs/AI-OPERATIONS.md`.
+
+## Слято с `origin/main` (архивен слой)
+
+GitHub `origin/main` носеше отделно дърво (`ai-agro-academy/`, коренов `backend/`, `mobile/`, …). То е **запазено** в това репо след merge за справка; **активната разработка** остава **`apps/web`**, **`apps/backend`**, **`apps/mobile`**. Workspace за стария layout: **`Agro-Academy.code-workspace`**.
+
 ---
-
-## Свързани README
-
-- [ai-agro-academy/README.md](./ai-agro-academy/README.md) — Next.js, дизайн docs.  
-- [backend/README.md](./backend/README.md) — API, RAG, env променливи.
+*Every article peer-reviewed by working agronomists and traders. Always free. No vendor lock-in. Open standards, your data, your call.*

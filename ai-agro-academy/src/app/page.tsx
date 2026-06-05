@@ -48,7 +48,7 @@ export default function Home() {
             </div>
             
             {/* Massive Heading */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.05] max-w-5xl">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.05] max-w-5xl">
               Всички Агро Инструменти.<br />
               <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Една Платформа.</span><br />
               <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">Нула Усилия.</span>
@@ -74,17 +74,17 @@ export default function Home() {
           >
             {features.map((feature, idx) => {
               const CardContent = (
-                <div className="relative h-full bg-white/5 border border-white/10 p-6 md:p-8 rounded-2xl md:rounded-[2rem] overflow-hidden group hover:border-white/20 transition-all duration-500">
+                <div className="relative h-full bg-white/5 border border-white/10 p-4 md:p-5 rounded-xl md:rounded-2xl overflow-hidden group hover:border-white/20 transition-all duration-500">
                   <div className="relative z-10 flex flex-col h-full">
-                    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 md:mb-8 border border-white/5 group-hover:scale-110 transition-transform duration-500 ease-out`}>
-                      <feature.icon className="w-7 h-7 md:w-8 md:h-8 text-white opacity-90" />
+                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-3 md:mb-4 border border-white/5 group-hover:scale-110 transition-transform duration-500 ease-out`}>
+                      <feature.icon className="w-5 h-5 md:w-6 md:h-6 text-white opacity-90" />
                     </div>
                     
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4 tracking-tight">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-2 tracking-tight">
                       {feature.title}
                     </h3>
                     
-                    <p className="text-slate-400 text-sm md:text-base leading-relaxed mt-auto">
+                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed mt-auto">
                       {feature.desc}
                     </p>
                   </div>

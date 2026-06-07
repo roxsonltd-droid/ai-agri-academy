@@ -2,8 +2,17 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { yahooFinance } from './yahoo-finance-client.js';
 
 // Cache results for 1 hour to avoid rate limits on historical data
-let cachedHistory: any = {};
-let lastFetchTime: any = {};
+interface HistoryDataPoint {
+	date: string;
+	price: number;
+}
+interface HistoryResponse {
+	symbol: string;
+	data: HistoryDataPoint[];
+	isFallback?: boolean;
+}
+let cachedHistory: Record<string, HistoryResponse> = {};
+let lastFetchTime: Record<string, number> = {};
 const CACHE_DURATION_MS = 60 * 60 * 1000;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

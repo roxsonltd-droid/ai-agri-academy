@@ -1,9 +1,19 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { submitFurrowWaitlist } from '../server/waitlist.js';
 
+function setCors(req: VercelRequest, res: VercelResponse) {
+	const envOrigins = process.env.FURROW_ALLOWED_ORIGINS?.trim();
+	const origins = envOrigins
+		? envOrigins.split(',').map((s) => s.trim())
+		: ['https://agrinexus-final.vercel.app', 'http://127.0.0.1:3456', 'http://localhost:3456'];
+	const origin = typeof req.headers['origin'] === 'string' ? req.headers['origin'] : '';
+	const allowed = origins.includes(origin) ? origin : origins[0];
+	res.setHeader('Access-Control-Allow-Origin', allowed);
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	res.setHeader('Content-Type', 'application/json; charset=utf-8');
-	res.setHeader('Access-Control-Allow-Origin', '*');
+	setCors(req, res);
 
 	if (req.method === 'OPTIONS') {
 		res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -23,7 +33,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	if (typeof req.body === 'string' && req.body.trim()) {
 		try {
 			body = JSON.parse(req.body) as Record<string, unknown>;
-		} catch {
+		} catch (e) {
+			console.warn('waitlist: invalid JSON body', e);
 			body = {};
 		}
 	}

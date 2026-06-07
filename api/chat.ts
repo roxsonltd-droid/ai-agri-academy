@@ -359,34 +359,21 @@ workflow.addNode('newsAgent', newsAgent);
 workflow.addNode('academyAgent', academyAgent);
 workflow.addNode('generalAgent', generalAgent);
 
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge(START, 'orchestrator');
-// @ts-expect-error LangGraph typings vary by version
-workflow.addConditionalEdges('orchestrator', routeQuery);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('analyticsAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('marketAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('weatherAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('cropAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('fieldAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('operationsAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('financeAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('complianceAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('sustainabilityAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('newsAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('academyAgent', END);
-// @ts-expect-error LangGraph typings vary by version
-workflow.addEdge('generalAgent', END);
+const lg = workflow as any;
+lg.addEdge(START, 'orchestrator');
+lg.addConditionalEdges('orchestrator', routeQuery);
+lg.addEdge('analyticsAgent', END);
+lg.addEdge('marketAgent', END);
+lg.addEdge('weatherAgent', END);
+lg.addEdge('cropAgent', END);
+lg.addEdge('fieldAgent', END);
+lg.addEdge('operationsAgent', END);
+lg.addEdge('financeAgent', END);
+lg.addEdge('complianceAgent', END);
+lg.addEdge('sustainabilityAgent', END);
+lg.addEdge('newsAgent', END);
+lg.addEdge('academyAgent', END);
+lg.addEdge('generalAgent', END);
 
 const checkpointer = new MemorySaver();
 const app = workflow.compile({ checkpointer });

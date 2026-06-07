@@ -1,6 +1,6 @@
 import { MemoryAgent } from './agent-memory.js';
 import { ToolsAgent } from './agent-tools.js';
-import type { ChatMessage, AgentActionRecord, AgentToolContext } from './agent-types.js';
+import type { ChatMessage, AgentActionRecord, AgentToolContext, FurrowChatTurn } from './agent-types.js';
 import { type TextChatUpstream, openAIMessageContentToString } from './llm-upstream.js';
 
 
@@ -73,7 +73,7 @@ export class WorkflowAgent {
 	> {
 		let chatMessages: ChatMessage[] = [];
 		let knowledgeIds: string[] = [];
-		let history: any[] = [];
+		let history: FurrowChatTurn[] = [];
 
 		try {
 			const memResult = await this.memory.prepareMemory(sessionId, userMessageContent, lang);

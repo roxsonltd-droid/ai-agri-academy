@@ -5,6 +5,8 @@ import {
 	refreshFurrowMarketSignals,
 } from './furrow-market-signals.js';
 import { submitFurrowWaitlist } from './waitlist.js';
+import { searchNews } from './furrow-rss-news.js';
+import { getWeatherForecast } from './furrow-weather.js';
 
 export type AgentActionRecord = { tool: string; ok: boolean; summary: string };
 export type AgentToolContext = { lang: 'en' | 'bg'; clientIp?: string | null };
@@ -167,25 +169,36 @@ export async function executeFurrowAgentTool(
 
 	if (name === 'search_web_news') {
 		const query = typeof args.query === 'string' ? args.query : '';
-		// Mocked data for now
-		const mockNews = [
-			`(MOCK) Bloomberg: ${query} causing market ripples as traders adjust positions.`,
-			`(MOCK) Reuters: Global supply chains monitor developments regarding ${query}.`,
-		];
-		return {
-			result: JSON.stringify({ ok: true, news: mockNews }),
-			action: { tool: name, ok: true, summary: `Web search: ${query}` },
-		};
+		try {
+			const news = await searchNews(query, ctx.lang);
+			return {
+				result: JSON.stringify({ ok: true, news }),
+				action: { tool: name, ok: true, summary: `Web search: ${query}` },
+			};
+		} catch (e) {
+			const msg = e instanceof Error ? e.message : 'News search failed';
+			return {
+				result: JSON.stringify({ ok: false, error: msg }),
+				action: { tool: name, ok: false, summary: msg },
+			};
+		}
 	}
 
 	if (name === 'get_weather_forecast') {
 		const region = typeof args.region === 'string' ? args.region : '';
-		// Mocked data for now
-		const mockWeather = `(MOCK) ${region}: Persistent dry conditions in the southern areas, expected rainfall of 10-15mm over the next week in the north. Soil moisture remains below optimal.`;
-		return {
-			result: JSON.stringify({ ok: true, weather: mockWeather }),
-			action: { tool: name, ok: true, summary: `Weather: ${region}` },
-		};
+		try {
+			const result = await getWeatherForecast(region, ctx.lang);
+			return {
+				result: JSON.stringify(result),
+				action: { tool: name, ok: result.ok, summary: `Weather: ${region}` },
+			};
+		} catch (e) {
+			const msg = e instanceof Error ? e.message : 'Weather fetch failed';
+			return {
+				result: JSON.stringify({ ok: false, error: msg }),
+				action: { tool: name, ok: false, summary: msg },
+			};
+		}
 	}
 
 	return {

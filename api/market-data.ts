@@ -2,7 +2,19 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { yahooFinance } from './yahoo-finance-client.js';
 
 // Cache results for 15 minutes to avoid rate limits
-let cachedData: any = null;
+interface MarketDataSnapshot {
+	timestamp: string;
+	data: {
+		symbol: string;
+		name?: string;
+		price?: number;
+		change?: number;
+		changePercent?: number;
+		currency?: string;
+	}[];
+	isFallback?: boolean;
+}
+let cachedData: MarketDataSnapshot | null = null;
 let lastFetchTime = 0;
 const CACHE_DURATION_MS = 15 * 60 * 1000;
 

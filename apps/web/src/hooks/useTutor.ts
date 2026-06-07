@@ -1,7 +1,37 @@
 import { useState, useCallback } from "react";
 
+type TutorSource = {
+	source?: string;
+	topic?: string;
+	course?: string;
+	lecture_id?: string;
+	chunk_index?: number | null;
+	score?: number;
+	distance?: number | null;
+};
+
+type TutorRetrieval = {
+	backend?: string;
+	top_k?: number;
+	document_count?: number;
+	course_filter?: string | null;
+};
+
+type TutorMessage = {
+	role: "user" | "assistant";
+	content: string;
+	sources?: TutorSource[];
+	retrieval?: TutorRetrieval;
+};
+
+type TutorChatResponse = {
+	answer?: string;
+	sources?: TutorSource[];
+	retrieval?: TutorRetrieval;
+};
+
 export function useTutor(userId: string) {
-	const [messages, setMessages] = useState<any[]>([]);
+	const [messages, setMessages] = useState<TutorMessage[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [threadId] = useState(`chat_${userId}`);
 
@@ -23,12 +53,17 @@ export function useTutor(userId: string) {
 					}),
 				});
 
-				const data = await res.json();
+				const data = (await res.json()) as TutorChatResponse;
 
 				setMessages((prev) => [
 					...prev,
 					{ role: "user", content: question },
-					{ role: "assistant", content: data.answer, sources: data.sources },
+					{
+						role: "assistant",
+						content: typeof data.answer === "string" ? data.answer : "",
+						sources: Array.isArray(data.sources) ? data.sources : [],
+						retrieval: data.retrieval,
+					},
 				]);
 
 				setIsLoading(false);

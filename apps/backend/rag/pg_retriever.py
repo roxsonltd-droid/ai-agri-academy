@@ -80,7 +80,22 @@ class AcademyRetriever:
                 "source": doc.metadata.get("source", "academy"),
                 "topic": doc.metadata.get("topic", ""),
                 "course": doc.metadata.get("course", ""),
+                "lecture_id": doc.metadata.get("lecture_id", ""),
+                "chunk_index": doc.metadata.get("chunk_index"),
             }
             for doc in docs
         ]
-        return {"context": context, "documents": docs, "sources": sources}
+        course_filter = None
+        if filters:
+            course_filter = filters.get("course") or filters.get("course_slug")
+        return {
+            "context": context,
+            "documents": docs,
+            "sources": sources,
+            "retrieval": {
+                "backend": "pg",
+                "top_k": top_k,
+                "document_count": len(docs),
+                "course_filter": course_filter,
+            },
+        }

@@ -154,7 +154,22 @@ class FileAcademyRetriever:
                 "source": d.metadata.get("source", "academy"),
                 "topic": d.metadata.get("topic", ""),
                 "course": d.metadata.get("course", ""),
+                "lecture_id": d.metadata.get("lecture_id", ""),
+                "chunk_index": d.metadata.get("chunk_index"),
             }
             for d in docs
         ]
-        return {"context": context, "documents": docs, "sources": sources}
+        course_filter = None
+        if filters:
+            course_filter = filters.get("course") or filters.get("course_slug")
+        return {
+            "context": context,
+            "documents": docs,
+            "sources": sources,
+            "retrieval": {
+                "backend": "file",
+                "top_k": top_k,
+                "document_count": len(docs),
+                "course_filter": course_filter,
+            },
+        }

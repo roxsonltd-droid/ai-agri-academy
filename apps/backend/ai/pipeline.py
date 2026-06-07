@@ -81,7 +81,9 @@ class AiCourseRAG:
                 "topic": row.get("topic", ""),
                 "course": row.get("course", ""),
                 "course_slug": row.get("course", ""),
-                "lecture_id": "",
+                "lecture_id": row.get("lecture_id", ""),
+                "chunk_index": row.get("chunk_index"),
+                "distance": row.get("distance"),
             }
             out.append(_Doc(row.get("content") or "", meta))
         return out
@@ -97,6 +99,8 @@ class AiCourseRAG:
                 "course": ch.get("course_slug", ""),
                 "course_slug": ch.get("course_slug", ""),
                 "lecture_id": ch.get("lecture_id", ""),
+                "chunk_index": ch.get("chunk_index"),
+                "score": ch.get("score"),
             }
             out.append(_Doc(ch.get("text", ""), meta))
         return out
@@ -104,18 +108,34 @@ class AiCourseRAG:
     def get_context(self, query: str, filters: dict | None = None, top_k: int = 7) -> dict[str, Any]:
         course_slug = _course_slug_from_filters(filters)
         docs = self._vector_docs(query, course_slug, top_k)
+        backend = "pgvector"
         if not docs:
             docs = self._tfidf_docs(query, course_slug, top_k)
+            backend = "tfidf"
         context = "\n\n---\n\n".join(d.page_content for d in docs)
         sources = [
             {
                 "source": d.metadata.get("source", "academy"),
                 "topic": d.metadata.get("topic", ""),
                 "course": d.metadata.get("course", ""),
+                "lecture_id": d.metadata.get("lecture_id", ""),
+                "chunk_index": d.metadata.get("chunk_index"),
+                "score": d.metadata.get("score"),
+                "distance": d.metadata.get("distance"),
             }
             for d in docs
         ]
-        return {"context": context, "documents": docs, "sources": sources}
+        return {
+            "context": context,
+            "documents": docs,
+            "sources": sources,
+            "retrieval": {
+                "backend": backend,
+                "top_k": top_k,
+                "document_count": len(docs),
+                "course_filter": course_slug,
+            },
+        }
 
 
 _instance: AiCourseRAG | None = None

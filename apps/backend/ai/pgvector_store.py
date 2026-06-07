@@ -107,7 +107,7 @@ def search_similar(
     t = _table_sql(AI_CHUNKS_TABLE)
     vec_lit = _vec_literal(query_embedding)
     q = f"""
-        SELECT content, source_path, course_slug, topic,
+        SELECT content, source_path, course_slug, topic, lecture_id, chunk_index,
                (embedding <=> %s::vector) AS dist
         FROM {t}
         WHERE (%s::text IS NULL OR course_slug = %s::text)
@@ -125,7 +125,9 @@ def search_similar(
                     "source": row[1],
                     "course": row[2],
                     "topic": row[3],
-                    "distance": float(row[4]) if row[4] is not None else None,
+                    "lecture_id": row[4],
+                    "chunk_index": row[5],
+                    "distance": float(row[6]) if row[6] is not None else None,
                 }
             )
     return out

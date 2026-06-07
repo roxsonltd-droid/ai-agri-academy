@@ -60,6 +60,7 @@ class TutorResponse(BaseModel):
     answer: str
     sources: list
     confidence: float = 0.85
+    retrieval: dict = Field(default_factory=dict)
 
 @router.post("/chat", response_model=TutorResponse)
 async def tutor_chat(request: TutorRequest):
@@ -83,7 +84,8 @@ async def tutor_chat(request: TutorRequest):
         return TutorResponse(
             answer=response.content,
             sources=data["sources"],
-            confidence=0.88
+            confidence=0.88,
+            retrieval=data.get("retrieval") or {},
         )
 
     except Exception as e:

@@ -8,7 +8,22 @@ import AnimatedDebateTimeline from '@/components/AnimatedDebateTimeline';
 import { TutorProgressDashboard } from '@/components/tutor/TutorProgressDashboard';
 import { formatRagScore } from '@/lib/formatRagScore';
 
-type AcademySource = { source?: string; topic?: string; course?: string; score?: number };
+type AcademySource = {
+  source?: string;
+  topic?: string;
+  course?: string;
+  lecture_id?: string;
+  chunk_index?: number | null;
+  score?: number;
+  distance?: number | null;
+};
+
+type RetrievalInfo = {
+  backend?: string;
+  top_k?: number;
+  document_count?: number;
+  course_filter?: string | null;
+};
 
 type DeepDebateApiResponse = {
   debate_history?: unknown[];
@@ -40,6 +55,7 @@ interface ChatMessage {
   isDebate?: boolean;
   debateData?: unknown;
   sources?: AcademySource[];
+  retrieval?: RetrievalInfo;
 }
 
 export default function TutorChat() {
@@ -165,6 +181,7 @@ export default function TutorChat() {
             role: 'ai',
             content: typeof data.answer === 'string' ? data.answer : '',
             sources: Array.isArray(data.sources) ? data.sources : [],
+            retrieval: data.retrieval && typeof data.retrieval === 'object' ? (data.retrieval as RetrievalInfo) : undefined,
           },
         ]);
       }
@@ -256,14 +273,14 @@ export default function TutorChat() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 pt-16 dark:bg-slate-950">
-      <header className="z-10 flex flex-wrap items-center gap-3 border-b border-slate-200/90 bg-white/95 px-4 py-4 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-slate-900/90 sm:px-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
-          <Bot size={24} />
+    <div className="flex min-h-screen flex-col bg-slate-50 pt-16 font-sans tracking-[-0.01em] dark:bg-slate-950">
+      <header className="z-10 flex flex-wrap items-center gap-3 border-b border-slate-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/85 sm:px-6">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+          <Bot size={20} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-lg font-bold text-slate-900 dark:text-slate-50">AgriNexus Tutor</h1>
-          <p className="flex items-center gap-1 text-sm font-medium text-emerald-700 dark:text-emerald-300">
+          <h1 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-900 dark:text-slate-50">AgriNexus Tutor</h1>
+          <p className="mt-0.5 flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
@@ -275,24 +292,24 @@ export default function TutorChat() {
           <button
             type="button"
             onClick={() => setView('chat')}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium sm:flex-none ${
+            className={`flex flex-1 items-center justify-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold sm:flex-none ${
               view === 'chat'
-                ? 'bg-emerald-600 text-white shadow dark:bg-emerald-500'
-                : 'border border-slate-200 bg-white text-slate-700 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200'
+                ? 'bg-slate-950 text-white shadow dark:bg-emerald-500'
+                : 'border border-slate-200 bg-white/80 text-slate-700 dark:border-white/10 dark:bg-slate-800/80 dark:text-slate-200'
             }`}
           >
-            <MessageCircle size={18} /> Чат
+            <MessageCircle size={16} /> Чат
           </button>
           <button
             type="button"
             onClick={() => setView('lesson')}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium sm:flex-none ${
+            className={`flex flex-1 items-center justify-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold sm:flex-none ${
               view === 'lesson'
-                ? 'bg-emerald-600 text-white shadow dark:bg-emerald-500'
-                : 'border border-slate-200 bg-white text-slate-700 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200'
+                ? 'bg-slate-950 text-white shadow dark:bg-emerald-500'
+                : 'border border-slate-200 bg-white/80 text-slate-700 dark:border-white/10 dark:bg-slate-800/80 dark:text-slate-200'
             }`}
           >
-            <BookOpen size={18} /> Урок по тема
+            <BookOpen size={16} /> Урок
           </button>
         </div>
       </header>
@@ -477,6 +494,25 @@ export default function TutorChat() {
                   ) : (
                     <div>
                       <div className="whitespace-pre-wrap">{msg.content}</div>
+                      {msg.retrieval ? (
+                        <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-600 dark:text-slate-300">
+                          {msg.retrieval.backend ? (
+                            <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold uppercase text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                              RAG: {msg.retrieval.backend}
+                            </span>
+                          ) : null}
+                          {typeof msg.retrieval.document_count === 'number' ? (
+                            <span className="rounded-full bg-emerald-50 px-2 py-1 font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200">
+                              {msg.retrieval.document_count} документа
+                            </span>
+                          ) : null}
+                          {msg.retrieval.course_filter ? (
+                            <span className="rounded-full bg-blue-50 px-2 py-1 font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-200">
+                              курс: {msg.retrieval.course_filter}
+                            </span>
+                          ) : null}
+                        </div>
+                      ) : null}
                       {msg.sources && msg.sources.length > 0 ? (
                         <div className="mt-4 border-t border-slate-200/80 pt-3 dark:border-white/10">
                           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Academy източници</p>
@@ -490,8 +526,14 @@ export default function TutorChat() {
                                       {formatRagScore(s.score)}
                                     </span>
                                   ) : null}
+                                  {typeof s.distance === 'number' && Number.isFinite(s.distance) ? (
+                                    <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-semibold uppercase text-sky-900 dark:bg-sky-900/40 dark:text-sky-200">
+                                      dist {s.distance.toFixed(3)}
+                                    </span>
+                                  ) : null}
                                 </span>
                                 {s.source ? <span className="text-slate-500"> — {s.source}</span> : null}
+                                {typeof s.chunk_index === 'number' ? <span className="text-slate-400"> · chunk {s.chunk_index}</span> : null}
                               </li>
                             ))}
                           </ul>

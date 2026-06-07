@@ -13,6 +13,9 @@ class AgentRunRequest(BaseModel):
     image_base64: str | None = None
     """Опционално: Base64 на изображение (JPEG/PNG/WebP). Mistral (ReAct) сам решава дали да извика Roboflow — виж docs/ROBOFLOW_VISION.md."""
 
+    thread_id: str | None = None
+    """Опционално: нишка за сесийна памет (LangGraph MemorySaver). По подразбиране \"default\"."""
+
 
 class AgentRunResponse(BaseModel):
     reply: str
@@ -24,7 +27,11 @@ async def run_agent(req: AgentRunRequest):
         raise HTTPException(status_code=400, detail="Подайте поне message или image_base64")
     try:
         msg = req.message.strip() or "Опиши какво виждаш в резултата от Roboflow и дай препоръки за агрономията."
-        reply = await run_agro_agent(msg, image_base64=req.image_base64)
+        reply = await run_agro_agent(
+            msg,
+            image_base64=req.image_base64,
+            thread_id=req.thread_id or "default",
+        )
         return AgentRunResponse(reply=reply)
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail=str(e)) from e

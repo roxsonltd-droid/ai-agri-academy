@@ -13,5 +13,9 @@ class User(Base):
     is_superuser = Column(Boolean, default=False)
     role = Column(String, default="student") # student, instructor, admin
     
+    # MFA
+    mfa_secret = Column(String, nullable=True)
+    mfa_enabled = Column(Boolean, default=False)
+    
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

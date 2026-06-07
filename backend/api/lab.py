@@ -1,15 +1,11 @@
 import json
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import SystemMessage, HumanMessage
-from core.config import settings
+from core.llm_factory import get_chat_llm
 from core.rag_facade import retrieve_for_prompt
 
 router = APIRouter()
-
-# Initialize LLM for the Lab
-llm = ChatMistralAI(model="mistral-large-latest", temperature=0.1, api_key=settings.MISTRAL_API_KEY)
 
 class LabAnalyzeRequest(BaseModel):
     ph: float
@@ -80,9 +76,10 @@ async def analyze_soil(request: LabAnalyzeRequest):
     ]
     
     try:
+        llm = get_chat_llm(temperature=0.1)
         response = await llm.ainvoke(messages)
         # Parse the JSON response
-        content = response.content.strip()
+        content = (response.content if isinstance(response.content, str) else str(response.content)).strip()
         if content.startswith("```json"):
             content = content[7:-3].strip()
         elif content.startswith("```"):

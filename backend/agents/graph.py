@@ -21,6 +21,10 @@ _COMPILED: Any | None = None
 
 SYS_REACT = (
     "Ти си AI агент на AI Agro Academy. Отговаряй кратко и експертно на български. Без емоджита.\n\n"
+    "Отказвай ясно заявки извън земеделие, образование и устойчивост (без политика, без медицински съвети, без търговски "
+    "препоръки за конкретни финансови инструменти).\n\n"
+    "Имаш инструмент academy_knowledge_search: семантично търсене във вътрешната база знания. Извиквай го, когато "
+    "потребителят пита за факти от учебни материали или вътрешни политики на академията.\n\n"
     "Имаш инструмент roboflow_detect_uploaded: стартира Roboflow върху прикачената от потребителя снимка "
     "(само ако заявката включва такава). Извиквай го само когато е нужно компютърно зрение — например "
     "идентификация на болести/вредители по листа, броене или локализиране на обекти, визуална класификация. "
@@ -29,27 +33,49 @@ SYS_REACT = (
 )
 
 
-def _try_build_graph():
+async def _try_build_graph_async():
     try:
         from langgraph.prebuilt import create_react_agent
-        from langchain_mistralai import ChatMistralAI
         from core.config import settings
+        from core.llm_factory import get_chat_llm
 
-        if not settings.MISTRAL_API_KEY:
+        if not settings.MISTRAL_API_KEY and not settings.HELICONE_API_KEY:
             return None
 
         from agents.tools_roboflow import roboflow_detect_uploaded
+        from agents.tools_rag import academy_knowledge_search
+        from agents.mcp_client import get_mcp_tools
 
-        llm = ChatMistralAI(
-            model="mistral-large-latest",
-            temperature=0.5,
-            api_key=settings.MISTRAL_API_KEY,
-        )
-        return create_react_agent(
-            llm,
-            tools=[roboflow_detect_uploaded],
-            prompt=SYS_REACT,
-        )
+        llm = get_chat_llm(temperature=0.5)
+        
+        # Load standard tools
+        tools_list = [academy_knowledge_search, roboflow_detect_uploaded]
+        
+        # Load MCP tools dynamically (AI Layer 2.0)
+        mcp_tools = await get_mcp_tools()
+        tools_list.extend(mcp_tools)
+        
+        from agents.tools_memory import save_user_fact
+        tools_list.append(save_user_fact)
+        
+        try:
+            from langgraph.checkpoint.redis.aio import AsyncRedisSaver
+            from core.redis_client import get_redis
+            from core.memory_store import get_memory_store
+            
+            redis_client = get_redis()
+            store = get_memory_store()
+            kwargs = {"store": store} if store else {}
+            
+            if redis_client:
+                # Use Redis for persistent AI session memory (Checkpointer)
+                return create_react_agent(llm, tools_list, prompt=SYS_REACT, checkpointer=AsyncRedisSaver(redis_client), **kwargs)
+            else:
+                from langgraph.checkpoint.memory import MemorySaver
+                return create_react_agent(llm, tools_list, prompt=SYS_REACT, checkpointer=MemorySaver(), **kwargs)
+        except (TypeError, ImportError) as e:
+            logger.warning(f"Checkpointer/Store not available, falling back to stateless agent. ({e})")
+            return create_react_agent(llm, tools_list, prompt=SYS_REACT)
     except ImportError:
         logger.info("LangGraph not installed — optional. See requirements-ai.txt")
         return None
@@ -58,10 +84,10 @@ def _try_build_graph():
         return None
 
 
-def _get_graph():
+async def _get_graph_async():
     global _COMPILED
     if _COMPILED is None:
-        _COMPILED = _try_build_graph()
+        _COMPILED = await _try_build_graph_async()
     return _COMPILED
 
 
@@ -87,16 +113,22 @@ def _final_answer_text(messages: list[BaseMessage]) -> str:
     return ""
 
 
-async def run_agro_agent(question: str, image_base64: str | None = None) -> str:
+async def run_agro_agent(
+    question: str,
+    image_base64: str | None = None,
+    thread_id: str = "default",
+    user_id: str = "default",
+) -> str:
     """
     Run the ReAct LangGraph agent. Optional ``image_base64`` is exposed only to
     ``roboflow_detect_uploaded`` — Mistral decides whether to call the tool.
+    ``thread_id`` — кратка сесийна нишка за MemorySaver (LangGraph), ако е наличен checkpointer.
     """
-    from langchain_core.messages import HumanMessage
-
+    from langchain_core.messages import HumanMessage, SystemMessage
     from agents.tools_roboflow import reset_request_image_b64, set_request_image_b64
+    from core.memory_store import get_memory_store
 
-    compiled = _get_graph()
+    compiled = await _get_graph_async()
     if not compiled:
         raise RuntimeError(
             "LangGraph agent unavailable. Install requirements-ai.txt and set MISTRAL_API_KEY."
@@ -107,22 +139,39 @@ async def run_agro_agent(question: str, image_base64: str | None = None) -> str:
         q = "Опиши какво виждаш и дай препоръки за агрономията."
 
     b64 = (image_base64.strip() if image_base64 else "") or ""
+    tid = (thread_id or "default").strip() or "default"
+    uid = (user_id or tid).strip() or "default"
 
-    def _invoke():
-        # ContextVar must be set on the same thread that runs the graph (tool node).
-        token = None
-        try:
-            if b64:
-                token = set_request_image_b64(b64)
-            return compiled.invoke(
-                {"messages": [HumanMessage(content=q)]},
-                {"recursion_limit": 25},
-            )
-        finally:
-            if token is not None:
-                reset_request_image_b64(token)
+    # 1. Fetch Long-Term Memory context
+    store = get_memory_store()
+    memory_context = ""
+    if store:
+        items = await store.asearch(("user_facts", uid))
+        if items:
+            facts = "\n".join([f"- {item.value.get('fact', '')}" for item in items])
+            memory_context = f"\n\nФАКТИ ЗА ТОЗИ ПОТРЕБИТЕЛ (Запазени в LTM):\n{facts}\nИзползвай ги, за да персонализираш отговора си."
 
-    result = await asyncio.to_thread(_invoke)
+    # 2. Prepare messages
+    msgs = []
+    if memory_context:
+        msgs.append(SystemMessage(content=memory_context))
+    msgs.append(HumanMessage(content=q))
+
+    token = None
+    try:
+        if b64:
+            token = set_request_image_b64(b64)
+            
+        result = await compiled.ainvoke(
+            {"messages": msgs},
+            {
+                "recursion_limit": 25,
+                "configurable": {"thread_id": tid, "user_id": uid},
+            },
+        )
+    finally:
+        if token is not None:
+            reset_request_image_b64(token)
 
     messages = result.get("messages") or []
     return _final_answer_text(messages)

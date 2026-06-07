@@ -36,6 +36,8 @@ export default function CoursePlayerPage() {
   const [courseData, setCourseData] = useState<CoursePayload | null>(null);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState("description");
+  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+  const [isMarking, setIsMarking] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
   // Quiz State
@@ -46,22 +48,60 @@ export default function CoursePlayerPage() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await fetch(`${API_BASE}/api/v1/courses/${params.courseId}`);
-        if (response.ok) {
-          const data = await response.json();
+        const token = localStorage.getItem("token");
+        const headers: HeadersInit = token ? { "Authorization": `Bearer ${token}` } : {};
+
+        const [courseRes, progRes] = await Promise.all([
+          fetch(`${API_BASE}/api/v1/courses/${params.courseId}`, { headers }),
+          token ? fetch(`${API_BASE}/api/v1/courses/progress/my`, { headers }) : Promise.resolve(null)
+        ]);
+
+        if (courseRes.ok) {
+          const data = await courseRes.json();
           setCourseData(data);
           if (data.modules && data.modules.length > 0 && data.modules[0].lessons.length > 0) {
             setActiveLesson(data.modules[0].lessons[0]);
           }
         }
+
+        if (progRes && progRes.ok) {
+          const progData = await progRes.json();
+          setCompletedLessons(progData.completed_lessons || []);
+        }
       } catch (error) {
-        console.error("Failed to fetch course", error);
+        console.error("Failed to fetch course data", error);
       } finally {
         setIsLoading(false);
       }
     };
     fetchCourse();
   }, [params.courseId]);
+
+  const markCompleted = async () => {
+    if (!activeLesson) return;
+    setIsMarking(true);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const res = await fetch(`${API_BASE}/api/v1/courses/progress/${activeLesson.id}`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setCompletedLessons(prev => [...prev, activeLesson.id.toString()]);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsMarking(false);
+    }
+  };
+
+  const totalLessons = courseData?.modules.reduce((acc, m) => acc + m.lessons.length, 0) || 0;
+  const completedInThisCourse = courseData?.modules.reduce((acc, m) => {
+    return acc + m.lessons.filter(l => completedLessons.includes(l.id.toString())).length;
+  }, 0) || 0;
+  const progressPercent = totalLessons > 0 ? Math.round((completedInThisCourse / totalLessons) * 100) : 0;
 
   if (isLoading || !courseData || !activeLesson) {
     return (
@@ -195,6 +235,22 @@ export default function CoursePlayerPage() {
                         осмислено прилагане спрямо спецификата на вашата почва и култури.&rdquo;
                       </p>
                     </div>
+                    
+                    {!completedLessons.includes(activeLesson.id.toString()) ? (
+                      <button
+                        onClick={markCompleted}
+                        disabled={isMarking}
+                        className="mt-8 w-full bg-app-primary hover:bg-app-primary-hover text-white font-bold py-4 rounded-xl flex items-center justify-center transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                      >
+                        <CheckCircle className="h-5 w-5 mr-2" />
+                        {isMarking ? "Запазване..." : "Отбележи урока като завършен"}
+                      </button>
+                    ) : (
+                      <div className="mt-8 w-full bg-app-success-bg border border-app-primary text-app-primary font-bold py-4 rounded-xl flex items-center justify-center">
+                        <CheckCircle className="h-5 w-5 mr-2" />
+                        Урокът е завършен
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -335,9 +391,9 @@ export default function CoursePlayerPage() {
         <div className="w-full lg:w-96 bg-app-card border-l border-app-border flex-shrink-0 flex flex-col h-[calc(100vh-8.5rem)]">
           <div className="p-4 border-b border-app-border bg-app-surface">
             <h3 className="font-semibold text-app-ink">Съдържание на курса</h3>
-            <p className="text-xs text-app-ink-muted mt-1">2 от 5 урока завършени</p>
+            <p className="text-xs text-app-ink-muted mt-1">{completedInThisCourse} от {totalLessons} урока завършени</p>
             <div className="w-full bg-app-border rounded-full h-1.5 mt-3">
-              <div className="bg-app-primary h-1.5 rounded-full" style={{ width: "40%" }} />
+              <div className="bg-app-primary h-1.5 rounded-full transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
             </div>
           </div>
 
@@ -360,7 +416,7 @@ export default function CoursePlayerPage() {
                       }`}
                     >
                       <div className="mt-0.5 mr-3 flex-shrink-0">
-                        {lesson.completed ? (
+                        {completedLessons.includes(lesson.id.toString()) ? (
                           <CheckCircle className="h-4 w-4 text-app-primary" />
                         ) : (
                           <PlayCircle

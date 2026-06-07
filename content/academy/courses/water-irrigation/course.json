@@ -1,0 +1,31 @@
+{
+	"slug": "water-irrigation",
+	"modules": 2,
+	"title": { "bg": "Вода и иригация", "en": "Water and irrigation" },
+	"description": {
+		"bg": "Воден бюджет, риск от суша и разговор с банкера на език m³/ha.",
+		"en": "Water budget, drought risk, and talking to your banker in m³/ha language."
+	},
+	"lectures": [
+		{
+			"id": "wi-budget",
+			"file": "courses/water-irrigation/01-voden-byudzhet.md",
+			"filename": "01-voden-byudzhet.md",
+			"title": { "bg": "Воден бюджет на сезона", "en": "Season water budget" },
+			"summary": {
+				"bg": "Отделна линия в разходите — не „остатък“ след торовете.",
+				"en": "A dedicated cost line — not a leftover after fertilizer."
+			}
+		},
+		{
+			"id": "wi-energy",
+			"file": "courses/water-irrigation/02-pompi-energiya.md",
+			"filename": "02-pompi-energiya.md",
+			"title": { "bg": "Помпи и енергия", "en": "Pumps and energy" },
+			"summary": {
+				"bg": "Когато токът изяде спестенията от по-малко тор.",
+				"en": "When electricity eats the savings from “less fertilizer”."
+			}
+		}
+	]
+}

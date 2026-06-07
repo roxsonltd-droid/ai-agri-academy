@@ -87,6 +87,12 @@ export default function Navbar() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const navLinks = [
+    { name: "AI Command Center", href: "/dashboard", className: "text-emerald-400 font-bold" },
+    { name: "FIELDLOT Пазар", href: "/marketplace", className: "text-amber-400 font-bold" },
+    { name: "Финанси", href: "/finance" },
+    { name: "Дигитален Паспорт", href: "/passport" },
+    { name: "Метеорология", href: "/weather" },
+    { name: "Сателити", href: "/satellite" },
     { name: "Курсове", href: "/courses" },
     { name: "AI Факултет", href: "/faculty/agromind" },
     { name: "Лаборатории", href: "/labs" },
@@ -108,8 +114,9 @@ export default function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={reduceMotion ? { duration: 0 } : { ...transitionCinematic, ease: easeCinematic }}
       >
-        {/* Left: Mobile Menu Toggle & Logo & Desktop Nav */}
+{/* Left: Mobile Menu Toggle & Logo & Desktop Nav */}
         <div className="flex items-center gap-6 xl:gap-8 z-10 shrink-0">
+
           <div className="flex items-center gap-3">
             <button 
               className="lg:hidden p-1 text-slate-300 hover:text-white focus:outline-none"
@@ -132,13 +139,43 @@ export default function Navbar() {
             </div>
           </div>
           
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
+          <div className="hidden xl:flex items-center gap-1">
+            {navLinks.slice(0, 6).map((link) => (
               <Link key={link.href} href={link.href} className={`${desktopNavLinkStyle} ${link.className || ''}`}>
                 {link.name}
               </Link>
             ))}
+            <div className="relative group">
+              <button className={`${desktopNavLinkStyle} flex items-center`}>
+                Още <ChevronDown className="w-4 h-4 ml-1 opacity-50 group-hover:opacity-100 transition-opacity" />
+              </button>
+              <div className="absolute top-full right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col p-2 z-50">
+                {navLinks.slice(6).map((link) => (
+                  <Link key={link.href} href={link.href} className={`px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors ${link.className || ''}`}>
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="hidden lg:flex xl:hidden items-center gap-1">
+            {navLinks.slice(0, 4).map((link) => (
+              <Link key={link.href} href={link.href} className={`${desktopNavLinkStyle} ${link.className || ''}`}>
+                {link.name}
+              </Link>
+            ))}
+            <div className="relative group">
+              <button className={`${desktopNavLinkStyle} flex items-center`}>
+                Още <ChevronDown className="w-4 h-4 ml-1 opacity-50 group-hover:opacity-100 transition-opacity" />
+              </button>
+              <div className="absolute top-full right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col p-2 z-50">
+                {navLinks.slice(4).map((link) => (
+                  <Link key={link.href} href={link.href} className={`px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors ${link.className || ''}`}>
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 

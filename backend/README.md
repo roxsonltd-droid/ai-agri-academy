@@ -29,6 +29,14 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 - **ReDoc:** [http://127.0.0.1:8000/api/v1/redoc](http://127.0.0.1:8000/api/v1/redoc)
 - **Health:** `GET /health`
 
+Пълен списък AI/RAG подобрения и бъдещи задачи: **[`../docs/AI_ENHANCEMENTS_ROADMAP.md`](../docs/AI_ENHANCEMENTS_ROADMAP.md)** · Eval (LangSmith, RAGAS, offline retrieval): **[`../docs/RAG_EVAL_AND_OBSERVABILITY.md`](../docs/RAG_EVAL_AND_OBSERVABILITY.md)**.
+
+## Опционално: LangSmith + RAGAS (evaluation)
+
+За офлайн RAGAS метрики и LangSmith клиент вижте **`requirements-eval.txt`** (отделен venv препоръчително — възможни конфликти с версиите в `requirements.txt`) и **[`../docs/RAG_EVAL_AND_OBSERVABILITY.md`](../docs/RAG_EVAL_AND_OBSERVABILITY.md)** § LangSmith + RAGAS.
+
+За **Helicone + Grafana** (LLM gateway, метрики, логове): **[`../docs/OBSERVABILITY_HELICONE_GRAFANA.md`](../docs/OBSERVABILITY_HELICONE_GRAFANA.md)**.
+
 ## PostgreSQL (локално с Docker)
 
 Пълно ръководство (SSL, Render, troubleshooting): **[`../docs/POSTGRES.md`](../docs/POSTGRES.md)**.
@@ -64,10 +72,15 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 | `DATABASE_URL` | Не | По подразбиране `sqlite:///./agro_academy.db`. За Postgres: `postgresql+psycopg2://USER:PASS@HOST:5432/DBNAME` |
 | `BACKEND_CORS_ORIGINS` | Не | Списък origin-и за CORS (по подразбиране включва `localhost:3000`). При задаване от env често се ползва JSON масив. |
 | `MISTRAL_API_KEY` | За AI чат / embeddings в „files“ RAG | API ключ към Mistral |
+| `LLM_MAX_OUTPUT_TOKENS` | Не | Макс. токени за отговор на Mistral (по подразбиране 2048) |
+| `RAG_LOG_RETRIEVAL` | Не | `true` — логване на RAG hit (източник + score) |
+| `CHAT_RATE_LIMIT_PER_MINUTE` | Не | `0` = без лимит; иначе max заявки/IP за 60 s към `POST /api/v1/chat` |
 | `RAG_ENABLED` | Не | `true` / `false` (по подразбиране логиката в кода е включена) |
 | `RAG_TOP_K` | Не | Брой chunks за RAG |
 | `RAG_UPLOAD_SECRET` | Не | Споделен секрет за header `X-RAG-Upload-Secret` при качване на документи |
 | `RAG_MAX_UPLOAD_BYTES` | Не | Лимит на upload (по подразбиране 10 MB) |
+| `ACADEMY_LESSON_RAG_TOP_K` | Не | Брой chunks от уроци в БД за Academy Tutor RAG (по подразбиране `4`) |
+| `ACADEMY_DEBATE_MAX_ROUNDS` | Не | Макс. кръга критик за LangGraph дебат (по подразбиране `3`) |
 | `PLATFORM_RAG_BACKEND` | Не | `files` (вградени MD + Mistral) или `llamaindex` (Pinecone през LlamaIndex). Бъдещо: `weaviate` — виж [LANGCHAIN_VECTOR_DB.md](../docs/LANGCHAIN_VECTOR_DB.md) |
 | `PINECONE_API_KEY` | За LlamaIndex path | Pinecone API ключ |
 | `PINECONE_INDEX_NAME` | За LlamaIndex path | Име на индекс |
@@ -146,6 +159,7 @@ python -m alembic downgrade -1      # една стъпка назад (ако d
 | Vision (Roboflow) | `/api/v1/vision` |
 | Platform | `/api/v1/platform` |
 | Agents | `/api/v1/agents` |
+| Academy Tutor (LangGraph дебат) | `/api/v1/academy/tutor` |
 
 ## Deploy (кратко)
 
@@ -156,6 +170,7 @@ python -m alembic downgrade -1      # една стъпка назад (ако d
 Глас (ElevenLabs TTS): **`../docs/ELEVENLABS_VOICE.md`**.  
 Vision (Roboflow): **`../docs/ROBOFLOW_VISION.md`**.  
 Multi-agent факултет (LangGraph, личности, памет): **`../docs/MULTI_AI_TEACHERS.md`**.  
+Academy Tutor (RAG уроци + файлове, Tutor/Critic LangGraph): **`../docs/ACADEMY_TUTOR_LANGGRAPH.md`**.  
 Видео обучение (уроци, прогрес, Stream): **`../docs/VIDEO_LEARNING_SYSTEM.md`**.
 
 ---

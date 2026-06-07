@@ -1,0 +1,6 @@
+region,year,crop,disease_label
+SouthBulgaria,2023,Wheat,0
+SouthBulgaria,2023,Rye,1
+NorthBulgaria,2023,Wheat,0
+NorthBulgaria,2024,Wheat,1
+SouthBulgaria,2024,Rye,0

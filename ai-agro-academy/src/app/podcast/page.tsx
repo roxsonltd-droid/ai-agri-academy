@@ -90,7 +90,7 @@ export default function PodcastPage() {
         };
       }
     } catch (err: any) {
-      setError("Грешка при пускане на подкаста.");
+      setError(err.message || "Грешка при пускане на подкаста.");
     } finally {
       setIsLoadingAudio(false);
     }
@@ -117,29 +117,30 @@ export default function PodcastPage() {
         </div>
       </header>
 
-      <main className="relative z-10 container mx-auto max-w-2xl px-4 py-8">
-        <Card className="glass-subtle border-border/60 mb-6">
-          <CardHeader>
-            <CardTitle>Генерирай нов епизод</CardTitle>
-            <CardDescription>
+      <main className="relative z-10 container mx-auto max-w-2xl px-4 py-6">
+        <Card className="glass-subtle border-border/60 mb-5 shadow-sm">
+          <CardHeader className="pb-3 px-5 pt-5">
+            <CardTitle className="text-base">Генерирай нов епизод</CardTitle>
+            <CardDescription className="text-xs">
               Въведете тема (например: Актуални цени на зърното) и AI ще създаде аудио новини.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={generatePodcast} className="flex gap-3">
+          <CardContent className="px-5 pb-5">
+            <form onSubmit={generatePodcast} className="flex gap-2">
               <input
                 type="text"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="Тема на подкаста..."
-                className="flex-1 bg-card/50 border border-border/50 rounded-xl px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40"
+                className="flex-1 bg-card/50 border border-border/50 rounded-lg px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500/40"
               />
               <Button 
                 type="submit" 
+                size="sm"
                 disabled={!topic.trim() || isGenerating}
-                className="bg-amber-500 hover:bg-amber-600 text-white"
+                className="bg-amber-500 hover:bg-amber-600 text-white rounded-lg px-4"
               >
-                {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <ListMusic className="w-4 h-4 mr-2" />}
+                {isGenerating ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <ListMusic className="w-3.5 h-3.5 mr-1.5" />}
                 Създай
               </Button>
             </form>
@@ -147,36 +148,36 @@ export default function PodcastPage() {
         </Card>
 
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+          <div className="mb-5 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
             {error}
           </div>
         )}
 
         {script && (
-          <Card className="glass-subtle border-border/60 overflow-hidden relative group">
+          <Card className="glass-subtle border-border/60 overflow-hidden relative group shadow-sm">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-transparent pointer-events-none" />
-            <CardHeader className="border-b border-border/30 pb-4">
+            <CardHeader className="border-b border-border/20 pb-3 px-5 pt-4">
               <div className="flex justify-between items-center">
-                <CardTitle className="text-lg text-amber-400">Скрипт на Епизода</CardTitle>
+                <CardTitle className="text-base font-semibold text-amber-500">Скрипт на Епизода</CardTitle>
                 <Button 
                   onClick={playPodcast}
                   disabled={isLoadingAudio}
                   size="sm"
-                  className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-6 shadow-[0_0_15px_rgba(251,191,36,0.3)]"
+                  className="bg-foreground text-background hover:bg-foreground/90 rounded-md h-8 px-4 text-xs shadow-[0_0_10px_rgba(251,191,36,0.2)]"
                 >
                   {isLoadingAudio ? (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                   ) : isPlaying ? (
-                    <Square className="w-4 h-4 mr-2" />
+                    <Square className="w-3.5 h-3.5 mr-1.5" />
                   ) : (
-                    <Play className="w-4 h-4 mr-2 fill-current" />
+                    <Play className="w-3.5 h-3.5 mr-1.5 fill-current" />
                   )}
                   {isPlaying ? "Спри" : "Слушай"}
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
-              <div className="prose prose-invert prose-sm max-w-none text-muted-foreground leading-relaxed h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+            <CardContent className="px-5 py-4">
+              <div className="prose prose-invert prose-sm max-w-none text-muted-foreground leading-relaxed h-[300px] overflow-y-auto pr-2 custom-scrollbar [&_strong]:font-semibold [&_strong]:text-foreground [&_h1]:text-base [&_h2]:text-sm [&_h3]:text-sm">
                 <ReactMarkdown>{script}</ReactMarkdown>
               </div>
             </CardContent>

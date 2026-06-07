@@ -1,0 +1,31 @@
+{
+	"slug": "farm-finance",
+	"modules": 2,
+	"title": { "bg": "Финанси и риск в стопанството", "en": "Farm finance and risk" },
+	"description": {
+		"bg": "Оборот, застраховки, субсидии и прости показатели за решения.",
+		"en": "Working capital, insurance, subsidies, and simple metrics for decisions."
+	},
+	"lectures": [
+		{
+			"id": "ff-working-capital",
+			"file": "courses/farm-finance/01-oboroten-kapital.md",
+			"filename": "01-oboroten-kapital.md",
+			"title": { "bg": "Оборотен капитал в кампанията", "en": "Working capital in the campaign" },
+			"summary": {
+				"bg": "Защо сушата е и кредитен риск.",
+				"en": "Why drought is also a credit risk."
+			}
+		},
+		{
+			"id": "ff-insurance",
+			"file": "courses/farm-finance/02-zastrahovki-meteo.md",
+			"filename": "02-zastrahovki-meteo.md",
+			"title": { "bg": "Застраховки и метео прагове", "en": "Insurance and weather triggers" },
+			"summary": {
+				"bg": "Какво „доказуемо“ иска финансовият партньор.",
+				"en": "What “verifiable” means to a financial partner."
+			}
+		}
+	]
+}

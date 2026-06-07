@@ -1,21 +1,62 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: agro-academy-postgres
-    restart: unless-stopped
+  db:
+    image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_USER: agro
-      POSTGRES_PASSWORD: agro_dev_change_me
-      POSTGRES_DB: agro_academy
+      POSTGRES_USER: agrinexus
+      POSTGRES_PASSWORD: agrinexus_dev
+      POSTGRES_DB: agrinexus
     ports:
       - "5432:5432"
     volumes:
-      - agro_pg_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/docker/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U agro -d agro_academy"]
+      test: ["CMD-SHELL", "pg_isready -U agrinexus -d agrinexus"]
       interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./apps/backend/rag
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://agrinexus:agrinexus_dev@db:5432/agrinexus
+      CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  neo4j:
+    image: neo4j:5.20
+    environment:
+      - NEO4J_AUTH=neo4j/test
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  agro_pg_data:
+  pgdata:
+  redis_data:
+  neo4j_data:

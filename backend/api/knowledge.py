@@ -13,6 +13,7 @@ from core.config import settings
 from core.bearer_user import resolve_user_from_bearer
 from core.r2 import RAG_OBJECT_KEY_RE, delete_object, get_object_bytes, r2_enabled
 from core.rag_paths import knowledge_uploads_dir
+from core.upload_safety import assert_upload_bytes_safe
 from db.database import get_db
 
 router = APIRouter()
@@ -61,6 +62,7 @@ def _ingest_bytes_to_uploads(*, original_filename: str, suf: str, data: bytes) -
     """Write validated bytes to knowledge/uploads and return {stored_as, size_bytes}."""
     if len(data) > settings.RAG_MAX_UPLOAD_BYTES:
         raise HTTPException(status_code=413, detail="Файлът е твърде голям")
+    assert_upload_bytes_safe(data, suf)
 
     uploads = knowledge_uploads_dir()
     if suf == ".pdf":

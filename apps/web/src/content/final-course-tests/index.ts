@@ -1,6 +1,7 @@
 import { cropMarketsRows } from "./crop-markets";
 import { dronePilotsRows } from "./drone-pilots";
 import { farmFinanceRows } from "./farm-finance";
+import { mapsAndFieldsRows } from "./maps-and-fields";
 import { precisionDataRows } from "./precision-data";
 import { soilFertilityRows } from "./soil-fertility";
 import {
@@ -31,6 +32,7 @@ const FINAL_TESTS_BY_SLUG: Record<string, CourseFinalTest> = {
 	"crop-markets": pack("crop-markets", cropMarketsRows),
 	"water-irrigation": pack("water-irrigation", waterIrrigationRows),
 	"farm-finance": pack("farm-finance", farmFinanceRows),
+	"maps-and-fields": pack("maps-and-fields", mapsAndFieldsRows),
 	"precision-data": pack("precision-data", precisionDataRows),
 	"drone-pilots": pack("drone-pilots", dronePilotsRows),
 	"integrated-pest-management": pack("integrated-pest-management", integratedPestManagementRows),

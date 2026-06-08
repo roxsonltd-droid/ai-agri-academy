@@ -5,6 +5,7 @@
 	"rewrites": [
 		{ "source": "/academy/course/(.*)", "destination": "/course.html" },
 		{ "source": "/academy", "destination": "/academy.html" },
+		{ "source": "/simulator", "destination": "/simulator.html" },
 		{ "source": "/login", "destination": "/login.html" },
 		{ "source": "/course", "destination": "/course.html" },
 		{ "source": "/dashboard", "destination": "/dashboard.html" },

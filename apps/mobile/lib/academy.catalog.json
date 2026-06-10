@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-29T06:22:02.432Z",
+  "generatedAt": "2026-06-10T07:42:39.030Z",
   "courses": [
     {
       "slug": "crop-markets",
@@ -119,6 +119,20 @@
             "bg": "Какво „доказуемо“ иска финансовият партньор.",
             "en": "What “verifiable” means to a financial partner."
           }
+        }
+      ]
+    },
+    {
+      "slug": "grain-trading",
+      "title": "Търговия със зърно",
+      "description": "Стратегии за успешен маркетинг и продажби на зърнената реколта.",
+      "difficulty": "advanced",
+      "lectures": [
+        {
+          "id": "grain-markets",
+          "title": "Динамика на зърнените пазари",
+          "filename": "lesson-1.md",
+          "file": "grain-trading/lesson-1.md"
         }
       ]
     },
@@ -291,6 +305,20 @@
             "bg": "Очертаване на блокове, сателитни слоеве във времето, проверка на граници с GPS и обновяване в полето.",
             "en": "Draw parcel polygons, use satellite time series, walk boundaries with live GPS, and refresh layers safely in the field."
           }
+        }
+      ]
+    },
+    {
+      "slug": "precision-farming",
+      "title": "Основи на прецизното земеделие",
+      "description": "Научете как да използвате технологии за оптимизация на добива.",
+      "difficulty": "intermediate",
+      "lectures": [
+        {
+          "id": "intro-precision",
+          "title": "Въведение в прецизното земеделие",
+          "filename": "lesson-1.md",
+          "file": "precision-farming/lesson-1.md"
         }
       ]
     },

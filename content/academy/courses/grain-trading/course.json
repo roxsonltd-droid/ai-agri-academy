@@ -1,0 +1,14 @@
+{
+  "slug": "grain-trading",
+  "title": "Търговия със зърно",
+  "description": "Стратегии за успешен маркетинг и продажби на зърнената реколта.",
+  "difficulty": "advanced",
+  "lectures": [
+    {
+      "id": "grain-markets",
+      "title": "Динамика на зърнените пазари",
+      "filename": "lesson-1.md",
+      "file": "grain-trading/lesson-1.md"
+    }
+  ]
+}

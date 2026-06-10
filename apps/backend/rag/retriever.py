@@ -35,9 +35,18 @@ def get_retriever():
         return _file_retriever
     if mode in ("pg", "postgres", "vector"):
         if _pg_retriever is None:
-            from pg_retriever import AcademyRetriever
+            try:
+                from pg_retriever import AcademyRetriever
 
-            _pg_retriever = AcademyRetriever()
+                _pg_retriever = AcademyRetriever()
+            except Exception as e:
+                import logging
+                logging.error(f"Failed to initialize PGVector retriever: {e}. Falling back to file retriever.")
+                if _file_retriever is None:
+                    from file_retriever import FileAcademyRetriever
+
+                    _file_retriever = FileAcademyRetriever()
+                return _file_retriever
         return _pg_retriever
     if _pg_retriever is not None:
         return _pg_retriever

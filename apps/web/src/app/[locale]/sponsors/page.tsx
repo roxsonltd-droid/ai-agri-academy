@@ -377,7 +377,7 @@ export default async function SponsorsPage({ params }: PageProps) {
 				<p className="mb-5 text-[13px] text-ink/55">{c.finalSub}</p>
 				<CTARow>
 					<CTA href="mailto:partners@agrinexus.io">{c.finalCta1}</CTA>
-					<CTA href="#" variant="secondary">{c.finalCta2}</CTA>
+					<CTA href="/contact" variant="secondary">{c.finalCta2}</CTA>
 				</CTARow>
 			</section>
 		</>

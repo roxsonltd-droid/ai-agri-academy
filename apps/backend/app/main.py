@@ -22,7 +22,12 @@ from app.core.rate_limit import limiter
 
 def _cors_origins() -> list[str]:
 	raw = get_settings().cors_origins
-	return [o.strip() for o in raw.split(",") if o.strip()]
+	origins = [o.strip() for o in raw.split(",") if o.strip()]
+	defaults = ["http://localhost:3000", "http://127.0.0.1:3456", "http://localhost:3456", "http://localhost:8000"]
+	for d in defaults:
+		if d not in origins:
+			origins.append(d)
+	return origins
 
 
 @asynccontextmanager

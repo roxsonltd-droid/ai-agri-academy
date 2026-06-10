@@ -1,0 +1,14 @@
+{
+  "slug": "precision-farming",
+  "title": "Основи на прецизното земеделие",
+  "description": "Научете как да използвате технологии за оптимизация на добива.",
+  "difficulty": "intermediate",
+  "lectures": [
+    {
+      "id": "intro-precision",
+      "title": "Въведение в прецизното земеделие",
+      "filename": "lesson-1.md",
+      "file": "precision-farming/lesson-1.md"
+    }
+  ]
+}

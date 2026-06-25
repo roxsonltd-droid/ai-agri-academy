@@ -74,9 +74,9 @@ export function FileUpload({
       // Clear the input
       e.target.value = '';
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Upload error:", err);
-      setError(err.message || "Възникна неочаквана грешка");
+      setError(err instanceof Error ? err.message : "Възникна неочаквана грешка");
     } finally {
       setIsUploading(false);
     }

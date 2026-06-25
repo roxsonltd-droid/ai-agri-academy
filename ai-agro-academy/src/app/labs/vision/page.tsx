@@ -29,6 +29,7 @@ export default function DiagnosticLabPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [reportId] = useState(() => Math.random().toString(36).substring(7).toUpperCase());
 
   // Drag and Drop State
   const [isDragging, setIsDragging] = useState(false);
@@ -272,7 +273,7 @@ export default function DiagnosticLabPage() {
                   </div>
                   <div className="flex gap-4 relative z-10">
                     <span className="inline-flex items-center px-3 py-1 rounded bg-slate-900 border border-slate-700 text-xs font-mono text-slate-400">
-                      ID: {Math.random().toString(36).substring(7).toUpperCase()}
+                      ID: {reportId}
                     </span>
                     <span className="inline-flex items-center px-3 py-1 rounded bg-slate-900 border border-slate-700 text-xs font-mono text-slate-400">
                       ДАТА: {new Date().toLocaleDateString('bg-BG')}

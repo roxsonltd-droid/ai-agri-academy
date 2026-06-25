@@ -365,7 +365,7 @@ export default function CoursePlayerPage() {
                                   courseName: courseData.title,
                                   date: new Date().toISOString()
                                 };
-                                if (!certs.find((c: any) => c.courseName === courseData.title)) {
+                                if (!certs.find((c: { courseName: string }) => c.courseName === courseData.title)) {
                                   certs.push(newCert);
                                   localStorage.setItem("agro_certificates", JSON.stringify(certs));
                                 }

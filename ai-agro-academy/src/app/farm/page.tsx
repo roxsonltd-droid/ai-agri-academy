@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 
 export default function FarmProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   
   const [profile, setProfile] = useState({
@@ -19,18 +19,26 @@ export default function FarmProfilePage() {
     experience: "5-10 години",
   });
 
+  const [marketPrices] = useState(() =>
+    Array.from({ length: 4 }, () => ({
+      price: (Math.random() * 200 + 300).toFixed(0),
+      change: (Math.random() * 5 + 1).toFixed(1),
+    }))
+  );
+
   useEffect(() => {
     const saved = localStorage.getItem("agro_farm_profile");
     if (saved) {
       const parsed = JSON.parse(saved);
-      setProfile(parsed);
-      if (!parsed.region || !parsed.crops) {
-        setIsEditing(true);
-      }
+      queueMicrotask(() => {
+        setProfile(parsed);
+        if (!parsed.region || !parsed.crops) {
+          setIsEditing(true);
+        }
+      });
     } else {
-      setIsEditing(true);
+      queueMicrotask(() => setIsEditing(true));
     }
-    setIsLoaded(true);
   }, []);
 
   const handleSave = () => {
@@ -274,7 +282,7 @@ export default function FarmProfilePage() {
               <div className="flex justify-between items-start">
                 <CardTitle className="text-lg flex items-center text-blue-400">
                   <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse mr-2" />
-                  Агент "Метеоролог"
+                  Агент &quot;Метеоролог&quot;
                 </CardTitle>
                 <span className="text-xs font-mono bg-blue-500/10 text-blue-400 px-2 py-1 rounded border border-blue-500/20">LIVE DATA</span>
               </div>
@@ -325,7 +333,7 @@ export default function FarmProfilePage() {
               <div className="flex justify-between items-start">
                 <CardTitle className="text-lg flex items-center text-emerald-400">
                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2" />
-                  Агент "Агро Пазар"
+                  Агент &quot;Агро Пазар&quot;
                 </CardTitle>
                 <span className="text-xs font-mono bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded border border-emerald-500/20">LIVE MARKET</span>
               </div>
@@ -338,9 +346,9 @@ export default function FarmProfilePage() {
                     <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500/50 group-hover:bg-emerald-400 transition-colors" />
                     <p className="text-sm text-muted-foreground font-medium mb-2">{c.trim()}</p>
                     <div className="flex items-end justify-between">
-                      <h3 className="text-2xl font-bold">{(Math.random() * 200 + 300).toFixed(0)} <span className="text-xs text-muted-foreground font-normal">лв/т</span></h3>
+                      <h3 className="text-2xl font-bold">{marketPrices[i]?.price ?? "350"} <span className="text-xs text-muted-foreground font-normal">лв/т</span></h3>
                       <div className="flex items-center text-emerald-400 text-xs font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                        <TrendingUp className="w-3 h-3 mr-1" /> +{(Math.random() * 5 + 1).toFixed(1)}%
+                        <TrendingUp className="w-3 h-3 mr-1" /> +{marketPrices[i]?.change ?? "2.5"}%
                       </div>
                     </div>
                   </div>

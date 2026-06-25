@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function CheckoutSuccessPage() {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient] = useState(() => typeof window !== "undefined");
+  const orderId = useId();
+  const [orderNum] = useState(() => Math.floor(Math.random() * 1000000));
 
   useEffect(() => {
-    setIsClient(true);
     // Mark user as PRO in local storage
     localStorage.setItem("agro_pro", "true");
     
@@ -79,7 +80,7 @@ export default function CheckoutSuccessPage() {
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-slate-500">Номер на поръчка:</span>
-            <span className="text-slate-300 font-mono">ORD-{Math.floor(Math.random() * 1000000)}</span>
+            <span className="text-slate-300 font-mono">ORD-{orderNum}</span>
           </div>
         </div>
 

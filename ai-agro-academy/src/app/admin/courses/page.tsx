@@ -9,7 +9,7 @@ type Course = {
   id: string;
   title: string;
   description: string;
-  modules: any[];
+  modules: { id: string; title: string; lessons?: { id: string }[] }[];
 };
 
 export default function AdminCoursesPage() {

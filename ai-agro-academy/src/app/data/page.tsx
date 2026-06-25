@@ -36,8 +36,8 @@ export default function DataAnalysisPage() {
       
       const data = await res.json();
       setResult(data.reply);
-    } catch (err: any) {
-      setError(err.message || "Грешка при анализа на данните.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Грешка при анализа на данните.");
     } finally {
       setIsAnalyzing(false);
     }

@@ -10,27 +10,44 @@ function CertificateContent() {
   const searchParams = useSearchParams();
   const courseTitle = searchParams.get("course") || "Основи на Прецизното Земеделие";
   
-  const [studentName, setStudentName] = useState("Иван Иванов (Отличен)");
-  const [dateStr, setDateStr] = useState(new Date().toLocaleDateString("bg-BG"));
-  const [certId, setCertId] = useState("#" + (Math.floor(Math.random() * 90000) + 10000).toString());
-  
+  const [certData, setCertData] = useState(() => {
+    let studentName = "Иван Иванов (Отличен)";
+    let dateStr = new Date().toLocaleDateString("bg-BG");
+    let certId = "#" + (Math.floor(Math.random() * 90000) + 10000).toString();
+    if (typeof window !== "undefined") {
+      try {
+        const savedUser = localStorage.getItem("agro_farm_profile");
+        if (savedUser) studentName = "Сертифициран Фермер";
+      } catch { /* ignore */ }
+      try {
+        const certs = JSON.parse(localStorage.getItem("agro_certificates") || "[]");
+        const found = certs.find((c: { courseName: string; date: string; id: string }) => c.courseName === courseTitle);
+        if (found) {
+          dateStr = new Date(found.date).toLocaleDateString("bg-BG");
+          certId = "#" + found.id;
+        }
+      } catch { /* ignore */ }
+    }
+    return { studentName, dateStr, certId };
+  });
+
   useEffect(() => {
+    let studentName = "Иван Иванов (Отличен)";
+    let dateStr = new Date().toLocaleDateString("bg-BG");
+    let certId = "#" + (Math.floor(Math.random() * 90000) + 10000).toString();
     try {
       const savedUser = localStorage.getItem("agro_farm_profile");
-      if (savedUser) {
-        // We can just set a dynamic name for realism
-        setStudentName("Сертифициран Фермер");
-      }
-    } catch(e) {}
-
+      if (savedUser) studentName = "Сертифициран Фермер";
+    } catch { /* ignore */ }
     try {
       const certs = JSON.parse(localStorage.getItem("agro_certificates") || "[]");
-      const found = certs.find((c: any) => c.courseName === courseTitle);
+      const found = certs.find((c: { courseName: string; date: string; id: string }) => c.courseName === courseTitle);
       if (found) {
-        setDateStr(new Date(found.date).toLocaleDateString("bg-BG"));
-        setCertId("#" + found.id);
+        dateStr = new Date(found.date).toLocaleDateString("bg-BG");
+        certId = "#" + found.id;
       }
-    } catch(e) {}
+    } catch { /* ignore */ }
+    queueMicrotask(() => setCertData({ studentName, dateStr, certId }));
   }, [courseTitle]);
 
   const handlePrint = () => {
@@ -77,7 +94,7 @@ function CertificateContent() {
             </p>
 
             <h2 className="text-5xl md:text-7xl font-serif font-bold text-slate-900 mb-6 border-b-2 border-slate-300 pb-4 px-12">
-              {studentName}
+              {certData.studentName}
             </h2>
 
             <p className="text-lg md:text-xl text-slate-600 font-serif mb-6">
@@ -110,10 +127,10 @@ function CertificateContent() {
               </div>
 
               <div className="flex flex-col items-center">
-                <div className="text-xl font-serif text-slate-800 mb-4">{dateStr}</div>
+                <div className="text-xl font-serif text-slate-800 mb-4">{certData.dateStr}</div>
                 <div className="w-48 border-t border-slate-400 pt-2">
                   <p className="text-sm font-bold text-slate-800 uppercase tracking-widest">Дата</p>
-                  <p className="text-xs text-slate-500">Идентификатор: {certId}</p>
+                  <p className="text-xs text-slate-500">Идентификатор: {certData.certId}</p>
                 </div>
               </div>
 

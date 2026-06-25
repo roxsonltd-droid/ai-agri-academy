@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ElementType } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { listContainerVariants, listItemVariants } from "@/lib/motion";
@@ -38,22 +38,42 @@ type Agent = {
   id: string;
   name: string;
   role: string;
-  icon: any;
+  icon: ElementType;
   status: "idle" | "monitoring" | "alert" | "active";
   color: string;
   bg: string;
 };
 
+interface Notification {
+  id: string;
+  type: string;
+  message: string;
+}
+
 export default function AgentsMissionControl() {
-  const [region, setRegion] = useState("вашия регион");
-  const [crops, setCrops] = useState("вашите култури");
+  const [region, setRegion] = useState(() => {
+    if (typeof window === "undefined") return "вашия регион";
+    try {
+      const saved = localStorage.getItem("agro_farm_profile");
+      if (saved) { const p = JSON.parse(saved); if (p.region) return p.region; }
+    } catch { /* ignore */ }
+    return "вашия регион";
+  });
+  const [crops, setCrops] = useState(() => {
+    if (typeof window === "undefined") return "вашите култури";
+    try {
+      const saved = localStorage.getItem("agro_farm_profile");
+      if (saved) { const p = JSON.parse(saved); if (p.crops) return p.crops; }
+    } catch { /* ignore */ }
+    return "вашите култури";
+  });
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [showNewAgentModal, setShowNewAgentModal] = useState(false);
   const [newAgentName, setNewAgentName] = useState("");
   const [newAgentTask, setNewAgentTask] = useState("");
   
   const [isSimulatingCron, setIsSimulatingCron] = useState(false);
-  const [alerts, setAlerts] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<{ id: string; agentId: string; severity: string; title: string; description: string; time: string; contextParam: string }[]>([]);
   
   // AI Clear States
   const [isScanning, setIsScanning] = useState(false);
@@ -136,24 +156,11 @@ export default function AgentsMissionControl() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("agro_farm_profile");
-      let currentRegion = "вашия регион";
-      let currentCrops = "вашите култури";
-      
-      if (saved) {
-        const profile = JSON.parse(saved);
-        if (profile.region) {
-          setRegion(profile.region);
-          currentRegion = profile.region;
-        }
-        if (profile.crops) {
-          setCrops(profile.crops);
-          currentCrops = profile.crops;
-        }
-      }
+      const currentRegion = region;
+      const currentCrops = crops;
 
-      const notifs = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
-      const formattedNotifs = notifs.map((n: any) => ({
+      const notifs: Notification[] = JSON.parse(localStorage.getItem("agro_notifications") || "[]");
+      const formattedNotifs = notifs.map((n: Notification) => ({
          id: n.id,
          agentId: n.type,
          severity: n.type === 'weather' ? 'high' : n.type === 'market' ? 'medium' : 'low',
@@ -193,7 +200,7 @@ export default function AgentsMissionControl() {
         }
       ];
 
-      setAlerts([...formattedNotifs, ...defaultAlerts]);
+      queueMicrotask(() => setAlerts([...formattedNotifs, ...defaultAlerts]));
     } catch(e) {}
   }, []);
 

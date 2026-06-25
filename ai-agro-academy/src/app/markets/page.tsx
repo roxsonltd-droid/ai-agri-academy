@@ -36,7 +36,7 @@ export default function MarketsPage() {
       if (!res.ok) throw new Error("Грешка при генериране на обзора.");
       const data = await res.json();
       setInsight(data.reply);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setInsight("Възникна грешка при свързването с AI анализатора. Опитайте отново по-късно.");
     } finally {
       setIsGenerating(false);
@@ -106,7 +106,7 @@ export default function MarketsPage() {
               {!isGenerating && !insight && (
                 <div className="flex flex-col items-center justify-center h-full opacity-50 py-10 text-center">
                    <Landmark className="w-16 h-16 text-muted-foreground mb-4 opacity-50" />
-                   <p className="text-sm max-w-sm">Кликнете бутона "Генерирай обзор", за да позволите на изкуствения интелект да обобщи ситуацията на глобалните пазари.</p>
+                   <p className="text-sm max-w-sm">Кликнете бутона &quot;Генерирай обзор&quot;, за да позволите на изкуствения интелект да обобщи ситуацията на глобалните пазари.</p>
                 </div>
               )}
               {insight && !isGenerating && (

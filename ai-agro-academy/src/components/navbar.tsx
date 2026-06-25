@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
@@ -62,9 +62,15 @@ export default function Navbar() {
   }, []);
 
   // Close mobile menu when route changes
+  const prevPathname = useRef(pathname);
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setShowNotifications(false);
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      queueMicrotask(() => {
+        setIsMobileMenuOpen(false);
+        setShowNotifications(false);
+      });
+    }
   }, [pathname]);
 
   const markAllAsRead = () => {

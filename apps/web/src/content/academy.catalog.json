@@ -124,13 +124,26 @@
     },
     {
       "slug": "grain-trading",
-      "title": "Търговия със зърно",
-      "description": "Стратегии за успешен маркетинг и продажби на зърнената реколта.",
-      "difficulty": "advanced",
+      "modules": 1,
+      "title": {
+        "bg": "Търговия със зърно",
+        "en": "Grain trading"
+      },
+      "description": {
+        "bg": "Стратегии за успешен маркетинг и продажби на зърнената реколта.",
+        "en": "Strategies for successful marketing and sales of the grain harvest."
+      },
       "lectures": [
         {
           "id": "grain-markets",
-          "title": "Динамика на зърнените пазари",
+          "title": {
+            "bg": "Динамика на зърнените пазари",
+            "en": "Grain market dynamics"
+          },
+          "summary": {
+            "bg": "Фактори, сезонност и ценови движения на зърнените пазари.",
+            "en": "Factors, seasonality, and price movements in grain markets."
+          },
           "filename": "lesson-1.md",
           "file": "grain-trading/lesson-1.md"
         }
@@ -310,13 +323,26 @@
     },
     {
       "slug": "precision-farming",
-      "title": "Основи на прецизното земеделие",
-      "description": "Научете как да използвате технологии за оптимизация на добива.",
-      "difficulty": "intermediate",
+      "modules": 1,
+      "title": {
+        "bg": "Основи на прецизното земеделие",
+        "en": "Precision farming fundamentals"
+      },
+      "description": {
+        "bg": "Научете как да използвате технологии за оптимизация на добива.",
+        "en": "Learn how to use technology to optimize yield."
+      },
       "lectures": [
         {
           "id": "intro-precision",
-          "title": "Въведение в прецизното земеделие",
+          "title": {
+            "bg": "Въведение в прецизното земеделие",
+            "en": "Introduction to precision farming"
+          },
+          "summary": {
+            "bg": "Основни концепции и технологии в прецизното земеделие.",
+            "en": "Core concepts and technologies in precision farming."
+          },
           "filename": "lesson-1.md",
           "file": "precision-farming/lesson-1.md"
         }

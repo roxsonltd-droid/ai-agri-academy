@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 
 export default function FarmProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   
   const [profile, setProfile] = useState({

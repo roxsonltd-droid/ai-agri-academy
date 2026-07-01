@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 // This endpoint is designed to be hit by Vercel Cron or Render Background Jobs
 // e.g. 0 6 * * * (Every day at 6:00 AM)
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // 1. In a real scenario with a database (e.g. Supabase), we would:
     // const users = await db.query('SELECT * FROM users WHERE has_farm = true');
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
       timestamp: new Date().toISOString()
     }, { status: 200 });
     
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       status: 'error',
       message: 'Failed to execute cron job'

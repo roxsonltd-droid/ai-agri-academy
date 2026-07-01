@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { Search, MapPin, Wheat, Tractor, Map, TrendingUp, Filter, Tag, Clock, ArrowRight, Star, ShieldCheck, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { Search, MapPin, Wheat, Tractor, Map, TrendingUp, Filter, Tag, Clock, Star, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function MarketplacePage() {
@@ -99,7 +99,7 @@ export default function MarketplacePage() {
               <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-all group">
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10" />
-                  <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=500" alt="Пшеница" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=500" alt="Пшеница" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 z-20 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded">Продава</div>
                 </div>
                 <div className="p-5">
@@ -125,7 +125,7 @@ export default function MarketplacePage() {
               <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-all group">
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10" />
-                  <img src="https://images.unsplash.com/photo-1601398863623-6cb61d9a5b3a?auto=format&fit=crop&q=80&w=500" alt="Царевица" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src="https://images.unsplash.com/photo-1601398863623-6cb61d9a5b3a?auto=format&fit=crop&q=80&w=500" alt="Царевица" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 z-20 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded">Продава</div>
                 </div>
                 <div className="p-5">
@@ -182,7 +182,7 @@ export default function MarketplacePage() {
               <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-all group">
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10" />
-                  <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&q=80&w=500" alt="Трактор" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&q=80&w=500" alt="Трактор" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 z-20 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded">Дава под наем</div>
                 </div>
                 <div className="p-5">
@@ -203,7 +203,7 @@ export default function MarketplacePage() {
               <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-all group">
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10" />
-                  <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&q=80&w=500" alt="Комбайн" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&q=80&w=500" alt="Комбайн" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 z-20 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded">Продава</div>
                 </div>
                 <div className="p-5">
@@ -229,7 +229,7 @@ export default function MarketplacePage() {
               <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-all group">
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10" />
-                  <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=500" alt="Нива" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=500" alt="Нива" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 z-20 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded">Дава под Аренда</div>
                 </div>
                 <div className="p-5">

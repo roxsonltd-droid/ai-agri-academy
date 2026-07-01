@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+
 import { Mic, MicOff, Square, ChevronLeft, Loader2, Save, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,13 +29,10 @@ export default function VoiceAssistantPage() {
         recognition.lang = "bg-BG";
 
         recognition.onresult = (event: SpeechRecognitionEvent) => {
-          let currentTranscript = "";
           for (let i = event.resultIndex; i < event.results.length; i++) {
-            const transcript = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
+              const transcript = event.results[i][0].transcript;
               setText((prev) => prev + transcript + " ");
-            } else {
-              currentTranscript += transcript;
             }
           }
         };
@@ -58,15 +55,17 @@ export default function VoiceAssistantPage() {
       }
     }
 
+    const currentRecognition = recognitionRef.current;
+    const currentAudio = audioRef.current;
     return () => {
-      if (recognitionRef.current && isListening) {
-        recognitionRef.current.stop();
+      if (currentRecognition) {
+        currentRecognition.stop();
       }
-      if (audioRef.current) {
-        audioRef.current.pause();
+      if (currentAudio) {
+        currentAudio.pause();
       }
     };
-  }, []);
+  }, [isListening]);
 
   const toggleListening = () => {
     if (!recognitionRef.current) return;

@@ -174,6 +174,7 @@ export default function DiagnosticLabPage() {
                 </div>
                 
                 {/* The Image */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={previewUrl} alt="Качена снимка" className="w-full h-80 object-cover opacity-90 transition-opacity" />
                 
                 {/* Scanner Animation Effect */}

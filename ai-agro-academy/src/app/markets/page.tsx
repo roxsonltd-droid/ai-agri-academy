@@ -36,7 +36,7 @@ export default function MarketsPage() {
       if (!res.ok) throw new Error("Грешка при генериране на обзора.");
       const data = await res.json();
       setInsight(data.reply);
-    } catch (err: unknown) {
+    } catch {
       setInsight("Възникна грешка при свързването с AI анализатора. Опитайте отново по-късно.");
     } finally {
       setIsGenerating(false);

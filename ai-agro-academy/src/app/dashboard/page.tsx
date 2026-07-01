@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronLeft, CloudRain, ShieldAlert, CircleDollarSign, Tractor, LineChart, Cpu, Sun, ThermometerSnowflake, Droplets, ArrowUpRight, BrainCircuit } from "lucide-react";
+import { CloudRain, ShieldAlert, CircleDollarSign, Tractor, LineChart, Cpu, Sun, ArrowUpRight, BrainCircuit } from "lucide-react";
 
 export default function DashboardPage() {
   return (

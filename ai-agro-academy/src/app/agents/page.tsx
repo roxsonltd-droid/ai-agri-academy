@@ -14,7 +14,6 @@ import {
   ChevronRight, 
   BrainCircuit, 
   Radio,
-  Settings,
   X,
   Plus,
   Zap,
@@ -22,7 +21,6 @@ import {
   FolderOpen,
   Eraser,
   Search,
-  Trash2,
   FileText,
   UploadCloud,
   CheckCircle2,
@@ -51,7 +49,7 @@ interface Notification {
 }
 
 export default function AgentsMissionControl() {
-  const [region, setRegion] = useState(() => {
+  const [region] = useState(() => {
     if (typeof window === "undefined") return "вашия регион";
     try {
       const saved = localStorage.getItem("agro_farm_profile");
@@ -59,7 +57,7 @@ export default function AgentsMissionControl() {
     } catch { /* ignore */ }
     return "вашия регион";
   });
-  const [crops, setCrops] = useState(() => {
+  const [crops] = useState(() => {
     if (typeof window === "undefined") return "вашите култури";
     try {
       const saved = localStorage.getItem("agro_farm_profile");
@@ -201,8 +199,8 @@ export default function AgentsMissionControl() {
       ];
 
       queueMicrotask(() => setAlerts([...formattedNotifs, ...defaultAlerts]));
-    } catch(e) {}
-  }, []);
+    } catch { /* ignore */ }
+  }, [region, crops]);
 
   const handleCreateAgent = () => {
     if (!newAgentName) return;

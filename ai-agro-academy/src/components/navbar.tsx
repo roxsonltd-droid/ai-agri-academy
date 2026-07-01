@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, Sprout, ChevronDown, User, FileText, Video, Bell, LogOut, Settings as SettingsIcon, X, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
+import { Menu, ChevronDown, Bell, X, Trash2, ShieldAlert, CloudRain, LineChart } from "lucide-react";
 import { GlobalSearchBar } from "./global-search";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { easeCinematic, transitionCinematic } from "@/lib/motion";
@@ -44,7 +44,7 @@ export default function Navbar() {
         if (saved) {
           setNotifications(JSON.parse(saved));
         }
-      } catch (e) {}
+      } catch { /* ignore */ }
     };
 
     loadNotifications();

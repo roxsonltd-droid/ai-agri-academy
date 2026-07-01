@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ImagePlus, Loader2, Target, ScanSearch, CheckCircle, BrainCircuit, Activity, Pill, Bug } from "lucide-react";
+import { ChevronLeft, ImagePlus, Loader2, Target, ScanSearch, CheckCircle, Activity, Pill, Bug } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -172,6 +172,7 @@ export default function PlantDoctorAgent() {
                   </button>
                 </div>
                 
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={previewUrl} alt="Качена снимка" className="w-full h-80 object-cover opacity-90 transition-opacity" />
                 
                 {isScanning && (

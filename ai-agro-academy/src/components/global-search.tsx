@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 import { InstantSearch, SearchBox, Hits, Highlight, useInstantSearch } from "react-instantsearch";
 import type { Hit as AlgoliaHit, BaseHit } from "instantsearch.js";

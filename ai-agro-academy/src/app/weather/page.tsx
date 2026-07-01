@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, CloudRain, Sun, Cloud, Wind, ThermometerSnowflake, Droplets, AlertTriangle, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function WeatherIntelligence() {
   const [selectedDay, setSelectedDay] = useState(0);

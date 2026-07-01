@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, CircleDollarSign, TrendingUp, TrendingDown, Wallet, Calculator, LineChart as LineChartIcon, AlertCircle } from "lucide-react";
+import { ChevronLeft, CircleDollarSign, TrendingUp, Wallet, Calculator, LineChart as LineChartIcon, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function AIFinanceDirector() {

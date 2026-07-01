@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit, Send, User, ChevronLeft, Sprout, Mic, MicOff, Volume2, Loader2 } from "lucide-react";
+import { BrainCircuit, Send, User, ChevronLeft, Sprout, Mic, Volume2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";

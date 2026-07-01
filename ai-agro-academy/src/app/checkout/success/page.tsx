@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 
 export default function CheckoutSuccessPage() {
   const [isClient] = useState(() => typeof window !== "undefined");
-  const orderId = useId();
   const [orderNum] = useState(() => Math.floor(Math.random() * 1000000));
 
   useEffect(() => {

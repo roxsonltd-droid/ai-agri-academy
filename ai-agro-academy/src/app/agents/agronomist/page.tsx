@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Sprout, Send, User, ChevronLeft, Mic, Volume2, Loader2, Wheat } from "lucide-react";
+import { Sprout, Send, User, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -14,7 +14,7 @@ interface Message {
 }
 
 export default function AgronomistAgent() {
-  const reduceMotion = useReducedMotion();
+  useReducedMotion();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "ai",
@@ -55,7 +55,7 @@ export default function AgronomistAgent() {
       
       const data = await res.json();
       setMessages(prev => [...prev, { role: "ai", content: data.reply }]);
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { role: "ai", content: "Възникна техническа грешка при връзката с базата данни." }]);
     } finally {
       setIsLoading(false);

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus, BookOpen, Clock, ChevronRight, PlayCircle } from "lucide-react";
+import { Plus, BookOpen, PlayCircle } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
 
 type Course = {

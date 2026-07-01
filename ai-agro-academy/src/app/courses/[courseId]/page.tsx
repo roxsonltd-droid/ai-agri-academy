@@ -369,7 +369,7 @@ export default function CoursePlayerPage() {
                                   certs.push(newCert);
                                   localStorage.setItem("agro_certificates", JSON.stringify(certs));
                                 }
-                            } catch (e) {}
+                            } catch { /* ignore */ }
                           } else {
                             setQuizFeedback("Грешка! Върни се към текста. Ключът не е в скъпата техника, а в осмисленото ѝ приложение спрямо твоята специфична почва!");
                           }

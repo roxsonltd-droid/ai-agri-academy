@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { MessageSquare, Bot, Code2, Image as ImageIcon, Video, FileText, BarChart3, Globe, Zap, Mic, Languages, Podcast } from "lucide-react";
 import Link from "next/link";
 import { easeCinematic, staggerInViewContainer, transitionCinematic, viewportFadeUpVariants } from "@/lib/motion";

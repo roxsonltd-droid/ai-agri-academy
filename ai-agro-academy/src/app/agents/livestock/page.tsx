@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { PawPrint, Send, User, ChevronLeft, Loader2 } from "lucide-react";
+import { PawPrint, Send, User, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -14,7 +14,7 @@ interface Message {
 }
 
 export default function LivestockAgent() {
-  const reduceMotion = useReducedMotion();
+  useReducedMotion();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "ai",
@@ -54,7 +54,7 @@ export default function LivestockAgent() {
       
       const data = await res.json();
       setMessages(prev => [...prev, { role: "ai", content: data.reply }]);
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { role: "ai", content: "Възникна техническа грешка при връзката с базата данни." }]);
     } finally {
       setIsLoading(false);

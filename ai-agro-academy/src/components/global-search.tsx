@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 import { InstantSearch, SearchBox, Hits, Highlight, useInstantSearch } from "react-instantsearch";
+import type { Hit as AlgoliaHit, BaseHit } from "instantsearch.js";
 import { Search, X, BookOpen, Video, FileText } from "lucide-react";
 
 // Initialize Typesense Client
@@ -32,7 +33,13 @@ function EmptyQueryBoundary({ children, fallback }: { children: React.ReactNode,
   return <>{children}</>;
 }
 
-function Hit({ hit }: any) {
+interface SearchHitFields extends BaseHit {
+  type: string;
+  title: string;
+  content: string;
+}
+
+function Hit({ hit }: { hit: AlgoliaHit<SearchHitFields> }) {
   return (
     <div className="flex items-start gap-4 p-4 border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
       <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 mt-1">

@@ -30,8 +30,8 @@ export default function CreateAdPage() {
       setTitle("");
       setDescription("");
       setPrice("");
-    } catch (err: any) {
-      setMessage(err.message ?? "Грешка при заявката");
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Грешка при заявката");
     } finally {
       setIsSubmitting(false);
     }

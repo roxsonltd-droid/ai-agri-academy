@@ -42,8 +42,8 @@ export default function PodcastPage() {
       if (!res.ok) throw new Error("Грешка при генериране на скрипта.");
       const data = await res.json();
       setScript(data.reply);
-    } catch (err: any) {
-      setError(err.message || "Възникна грешка.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Възникна грешка.");
     } finally {
       setIsGenerating(false);
     }
@@ -89,8 +89,8 @@ export default function PodcastPage() {
           URL.revokeObjectURL(url);
         };
       }
-    } catch (err: any) {
-      setError(err.message || "Грешка при пускане на подкаста.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Грешка при пускане на подкаста.");
     } finally {
       setIsLoadingAudio(false);
     }

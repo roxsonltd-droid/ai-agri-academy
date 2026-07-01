@@ -37,8 +37,8 @@ export default function TranslatePage() {
       
       const data = await res.json();
       setTargetText(data.reply);
-    } catch (err: any) {
-      setError(err.message || "Грешка при превода.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Грешка при превода.");
     } finally {
       setIsTranslating(false);
     }

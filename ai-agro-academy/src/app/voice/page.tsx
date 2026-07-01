@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Mic, MicOff, Play, Square, ChevronLeft, Volume2, Loader2, Save } from "lucide-react";
+
+import { Mic, MicOff, Square, ChevronLeft, Loader2, Save, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { API_BASE } from "@/lib/api";
@@ -15,32 +15,29 @@ export default function VoiceAssistantPage() {
   const [isLoadingAudio, setIsLoadingAudio] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Initialize Web Speech API for dictation
     if (typeof window !== "undefined") {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const SpeechRecognition = (window as unknown as { SpeechRecognition?: typeof globalThis.SpeechRecognition; webkitSpeechRecognition?: typeof globalThis.SpeechRecognition }).SpeechRecognition || (window as unknown as { webkitSpeechRecognition?: typeof globalThis.SpeechRecognition }).webkitSpeechRecognition;
       if (SpeechRecognition) {
         const recognition = new SpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = true;
         recognition.lang = "bg-BG";
 
-        recognition.onresult = (event: any) => {
-          let currentTranscript = "";
+        recognition.onresult = (event: SpeechRecognitionEvent) => {
           for (let i = event.resultIndex; i < event.results.length; i++) {
-            const transcript = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
+              const transcript = event.results[i][0].transcript;
               setText((prev) => prev + transcript + " ");
-            } else {
-              currentTranscript += transcript;
             }
           }
         };
 
-        recognition.onerror = (event: any) => {
+        recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
           console.error("Speech recognition error", event.error);
           setIsListening(false);
           if (event.error !== "no-speech") {
@@ -54,19 +51,21 @@ export default function VoiceAssistantPage() {
 
         recognitionRef.current = recognition;
       } else {
-        setError("Вашият браузър не поддържа гласово диктуване (Web Speech API). Опитайте с Google Chrome.");
+        console.warn("Вашият браузър не поддържа гласово диктуване (Web Speech API). Опитайте с Google Chrome.");
       }
     }
 
+    const currentRecognition = recognitionRef.current;
+    const currentAudio = audioRef.current;
     return () => {
-      if (recognitionRef.current && isListening) {
-        recognitionRef.current.stop();
+      if (currentRecognition) {
+        currentRecognition.stop();
       }
-      if (audioRef.current) {
-        audioRef.current.pause();
+      if (currentAudio) {
+        currentAudio.pause();
       }
     };
-  }, []);
+  }, [isListening]);
 
   const toggleListening = () => {
     if (!recognitionRef.current) return;
@@ -129,7 +128,7 @@ export default function VoiceAssistantPage() {
           URL.revokeObjectURL(url);
         };
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setError("Грешка при генериране на аудио (ElevenLabs може да не е конфигуриран).");
     } finally {

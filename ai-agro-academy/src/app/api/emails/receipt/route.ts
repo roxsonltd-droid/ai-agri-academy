@@ -57,8 +57,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, simulated: true, message: "Receipt simulated successfully." });
     }
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Email Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Unknown error" }, { status: 500 });
   }
 }

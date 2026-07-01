@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bot, User, Send, Loader2, Sparkles } from "lucide-react";
+import { User, Send, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AiAvatar } from "@/components/ai-avatar";
 import { API_BASE } from "@/lib/api";

@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus, BookOpen, Clock, ChevronRight, PlayCircle } from "lucide-react";
+import { Plus, BookOpen, PlayCircle } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
 
 type Course = {
   id: string;
   title: string;
   description: string;
-  modules: any[];
+  modules: { id: string; title: string; lessons?: { id: string }[] }[];
 };
 
 export default function AdminCoursesPage() {

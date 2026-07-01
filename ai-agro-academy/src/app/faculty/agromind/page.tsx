@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit, Send, User, ChevronLeft, Sprout, Mic, MicOff, Volume2, Loader2 } from "lucide-react";
+import { BrainCircuit, Send, User, ChevronLeft, Sprout, Mic, Volume2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -16,8 +16,8 @@ interface Message {
 // Global declaration for SpeechRecognition
 declare global {
   interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
+    SpeechRecognition: typeof SpeechRecognition | undefined;
+    webkitSpeechRecognition: typeof SpeechRecognition | undefined;
   }
 }
 
@@ -58,7 +58,7 @@ export default function AgroMindChat() {
     recognition.onstart = () => setIsRecording(true);
     recognition.onend = () => setIsRecording(false);
     recognition.onerror = () => setIsRecording(false);
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript;
       setInput(prev => (prev + " " + transcript).trim());
     };

@@ -2,12 +2,16 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ImagePlus, Loader2, Target, ScanSearch, CheckCircle, BrainCircuit, Activity, Pill, Bug } from "lucide-react";
+import { ChevronLeft, ImagePlus, Loader2, Target, ScanSearch, CheckCircle, Activity, Pill, Bug } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 const apiBase = () => process.env.NEXT_PUBLIC_API_URL || "https://agro-academy-backend.onrender.com";
+
+function generateReportId() {
+  return Math.random().toString(36).substring(7).toUpperCase();
+}
 
 function readFileAsBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -30,6 +34,7 @@ export default function PlantDoctorAgent() {
   const [error, setError] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [reportId] = useState(() => generateReportId());
 
   const handleFile = (f: File) => {
     setError(null);
@@ -167,6 +172,7 @@ export default function PlantDoctorAgent() {
                   </button>
                 </div>
                 
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={previewUrl} alt="Качена снимка" className="w-full h-80 object-cover opacity-90 transition-opacity" />
                 
                 {isScanning && (
@@ -262,7 +268,7 @@ export default function PlantDoctorAgent() {
                   </div>
                   <div className="flex gap-4 relative z-10">
                     <span className="inline-flex items-center px-3 py-1 rounded bg-slate-900 border border-slate-700 text-xs font-mono text-slate-400">
-                      ID: {Math.random().toString(36).substring(7).toUpperCase()}
+                      ID: {reportId}
                     </span>
                     <span className="inline-flex items-center px-3 py-1 rounded bg-slate-900 border border-slate-700 text-xs font-mono text-slate-400">
                       ДАТА: {new Date().toLocaleDateString('bg-BG')}
